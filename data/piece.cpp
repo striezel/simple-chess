@@ -18,13 +18,26 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_COLOUR_HPP
-#define SIMPLE_COLOUR_HPP
+#include "piece.hpp"
 
 namespace simplechess
 {
-   //enumeration type for players / colours
-   enum Colour { none, white, black };
-} //namespace
 
-#endif // SIMPLE_COLOUR_HPP
+Piece::Piece()
+: colour(Colour::none),
+  piece(PieceType::none)
+{
+}
+
+Piece::Piece(Colour c, PieceType pt)
+: colour(c),
+  piece(pt)
+{
+}
+
+bool Piece::operator==(const Piece& other) const
+{
+  return ((colour == other.colour) && (piece == other.piece));
+}
+
+} //namespace

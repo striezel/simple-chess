@@ -23,7 +23,26 @@
 
 namespace simplechess
 {
-   enum class Piece { none, king, queen, bishop, knight, rook, pawn};
+   //enumeration type for players / colours
+   enum Colour { none, white, black };
+
+   //enumeration type for types of pieces
+   enum class PieceType { none, king, queen, bishop, knight, rook, pawn};
+
+   struct Piece
+   {
+     Colour colour;
+     PieceType piece;
+
+     /* default constructor */
+     Piece();
+
+     /* parametrized constructor */
+     Piece(Colour c, PieceType pt);
+
+     /* equality operator for Piece structures */
+     bool operator==(const Piece& other) const;
+   }; //struct
 } //namespace
 
 #endif // SIMPLE_CHESS_PIECE_HPP

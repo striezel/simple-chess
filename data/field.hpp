@@ -42,6 +42,9 @@ namespace simplechess
 
    /* returns the row of a given field */
    int row(Field f);
+
+   /* converts (column;row) pair to Field */
+   Field toField(const char column, const int row);
 } //namespace
 
 #endif // SIMPLE_CHESS_FIELD_HPP

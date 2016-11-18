@@ -19,6 +19,7 @@
 */
 
 #include "field.hpp"
+#include <stdexcept>
 
 namespace simplechess
 {
@@ -179,6 +180,13 @@ int row(Field f)
     case Field::h8:
          return 8;
   } //switch
+}
+
+Field toField(const char column, const int row)
+{
+  if ((column < 'a') || (column > 'h') || (row < 1) || (row > 8))
+    throw std::range_error("Column or row argument is out of range!");
+  return static_cast<Field>((column - 'a') * 8 + (row - 1) + static_cast<int>(Field::a1));
 }
 
 } //namespace

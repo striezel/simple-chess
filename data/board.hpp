@@ -22,31 +22,23 @@
 #define SIMPLE_CHESS_BOARD_HPP
 
 #include <map>
-#include "colour.hpp"
 #include "field.hpp"
 #include "piece.hpp"
 
 namespace simplechess
 {
 
-struct BoardElem
-{
-  Colour colour;
-  Piece piece;
-
-  BoardElem();
-};
-
+/* class that represents a chess board */
 class Board
 {
-  std::map<Field, BoardElem> m_Fields;
+  std::map<Field, Piece> m_Fields;
 
   public:
     /* default constructor */
     Board();
 
     /* gets data for a given field on the board */
-    const BoardElem& element(const Field f);
+    const Piece& element(const Field f);
 }; //class
 
 } //namespace
