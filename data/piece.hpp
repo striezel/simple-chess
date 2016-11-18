@@ -23,7 +23,7 @@
 
 namespace simplechess
 {
-   enum class Piece { knight, queen, bishop, knight, rook, pawn};
+   enum class Piece { none, king, queen, bishop, knight, rook, pawn};
 } //namespace
 
 #endif // SIMPLE_CHESS_PIECE_HPP

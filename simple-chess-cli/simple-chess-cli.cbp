@@ -33,6 +33,8 @@
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../data/board.cpp" />
+		<Unit filename="../data/board.hpp" />
 		<Unit filename="../data/colour.hpp" />
 		<Unit filename="../data/field.cpp" />
 		<Unit filename="../data/field.hpp" />

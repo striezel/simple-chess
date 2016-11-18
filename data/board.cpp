@@ -18,13 +18,31 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_COLOUR_HPP
-#define SIMPLE_COLOUR_HPP
+#include "board.hpp"
 
 namespace simplechess
 {
-   //enumeration type for players / colours
-   enum Colour { none, white, black };
-} //namespace
 
-#endif // SIMPLE_COLOUR_HPP
+BoardElem::BoardElem()
+: colour(Colour::none),
+  piece(Piece::none)
+{
+}
+
+Board::Board()
+{
+  for(int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
+  {
+    m_Fields[static_cast<Field>(i)] = BoardElem();
+  }
+}
+
+const BoardElem& Board::element(const Field f)
+{
+  const std::map<Field, BoardElem>::const_iterator cIter = m_Fields.find(f);
+  if (cIter != m_Fields.end())
+    return cIter->second;
+  throw std::runtime_error("Field does not exist on board!");
+}
+
+} //namespace

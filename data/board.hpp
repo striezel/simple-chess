@@ -18,13 +18,37 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_COLOUR_HPP
-#define SIMPLE_COLOUR_HPP
+#ifndef SIMPLE_CHESS_BOARD_HPP
+#define SIMPLE_CHESS_BOARD_HPP
+
+#include <map>
+#include "colour.hpp"
+#include "field.hpp"
+#include "piece.hpp"
 
 namespace simplechess
 {
-   //enumeration type for players / colours
-   enum Colour { none, white, black };
+
+struct BoardElem
+{
+  Colour colour;
+  Piece piece;
+
+  BoardElem();
+};
+
+class Board
+{
+  std::map<Field, BoardElem> m_Fields;
+
+  public:
+    /* default constructor */
+    Board();
+
+    /* gets data for a given field on the board */
+    const BoardElem& element(const Field f);
+}; //class
+
 } //namespace
 
-#endif // SIMPLE_COLOUR_HPP
+#endif // SIMPLE_CHESS_BOARD_HPP
