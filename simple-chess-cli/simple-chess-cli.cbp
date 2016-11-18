@@ -35,6 +35,8 @@
 		</Compiler>
 		<Unit filename="../data/board.cpp" />
 		<Unit filename="../data/board.hpp" />
+		<Unit filename="../data/castling.cpp" />
+		<Unit filename="../data/castling.hpp" />
 		<Unit filename="../data/field.cpp" />
 		<Unit filename="../data/field.hpp" />
 		<Unit filename="../data/piece.cpp" />

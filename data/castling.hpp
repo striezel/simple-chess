@@ -18,42 +18,28 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_CHESS_BOARD_HPP
-#define SIMPLE_CHESS_BOARD_HPP
+#ifndef SIMPLE_CHESS_CASTLING_HPP
+#define SIMPLE_CHESS_CASTLING_HPP
 
-#include <map>
-#include "castling.hpp"
-#include "field.hpp"
-#include "piece.hpp"
+#include <string>
 
 namespace simplechess
 {
 
-/* class that represents a chess board */
-class Board
+struct Castling
 {
-  public:
-    /* default constructor */
-    Board();
+  bool white_kingside;
+  bool white_queenside;
+  bool black_kingside;
+  bool black_queenside;
 
-    /* gets data for a given field on the board */
-    const Piece& element(const Field f) const;
+  /* default constructor */
+  Castling();
 
-    /* gets the player / colour who is to move next */
-    const Colour& toMove() const;
-
-    /* gets the field which can be used for en passant capture, if any */
-    const Field& enPassant() const;
-
-    /* castling information for the board */
-    const Castling& castling() const;
-  private:
-    std::map<Field, Piece> m_Fields;
-    Colour m_toMove;
-    Field  m_enPassant;
-    Castling m_castling;
-}; //class
+  /* provides Forsyth-Edwards notation of the castling information */
+  std::string toFEN() const;
+}; //struct
 
 } //namespace
 
-#endif // SIMPLE_CHESS_BOARD_HPP
+#endif // SIMPLE_CHESS_CASTLING_HPP

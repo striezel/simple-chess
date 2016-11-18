@@ -100,6 +100,8 @@ char column(Field f)
     case Field::h7:
     case Field::h8:
          return 'h';
+    case Field::none:
+         throw std::invalid_argument("None is not allowed as argument of column()!");
   } //switch
 }
 
@@ -179,6 +181,8 @@ int row(Field f)
     case Field::g8:
     case Field::h8:
          return 8;
+    case Field::none:
+         throw std::invalid_argument("None is not allowed as argument of row()!");
   } //switch
 }
 

@@ -18,42 +18,33 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_CHESS_BOARD_HPP
-#define SIMPLE_CHESS_BOARD_HPP
-
-#include <map>
 #include "castling.hpp"
-#include "field.hpp"
-#include "piece.hpp"
 
 namespace simplechess
 {
 
-/* class that represents a chess board */
-class Board
+Castling::Castling()
+: white_kingside(true),
+  white_queenside(true),
+  black_kingside(true),
+  black_queenside(true)
 {
-  public:
-    /* default constructor */
-    Board();
+}
 
-    /* gets data for a given field on the board */
-    const Piece& element(const Field f) const;
-
-    /* gets the player / colour who is to move next */
-    const Colour& toMove() const;
-
-    /* gets the field which can be used for en passant capture, if any */
-    const Field& enPassant() const;
-
-    /* castling information for the board */
-    const Castling& castling() const;
-  private:
-    std::map<Field, Piece> m_Fields;
-    Colour m_toMove;
-    Field  m_enPassant;
-    Castling m_castling;
-}; //class
+std::string Castling::toFEN() const
+{
+  std::string result;
+  if (white_kingside)
+    result.append("K");
+  if (white_queenside)
+    result.append("Q");
+  if (black_kingside)
+    result.append("k");
+  if (black_queenside)
+    result.append("q");
+  if (result.empty())
+    result = "-";
+  return result;
+}
 
 } //namespace
-
-#endif // SIMPLE_CHESS_BOARD_HPP

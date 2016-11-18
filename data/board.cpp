@@ -24,6 +24,9 @@ namespace simplechess
 {
 
 Board::Board()
+: m_toMove(Colour::white),
+  m_enPassant(Field::none),
+  m_castling(Castling())
 {
   for(int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
@@ -31,12 +34,22 @@ Board::Board()
   }
 }
 
-const Piece& Board::element(const Field f)
+const Piece& Board::element(const Field f) const
 {
   const std::map<Field, Piece>::const_iterator cIter = m_Fields.find(f);
   if (cIter != m_Fields.end())
     return cIter->second;
   throw std::runtime_error("Field does not exist on board!");
+}
+
+const Colour& Board::toMove() const
+{
+  return m_toMove;
+}
+
+const Field& Board::enPassant() const
+{
+  return m_enPassant;
 }
 
 } //namespace
