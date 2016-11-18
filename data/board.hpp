@@ -47,6 +47,16 @@ class Board
 
     /* castling information for the board */
     const Castling& castling() const;
+
+
+    /** \brief initializes the board's content with the data from a Forsyth-Edwards notation string
+     *
+     * \param FEN  Forsyth-Edwards notation of the board
+     * \return Returns true, if initialization was successful.
+     *         Returns false otherwise. The board's content is undefined,
+     *         if the return value is false.
+     */
+    bool fromFEN(const std::string& FEN);
   private:
     std::map<Field, Piece> m_Fields;
     Colour m_toMove;

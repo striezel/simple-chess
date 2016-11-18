@@ -41,6 +41,8 @@
 		<Unit filename="../data/field.hpp" />
 		<Unit filename="../data/piece.cpp" />
 		<Unit filename="../data/piece.hpp" />
+		<Unit filename="../util/strings.cpp" />
+		<Unit filename="../util/strings.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
