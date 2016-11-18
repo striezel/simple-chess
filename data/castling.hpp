@@ -26,18 +26,28 @@
 namespace simplechess
 {
 
+/** \brief structure to hold castling information, i.e. which player can still
+           perform castling on which side
+ */
 struct Castling
 {
-  bool white_kingside;
-  bool white_queenside;
-  bool black_kingside;
-  bool black_queenside;
+  bool white_kingside; /**< whether kingside castlig for white is still possible */
+  bool white_queenside; /**< whether queenside castlig for white is still possible */
+  bool black_kingside; /**< whether kingside castlig for black is still possible */
+  bool black_queenside; /**< whether queenside castlig for black is still possible */
 
-  /* default constructor */
+  /** \brief default constructor */
   Castling();
 
-  /* provides Forsyth-Edwards notation of the castling information */
+  /** \brief provides Forsyth-Edwards notation of the castling information
+   *
+   * \return Returns a string like "-", "KQkq", or similar that reflects the
+   * castling options that are still possible.
+   */
   std::string toFEN() const;
+
+  /** \brief intializes the struct from a Forsyth-Edwards notation of the castling information */
+  void fromFEN(const std::string& FEN);
 }; //struct
 
 } //namespace
