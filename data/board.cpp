@@ -70,6 +70,11 @@ const Field& Board::enPassant() const
   return m_enPassant;
 }
 
+const Castling& Board::castling() const
+{
+  return m_castling;
+}
+
 bool Board::fromFEN(const std::string& FEN)
 {
   //split into single parts
