@@ -18,21 +18,35 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_CHESS_MOVES_HPP
-#define SIMPLE_CHESS_MOVES_HPP
+#ifndef SIMPLE_CHESS_CHECK_HPP
+#define SIMPLE_CHESS_CHECK_HPP
 
 #include "../data/board.hpp"
-#include "../data/field.hpp"
+#include "../data/piece.hpp"
 
 namespace simplechess
 {
 
-class Moves
-{
-  public:
-    static bool allowed(const Board& board, const Field from, const Field to);
-}; //class
+/** \brief determines whether a field is attacked by a certain colour
+ *
+ * \param board  the current board
+ * \param by     the attacking colour/player
+ * \param field  the field which shall be checked
+ * \return Returns true, if the given field is attacked by the given player.
+ *         Returns false otherwise.
+ */
+bool isUnderAttack(const Board& board, const Colour by, const Field field);
+
+
+/** \brief determines whether or not a player/colour is in check
+ *
+ * \param board   the current board
+ * \param colour  the colour to check
+ * \return Returns true, if the given colour is in check.
+ *         Returns false otherwise.
+ */
+bool isInCheck(const Board& board, const Colour colour);
 
 } //namespace
 
-#endif // SIMPLE_CHESS_MOVES_HPP
+#endif // SIMPLE_CHESS_CHECK_HPP
