@@ -242,4 +242,20 @@ bool Moves::allowed(const Board& board, const Field from, const Field to)
   throw std::range_error("Piece type is out of range!");
 }
 
+void Moves::sanitizePromotion(PieceType& promoteTo)
+{
+  switch(promoteTo)
+  {
+    case PieceType::queen:
+    case PieceType::knight:
+    case PieceType::bishop:
+    case PieceType::rook:
+         return;
+    default:
+         //Some other piece - change to queen.
+         promoteTo = PieceType::queen;
+         break;
+  } //switch
+}
+
 } //namespace

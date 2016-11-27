@@ -31,6 +31,8 @@ class Moves
 {
   public:
     static bool allowed(const Board& board, const Field from, const Field to);
+
+    static void sanitizePromotion(PieceType& promoteTo);
 }; //class
 
 } //namespace

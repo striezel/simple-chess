@@ -49,6 +49,14 @@ class Board
     const Castling& castling() const;
 
 
+    /** \brief determines whether one side is currently in check
+     *
+     * \param colour   the colour that is (or is not) in check
+     * \return Returns true, if the given colour is in check;
+     */
+    bool isInCheck(const Colour colour) const;
+
+
     /** \brief initializes the board's content with the data from a Forsyth-Edwards notation string
      *
      * \param FEN  Forsyth-Edwards notation of the board
@@ -57,11 +65,25 @@ class Board
      *         if the return value is false.
      */
     bool fromFEN(const std::string& FEN);
+
+
+    /** \brief tries to move a piece on the board
+     *
+     * \param from       field where the move starts
+     * \param to         field where the move ends
+     * \param promoteTo  type of piece that a pawn shall be promoted to,
+                         if the move allows pawn promotion
+     * \return Returns true, if move could be performed.
+     * Returns false, if move was not performed.
+     */
+    bool move(const Field from, const Field to, PieceType promoteTo);
   private:
-    std::map<Field, Piece> m_Fields;
-    Colour m_toMove;
-    Field  m_enPassant;
-    Castling m_castling;
+    std::map<Field, Piece> m_Fields; /**< pieces on fields of the board */
+    Colour m_toMove; /**< player/colour that is to move next */
+    Field  m_enPassant; /**< en passant field, if any */
+    Castling m_castling; /**< castling information (i.e. where is castling still allowed) */
+    bool m_blackInCheck; /**< whether black player is in check */
+    bool m_whiteInCheck; /**< whether white player is in check */
 }; //class
 
 } //namespace

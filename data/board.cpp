@@ -19,6 +19,9 @@
 */
 
 #include "board.hpp"
+#include <cmath>
+#include "../rules/check.hpp"
+#include "../rules/moves.hpp"
 #include "../util/strings.hpp"
 
 namespace simplechess
@@ -44,7 +47,9 @@ char nextColumn(const char column)
 Board::Board()
 : m_toMove(Colour::white),
   m_enPassant(Field::none),
-  m_castling(Castling())
+  m_castling(Castling()),
+  m_blackInCheck(false),
+  m_whiteInCheck(false)
 {
   for(int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
@@ -73,6 +78,20 @@ const Field& Board::enPassant() const
 const Castling& Board::castling() const
 {
   return m_castling;
+}
+
+bool Board::isInCheck(const Colour colour) const
+{
+  switch(colour)
+  {
+    case Colour::white:
+         return m_whiteInCheck;
+    case Colour::black:
+         return m_blackInCheck;
+    default:
+         //"None" can never be in check.
+         return false;
+  } //switch
 }
 
 bool Board::fromFEN(const std::string& FEN)
@@ -167,7 +186,165 @@ bool Board::fromFEN(const std::string& FEN)
   else
     m_enPassant = Field::none;
 
+  //update info who is in check
+  m_whiteInCheck = simplechess::isInCheck(*this, Colour::white);
+  m_blackInCheck = simplechess::isInCheck(*this, Colour::black);
+
   // Other info from FEN is not parsed yet, so return true for now.
+  return true;
+}
+
+bool Board::move(const Field from, const Field to, PieceType promoteTo)
+{
+  if ((from == Field::none) || (to == Field::none))
+    return false;
+
+  const Piece start = element(from);
+  //Is the correct player moving?
+  if (toMove() != start.colour)
+  {
+    return false;
+  }
+
+  const bool allow = Moves::allowed(*this, from, to);
+  if (!allow)
+    return false;
+  //save for possible later use
+  const Piece dest = element(to);
+
+  // Move is allowed.
+  // -- "copy" piece to destination field
+  m_Fields[to] = start;
+  // -- remove piece in start field
+  m_Fields[from] = Piece(Colour::none, PieceType::none);
+  // holds en passant data for next move
+  Field enPassantData = Field::none;
+  // -- check for special moves of pawn pieces
+  if (start.piece == PieceType::pawn)
+  {
+    // check for promotion
+    // -- sanitize promotion piece
+    Moves::sanitizePromotion(promoteTo);
+    // -- check for promotion of white pawn
+    if ((start.colour == Colour::white) && (row(to) == 8))
+    {
+      m_Fields[to].piece = promoteTo;
+      //console.log('Info: Promoted white pawn on ' + column(to) + row(to) + ' to ' + promoteTo + '.');
+    }
+    // -- check for promotion of black pawn
+    else if ((start.colour == Colour::black) && (row(to) == 1))
+    {
+       m_Fields[to].piece = promoteTo;
+      //console.log('Info: Promoted black pawn on ' + column(to) + row(to) + ' to ' + promoteTo + '.');
+    }
+    // check for en passant capture
+    else if (to == enPassant())
+    {
+      int colDiff = std::abs(column(from) - column(to));
+      int rowDiff = std::abs(row(to) - row(from));
+      if ((colDiff == 1) && (rowDiff == 1))
+      {
+        //remove captured pawn
+        int removeRow = row(to);
+        if (removeRow == 3)
+          removeRow = 4;
+        else
+          removeRow = 5;
+        m_Fields[toField(column(to), removeRow)] = Piece(Colour::none, PieceType::none);
+      } //if
+    } //if en passant field is destination
+    //check whether en passant capture is possible in next move
+    if ((start.colour == Colour::white) && (row(from) == 2) && (row(to) == 4))
+      enPassantData = toField(row(from), 3);
+    else if ((start.colour == Colour::black) && (row(from) == 7) && (row(to) == 5))
+      enPassantData = toField(row(from), 6);
+  }//if pawn
+  // -- check for castling move
+  if (start.piece == PieceType::king)
+  {
+    if ((start.colour == Colour::white) && (from == Field::e1))
+    {
+      if ((to == Field::c1) && (dest.piece == PieceType::none))
+      {
+        //white queenside castling
+        // King was already moved, we just have to move the rook here.
+        m_Fields[Field::a1] = Piece(Colour::none, PieceType::none);
+        m_Fields[Field::d1] = Piece(Colour::white, PieceType::rook);
+      }
+      if ((to == Field::g1) && (dest.piece == PieceType::none))
+      {
+        //white kingside castling
+        // King was already moved, we just have to move the rook here.
+        m_Fields[Field::h1] = Piece(Colour::none, PieceType::none);
+        m_Fields[Field::f1] = Piece(Colour::white, PieceType::rook);
+      }
+    }//if white king at initial position
+    else if ((start.colour == Colour::black) && (from == Field::e8))
+    {
+      if ((to == Field::c8) && (dest.piece == PieceType::none))
+      {
+        //black queenside castling
+        // King was already moved, we just have to move the rook here.
+        m_Fields[Field::a8] = Piece(Colour::none, PieceType::none);
+        m_Fields[Field::d8] = Piece(Colour::black, PieceType::rook);
+      }
+      if ((to == Field::g8) && (dest.piece == PieceType::none))
+      {
+        //black kingside castling
+        // King was already moved, we just have to move the rook here.
+        m_Fields[Field::h8] = Piece(Colour::none, PieceType::none);
+        m_Fields[Field::f8] = Piece(Colour::black, PieceType::rook);
+      }
+    }//if black king at initial position
+  } //if king may be castling
+  // -- castling update
+  if (start.piece == PieceType::king)
+  {
+    if (start.colour == Colour::black)
+    {
+      m_castling.black_kingside = false;
+      m_castling.black_queenside = false;
+    }
+    else
+    {
+      m_castling.white_kingside = false;
+      m_castling.white_queenside = false;
+    }
+  } //if king
+  else if (start.piece == PieceType::rook)
+  {
+    if (start.colour == Colour::black)
+    {
+      if (from == Field::a8)
+        m_castling.black_queenside = false;
+      else if (from == Field::h8)
+        m_castling.black_kingside = false;
+    } //if black rook moved
+    else if (start.colour == Colour::white)
+    {
+      if (from == Field::a1)
+        m_castling.white_queenside = false;
+      else if (from == Field::h1)
+        m_castling.white_kingside = false;
+    } //if white rook moved
+  } //if rook
+  // -- update en passant data
+  m_enPassant = enPassantData;
+  // -- determine whether anyone is in check
+  const bool whiteCheck = simplechess::isInCheck(*this, Colour::white);
+  /* if (whiteCheck && m_whiteInCheck)
+    Boards.update({_id: board._id}, {$set: {winner: 'black'}}); */
+  m_whiteInCheck = whiteCheck;
+  const bool blackCheck = simplechess::isInCheck(*this, Colour::black);
+  /* if (blackCheck && m_blackInCheck)
+    Boards.update({_id: board._id}, {$set: {winner: 'white'}}); */
+  m_blackInCheck = blackCheck;
+  //TODO: check for checkmate
+  // -- update colour that is to move
+  if (m_toMove == Colour::white)
+    m_toMove = Colour::black;
+  else
+    m_toMove = Colour::white;
   return true;
 }
 
