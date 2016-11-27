@@ -39,6 +39,8 @@
 		<Unit filename="../data/castling.hpp" />
 		<Unit filename="../data/field.cpp" />
 		<Unit filename="../data/field.hpp" />
+		<Unit filename="../data/forsyth-edwards-notation.cpp" />
+		<Unit filename="../data/forsyth-edwards-notation.hpp" />
 		<Unit filename="../data/piece.cpp" />
 		<Unit filename="../data/piece.hpp" />
 		<Unit filename="../rules/check.cpp" />

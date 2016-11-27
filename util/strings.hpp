@@ -32,6 +32,8 @@ namespace util
 
 std::vector<std::string> split(std::string line, const char separator = ' ');
 
+std::string intToString(const int value);
+
 } //namespace
 
 } //namespace

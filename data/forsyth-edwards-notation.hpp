@@ -18,44 +18,28 @@
  -------------------------------------------------------------------------------
 */
 
-#include "strings.hpp"
-#include <sstream>
+#ifndef SIMPLE_CHESS_FEN_HPP
+#define SIMPLE_CHESS_FEN_HPP
+
+#include "board.hpp"
 
 namespace simplechess
 {
 
-namespace util
+class ForsythEdwardsNotation
 {
+  public:
+    /** \brief returns the Forsyth-Edwards-Notation for a board
+     *
+     * \param  board   the chess board
+     * \return string that contains the FEN of the board
+     */
+    static std::string fromBoard(const Board & board);
+}; //class
 
-std::vector<std::string> split(std::string line, const char separator)
-{
-  std::vector<std::string> result;
-  if (line.empty())
-  {
-    result.push_back("");
-    return result;
-  }
-  std::string::size_type pos = line.find(separator);
-  while (pos != std::string::npos)
-  {
-    result.push_back(line.substr(0, pos));
-    line = line.substr(pos+1);
-    pos = line.find(separator);
-  }//while
-  if (!line.empty())
-  {
-    result.push_back(line);
-  }
-  return result;
-}
-
-std::string intToString(const int value)
-{
-  std::ostringstream s;
-  s << value;
-  return s.str();
-}
+//type alias
+typedef ForsythEdwardsNotation FEN;
 
 } //namespace
 
-} //namespace
+#endif // SIMPLE_CHESS_FEN_HPP
