@@ -255,9 +255,9 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo)
     } //if en passant field is destination
     //check whether en passant capture is possible in next move
     if ((start.colour == Colour::white) && (row(from) == 2) && (row(to) == 4))
-      enPassantData = toField(row(from), 3);
+      enPassantData = toField(column(from), 3);
     else if ((start.colour == Colour::black) && (row(from) == 7) && (row(to) == 5))
-      enPassantData = toField(row(from), 6);
+      enPassantData = toField(column(from), 6);
   }//if pawn
   // -- check for castling move
   if (start.piece == PieceType::king)

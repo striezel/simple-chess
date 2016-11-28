@@ -47,6 +47,8 @@
 		<Unit filename="../rules/check.hpp" />
 		<Unit filename="../rules/moves.cpp" />
 		<Unit filename="../rules/moves.hpp" />
+		<Unit filename="../ui/Console.cpp" />
+		<Unit filename="../ui/Console.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
 		<Unit filename="main.cpp" />
