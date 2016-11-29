@@ -47,6 +47,17 @@ bool isUnderAttack(const Board& board, const Colour by, const Field field);
  */
 bool isInCheck(const Board& board, const Colour colour);
 
+
+/** \brief determines whether or not a player/colour is checkmate
+ *
+ * \param board   the current board
+ * \param colour  the colour to check
+ * \return Returns true, if the given player is checkmate.
+ *         Returns false otherwise.
+ */
+
+bool isCheckMate(const Board& board, const Colour colour);
+
 } //namespace
 
 #endif // SIMPLE_CHESS_CHECK_HPP

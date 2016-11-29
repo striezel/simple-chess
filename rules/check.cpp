@@ -65,4 +65,38 @@ bool isInCheck(const Board& board, const Colour colour)
   return false;
 }
 
+bool isCheckMate(const Board& board, const Colour colour)
+{
+  //Player can only be checkmated, if he/she is in check, too.
+  if (!board.isInCheck(colour))
+    return false;
+  //If player is not the one to move, (s)he shouldn't be in checkmate, because
+  // checkmate can only occur after a move made by the opponent.
+  if (board.toMove() != colour)
+    return false;
+
+  //The basic idea here is to check for all possible moves and check whether one
+  // of the moves leads to a position where the player is not in check any more.
+  for(int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
+  {
+    const Piece& piece = board.element(static_cast<Field>(i));
+    if (piece.colour == colour)
+    {
+      for(int j = static_cast<int>(Field::a1); j <= static_cast<int>(Field::h8); ++j)
+      {
+        Board newBoard = board;
+        if (newBoard.move(static_cast<Field>(i), static_cast<Field>(j), PieceType::queen))
+        {
+          //Move was possible. Are we not in check any more?
+          // If so, then this is no checkmate.
+          if (!newBoard.isInCheck(colour))
+            return false;
+        } //if
+      } //for all fields (j)
+    } //if colour
+  } //for all fields (i)
+  //No move out of check found. Player is checkmate.
+  return true;
+}
+
 } //namespace
