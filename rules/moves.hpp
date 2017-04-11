@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016  Dirk Stolle
+    Copyright (C) 2016, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,12 +26,26 @@
 
 namespace simplechess
 {
-
+/** class to check conformity of moves to rules */
 class Moves
 {
   public:
+    /** \brief checks whether a move is allowed
+     *
+     * \param board  the chess board
+     * \param from   field where the move begins
+     * \param to     field where the move ends (destination)
+     * \return Returns true, if the move is allowed. Returns false otherwise.
+     */
     static bool allowed(const Board& board, const Field from, const Field to);
 
+
+    /** \brief sanitizes piece selected promotion piece type
+     *
+     * \param promoteTo   the type of piece a pawn should get promoted to
+     * \remarks The value of promoteTo will be changed to an allowed value, if
+     *          it does not conform to promotion rules.
+     */
     static void sanitizePromotion(PieceType& promoteTo);
 }; //class
 
