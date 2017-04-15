@@ -1,0 +1,24 @@
+language: cpp
+compiler:
+  - gcc
+sudo: false
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.9
+    - gcc-4.9
+    - cmake
+    - libboost-test-dev
+before_install:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+script:
+  - ./ci/cpplint.sh
+  - mkdir ./build
+  - cd ./build
+  - cmake ../
+  - make -j2
+  - ./tests/boost/simple_chess_tests
+notifications:
+  email: false
