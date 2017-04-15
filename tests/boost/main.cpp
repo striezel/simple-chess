@@ -23,7 +23,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include "../../data/board.hpp"
-
+#include "../../data/forsyth-edwards-notation.hpp"
 
 BOOST_AUTO_TEST_CASE(defaultStartPoistion)
 {
@@ -122,4 +122,16 @@ BOOST_AUTO_TEST_CASE(defaultStartPoistion)
       simplechess::Piece(simplechess::Colour::black, simplechess::PieceType::rook)
       == board.element(simplechess::Field::h8)
   );
+}
+
+BOOST_AUTO_TEST_CASE(fromBoardToFEN)
+{
+  const std::string fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
+
+  simplechess::Board board;
+  BOOST_REQUIRE(board.fromFEN(fenString));
+
+  std::string fen = simplechess::ForsythEdwardsNotation::fromBoard(board);
+
+  BOOST_REQUIRE_EQUAL(fen, fenString);
 }

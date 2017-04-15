@@ -172,16 +172,23 @@ bool Board::fromFEN(const std::string& FEN)
   //parse info about en passant move
   if (parts.size() > 3)
   {
-    try
+    if (parts[3] == "-")
     {
-      m_enPassant = toField(parts[3][0], parts[3][0] - '1' + 1);
-      if ((row(m_enPassant) != 3) && (row(m_enPassant) != 6))
+      m_enPassant = Field::none;
+    }
+    else
+    {
+      try
+      {
+        m_enPassant = toField(parts[3][0], parts[3][0] - '1' + 1);
+        if ((row(m_enPassant) != 3) && (row(m_enPassant) != 6))
+          return false;
+      }
+      catch(...)
+      {
         return false;
-    }
-    catch(...)
-    {
-      return false;
-    }
+      }
+    } //else
   } //if
   else
     m_enPassant = Field::none;
