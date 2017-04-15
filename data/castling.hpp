@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016  Dirk Stolle
+    Copyright (C) 2016, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,10 +31,10 @@ namespace simplechess
  */
 struct Castling
 {
-  bool white_kingside; /**< whether kingside castlig for white is still possible */
-  bool white_queenside; /**< whether queenside castlig for white is still possible */
-  bool black_kingside; /**< whether kingside castlig for black is still possible */
-  bool black_queenside; /**< whether queenside castlig for black is still possible */
+  bool white_kingside; /**< whether kingside castling for white is still possible */
+  bool white_queenside; /**< whether queenside castling for white is still possible */
+  bool black_kingside; /**< whether kingside castling for black is still possible */
+  bool black_queenside; /**< whether queenside castling for black is still possible */
 
   /** \brief default constructor */
   Castling();
@@ -46,7 +46,7 @@ struct Castling
    */
   std::string toFEN() const;
 
-  /** \brief intializes the struct from a Forsyth-Edwards notation of the castling information */
+  /** \brief initializes the struct from a Forsyth-Edwards notation of the castling information */
   void fromFEN(const std::string& FEN);
 }; //struct
 
