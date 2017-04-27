@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016  Dirk Stolle
+    Copyright (C) 2016, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -167,7 +167,31 @@ bool Board::fromFEN(const std::string& FEN)
     m_castling.fromFEN(parts[2]);
   }
   else
+  {
     m_castling = Castling();
+    //guess as good as possible from current position
+    if (element(Field::e1) == Piece(Colour::white, PieceType::king))
+    {
+      m_castling.white_kingside = element(Field::h1) == Piece(Colour::white, PieceType::rook);
+      m_castling.white_queenside = element(Field::a1) == Piece(Colour::white, PieceType::rook);
+    }
+    else
+    {
+      m_castling.white_kingside = false;
+      m_castling.white_queenside = false;
+    }
+    if (element(Field::e8) == Piece(Colour::black, PieceType::king))
+    {
+      m_castling.black_kingside = element(Field::h8) == Piece(Colour::black, PieceType::rook);
+      m_castling.black_queenside = element(Field::a8) == Piece(Colour::black, PieceType::rook);
+    }
+    else
+    {
+      m_castling.black_kingside = false;
+      m_castling.black_queenside = false;
+    }
+  } //castling
+
 
   //parse info about en passant move
   if (parts.size() > 3)
