@@ -41,8 +41,12 @@
 		<Unit filename="../data/field.hpp" />
 		<Unit filename="../data/forsyth-edwards-notation.cpp" />
 		<Unit filename="../data/forsyth-edwards-notation.hpp" />
+		<Unit filename="../data/halfmove.cpp" />
+		<Unit filename="../data/halfmove.hpp" />
 		<Unit filename="../data/piece.cpp" />
 		<Unit filename="../data/piece.hpp" />
+		<Unit filename="../data/portable-game-notation.hpp" />
+		<Unit filename="../data/result.hpp" />
 		<Unit filename="../rules/check.cpp" />
 		<Unit filename="../rules/check.hpp" />
 		<Unit filename="../rules/moves.cpp" />
