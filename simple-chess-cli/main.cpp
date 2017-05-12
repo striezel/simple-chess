@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016  Dirk Stolle
+    Copyright (C) 2016, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,39 +22,70 @@
 #include "../data/board.hpp"
 #include "../ui/Console.hpp"
 
-int main()
+
+/** \brief prints a board to the standard output
+ *
+ * \param board   the chess board
+ */
+void showBoard(const simplechess::Board& board)
+{
+  simplechess::ui::Console::showBoard(board);
+  std::cout << "\n";
+  if (board.toMove() == simplechess::Colour::white)
+    std::cout << "White is to move.\n";
+  else
+    std::cout << "Black is to move.\n";
+}
+
+
+/** \brief gets a field from the standard input
+ *
+ * \return Returns the field that was entered by the user.
+ */
+simplechess::Field getField()
+{
+  std::string input;
+  std::cin >> input;
+  if (input.size() < 2)
+    input = "a1";
+  char c = input[0];
+  int r = input[1] - '1' + 1;
+  return simplechess::toField(c, r);
+}
+
+
+int main(int argc, char** argv)
 {
   simplechess::Board board;
-  if (!board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+  if ((argc > 1) && (argv != nullptr))
   {
-    std::cerr << "Could not initialize board from FEN string!\n";
-    return 1;
-  }
+    const std::string fenString = std::string(argv[1]);
+    if (!board.fromFEN(fenString))
+    {
+      std::cerr << "Could not initialize board from FEN string \"" << fenString
+                << "\"!\n";
+      return 1;
+    }
+  } //if one argument is given
+  else
+  {
+    //use default start position
+    if (!board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+    {
+      std::cerr << "Could not initialize board from FEN string!\n";
+      return 1;
+    }
+  } //else
 
+  //potentially endless game loop
   while (true)
   {
-    simplechess::ui::Console::showBoard(board);
-    std::cout << "\n";
-    if (board.toMove() == simplechess::Colour::white)
-      std::cout << "White is to move.\n";
-    else
-      std::cout << "Black is to move.\n";
+    showBoard(board);
     std::cout << "\n"
               << "Your move starts from field: ";
-    std::string input;
-    std::cin >> input;
-    if (input.size() < 2)
-      input = "a1";
-    char c = input[0];
-    int r = input[1] - '1' + 1;
-    const simplechess::Field start = simplechess::toField(c, r);
+    const simplechess::Field start = getField();
     std::cout << "Your move goes to field: ";
-    std::cin >> input;
-    if (input.size() < 2)
-      input = "a1";
-    c = input[0];
-    r = input[1] - '1' + 1;
-    const simplechess::Field destination = simplechess::toField(c, r);
+    const simplechess::Field destination = getField();
     if (!board.move(start, destination, simplechess::PieceType::queen))
     {
       std::cout << "The move is not allowed!\n";
