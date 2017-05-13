@@ -126,6 +126,18 @@ bool Tokenizer::fromString(const std::string& tokenString, std::vector<Token>& t
       tokens.push_back(Token(TokenType::HalfMove, "..."));
       workString.erase(0, 3);
     }
+    //half move: kingside castling
+    else if (workString.substr(0, 3) == "0-0")
+    {
+      tokens.push_back(Token(TokenType::HalfMove, "0-0"));
+      workString.erase(0, 3);
+    }
+    //half move: queenside castling
+    else if (workString.substr(0, 5) == "0-0-0")
+    {
+      tokens.push_back(Token(TokenType::HalfMove, "0-0-0"));
+      workString.erase(0, 5);
+    }
     //identifier
     else if (!nextCouldBeHalfMove && std::isalpha(workString[0]))
     {

@@ -9,6 +9,8 @@ set(simple_chess_tests_sources
     ../../data/Field.cpp
     ../../data/ForsythEdwardsNotation.cpp
     ../../data/Piece.cpp
+    ../../pgn/Token.cpp
+    ../../pgn/Tokenizer.cpp
     ../../rules/check.cpp
     ../../rules/Moves.cpp
     ../../util/strings.cpp

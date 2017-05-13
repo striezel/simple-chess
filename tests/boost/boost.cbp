@@ -46,10 +46,15 @@
 		<Unit filename="../../data/ForsythEdwardsNotation.hpp" />
 		<Unit filename="../../data/Piece.cpp" />
 		<Unit filename="../../data/Piece.hpp" />
-		<Unit filename="../../rules/check.cpp" />
-		<Unit filename="../../rules/check.hpp" />
+		<Unit filename="../../pgn/Token.cpp" />
+		<Unit filename="../../pgn/Token.hpp" />
+		<Unit filename="../../pgn/TokenType.hpp" />
+		<Unit filename="../../pgn/Tokenizer.cpp" />
+		<Unit filename="../../pgn/Tokenizer.hpp" />
 		<Unit filename="../../rules/Moves.cpp" />
 		<Unit filename="../../rules/Moves.hpp" />
+		<Unit filename="../../rules/check.cpp" />
+		<Unit filename="../../rules/check.hpp" />
 		<Unit filename="../../util/strings.cpp" />
 		<Unit filename="../../util/strings.hpp" />
 		<Unit filename="main.cpp" />
