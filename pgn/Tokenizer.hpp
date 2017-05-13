@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,43 +18,44 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_CHESS_UTIL_STRINGS_HPP
-#define SIMPLE_CHESS_UTIL_STRINGS_HPP
+#ifndef SIMPLECHESS_PGN_TOKENIZER_HPP
+#define SIMPLECHESS_PGN_TOKENIZER_HPP
 
 #include <string>
 #include <vector>
+#include "Token.hpp"
 
 namespace simplechess
 {
 
-namespace util
+namespace pgn
 {
 
-/** \brief splits a string into several strings, using the given separator
- *
- * \param line    the string that shall be split
- * \param separator   character that works as separator for parts / substrings
- * \return Returns a vector of strings, containing the split strings.
- */
-std::vector<std::string> split(std::string line, const char separator = ' ');
+/** class that generates a vector of tokens from an input file etc. */
+class Tokenizer
+{
+  public:
+      /** \brief gets tokens from a string
+       *
+       * \param tokenString  the string
+       * * \param tokens    the tokens in the string
+       * \return Returns a vector of tokens.
+       */
+    static bool fromString(const std::string& tokenString, std::vector<Token>& tokens);
 
 
-/** \brief gets the string representation of an integer value
- *
- * \param value   integer value
- * \return Returns a string containing the given integer.
- */
-std::string intToString(const int value);
-
-
-/* removes all leading whitespace characters from the given string
-   parameters:
-       str1 - the affected string
-*/
-void trimLeft(std::string& str1);
-
-} //namespace
+    /** \brief gets tokens from a file
+     *
+     * \param fileName  name of the file
+     * \param tokens    the tokens in the file
+     * \return Returns true in case of success.
+     * Returns false, if an error occurred.
+     */
+    static bool fromFile(const std::string& fileName, std::vector<Token>& tokens);
+}; //class
 
 } //namespace
 
-#endif // SIMPLE_CHESS_UTIL_STRINGS_HPP
+} //namespace
+
+#endif // SIMPLECHESS_PGN_TOKENIZER_HPP

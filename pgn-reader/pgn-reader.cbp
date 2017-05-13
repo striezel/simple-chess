@@ -39,9 +39,11 @@
 		<Unit filename="../data/Piece.hpp" />
 		<Unit filename="../data/PortableGameNotation.cpp" />
 		<Unit filename="../data/PortableGameNotation.hpp" />
-		<Unit filename="../pgn/TokenType.hpp" />
 		<Unit filename="../pgn/Token.cpp" />
 		<Unit filename="../pgn/Token.hpp" />
+		<Unit filename="../pgn/TokenType.hpp" />
+		<Unit filename="../pgn/Tokenizer.cpp" />
+		<Unit filename="../pgn/Tokenizer.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
 		<Unit filename="main.cpp" />

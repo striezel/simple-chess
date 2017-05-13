@@ -31,13 +31,21 @@ enum class TokenType
 {
   none, /**< no token */
 
+  invalid, /**< syntactically invalid text */
+
   LeftBracket, /**< left square bracket "[" */
 
   RightBracket, /**< right square bracket "]" */
 
   Identifier, /**< an identifier for tags */
 
-  String /**< string literal */
+  String, /**< string literal */
+
+  MoveNumber, /**< number of the current move */
+
+  HalfMove, /**< half move */
+
+  GameEnd /**< game end / result */
 };
 
 } //namespace
