@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include "forsyth-edwards-notation.hpp"
+#include "ForsythEdwardsNotation.hpp"
 #include "../util/strings.hpp"
 
 namespace simplechess

@@ -21,7 +21,7 @@
 #ifndef SIMPLE_CHESS_CONSOLE_HPP
 #define SIMPLE_CHESS_CONSOLE_HPP
 
-#include "../data/board.hpp"
+#include "../data/Board.hpp"
 
 namespace simplechess
 {

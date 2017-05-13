@@ -22,9 +22,9 @@
 #define SIMPLE_CHESS_BOARD_HPP
 
 #include <map>
-#include "castling.hpp"
-#include "field.hpp"
-#include "piece.hpp"
+#include "Castling.hpp"
+#include "Field.hpp"
+#include "Piece.hpp"
 
 namespace simplechess
 {

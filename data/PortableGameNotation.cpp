@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include "portable-game-notation.hpp"
+#include "PortableGameNotation.hpp"
 #include <stdexcept>
 #include "../util/strings.hpp"
 

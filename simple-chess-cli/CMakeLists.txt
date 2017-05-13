@@ -4,13 +4,13 @@ cmake_minimum_required (VERSION 2.8)
 project(simple_chess_cli)
 
 set(simple_chess_cli_sources
-    ../data/board.cpp
-    ../data/castling.cpp
-    ../data/field.cpp
-    ../data/forsyth-edwards-notation.cpp
-    ../data/piece.cpp
+    ../data/Board.cpp
+    ../data/Castling.cpp
+    ../data/Field.cpp
+    ../data/ForsythEdwardsNotation.cpp
+    ../data/Piece.cpp
     ../rules/check.cpp
-    ../rules/moves.cpp
+    ../rules/Moves.cpp
     ../ui/Console.cpp
     ../util/strings.cpp
     main.cpp)

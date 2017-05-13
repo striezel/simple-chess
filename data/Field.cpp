@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include "field.hpp"
+#include "Field.hpp"
 #include <stdexcept>
 
 namespace simplechess

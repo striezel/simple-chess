@@ -18,26 +18,41 @@
  -------------------------------------------------------------------------------
 */
 
-#include "piece.hpp"
+#include "Castling.hpp"
 
 namespace simplechess
 {
 
-Piece::Piece()
-: colour(Colour::none),
-  piece(PieceType::none)
+Castling::Castling()
+: white_kingside(true),
+  white_queenside(true),
+  black_kingside(true),
+  black_queenside(true)
 {
 }
 
-Piece::Piece(Colour c, PieceType pt)
-: colour(c),
-  piece(pt)
+std::string Castling::toFEN() const
 {
+  std::string result;
+  if (white_kingside)
+    result.append("K");
+  if (white_queenside)
+    result.append("Q");
+  if (black_kingside)
+    result.append("k");
+  if (black_queenside)
+    result.append("q");
+  if (result.empty())
+    result = "-";
+  return result;
 }
 
-bool Piece::operator==(const Piece& other) const
+void Castling::fromFEN(const std::string& FEN)
 {
-  return ((colour == other.colour) && (piece == other.piece));
+  white_kingside = (FEN.find('K') != std::string::npos);
+  white_queenside = (FEN.find('Q') != std::string::npos);
+  black_kingside = (FEN.find('k') != std::string::npos);
+  black_queenside = (FEN.find('q') != std::string::npos);
 }
 
 } //namespace

@@ -21,8 +21,8 @@
 #ifndef SIMPLE_CHESS_CHECK_HPP
 #define SIMPLE_CHESS_CHECK_HPP
 
-#include "../data/board.hpp"
-#include "../data/piece.hpp"
+#include "../data/Board.hpp"
+#include "../data/Piece.hpp"
 
 namespace simplechess
 {

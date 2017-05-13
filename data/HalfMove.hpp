@@ -21,8 +21,8 @@
 #ifndef SIMPLECHESS_HALFMOVE_HPP
 #define SIMPLECHESS_HALFMOVE_HPP
 
-#include "field.hpp"
-#include "piece.hpp"
+#include "Field.hpp"
+#include "Piece.hpp"
 
 namespace simplechess
 {

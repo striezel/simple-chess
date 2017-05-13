@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,31 +18,53 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_CHESS_PIECE_HPP
-#define SIMPLE_CHESS_PIECE_HPP
+#include "HalfMove.hpp"
 
 namespace simplechess
 {
-   //enumeration type for players / colours
-   enum class Colour { none, white, black };
 
-   //enumeration type for types of pieces
-   enum class PieceType { none, king, queen, bishop, knight, rook, pawn};
+HalfMove::HalfMove()
+: mPiece(PieceType::none),
+  mOrigin(Field::none),
+  captures(false),
+  mDestination(Field::none)
+{
+}
 
-   struct Piece
-   {
-     Colour colour;
-     PieceType piece;
+HalfMove::HalfMove(PieceType pt, Field destination, bool capture)
+: mPiece(pt),
+  mOrigin(Field::none),
+  captures(capture),
+  mDestination(destination)
+{
+}
 
-     /* default constructor */
-     Piece();
+HalfMove::HalfMove(PieceType pt, Field origin, Field destination, bool capture)
+: mPiece(pt),
+  mOrigin(origin),
+  captures(capture),
+  mDestination(destination)
+{
+}
 
-     /* parametrized constructor */
-     Piece(Colour c, PieceType pt);
+PieceType HalfMove::piece() const
+{
+  return mPiece;
+}
 
-     /* equality operator for Piece structures */
-     bool operator==(const Piece& other) const;
-   }; //struct
+Field HalfMove::origin() const
+{
+  return mOrigin;
+}
+
+Field HalfMove::destination() const
+{
+  return mDestination;
+}
+
+bool HalfMove::capture() const
+{
+  return captures;
+}
+
 } //namespace
-
-#endif // SIMPLE_CHESS_PIECE_HPP

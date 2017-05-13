@@ -18,53 +18,27 @@
  -------------------------------------------------------------------------------
 */
 
-#include "halfmove.hpp"
+#include "Token.hpp"
 
 namespace simplechess
 {
 
-HalfMove::HalfMove()
-: mPiece(PieceType::none),
-  mOrigin(Field::none),
-  captures(false),
-  mDestination(Field::none)
+namespace pgn
+{
+
+Token::Token()
+: type(TokenType::none),
+  text(std::string())
 {
 }
 
-HalfMove::HalfMove(PieceType pt, Field destination, bool capture)
-: mPiece(pt),
-  mOrigin(Field::none),
-  captures(capture),
-  mDestination(destination)
+
+Token::Token(TokenType _type, const std::string& content)
+: type(_type),
+  text(content)
 {
 }
 
-HalfMove::HalfMove(PieceType pt, Field origin, Field destination, bool capture)
-: mPiece(pt),
-  mOrigin(origin),
-  captures(capture),
-  mDestination(destination)
-{
-}
-
-PieceType HalfMove::piece() const
-{
-  return mPiece;
-}
-
-Field HalfMove::origin() const
-{
-  return mOrigin;
-}
-
-Field HalfMove::destination() const
-{
-  return mDestination;
-}
-
-bool HalfMove::capture() const
-{
-  return captures;
-}
+} //namespace
 
 } //namespace

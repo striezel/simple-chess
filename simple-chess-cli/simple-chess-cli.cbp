@@ -33,24 +33,20 @@
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="../data/board.cpp" />
-		<Unit filename="../data/board.hpp" />
-		<Unit filename="../data/castling.cpp" />
-		<Unit filename="../data/castling.hpp" />
-		<Unit filename="../data/field.cpp" />
-		<Unit filename="../data/field.hpp" />
-		<Unit filename="../data/forsyth-edwards-notation.cpp" />
-		<Unit filename="../data/forsyth-edwards-notation.hpp" />
-		<Unit filename="../data/halfmove.cpp" />
-		<Unit filename="../data/halfmove.hpp" />
-		<Unit filename="../data/piece.cpp" />
-		<Unit filename="../data/piece.hpp" />
-		<Unit filename="../data/portable-game-notation.hpp" />
-		<Unit filename="../data/result.hpp" />
+		<Unit filename="../data/Board.cpp" />
+		<Unit filename="../data/Board.hpp" />
+		<Unit filename="../data/Castling.cpp" />
+		<Unit filename="../data/Castling.hpp" />
+		<Unit filename="../data/Field.cpp" />
+		<Unit filename="../data/Field.hpp" />
+		<Unit filename="../data/ForsythEdwardsNotation.cpp" />
+		<Unit filename="../data/ForsythEdwardsNotation.hpp" />
+		<Unit filename="../data/Piece.cpp" />
+		<Unit filename="../data/Piece.hpp" />
 		<Unit filename="../rules/check.cpp" />
 		<Unit filename="../rules/check.hpp" />
-		<Unit filename="../rules/moves.cpp" />
-		<Unit filename="../rules/moves.hpp" />
+		<Unit filename="../rules/Moves.cpp" />
+		<Unit filename="../rules/Moves.hpp" />
 		<Unit filename="../ui/Console.cpp" />
 		<Unit filename="../ui/Console.hpp" />
 		<Unit filename="../util/strings.cpp" />

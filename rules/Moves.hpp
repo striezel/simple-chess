@@ -21,8 +21,8 @@
 #ifndef SIMPLE_CHESS_MOVES_HPP
 #define SIMPLE_CHESS_MOVES_HPP
 
-#include "../data/board.hpp"
-#include "../data/field.hpp"
+#include "../data/Board.hpp"
+#include "../data/Field.hpp"
 
 namespace simplechess
 {

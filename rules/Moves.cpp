@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include "moves.hpp"
+#include "Moves.hpp"
 #include <cmath>
 
 namespace simplechess

@@ -18,41 +18,28 @@
  -------------------------------------------------------------------------------
 */
 
-#include "castling.hpp"
+#ifndef SIMPLE_CHESS_FEN_HPP
+#define SIMPLE_CHESS_FEN_HPP
+
+#include "Board.hpp"
 
 namespace simplechess
 {
 
-Castling::Castling()
-: white_kingside(true),
-  white_queenside(true),
-  black_kingside(true),
-  black_queenside(true)
+class ForsythEdwardsNotation
 {
-}
+  public:
+    /** \brief returns the Forsyth-Edwards-Notation for a board
+     *
+     * \param  board   the chess board
+     * \return string that contains the FEN of the board
+     */
+    static std::string fromBoard(const Board & board);
+}; //class
 
-std::string Castling::toFEN() const
-{
-  std::string result;
-  if (white_kingside)
-    result.append("K");
-  if (white_queenside)
-    result.append("Q");
-  if (black_kingside)
-    result.append("k");
-  if (black_queenside)
-    result.append("q");
-  if (result.empty())
-    result = "-";
-  return result;
-}
-
-void Castling::fromFEN(const std::string& FEN)
-{
-  white_kingside = (FEN.find('K') != std::string::npos);
-  white_queenside = (FEN.find('Q') != std::string::npos);
-  black_kingside = (FEN.find('k') != std::string::npos);
-  black_queenside = (FEN.find('q') != std::string::npos);
-}
+//type alias
+typedef ForsythEdwardsNotation FEN;
 
 } //namespace
+
+#endif // SIMPLE_CHESS_FEN_HPP

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2016, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,27 +18,33 @@
  -------------------------------------------------------------------------------
 */
 
-#include "token.hpp"
+#ifndef SIMPLE_CHESS_PIECE_HPP
+#define SIMPLE_CHESS_PIECE_HPP
+
+#include <iostream>
 
 namespace simplechess
 {
+   //enumeration type for players / colours
+   enum class Colour { none, white, black };
 
-namespace pgn
-{
+   //enumeration type for types of pieces
+   enum class PieceType { none, king, queen, bishop, knight, rook, pawn};
 
-Token::Token()
-: type(TokenType::none),
-  text(std::string())
-{
-}
+   struct Piece
+   {
+     Colour colour;
+     PieceType piece;
 
+     /* default constructor */
+     Piece();
 
-Token::Token(TokenType _type, const std::string& content)
-: type(_type),
-  text(content)
-{
-}
+     /* parametrized constructor */
+     Piece(Colour c, PieceType pt);
 
+     /* equality operator for Piece structures */
+     bool operator==(const Piece& other) const;
+   }; //struct
 } //namespace
 
-} //namespace
+#endif // SIMPLE_CHESS_PIECE_HPP

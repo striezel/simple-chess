@@ -19,7 +19,7 @@
 */
 
 #include "check.hpp"
-#include "moves.hpp"
+#include "Moves.hpp"
 
 namespace simplechess
 {

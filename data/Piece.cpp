@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016  Dirk Stolle
+    Copyright (C) 2016, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,28 +18,26 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_CHESS_FEN_HPP
-#define SIMPLE_CHESS_FEN_HPP
-
-#include "board.hpp"
+#include "Piece.hpp"
 
 namespace simplechess
 {
 
-class ForsythEdwardsNotation
+Piece::Piece()
+: colour(Colour::none),
+  piece(PieceType::none)
 {
-  public:
-    /** \brief returns the Forsyth-Edwards-Notation for a board
-     *
-     * \param  board   the chess board
-     * \return string that contains the FEN of the board
-     */
-    static std::string fromBoard(const Board & board);
-}; //class
+}
 
-//type alias
-typedef ForsythEdwardsNotation FEN;
+Piece::Piece(Colour c, PieceType pt)
+: colour(c),
+  piece(pt)
+{
+}
+
+bool Piece::operator==(const Piece& other) const
+{
+  return ((colour == other.colour) && (piece == other.piece));
+}
 
 } //namespace
-
-#endif // SIMPLE_CHESS_FEN_HPP

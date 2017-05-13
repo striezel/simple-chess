@@ -24,8 +24,8 @@
 #include <map>
 #include <string>
 #include <utility>
-#include "halfmove.hpp"
-#include "result.hpp"
+#include "HalfMove.hpp"
+#include "Result.hpp"
 
 namespace simplechess
 {

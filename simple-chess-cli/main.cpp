@@ -19,7 +19,7 @@
 */
 
 #include <iostream>
-#include "../data/board.hpp"
+#include "../data/Board.hpp"
 #include "../ui/Console.hpp"
 
 

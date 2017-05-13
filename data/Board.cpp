@@ -18,10 +18,10 @@
  -------------------------------------------------------------------------------
 */
 
-#include "board.hpp"
+#include "Board.hpp"
 #include <cmath>
 #include "../rules/check.hpp"
-#include "../rules/moves.hpp"
+#include "../rules/Moves.hpp"
 #include "../util/strings.hpp"
 
 namespace simplechess

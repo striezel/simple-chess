@@ -22,8 +22,8 @@
 #define BOOST_TEST_MODULE forsythEdwardsNotation
 #include <boost/test/unit_test.hpp>
 
-#include "../../data/board.hpp"
-#include "../../data/forsyth-edwards-notation.hpp"
+#include "../../data/Board.hpp"
+#include "../../data/ForsythEdwardsNotation.hpp"
 
 BOOST_AUTO_TEST_CASE(defaultStartPoistion)
 {
