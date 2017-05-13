@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,31 +18,10 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_CHESS_PIECE_HPP
-#define SIMPLE_CHESS_PIECE_HPP
+#include <iostream>
 
-namespace simplechess
+int main()
 {
-   //enumeration type for players / colours
-   enum class Colour { none, white, black };
-
-   //enumeration type for types of pieces
-   enum class PieceType { none, king, queen, bishop, knight, rook, pawn};
-
-   struct Piece
-   {
-     Colour colour;
-     PieceType piece;
-
-     /* default constructor */
-     Piece();
-
-     /* parametrized constructor */
-     Piece(Colour c, PieceType pt);
-
-     /* equality operator for Piece structures */
-     bool operator==(const Piece& other) const;
-   }; //struct
-} //namespace
-
-#endif // SIMPLE_CHESS_PIECE_HPP
+  std::cout << "Hello world!" << std::endl;
+  return 0;
+}

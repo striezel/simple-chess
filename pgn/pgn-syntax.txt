@@ -1,0 +1,17 @@
+Basic syntax description for Portable Game Notation:
+(EBNF syntax is not entirely correct, but it should help to get things going.)
+
+PGN := TagPairSection, MoveSection
+TagParSection := TagPair {, TagPair}
+TagPair := '[', Identifier, Whitespace, '"', String, '"', ']'
+Whitespace := ' ' | '\t'
+Identifier := Letter {, Letter | Digit | '_' }
+String := { any printable character except '"' }
+MoveSection := Move {, Move}
+Move := MoveNumber, HalfMove, HalfMove
+MoveNumber := Digit {, Digit}, '.'
+HalfMove := Piece {, 'x'}, Field {, '+'} | GameEnd
+Piece := '' | 'P' | 'R' | 'B' | 'N' | 'Q' | 'K'
+Field := 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' ,
+         '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8'
+GameEnd := '1-0' | '0-1' | '1/2-1/2'

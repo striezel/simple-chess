@@ -24,6 +24,7 @@
 #include <map>
 #include <string>
 #include <utility>
+#include "halfmove.hpp"
 #include "result.hpp"
 
 namespace simplechess
@@ -43,6 +44,64 @@ class PortableGameNotation
      * \return Returns a string indicating the result.
      */
     static std::string resultToString(const Result& res);
+
+
+    /** \brief get the name of the tournament or match event
+     *
+     * \return name of the tournament or match event
+     */
+    const std::string& event() const;
+
+
+    /** \brief get the location of the event
+     *
+     * \return location of the event
+     */
+    const std::string& site() const;
+
+
+    /** \brief get the date of the event
+     *
+     * \return date of the event
+     */
+    std::string date() const;
+
+
+    /** \brief get the playing round ordinal of the game
+     *
+     * \return playing round ordinal of the game
+     */
+    const std::string& round() const;
+
+
+    /** \brief get the player(s) of the white pieces
+     *
+     * \return player(s) of the white pieces
+     */
+    const std::string& white() const;
+
+
+    /** \brief get the player(s) of the black pieces
+     *
+     * \return player(s) of the black pieces
+     */
+    const std::string& black() const;
+
+
+    /** \brief get the result of the game, if any
+     *
+     * \return result of the game
+     */
+    const Result result() const;
+
+
+    /** \brief gets the content of a tag
+     *
+     * \param tagName   the identifier of the tag
+     * \return Returns the content of the tag, if it exists.
+     * Returns an empty string, if the tag does not exist.
+     */
+    std::string tag(const std::string& tagName) const;
   private:
     //tags of the STR (Seven Tag Roster)
     std::string mEvent; /**< name of the tournament or match event */
@@ -50,7 +109,7 @@ class PortableGameNotation
     int mDateYear; /**< date - year component */
     int mDateMonth; /**< date - month component */
     int mDateDay; /**< date - day component */
-    std::string Round; /**< playing round ordinal of the game */
+    std::string mRound; /**< playing round ordinal of the game */
     std::string mWhite; /**< player(s) of the white pieces */
     std::string mBlack; /**< player(s) of the black pieces */
     Result mResult; /**< result of the game */
