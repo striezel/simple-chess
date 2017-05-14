@@ -33,12 +33,16 @@
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../data/Field.cpp" />
+		<Unit filename="../data/Field.hpp" />
 		<Unit filename="../data/HalfMove.cpp" />
 		<Unit filename="../data/HalfMove.hpp" />
 		<Unit filename="../data/Piece.cpp" />
 		<Unit filename="../data/Piece.hpp" />
 		<Unit filename="../data/PortableGameNotation.cpp" />
 		<Unit filename="../data/PortableGameNotation.hpp" />
+		<Unit filename="../pgn/Parser.cpp" />
+		<Unit filename="../pgn/Parser.hpp" />
 		<Unit filename="../pgn/Token.cpp" />
 		<Unit filename="../pgn/Token.hpp" />
 		<Unit filename="../pgn/TokenType.hpp" />

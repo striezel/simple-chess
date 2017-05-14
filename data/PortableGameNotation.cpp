@@ -231,4 +231,30 @@ bool PortableGameNotation::parseDate(const std::string& dateText)
   return true;
 }
 
+bool PortableGameNotation::hasMove(const unsigned int moveNumber) const
+{
+  return (mMoves.find(moveNumber) != mMoves.end());
+}
+
+std::pair<HalfMove, HalfMove> PortableGameNotation::move(const unsigned int moveNumber) const
+{
+  const auto iter = mMoves.find(moveNumber);
+  if (iter != mMoves.end())
+    return iter->second;
+  //not found, return empty move
+  return std::pair<HalfMove, HalfMove>(HalfMove(), HalfMove());
+}
+
+void PortableGameNotation::setMove(const unsigned int moveNumber, const HalfMove& whiteMove, const HalfMove& blackMove)
+{
+  setMove(moveNumber, std::pair<HalfMove, HalfMove>(whiteMove, blackMove));
+}
+
+void PortableGameNotation::setMove(const unsigned int moveNumber, const std::pair<HalfMove, HalfMove>& data)
+{
+  if (moveNumber == 0)
+    return;
+  mMoves[moveNumber] = data;
+}
+
 } //namespace

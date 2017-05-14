@@ -117,6 +117,39 @@ class PortableGameNotation
      * \param tagName  the name of the tag
      */
     void clearTag(const std::string& tagName);
+
+
+    /** \brief checks whether there is data for the n-th move
+     *
+     * \param moveNumber   number of the move (n)
+     * \return Returns true, if there is data for the given move.
+     */
+    bool hasMove(const unsigned int moveNumber) const;
+
+
+    /** \brief gets the data for the n-th move
+     *
+     * \param moveNumber   number of the move (n)
+     * \return Returns a pair of half moves representing the n-th move.
+     */
+    std::pair<HalfMove, HalfMove> move(const unsigned int moveNumber) const;
+
+
+    /** \brief sets the data for a given move
+     *
+     * \param moveNumber   number of the move (n)
+     * \param whiteMove    white half move
+     * \param blackMove    black half move
+     */
+    void setMove(const unsigned int moveNumber, const HalfMove& whiteMove, const HalfMove& blackMove);
+
+
+    /** \brief sets the data for a given move
+     *
+     * \param moveNumber   number of the move (n)
+     * \param data         pair of half moves: white + black half move
+     */
+    void setMove(const unsigned int moveNumber, const std::pair<HalfMove, HalfMove>& data);
   private:
       /** \brief parses a date string by splitting it into its components
        *

@@ -21,6 +21,7 @@
 #ifndef SIMPLECHESS_HALFMOVE_HPP
 #define SIMPLECHESS_HALFMOVE_HPP
 
+#include <regex>
 #include "Field.hpp"
 #include "Piece.hpp"
 
@@ -80,11 +81,53 @@ class HalfMove
      * \return Returns true, if a part was captured during the move.
      */
     bool capture() const;
+
+
+    /** \brief whether the opponent is in check after the move
+     *
+     * \return Returns true, if the opponent is in check after the move.
+     */
+    bool check() const;
+
+
+    /** \brief checks whether the move was kingside castling
+     *
+     * \return Returns true, if the move was kingside castling.
+     *         Returns false otherwise.
+     */
+    bool kingsideCastling() const;
+
+
+    /** \brief checks whether the move was queenside castling
+     *
+     * \return Returns true, if the move was queenside castling.
+     *         Returns false otherwise.
+     */
+    bool queensideCastling() const;
+
+
+    /** \brief checks whether this half move has no data (yet)
+     *
+     * \return Returns true, if the data is empty. Returns false otherwise.
+     */
+    bool empty() const;
+
+
+    /** \brief sets the half move data from its Portable Game Notation string
+     *
+     * \param pgn   the string representing the half move, e.g. "Ke2"
+     * \return Returns true, if the data could be parsed.
+     *         Returns false otherwise.
+     */
+    bool fromPGN(const std::string& pgn);
   private:
     PieceType mPiece; /**< piece that moves */
     Field mOrigin; /**< origin of the move */
     bool captures; /**< whether a piece was captured during the move */
     Field mDestination; /**< destination field of the move */
+    bool mChecked; /**< whether the opponent is in check after the move */
+    bool mKingsideCastling; /**< whether the move is kingside castling */
+    bool mQueensideCastling; /**< whether the move is queenside castling */
 }; //class
 
 } //namespace
