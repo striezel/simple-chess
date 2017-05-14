@@ -102,7 +102,28 @@ class PortableGameNotation
      * Returns an empty string, if the tag does not exist.
      */
     std::string tag(const std::string& tagName) const;
+
+
+    /** \brief adds a new tag / changes content of existing tag
+     *
+     * \param tagName  the name of the tag
+     * \param content  content of the tag
+     */
+    void setTag(const std::string& tagName, const std::string& content);
+
+
+    /** \brief deletes an existing tag
+     *
+     * \param tagName  the name of the tag
+     */
+    void clearTag(const std::string& tagName);
   private:
+      /** \brief parses a date string by splitting it into its components
+       *
+       * \param dateText   the date, e.g. "1992.11.28" or "1993.??.??"
+       */
+    bool parseDate(const std::string& dateText);
+
     //tags of the STR (Seven Tag Roster)
     std::string mEvent; /**< name of the tournament or match event */
     std::string mSite; /**< location of the event */

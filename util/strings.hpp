@@ -47,10 +47,22 @@ std::vector<std::string> split(std::string line, const char separator = ' ');
 std::string intToString(const int value);
 
 
-/* removes all leading whitespace characters from the given string
-   parameters:
-       str1 - the affected string
-*/
+/** \brief tries to convert the string representation of an integer number into
+ * an int and returns true on success, false on failure.
+ *
+ * \param str    the string that contains the number
+ * \param value  the int that will be used to store the result
+ * \return Returns true, if the string could be converted to integer.
+ * \remarks If false is returned, the value of parameter value is undefined.
+ */
+bool stringToInt(const std::string& str, int& value);
+
+
+/** \brief removes all leading whitespace characters from the given string
+ *
+ * \param str1   the affected string
+ * \remarks The function works in place, i.e. it modifies the string directly.
+ */
 void trimLeft(std::string& str1);
 
 } //namespace

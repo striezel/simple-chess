@@ -139,4 +139,96 @@ std::string PortableGameNotation::tag(const std::string& tagName) const
   return std::string();
 }
 
+void PortableGameNotation::setTag(const std::string& tagName, const std::string& content)
+{
+  //tag from standard tag roster?
+  if (tagName == "Event")
+    mEvent = content;
+  else if (tagName == "Site")
+    mSite = content;
+  else if (tagName == "Date")
+  {
+    parseDate(content);
+  }
+  else if (tagName == "Round")
+    mRound = content;
+  else if (tagName == "White")
+    mWhite = content;
+  else if (tagName == "Black")
+    mBlack = content;
+  else if (tagName == "Result")
+  {
+    if (content == "1-0")
+      mResult = Result::WhiteWins;
+    else if (content == "0-1")
+      mResult = Result::BlackWins;
+    else if (content == "1/2-1/2")
+      mResult = Result::Draw;
+    else
+      mResult = Result::Unknown;
+  } //else (Result)
+  else
+  {
+    mOtherTags[tagName] = content;
+  }
+}
+
+void PortableGameNotation::clearTag(const std::string& tagName)
+{
+  //tag from standard tag roster?
+  if (tagName == "Event")
+    mEvent = "?";
+  else if (tagName == "Site")
+    mSite = "?";
+  else if (tagName == "Date")
+  {
+    mDateYear = -1;
+    mDateMonth = -1;
+    mDateDay = -1;
+  }
+  else if (tagName == "Round")
+    mRound = "?";
+  else if (tagName == "White")
+    mWhite = "?";
+  else if (tagName == "Black")
+    mBlack = "?";
+  else if (tagName == "Result")
+  {
+    mResult = Result::Unknown;
+  }
+  else
+  {
+    mOtherTags.erase(tagName);
+  }
+}
+
+bool PortableGameNotation::parseDate(const std::string& dateText)
+{
+  const auto parts = util::split(dateText, '.');
+  if (parts.size() != 3)
+    return false;
+  if ((parts[0].length() != 4) || (parts[1].length() != 2) || (parts[2].length() != 2))
+    return false;
+  int dummy = -1;
+  if (parts[0] == "????")
+    mDateYear = -1;
+  else if (!util::stringToInt(parts[0], dummy) || (dummy < 1000))
+    return false;
+  else
+    mDateYear = dummy;
+  if (parts[1] == "??")
+    mDateMonth = -1;
+  else if (!util::stringToInt(parts[1], dummy) || (dummy < 1) || (dummy > 12))
+    return false;
+  else
+    mDateMonth = dummy;
+  if (parts[2] == "??")
+    mDateDay = -1;
+  else if (!util::stringToInt(parts[2], dummy) || (dummy < 1) || (dummy > 31))
+    return false;
+  else
+    mDateDay = dummy;
+  return true;
+}
+
 } //namespace

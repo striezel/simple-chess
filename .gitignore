@@ -5,3 +5,6 @@
 # object and binary directories
 bin/
 obj/
+
+# files from cppcheck
+CppCheckResults.xml
