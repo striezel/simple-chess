@@ -167,7 +167,7 @@ bool Tokenizer::fromString(const std::string& tokenString, std::vector<Token>& t
     //half move
     else if (nextCouldBeHalfMove && std::isalpha(workString[0]))
     {
-      std::string::size_type pos = workString.find(' ');
+      std::string::size_type pos = workString.find_first_of(" \r\n\t\v");
       if (pos == std::string::npos)
       {
         if (workString.length() <= 7)
