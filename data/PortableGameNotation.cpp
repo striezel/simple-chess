@@ -35,7 +35,7 @@ PortableGameNotation::PortableGameNotation()
   mWhite("?"),
   mBlack("?"),
   mResult(Result::Unknown),
-  mOtherTags(std::map<std::string, std::string>()),
+  mOtherTags(std::unordered_map<std::string, std::string>()),
   mMoves(std::map<unsigned int, std::pair<HalfMove, HalfMove>>())
 {
 }
@@ -255,6 +255,40 @@ void PortableGameNotation::setMove(const unsigned int moveNumber, const std::pai
   if (moveNumber == 0)
     return;
   mMoves[moveNumber] = data;
+}
+
+std::string PortableGameNotation::toString() const
+{
+  std::string pgn;
+  //seven tag roster
+  pgn = "[Event \"" + event() + "\"]\n"
+      + "[Site \"" + site() + "\"]\n"
+      + "[Date \"" + date() + "\"]\n"
+      + "[Round \"" + round() + "\"]\n"
+      + "[White \"" + white() + "\"]\n"
+      + "[Black \"" + black() + "\"]\n"
+      + "[Result \"" + resultToString(result()) + "\"]\n";
+  for(const auto& item : mOtherTags)
+  {
+    pgn += "[" + item.first + " \"" + item.second + "\"]\n";
+  } //for
+  pgn += "\n";
+  unsigned int moves = 0;
+  for(const auto& mv : mMoves)
+  {
+    pgn += util::intToString(mv.first) + ". " + mv.second.first.toPGN();
+    if (!mv.second.second.empty())
+      pgn += " " + mv.second.second.toPGN();
+    ++moves;
+    //add line break after four moves
+    if (moves % 4 == 0)
+      pgn += "\n";
+    else
+      pgn += " ";
+  } //for
+  if (result() != Result::Unknown)
+    pgn += " " + resultToString(result());
+  return pgn;
 }
 
 } //namespace

@@ -19,6 +19,8 @@
 */
 
 #include "Parser.hpp"
+#include "ParserException.hpp"
+#include "UnconsumedTokensException.hpp"
 #include "../util/strings.hpp"
 
 namespace simplechess
@@ -115,11 +117,11 @@ bool FinalMove(const std::vector<Token>& tokens, unsigned int& idx, PortableGame
 bool Parser::parse(const std::vector<Token>& tokens, PortableGameNotation& result)
 {
   if (tokens.empty())
-    return false;
+    throw ParserException("There a no tokens to parse!");
   if (tokens.back().type == TokenType::invalid)
   {
     std::clog << "Invalid token: \"" << tokens.back().text << "\"!" << std::endl;
-    return false;
+    throw ParserException("Invalid token: \"" + tokens.back().text + "\"!");
   }
   result = PortableGameNotation();
   unsigned int nextTokenIdx = 0;
@@ -131,7 +133,7 @@ bool Parser::parse(const std::vector<Token>& tokens, PortableGameNotation& resul
   }
   //There should be at least one token pair (or better: 7 or more).
   if (parsedTagPairs == 0)
-    return false;
+    throw ParserException("There a no tag pairs to parse!");
 
   unsigned int parsedMoves = 0;
   while (FullMove(tokens, nextTokenIdx, result))
@@ -144,10 +146,11 @@ bool Parser::parse(const std::vector<Token>& tokens, PortableGameNotation& resul
   }
   //At least one move should have been parsed.
   if (parsedMoves == 0)
-    return false;
+    throw ParserException("There a no moves to parse!");
   //There should be no more tokens.
   if (nextTokenIdx < tokens.size())
-    return false;
+    throw UnconsumedTokensException(nextTokenIdx, tokens.size(),
+              std::vector<Token>(tokens.begin() + nextTokenIdx, tokens.end()));
   //All tokens have been consumed.
   return true;
 }

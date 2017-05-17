@@ -18,12 +18,11 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PGN_PARSER_HPP
-#define SIMPLECHESS_PGN_PARSER_HPP
+#ifndef SIMPLECHESS_PGN_PARSEREXCEPTION_HPP
+#define SIMPLECHESS_PGN_PARSEREXCEPTION_HPP
 
-#include <vector>
-#include "Token.hpp"
-#include "../data/PortableGameNotation.hpp"
+#include <exception>
+#include <string>
 
 namespace simplechess
 {
@@ -31,24 +30,27 @@ namespace simplechess
 namespace pgn
 {
 
-/** \brief parses Portable Game Notation
- */
-class Parser
+class ParserException: public std::exception
 {
   public:
-    /** \brief parses a portable game notation from a list of tokens
+    /** \brief constructor
      *
-     * \param tokens   vector of tokens
-     * \param result   resulting PGN
-     * \return Returns true, if parsing was successful. Returns false, if not.
-     * \remarks The content of @arg result is undefined, if the method returns false.
-     * The method throws ParserException, if something went wrong.
+     * \param message  the exception message
      */
-    static bool parse(const std::vector<Token>& tokens, PortableGameNotation& result);
-}; //class
+    ParserException(const std::string& message);
+
+
+    /** \brief Gets the exception message.
+     *
+     * \return Returns an explanatory string (C style).
+     */
+    virtual const char* what() const noexcept;
+  private:
+    std::string exceptMessage; /**< exception message */
+};
 
 } //namespace
 
 } //namespace
 
-#endif // SIMPLECHESS_PGN_PARSER_HPP
+#endif // SIMPLECHESS_PGN_PARSEREXCEPTION_HPP

@@ -127,15 +127,15 @@ bool Tokenizer::fromString(const std::string& tokenString, std::vector<Token>& t
       workString.erase(0, 3);
     }
     //half move: kingside castling
-    else if (workString.substr(0, 3) == "0-0")
+    else if (workString.substr(0, 3) == "O-O")
     {
-      tokens.push_back(Token(TokenType::HalfMove, "0-0"));
+      tokens.push_back(Token(TokenType::HalfMove, "O-O"));
       workString.erase(0, 3);
     }
     //half move: queenside castling
-    else if (workString.substr(0, 5) == "0-0-0")
+    else if (workString.substr(0, 5) == "O-O-O")
     {
-      tokens.push_back(Token(TokenType::HalfMove, "0-0-0"));
+      tokens.push_back(Token(TokenType::HalfMove, "O-O-O"));
       workString.erase(0, 5);
     }
     //identifier

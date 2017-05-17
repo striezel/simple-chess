@@ -102,15 +102,15 @@ bool HalfMove::fromPGN(const std::string& pgn)
   if (pgn.empty())
     return false;
   //Is it a castling move?
-  if ((pgn == "0-0") || (pgn == "0-0-0"))
+  if ((pgn == "O-O") || (pgn == "O-O-O"))
   {
     mPiece = PieceType::king;
     mOrigin = Field::none;
     mDestination = Field::none;
     captures = false;
     mChecked = false;
-    mKingsideCastling = (pgn == "0-0");
-    mQueensideCastling = (pgn == "0-0-0");
+    mKingsideCastling = (pgn == "O-O");
+    mQueensideCastling = (pgn == "O-O-O");
     return true;
   }
   //Regular moves follow a certain pattern that can be expressed as regex.
@@ -152,7 +152,7 @@ bool HalfMove::fromPGN(const std::string& pgn)
   //first field matched?
   if (matches[2].matched)
   {
-    mOrigin = toField(matches.str(2).at(0), matches.str(2).at(1));
+    mOrigin = toField(matches.str(2).at(0), matches.str(2).at(1) - '1' + 1);
   }
   else
     mOrigin = Field::none;
@@ -163,7 +163,7 @@ bool HalfMove::fromPGN(const std::string& pgn)
   //destination field matched?
   if (matches[4].matched)
   {
-    mDestination = toField(matches.str(4).at(0), matches.str(4).at(1));
+    mDestination = toField(matches.str(4).at(0), matches.str(4).at(1) - '1' + 1);
   }
   //there should be a destination field
   else
@@ -173,6 +173,55 @@ bool HalfMove::fromPGN(const std::string& pgn)
   mChecked = matches[5].matched;
 
   return true;
+}
+
+std::string HalfMove::toPGN() const
+{
+  //Treat special cases first.
+  if (empty())
+    return "";
+  if (mKingsideCastling)
+    return "O-O";
+  if (mQueensideCastling)
+    return "O-O-O";
+  std::string result;
+  switch (mPiece)
+  {
+    case PieceType::rook:
+         result = "R";
+         break;
+    case PieceType::knight:
+         result = "N";
+         break;
+    case PieceType::bishop:
+         result = "B";
+         break;
+    case PieceType::queen:
+         result = "Q";
+         break;
+    case PieceType::king:
+         result = "K";
+         break;
+    case PieceType::pawn:
+    case PieceType::none:
+         //no letter for pawn
+         break;
+  } //switch
+  if (mOrigin != Field::none)
+  {
+    result += std::string(1, column(mOrigin));
+    result += std::string(1, '1' + row(mOrigin) - 1);
+    if (!captures)
+      result += "-";
+  }
+  if (captures)
+    result += "x";
+  //destination
+  result += std::string(1, column(mDestination));
+  result += std::string(1, '1' + row(mDestination) - 1);
+  if (mChecked)
+    result += "+";
+  return result;
 }
 
 } //namespace

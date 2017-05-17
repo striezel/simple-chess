@@ -120,6 +120,13 @@ class HalfMove
      *         Returns false otherwise.
      */
     bool fromPGN(const std::string& pgn);
+
+
+    /** \brief gets the Portable Game Notation for the half move
+     *
+     * \return Returns a string containing the PGN.
+     */
+    std::string toPGN() const;
   private:
     PieceType mPiece; /**< piece that moves */
     Field mOrigin; /**< origin of the move */

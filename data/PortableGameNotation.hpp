@@ -23,6 +23,7 @@
 
 #include <map>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include "HalfMove.hpp"
 #include "Result.hpp"
@@ -150,6 +151,13 @@ class PortableGameNotation
      * \param data         pair of half moves: white + black half move
      */
     void setMove(const unsigned int moveNumber, const std::pair<HalfMove, HalfMove>& data);
+
+
+    /** \brief Gets the game as PGN string.
+     *
+     * \return Returns the complete PNG notation for the game.
+     */
+    std::string toString() const;
   private:
       /** \brief parses a date string by splitting it into its components
        *
@@ -168,7 +176,7 @@ class PortableGameNotation
     std::string mBlack; /**< player(s) of the black pieces */
     Result mResult; /**< result of the game */
     //additional tags
-    std::map<std::string, std::string> mOtherTags; /**< other tags */
+    std::unordered_map<std::string, std::string> mOtherTags; /**< other tags */
     //moves
     std::map<unsigned int, std::pair<HalfMove, HalfMove> > mMoves; /**< map of moves; key: move number, value: white move + black move */
 }; //class

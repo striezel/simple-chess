@@ -18,12 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PGN_PARSER_HPP
-#define SIMPLECHESS_PGN_PARSER_HPP
-
-#include <vector>
-#include "Token.hpp"
-#include "../data/PortableGameNotation.hpp"
+#include "UnconsumedTokensException.hpp"
+#include "../util/strings.hpp"
 
 namespace simplechess
 {
@@ -31,24 +27,31 @@ namespace simplechess
 namespace pgn
 {
 
-/** \brief parses Portable Game Notation
- */
-class Parser
+UnconsumedTokensException::UnconsumedTokensException(const unsigned int _nextIdx, const unsigned int tokenSize, const std::vector<Token>& leftOverTokens)
+: ParserException("Not all tokens have been consumed! Next index is "
+      + util::intToString(_nextIdx) + ", but there are "
+      + util::intToString(tokenSize) + " tokens in total."),
+  nextIdx(_nextIdx),
+  totalSize(tokenSize),
+  remainingTokens(leftOverTokens)
 {
-  public:
-    /** \brief parses a portable game notation from a list of tokens
-     *
-     * \param tokens   vector of tokens
-     * \param result   resulting PGN
-     * \return Returns true, if parsing was successful. Returns false, if not.
-     * \remarks The content of @arg result is undefined, if the method returns false.
-     * The method throws ParserException, if something went wrong.
-     */
-    static bool parse(const std::vector<Token>& tokens, PortableGameNotation& result);
-}; //class
+}
+
+unsigned int UnconsumedTokensException::nextIndex() const
+{
+  return nextIdx;
+}
+
+unsigned int UnconsumedTokensException::totalTokenCount() const
+{
+  return totalSize;
+}
+
+const std::vector<Token>& UnconsumedTokensException::unprocessedTokens() const
+{
+  return remainingTokens;
+}
 
 } //namespace
 
 } //namespace
-
-#endif // SIMPLECHESS_PGN_PARSER_HPP
