@@ -41,6 +41,7 @@
 		<Unit filename="../data/Piece.hpp" />
 		<Unit filename="../data/PortableGameNotation.cpp" />
 		<Unit filename="../data/PortableGameNotation.hpp" />
+		<Unit filename="../pgn/OriginType.hpp" />
 		<Unit filename="../pgn/Parser.cpp" />
 		<Unit filename="../pgn/Parser.hpp" />
 		<Unit filename="../pgn/ParserException.cpp" />

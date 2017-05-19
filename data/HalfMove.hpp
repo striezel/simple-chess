@@ -24,6 +24,7 @@
 #include <regex>
 #include "Field.hpp"
 #include "Piece.hpp"
+#include "../pgn/OriginType.hpp"
 
 namespace simplechess
 {
@@ -67,6 +68,13 @@ class HalfMove
      * \return Returns the field of origin of the move.
      */
     Field origin() const;
+
+
+    /** \brief determines which part of the origin (if any) is specified
+     *
+     * \return Returns the specified origin type.
+     */
+    pgn::OriginType originType() const;
 
 
     /** \brief gets the destination of the move
@@ -130,6 +138,7 @@ class HalfMove
   private:
     PieceType mPiece; /**< piece that moves */
     Field mOrigin; /**< origin of the move */
+    pgn::OriginType mOriginType; /**< type of the origin specification */
     bool captures; /**< whether a piece was captured during the move */
     Field mDestination; /**< destination field of the move */
     bool mChecked; /**< whether the opponent is in check after the move */

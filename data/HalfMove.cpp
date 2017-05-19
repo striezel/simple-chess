@@ -26,6 +26,7 @@ namespace simplechess
 HalfMove::HalfMove()
 : mPiece(PieceType::none),
   mOrigin(Field::none),
+  mOriginType(pgn::OriginType::none),
   captures(false),
   mDestination(Field::none),
   mChecked(false),
@@ -37,6 +38,7 @@ HalfMove::HalfMove()
 HalfMove::HalfMove(PieceType pt, Field destination, bool capture)
 : mPiece(pt),
   mOrigin(Field::none),
+  mOriginType(pgn::OriginType::none),
   captures(capture),
   mDestination(destination),
   mChecked(false),
@@ -48,6 +50,7 @@ HalfMove::HalfMove(PieceType pt, Field destination, bool capture)
 HalfMove::HalfMove(PieceType pt, Field origin, Field destination, bool capture)
 : mPiece(pt),
   mOrigin(origin),
+  mOriginType(pgn::OriginType::none),
   captures(capture),
   mDestination(destination),
   mChecked(false),
@@ -64,6 +67,11 @@ PieceType HalfMove::piece() const
 Field HalfMove::origin() const
 {
   return mOrigin;
+}
+
+pgn::OriginType HalfMove::originType() const
+{
+  return mOriginType;
 }
 
 Field HalfMove::destination() const
@@ -114,7 +122,7 @@ bool HalfMove::fromPGN(const std::string& pgn)
     return true;
   }
   //Regular moves follow a certain pattern that can be expressed as regex.
-  const std::regex regExPGN = std::regex("^([PRNBQK])?([a-h][1-8])?(x)?([a-h][1-8])(\\+)?$");
+  const std::regex regExPGN = std::regex("^([PRNBQK])?([a-h][1-8]|[a-h]|[1-8])?(x)?([a-h][1-8])(\\+)?$");
   std::smatch matches;
   if(!std::regex_search(pgn, matches, regExPGN))
     return false;
@@ -152,10 +160,32 @@ bool HalfMove::fromPGN(const std::string& pgn)
   //first field matched?
   if (matches[2].matched)
   {
-    mOrigin = toField(matches.str(2).at(0), matches.str(2).at(1) - '1' + 1);
-  }
+    const auto str = matches.str(2);
+    if (str.length() == 2)
+    {
+      mOrigin = toField(matches.str(2).at(0), matches.str(2).at(1) - '1' + 1);
+      mOriginType = pgn::OriginType::full;
+    } //if two characters
+    else
+    {
+      if ((str[0] >= 'a') && (str[0] <= 'h'))
+      {
+        mOrigin = toField(matches.str(2).at(0), 1);
+        mOriginType = pgn::OriginType::file;
+      }
+      else //rank only
+      {
+        mOrigin = toField('a', matches.str(2).at(0) - '1' + 1);
+        mOriginType = pgn::OriginType::rank;
+      }
+    } //else (i.e. only one character given)
+  } //if field of origin is set
   else
+  {
     mOrigin = Field::none;
+    mOriginType = pgn::OriginType::none;
+  }
+
 
   //capture?
   captures = matches[3].matched;
@@ -209,8 +239,10 @@ std::string HalfMove::toPGN() const
   } //switch
   if (mOrigin != Field::none)
   {
-    result += std::string(1, column(mOrigin));
-    result += std::string(1, '1' + row(mOrigin) - 1);
+    if ((mOriginType == pgn::OriginType::full) || (mOriginType == pgn::OriginType::file))
+      result += std::string(1, column(mOrigin));
+    if ((mOriginType == pgn::OriginType::full) || (mOriginType == pgn::OriginType::rank))
+      result += std::string(1, '1' + row(mOrigin) - 1);
     if (!captures)
       result += "-";
   }

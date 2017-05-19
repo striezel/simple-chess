@@ -8,9 +8,14 @@ set(simple_chess_tests_sources
     ../../data/Castling.cpp
     ../../data/Field.cpp
     ../../data/ForsythEdwardsNotation.cpp
+    ../../data/HalfMove.cpp
     ../../data/Piece.cpp
+    ../../data/PortableGameNotation.cpp
+    ../../pgn/Parser.cpp
+    ../../pgn/ParserException.cpp
     ../../pgn/Token.cpp
     ../../pgn/Tokenizer.cpp
+    ../../pgn/UnconsumedTokensException.cpp
     ../../rules/check.cpp
     ../../rules/Moves.cpp
     ../../util/strings.cpp
