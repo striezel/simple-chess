@@ -258,4 +258,9 @@ void Moves::sanitizePromotion(PieceType& promoteTo)
   } //switch
 }
 
+bool Moves::performMove(Board& board, const Field from, const Field to, PieceType promoteTo)
+{
+  return board.move(from, to, promoteTo);
+}
+
 } //namespace

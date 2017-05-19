@@ -29,23 +29,30 @@
 namespace simplechess
 {
 
-/* class that represents a chess board */
+/** class that represents a chess board */
 class Board
 {
   public:
-    /* default constructor */
+    /** \brief default constructor */
     Board();
 
-    /* gets data for a given field on the board */
+
+    /** \brief gets data for a given field on the board
+     *
+     * \param f a field on the board
+     */
     const Piece& element(const Field f) const;
 
-    /* gets the player / colour who is to move next */
+
+    /** \brief gets the player / colour who is to move next */
     const Colour& toMove() const;
 
-    /* gets the field which can be used for en passant capture, if any */
+
+    /** \brief gets the field which can be used for en passant capture, if any */
     const Field& enPassant() const;
 
-    /* castling information for the board */
+
+    /** \brief castling information for the board */
     const Castling& castling() const;
 
 
@@ -78,12 +85,12 @@ class Board
      */
     bool move(const Field from, const Field to, PieceType promoteTo);
   private:
-    std::map<Field, Piece> m_Fields; /**< pieces on fields of the board */
-    Colour m_toMove; /**< player/colour that is to move next */
-    Field  m_enPassant; /**< en passant field, if any */
-    Castling m_castling; /**< castling information (i.e. where is castling still allowed) */
-    bool m_blackInCheck; /**< whether black player is in check */
-    bool m_whiteInCheck; /**< whether white player is in check */
+    std::map<Field, Piece> mFields; /**< pieces on fields of the board */
+    Colour mToMove; /**< player/colour that is to move next */
+    Field  mEnPassant; /**< en passant field, if any */
+    Castling mCastling; /**< castling information (i.e. where is castling still allowed) */
+    bool mBlackInCheck; /**< whether black player is in check */
+    bool mWhiteInCheck; /**< whether white player is in check */
 }; //class
 
 } //namespace

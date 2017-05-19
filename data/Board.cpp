@@ -45,39 +45,39 @@ char nextColumn(const char column)
 
 
 Board::Board()
-: m_toMove(Colour::white),
-  m_enPassant(Field::none),
-  m_castling(Castling()),
-  m_blackInCheck(false),
-  m_whiteInCheck(false)
+: mToMove(Colour::white),
+  mEnPassant(Field::none),
+  mCastling(Castling()),
+  mBlackInCheck(false),
+  mWhiteInCheck(false)
 {
   for(int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
-    m_Fields[static_cast<Field>(i)] = Piece();
+    mFields[static_cast<Field>(i)] = Piece();
   }
 }
 
 const Piece& Board::element(const Field f) const
 {
-  const std::map<Field, Piece>::const_iterator cIter = m_Fields.find(f);
-  if (cIter != m_Fields.end())
+  const std::map<Field, Piece>::const_iterator cIter = mFields.find(f);
+  if (cIter != mFields.end())
     return cIter->second;
   throw std::runtime_error("Field does not exist on board!");
 }
 
 const Colour& Board::toMove() const
 {
-  return m_toMove;
+  return mToMove;
 }
 
 const Field& Board::enPassant() const
 {
-  return m_enPassant;
+  return mEnPassant;
 }
 
 const Castling& Board::castling() const
 {
-  return m_castling;
+  return mCastling;
 }
 
 bool Board::isInCheck(const Colour colour) const
@@ -85,9 +85,9 @@ bool Board::isInCheck(const Colour colour) const
   switch(colour)
   {
     case Colour::white:
-         return m_whiteInCheck;
+         return mWhiteInCheck;
     case Colour::black:
-         return m_blackInCheck;
+         return mBlackInCheck;
     default:
          //"None" can never be in check.
          return false;
@@ -129,7 +129,7 @@ bool Board::fromFEN(const std::string& FEN)
       const auto iter = fenmap.find(singleRow[j]);
       if (iter != fenmap.end())
       {
-        m_Fields[toField(boardColumn, boardRow)] = iter->second;
+        mFields[toField(boardColumn, boardRow)] = iter->second;
         boardColumn = nextColumn(boardColumn);
       } //if
       else if ((singleRow[j] >= '1') && (singleRow[j] <= '8'))
@@ -137,7 +137,7 @@ bool Board::fromFEN(const std::string& FEN)
         const auto count = singleRow[j] - '1' + 1;
         for (int k = 1; k <= count; ++k)
         {
-          m_Fields[toField(boardColumn, boardRow)] = Piece(Colour::none, PieceType::none);
+          mFields[toField(boardColumn, boardRow)] = Piece(Colour::none, PieceType::none);
           boardColumn = nextColumn(boardColumn);
         }
       } //else if '1'..'8'
@@ -154,41 +154,41 @@ bool Board::fromFEN(const std::string& FEN)
   if (parts.size() > 1)
   {
     if (parts[1] == "b")
-      m_toMove = Colour::black;
+      mToMove = Colour::black;
     else
-      m_toMove = Colour::white;
+      mToMove = Colour::white;
   }
   else
-    m_toMove = Colour::white;
+    mToMove = Colour::white;
 
   //Info about castling?
   if (parts.size() > 2)
   {
-    m_castling.fromFEN(parts[2]);
+    mCastling.fromFEN(parts[2]);
   }
   else
   {
-    m_castling = Castling();
+    mCastling = Castling();
     //guess as good as possible from current position
     if (element(Field::e1) == Piece(Colour::white, PieceType::king))
     {
-      m_castling.white_kingside = element(Field::h1) == Piece(Colour::white, PieceType::rook);
-      m_castling.white_queenside = element(Field::a1) == Piece(Colour::white, PieceType::rook);
+      mCastling.white_kingside = element(Field::h1) == Piece(Colour::white, PieceType::rook);
+      mCastling.white_queenside = element(Field::a1) == Piece(Colour::white, PieceType::rook);
     }
     else
     {
-      m_castling.white_kingside = false;
-      m_castling.white_queenside = false;
+      mCastling.white_kingside = false;
+      mCastling.white_queenside = false;
     }
     if (element(Field::e8) == Piece(Colour::black, PieceType::king))
     {
-      m_castling.black_kingside = element(Field::h8) == Piece(Colour::black, PieceType::rook);
-      m_castling.black_queenside = element(Field::a8) == Piece(Colour::black, PieceType::rook);
+      mCastling.black_kingside = element(Field::h8) == Piece(Colour::black, PieceType::rook);
+      mCastling.black_queenside = element(Field::a8) == Piece(Colour::black, PieceType::rook);
     }
     else
     {
-      m_castling.black_kingside = false;
-      m_castling.black_queenside = false;
+      mCastling.black_kingside = false;
+      mCastling.black_queenside = false;
     }
   } //castling
 
@@ -198,14 +198,14 @@ bool Board::fromFEN(const std::string& FEN)
   {
     if (parts[3] == "-")
     {
-      m_enPassant = Field::none;
+      mEnPassant = Field::none;
     }
     else
     {
       try
       {
-        m_enPassant = toField(parts[3][0], parts[3][0] - '1' + 1);
-        if ((row(m_enPassant) != 3) && (row(m_enPassant) != 6))
+        mEnPassant = toField(parts[3][0], parts[3][0] - '1' + 1);
+        if ((row(mEnPassant) != 3) && (row(mEnPassant) != 6))
           return false;
       }
       catch(...)
@@ -215,11 +215,11 @@ bool Board::fromFEN(const std::string& FEN)
     } //else
   } //if
   else
-    m_enPassant = Field::none;
+    mEnPassant = Field::none;
 
   //update info who is in check
-  m_whiteInCheck = simplechess::isInCheck(*this, Colour::white);
-  m_blackInCheck = simplechess::isInCheck(*this, Colour::black);
+  mWhiteInCheck = simplechess::isInCheck(*this, Colour::white);
+  mBlackInCheck = simplechess::isInCheck(*this, Colour::black);
 
   // Other info from FEN is not parsed yet, so return true for now.
   return true;
@@ -245,9 +245,9 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo)
 
   // Move is allowed.
   // -- "copy" piece to destination field
-  m_Fields[to] = start;
+  mFields[to] = start;
   // -- remove piece in start field
-  m_Fields[from] = Piece(Colour::none, PieceType::none);
+  mFields[from] = Piece(Colour::none, PieceType::none);
   // holds en passant data for next move
   Field enPassantData = Field::none;
   // -- check for special moves of pawn pieces
@@ -259,13 +259,13 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo)
     // -- check for promotion of white pawn
     if ((start.colour == Colour::white) && (row(to) == 8))
     {
-      m_Fields[to].piece = promoteTo;
+      mFields[to].piece = promoteTo;
       //console.log('Info: Promoted white pawn on ' + column(to) + row(to) + ' to ' + promoteTo + '.');
     }
     // -- check for promotion of black pawn
     else if ((start.colour == Colour::black) && (row(to) == 1))
     {
-       m_Fields[to].piece = promoteTo;
+       mFields[to].piece = promoteTo;
       //console.log('Info: Promoted black pawn on ' + column(to) + row(to) + ' to ' + promoteTo + '.');
     }
     // check for en passant capture
@@ -281,7 +281,7 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo)
           removeRow = 4;
         else
           removeRow = 5;
-        m_Fields[toField(column(to), removeRow)] = Piece(Colour::none, PieceType::none);
+        mFields[toField(column(to), removeRow)] = Piece(Colour::none, PieceType::none);
       } //if
     } //if en passant field is destination
     //check whether en passant capture is possible in next move
@@ -299,15 +299,15 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo)
       {
         //white queenside castling
         // King was already moved, we just have to move the rook here.
-        m_Fields[Field::a1] = Piece(Colour::none, PieceType::none);
-        m_Fields[Field::d1] = Piece(Colour::white, PieceType::rook);
+        mFields[Field::a1] = Piece(Colour::none, PieceType::none);
+        mFields[Field::d1] = Piece(Colour::white, PieceType::rook);
       }
       if ((to == Field::g1) && (dest.piece == PieceType::none))
       {
         //white kingside castling
         // King was already moved, we just have to move the rook here.
-        m_Fields[Field::h1] = Piece(Colour::none, PieceType::none);
-        m_Fields[Field::f1] = Piece(Colour::white, PieceType::rook);
+        mFields[Field::h1] = Piece(Colour::none, PieceType::none);
+        mFields[Field::f1] = Piece(Colour::white, PieceType::rook);
       }
     }//if white king at initial position
     else if ((start.colour == Colour::black) && (from == Field::e8))
@@ -316,15 +316,15 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo)
       {
         //black queenside castling
         // King was already moved, we just have to move the rook here.
-        m_Fields[Field::a8] = Piece(Colour::none, PieceType::none);
-        m_Fields[Field::d8] = Piece(Colour::black, PieceType::rook);
+        mFields[Field::a8] = Piece(Colour::none, PieceType::none);
+        mFields[Field::d8] = Piece(Colour::black, PieceType::rook);
       }
       if ((to == Field::g8) && (dest.piece == PieceType::none))
       {
         //black kingside castling
         // King was already moved, we just have to move the rook here.
-        m_Fields[Field::h8] = Piece(Colour::none, PieceType::none);
-        m_Fields[Field::f8] = Piece(Colour::black, PieceType::rook);
+        mFields[Field::h8] = Piece(Colour::none, PieceType::none);
+        mFields[Field::f8] = Piece(Colour::black, PieceType::rook);
       }
     }//if black king at initial position
   } //if king may be castling
@@ -333,13 +333,13 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo)
   {
     if (start.colour == Colour::black)
     {
-      m_castling.black_kingside = false;
-      m_castling.black_queenside = false;
+      mCastling.black_kingside = false;
+      mCastling.black_queenside = false;
     }
     else
     {
-      m_castling.white_kingside = false;
-      m_castling.white_queenside = false;
+      mCastling.white_kingside = false;
+      mCastling.white_queenside = false;
     }
   } //if king
   else if (start.piece == PieceType::rook)
@@ -347,35 +347,35 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo)
     if (start.colour == Colour::black)
     {
       if (from == Field::a8)
-        m_castling.black_queenside = false;
+        mCastling.black_queenside = false;
       else if (from == Field::h8)
-        m_castling.black_kingside = false;
+        mCastling.black_kingside = false;
     } //if black rook moved
     else if (start.colour == Colour::white)
     {
       if (from == Field::a1)
-        m_castling.white_queenside = false;
+        mCastling.white_queenside = false;
       else if (from == Field::h1)
-        m_castling.white_kingside = false;
+        mCastling.white_kingside = false;
     } //if white rook moved
   } //if rook
   // -- update en passant data
-  m_enPassant = enPassantData;
+  mEnPassant = enPassantData;
   // -- determine whether anyone is in check
   const bool whiteCheck = simplechess::isInCheck(*this, Colour::white);
   /* if (whiteCheck && m_whiteInCheck)
     Boards.update({_id: board._id}, {$set: {winner: 'black'}}); */
-  m_whiteInCheck = whiteCheck;
+  mWhiteInCheck = whiteCheck;
   const bool blackCheck = simplechess::isInCheck(*this, Colour::black);
   /* if (blackCheck && m_blackInCheck)
     Boards.update({_id: board._id}, {$set: {winner: 'white'}}); */
-  m_blackInCheck = blackCheck;
+  mBlackInCheck = blackCheck;
   //TODO: check for checkmate
   // -- update colour that is to move
-  if (m_toMove == Colour::white)
-    m_toMove = Colour::black;
+  if (mToMove == Colour::white)
+    mToMove = Colour::black;
   else
-    m_toMove = Colour::white;
+    mToMove = Colour::white;
   return true;
 }
 

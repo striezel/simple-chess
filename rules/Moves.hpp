@@ -47,6 +47,19 @@ class Moves
      *          it does not conform to promotion rules.
      */
     static void sanitizePromotion(PieceType& promoteTo);
+
+
+    /** \brief move a piece on the given board
+     *
+     * \param from field where the move starts
+     * \param to   field where the move ends
+     * \param promoteTo type of piece that a pawn shall be promoted to, if the
+     *                  move allows pawn promotion
+     * \return Returns true, if the move was performed.
+     * Returns false, if the move was not performed, e.g. because the move was
+     * against the chess rules.
+     */
+    static bool performMove(Board& board, const Field from, const Field to, PieceType promoteTo);
 }; //class
 
 } //namespace
