@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016  Dirk Stolle
+    Copyright (C) 2016, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 
 namespace simplechess
 {
+
+const std::string ForsythEdwardsNotation::defaultInitialPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
 
 std::string ForsythEdwardsNotation::fromBoard(const Board & board)
 {
@@ -98,6 +100,9 @@ std::string ForsythEdwardsNotation::fromBoard(const Board & board)
                       return std::string();
                } //switch piece
                break;
+          case Colour::none:
+               //should never happen, invalid colour
+               return std::string();
         } //switch colour
       } //else
     } //for columns

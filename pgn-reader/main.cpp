@@ -20,11 +20,15 @@
 
 #include <iostream>
 #include <string>
+#include "../algorithm/Apply.hpp"
+#include "../data/Board.hpp"
+#include "../data/ForsythEdwardsNotation.hpp"
 #include "../data/PortableGameNotation.hpp"
 #include "../pgn/Parser.hpp"
 #include "../pgn/Tokenizer.hpp"
 #include "../pgn/UnconsumedTokensException.hpp"
 #include "../pgn/ParserException.hpp"
+#include "../ui/Console.hpp"
 
 const std::string example =
     std::string("[Event \"F/S Return Match\"]\n")
@@ -63,11 +67,11 @@ int main(int argc, char** argv)
     std::cout << "UnconsumedTokensException: " << ex.what() << "\n";
     const auto & tokens = ex.unprocessedTokens();
     std::cout << "First unprocessed token: " << tokens.at(0).text << " of type "
-              << (int)tokens.at(0).type << ".\n";
+              << static_cast<int>(tokens.at(0).type) << ".\n";
     std::cout << "All remaining tokens:\n";
-    for (int i = 0; i < tokens.size(); ++i)
+    for (size_t i = 0; i < tokens.size(); ++i)
     {
-      std::cout << "Type: " << (int)tokens[i].type << " text: \"" << tokens[i].text << "\"\n";
+      std::cout << "Type: " << static_cast<int>(tokens[i].type) << " text: \"" << tokens[i].text << "\"\n";
     } //for
     return 2;
   }
@@ -80,5 +84,55 @@ int main(int argc, char** argv)
   std::cout << "\n"
             << "PGN is:\n"
             << pgn.toString() << "\n";
+  std::cout << "Number of first move: " << pgn.firstMoveNumber() << "\n"
+            << "Number of last move:  " << pgn.lastMoveNumber() << "\n";
+
+  //start game
+  simplechess::Board board;
+  std::string fen = simplechess::FEN::defaultInitialPosition;
+  if (!pgn.tag("FEN").empty())
+    fen = pgn.tag("FEN");
+
+  if (!board.fromFEN(fen))
+  {
+    std::cout << "Could not initialize chess board with the given initial position!\n";
+    return 3;
+  }
+
+  std::cout << "\n\nInitial position:\n\n";
+  simplechess::ui::Console::showBoard(board);
+
+  for (unsigned int i = pgn.firstMoveNumber(); i <= pgn.lastMoveNumber(); ++i)
+  {
+    const auto moves = pgn.move(i);
+    if (!simplechess::algorithm::applyMove(board, moves.first, simplechess::Colour::white))
+    {
+      std::cout << "Error: Could not perform move " << i << " of white player!\n"
+                << "Move would have been " << moves.first.toPGN() << ".\n";
+      return 4;
+    }
+    std::cout << "\nAfter move " << i << " of white player:\n";
+    simplechess::ui::Console::showBoard(board);
+
+    if (!simplechess::algorithm::applyMove(board, moves.second, simplechess::Colour::black))
+    {
+      std::cout << "Error: Could not perform move " << i << " of black player!\n"
+                << "Move would have been " << moves.second.toPGN() << ".\n";
+      return 4;
+    }
+    std::cout << "\nAfter move " << i << " of black player:\n";
+    simplechess::ui::Console::showBoard(board);
+  } //for
+
+  switch (pgn.result())
+  {
+    case simplechess::Result::Unknown:
+         std::cout << "Outcome of the game is unknown.\n";
+         break;
+    default:
+         std::cout << "Result of the game is " << pgn.resultToString(pgn.result()) << ".\n";
+         break;
+  } //switch
+
   return 0;
 }

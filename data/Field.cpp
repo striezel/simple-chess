@@ -24,7 +24,7 @@
 namespace simplechess
 {
 
-char column(Field f)
+char column(const Field f)
 {
   switch (f)
   {
@@ -106,7 +106,7 @@ char column(Field f)
   } //switch
 }
 
-int row(Field f)
+int row(const Field f)
 {
   switch (f)
   {
@@ -193,6 +193,16 @@ Field toField(const char column, const int row)
   if ((column < 'a') || (column > 'h') || (row < 1) || (row > 8))
     throw std::range_error("Column or row argument is out of range!");
   return static_cast<Field>((column - 'a') * 8 + (row - 1) + static_cast<int>(Field::a1));
+}
+
+bool sameFile(const Field f1, const Field f2)
+{
+  return ((f1 != Field::none) && (f2 != Field::none) && (column(f1) == column(f2)));
+}
+
+bool sameRank(const Field f1, const Field f2)
+{
+  return ((f1 != Field::none) && (f2 != Field::none) && (row(f1) == row(f2)));
 }
 
 } //namespace

@@ -25,26 +25,49 @@
 
 namespace simplechess
 {
-   //enumeration type for players / colours
+   /** enumeration type for players / colours */
    enum class Colour { none, white, black };
 
-   //enumeration type for types of pieces
+   /** enumeration type for types of pieces */
    enum class PieceType { none, king, queen, bishop, knight, rook, pawn};
 
    struct Piece
    {
-     Colour colour;
-     PieceType piece;
+     Colour colour; /**< colour of the piece */
+     PieceType piece; /**< type of the piece */
 
-     /* default constructor */
+     /** \brief default constructor */
      Piece();
 
-     /* parametrized constructor */
+     /** \brief parametrized constructor
+      *
+      * \param c colour of the piece
+      * \param pt type of the piece
+      */
      Piece(Colour c, PieceType pt);
 
-     /* equality operator for Piece structures */
+     /** equality operator for Piece structures
+      *
+      * \param other  other piece against which this piece is compared
+      * \return Returns true, if both pieces are equal.
+      *         Returns false otherwise.
+      */
      bool operator==(const Piece& other) const;
+
+     /** inequality operator for Piece structures
+      *
+      * \param other  other piece against which this piece is compared
+      * \return Returns true, if both pieces are NOT equal.
+      *         Returns false otherwise.
+      */
+     bool operator!=(const Piece& other) const;
    }; //struct
 } //namespace
+
+
+
+std::ostream& operator<<(std::ostream& str, const simplechess::Colour& c);
+std::ostream& operator<<(std::ostream& str, const simplechess::PieceType& pt);
+std::ostream& operator<<(std::ostream& str, const simplechess::Piece& p);
 
 #endif // SIMPLE_CHESS_PIECE_HPP

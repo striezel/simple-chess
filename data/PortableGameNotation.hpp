@@ -128,6 +128,22 @@ class PortableGameNotation
     bool hasMove(const unsigned int moveNumber) const;
 
 
+    /** \brief gets the number of the first move, or zero if there are no moves
+     *
+     * \return Returns the positive number of the first move.
+     *         Returns zero, if there are no moves yet.
+     */
+    unsigned int firstMoveNumber() const;
+
+
+    /** \brief gets the number of the last move, or zero if there are no moves
+     *
+     * \return Returns the positive number of the last move.
+     *         Returns zero, if there are no moves yet.
+     */
+    unsigned int lastMoveNumber() const;
+
+
     /** \brief gets the data for the n-th move
      *
      * \param moveNumber   number of the move (n)

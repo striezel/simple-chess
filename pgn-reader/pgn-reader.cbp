@@ -33,8 +33,16 @@
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../algorithm/Apply.cpp" />
+		<Unit filename="../algorithm/Apply.hpp" />
+		<Unit filename="../data/Board.cpp" />
+		<Unit filename="../data/Board.hpp" />
+		<Unit filename="../data/Castling.cpp" />
+		<Unit filename="../data/Castling.hpp" />
 		<Unit filename="../data/Field.cpp" />
 		<Unit filename="../data/Field.hpp" />
+		<Unit filename="../data/ForsythEdwardsNotation.cpp" />
+		<Unit filename="../data/ForsythEdwardsNotation.hpp" />
 		<Unit filename="../data/HalfMove.cpp" />
 		<Unit filename="../data/HalfMove.hpp" />
 		<Unit filename="../data/Piece.cpp" />
@@ -53,6 +61,12 @@
 		<Unit filename="../pgn/Tokenizer.hpp" />
 		<Unit filename="../pgn/UnconsumedTokensException.cpp" />
 		<Unit filename="../pgn/UnconsumedTokensException.hpp" />
+		<Unit filename="../rules/Moves.cpp" />
+		<Unit filename="../rules/Moves.hpp" />
+		<Unit filename="../rules/check.cpp" />
+		<Unit filename="../rules/check.hpp" />
+		<Unit filename="../ui/Console.cpp" />
+		<Unit filename="../ui/Console.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
 		<Unit filename="main.cpp" />

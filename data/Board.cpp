@@ -379,4 +379,16 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo)
   return true;
 }
 
+Field Board::findNext(const Piece& piece, Field start) const
+{
+  if (start == Field::none)
+    start = Field::a1;
+  for(int i = static_cast<int>(start); i <= static_cast<int>(Field::h8); ++i)
+  {
+    if (element(static_cast<Field>(i)) == piece)
+      return static_cast<Field>(i);
+  } //for
+  return Field::none;
+}
+
 } //namespace

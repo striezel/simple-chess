@@ -84,6 +84,16 @@ class Board
      * Returns false, if move was not performed.
      */
     bool move(const Field from, const Field to, PieceType promoteTo);
+
+
+    /** \brief finds the next field where a certain figure is located
+     *
+     * \param piece piece for which to search
+     * \param start field where search shall start (set to a1, if not sure)
+     * \return Returns the first field with the given piece, if it was found.
+     *         Returns none, if no matching field was found
+     */
+    Field findNext(const Piece& piece, Field start) const;
   private:
     std::map<Field, Piece> mFields; /**< pieces on fields of the board */
     Colour mToMove; /**< player/colour that is to move next */

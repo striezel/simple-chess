@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016  Dirk Stolle
+    Copyright (C) 2016, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,9 +32,15 @@ class ForsythEdwardsNotation
     /** \brief returns the Forsyth-Edwards-Notation for a board
      *
      * \param  board   the chess board
-     * \return string that contains the FEN of the board
+     * \return Returns a string that contains the FEN of the board.
+     *         Returns an empty string, if the board contains invalid data.
      */
     static std::string fromBoard(const Board & board);
+
+
+    /** \brief Forsyth-Edwards notation for the initial position in chess
+     */
+    static const std::string defaultInitialPosition;
 }; //class
 
 //type alias

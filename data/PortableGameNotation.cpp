@@ -236,6 +236,20 @@ bool PortableGameNotation::hasMove(const unsigned int moveNumber) const
   return (mMoves.find(moveNumber) != mMoves.end());
 }
 
+unsigned int PortableGameNotation::firstMoveNumber() const
+{
+  if (!mMoves.empty())
+    return mMoves.cbegin()->first;
+  return 0;
+}
+
+unsigned int PortableGameNotation::lastMoveNumber() const
+{
+  if (!mMoves.empty())
+    return mMoves.crbegin()->first;
+  return 0;
+}
+
 std::pair<HalfMove, HalfMove> PortableGameNotation::move(const unsigned int moveNumber) const
 {
   const auto iter = mMoves.find(moveNumber);

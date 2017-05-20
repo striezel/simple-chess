@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016  Dirk Stolle
+    Copyright (C) 2016, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,15 +36,49 @@ namespace simplechess
    };
 
 
-   /* returns the column of a given field */
-   char column(Field f);
+   /** \brief gets the column/file of a given field
+    *
+    * \param  f a field, must not be none
+    * \return Returns the column/file of the given field.
+    */
+   char column(const Field f);
 
 
-   /* returns the row of a given field */
-   int row(Field f);
+   /** \brief returns the row of a given field
+    *
+    * \param  f a field, must not be none
+    * \return Returns the row/rank of the given field.
+    */
+   int row(const Field f);
 
-   /* converts (column;row) pair to Field */
+
+   /** \brief converts (column;row) pair to Field
+    *
+    * \param column column (file) of the field
+    * \param row    row (rank) of the field
+    * \return Returns the converted field.
+    */
    Field toField(const char column, const int row);
+
+
+   /** \brief determines whether both fields have the same file
+    *
+    * \param f1  first field
+    * \param f2  second field
+    * \return Returns true, if both fields have the same file.
+    *         Returns false otherwise, or if one of the fields is none.
+    */
+   bool sameFile(const Field f1, const Field f2);
+
+
+   /** \brief determines whether both fields have the same rank
+    *
+    * \param f1  first field
+    * \param f2  second field
+    * \return Returns true, if both fields have the same rank.
+    *         Returns false otherwise, or if one of the fields is none.
+    */
+   bool sameRank(const Field f1, const Field f2);
 } //namespace
 
 #endif // SIMPLE_CHESS_FIELD_HPP

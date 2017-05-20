@@ -40,4 +40,64 @@ bool Piece::operator==(const Piece& other) const
   return ((colour == other.colour) && (piece == other.piece));
 }
 
+bool Piece::operator!=(const Piece& other) const
+{
+  return ((colour != other.colour) || (piece != other.piece));
+}
+
 } //namespace
+
+
+
+std::ostream& operator<<(std::ostream& str, const simplechess::Colour& c)
+{
+  switch(c)
+  {
+    case simplechess::Colour::black:
+         str << "black";
+         break;
+    case simplechess::Colour::white:
+         str << "white";
+         break;
+    default:
+         str << "none";
+         break;
+  } //switch
+  return str;
+}
+
+std::ostream& operator<<(std::ostream& str, const simplechess::PieceType& pt)
+{
+  switch(pt)
+  {
+    case simplechess::PieceType::pawn:
+         str << "pawn";
+         break;
+    case simplechess::PieceType::bishop:
+         str << "bishop";
+         break;
+    case simplechess::PieceType::king:
+         str << "king";
+         break;
+    case simplechess::PieceType::knight:
+         str << "knight";
+         break;
+    case simplechess::PieceType::queen:
+         str << "queen";
+         break;
+    case simplechess::PieceType::rook:
+         str << "rook";
+         break;
+    default:
+         str << "none";
+         break;
+  }
+  return str;
+}
+
+std::ostream& operator<<(std::ostream& str, const simplechess::Piece& p)
+{
+  str << "Piece(" << p.colour << " " << p.piece << ")";
+  return str;
+}
+
