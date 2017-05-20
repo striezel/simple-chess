@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include <string>
+#include <thread>
 #include "Options.hpp"
 #include "../algorithm/Apply.hpp"
 #include "../data/Board.hpp"
@@ -97,8 +98,10 @@ int main(int argc, char** argv)
   std::cout << "\n\nInitial position:\n\n";
   simplechess::ui::Console::showBoard(board);
 
+  const std::chrono::milliseconds delay(options.delayMilliseconds);
   for (unsigned int i = pgn.firstMoveNumber(); i <= pgn.lastMoveNumber(); ++i)
   {
+    std::this_thread::sleep_for(delay);
     const auto moves = pgn.move(i);
     if (!simplechess::algorithm::applyMove(board, moves.first, simplechess::Colour::white))
     {
@@ -109,6 +112,7 @@ int main(int argc, char** argv)
     std::cout << "\nAfter move " << i << " of white player:\n";
     simplechess::ui::Console::showBoard(board);
 
+    std::this_thread::sleep_for(delay);
     if (!simplechess::algorithm::applyMove(board, moves.second, simplechess::Colour::black))
     {
       std::cout << "Error: Could not perform move " << i << " of black player!\n"
