@@ -69,6 +69,8 @@
 		<Unit filename="../ui/Console.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
+		<Unit filename="Options.cpp" />
+		<Unit filename="Options.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<envvars />

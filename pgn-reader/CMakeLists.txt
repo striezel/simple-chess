@@ -21,6 +21,7 @@ set(pgn_reader_sources
     ../rules/Moves.cpp
     ../ui/Console.cpp
     ../util/strings.cpp
+    Options.cpp
     main.cpp)
 
 add_definitions(-std=c++0x)

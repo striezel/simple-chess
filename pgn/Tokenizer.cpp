@@ -36,6 +36,7 @@ bool Tokenizer::fromString(const std::string& tokenString, std::vector<Token>& t
     return true;
 
   std::string workString(tokenString);
+  util::trimLeft(workString);
   while (!workString.empty())
   {
     const bool nextCouldBeHalfMove = !tokens.empty()
@@ -205,20 +206,34 @@ bool Tokenizer::fromFile(const std::string& fileName, std::vector<Token>& tokens
   if (!stream.good() || !stream.is_open())
     return false;
 
-  std::string line;
-  while(std::getline(stream, line))
+  std::string content;
+  for(std::string line = ""; std::getline(stream, line); )
   {
-    std::vector<Token> lineTokens;
-    const bool success = fromString(line, lineTokens);
-    tokens.insert(tokens.end(), lineTokens.begin(), lineTokens.end());
-    if (!success)
+    content.append(std::string("\n") + line);
+    if (content.size() > 1024 * 1024)
     {
-      stream.close();
-      return false;
+      std::vector<Token> partialTokens;
+      const bool success = fromString(content, partialTokens);
+      tokens.insert(tokens.end(), partialTokens.begin(), partialTokens.end());
+      if (!success)
+      {
+        stream.close();
+        return false;
+      }
+      content.clear();
     }
-  } //while
+  } //for
   stream.close();
-  return true;
+  if (!content.empty())
+  {
+    std::vector<Token> partialTokens;
+    const bool success = fromString(content, partialTokens);
+    tokens.insert(tokens.end(), partialTokens.begin(), partialTokens.end());
+    if (!success)
+       return false;
+  }
+
+  return !tokens.empty();
 }
 
 } //namespace
