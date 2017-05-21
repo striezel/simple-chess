@@ -27,7 +27,8 @@ namespace simplechess
 
 PgnReaderOptions::PgnReaderOptions()
 : inputFile(""),
-  delayMilliseconds(1000)
+  delayMilliseconds(1000),
+  help(false)
 {
 }
 
@@ -81,6 +82,10 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
                   << " to the Portable Game Notation file!\n";
         return false;
       }
+    }
+    else if ((param == "--help") || (param == "-?") || (param == "/?"))
+    {
+      help = true;
     }
     else
     {

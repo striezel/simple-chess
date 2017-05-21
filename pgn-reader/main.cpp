@@ -32,13 +32,31 @@
 #include "../pgn/ParserException.hpp"
 #include "../ui/Console.hpp"
 
+void showHelp()
+{
+  std::cout << "\npgn-reader --pgn FILENAME [--delay MILLISECONDS]\n"
+            << "\n"
+            << "options:\n"
+            << "  --help | -?      - displays this help message and quits\n"
+            << "  -pgn FILENAME    - sets the path for the Portable Game Notation file that\n"
+            << "                     will be read. This parameter is mandatory.\n"
+            << "  --delay MS       - sets the delay between moves to MS milliseconds.\n"
+            << "                     The default value is 1000, i.e. one second.\n";
+}
+
 int main(int argc, char** argv)
 {
   simplechess::PgnReaderOptions options;
   if (!options.parse(argc, argv))
   {
-    std::cout << "Invalid parameters encountered, program will exit.\n";
+    std::cout << "Invalid parameters encountered, program will exit.\n"
+              << "Use --help to show recognized parameters.\n";
     return 1;
+  }
+  if (options.help)
+  {
+    showHelp();
+    return 0;
   }
   if (options.inputFile.empty())
   {
