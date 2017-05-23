@@ -23,6 +23,7 @@
 
 #include "../data/Board.hpp"
 #include "../data/HalfMove.hpp"
+#include "../data/PortableGameNotation.hpp"
 
 namespace simplechess
 {
@@ -49,6 +50,15 @@ bool applyMove(Board& board, const HalfMove& hMove, const Colour toMove);
  *         Returns none, if no matching field was found
  */
 Field findOriginField(const Board& board, const HalfMove& hMove);
+
+
+/** \brief checks the plausibility of a Portable Game Notation
+ *
+ * \param pgn  the Portable Game Notation instance
+ * \return Returns true, if the content seems plausible.
+ *         Returns false otherwise.
+ */
+bool checkPortableGameNotation(const PortableGameNotation& pgn);
 
 } //namespace
 

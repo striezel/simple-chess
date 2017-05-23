@@ -101,6 +101,12 @@ int main(int argc, char** argv)
   std::cout << "Number of first move: " << pgn.firstMoveNumber() << "\n"
             << "Number of last move:  " << pgn.lastMoveNumber() << "\n";
 
+  if (!simplechess::algorithm::checkPortableGameNotation(pgn))
+  {
+    std::cout << "Error: Portable game notation data is implausible!\n";
+    return 2;
+  }
+
   //start game
   simplechess::Board board;
   std::string fen = simplechess::FEN::defaultInitialPosition;

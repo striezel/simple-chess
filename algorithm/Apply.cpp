@@ -19,6 +19,7 @@
 */
 
 #include "Apply.hpp"
+#include "../data/ForsythEdwardsNotation.hpp"
 #include "../rules/Moves.hpp"
 
 namespace simplechess
@@ -111,6 +112,38 @@ Field findOriginField(const Board& board, const HalfMove& hMove)
     origin = board.findNext(piece, static_cast<Field>(static_cast<int>(origin) + 1));
   } //while
   return origin;
+}
+
+bool checkPortableGameNotation(const PortableGameNotation& pgn)
+{
+  //check move number range
+  const auto min = pgn.firstMoveNumber();
+  if (min == 0)
+    return false;
+  const auto max = pgn.lastMoveNumber();
+  if (max == 0)
+    return false;
+  for(auto i = min; i <= max; ++i)
+  {
+    if (!pgn.hasMove(i))
+      return false;
+  } //for
+  std::string fen = pgn.tag("FEN");
+  if (fen.empty())
+    fen = FEN::defaultInitialPosition;
+  Board board;
+  if (!board.fromFEN(fen))
+    return false;
+  for (unsigned int i = min; i <= max; ++i)
+  {
+    const auto moves = pgn.move(i);
+    if (!simplechess::algorithm::applyMove(board, moves.first, simplechess::Colour::white))
+      return false;
+    if (!simplechess::algorithm::applyMove(board, moves.second, simplechess::Colour::black))
+      return false;
+  } //for
+  //All seems to be OK.
+  return true;
 }
 
 } //namespace
