@@ -38,6 +38,11 @@ BSON::BSON()
     throw std::runtime_error("Could not create new BSON instance!");
 }
 
+BSON::~BSON()
+{
+  bson_free(mBson);
+}
+
 bool BSON::append(const std::string& key, const std::string& value)
 {
   return bson_append_string(mBson, key.c_str(), value.c_str(), value.size());
@@ -81,6 +86,27 @@ bool BSON::finish()
     return true;
   }
   return false;
+}
+
+std::vector<std::pair<std::string, std::string>> BSON::keys() const
+{
+  bson_cursor * cursor = bson_cursor_new(mBson);
+  if (nullptr == cursor)
+    throw std::runtime_error("Could not get BSON cursor!");
+  std::vector<std::pair<std::string, std::string>> result;
+  while (bson_cursor_next(cursor))
+  {
+    result.push_back(std::pair<std::string, std::string>(
+        std::string(bson_cursor_key(cursor)),
+        std::string(bson_cursor_type_as_string(cursor))));
+  } //while
+  bson_cursor_free(cursor);
+  return result;
+}
+
+bson* BSON::raw() const
+{
+  return mBson;
 }
 
 } //namespace

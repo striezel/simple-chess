@@ -22,6 +22,8 @@
 #define SIMPLECHESS_DB_MONGO_BSON_HPP
 
 #include <string>
+#include <utility>
+#include <vector>
 #include <mongo-client/mongo.h>
 
 namespace simplechess
@@ -40,6 +42,9 @@ class BSON
   public:
     /** \brief default constructor */
     BSON();
+
+    /** destructor */
+    ~BSON();
 
 
     //delete copy constructor and assignment operator
@@ -119,6 +124,20 @@ class BSON
      * \return Returns true, if the object could be finished.
      */
     bool finish();
+
+
+    /** \brief gets the keys of this BSON
+     *
+     * \return vector of key names paired with their type
+     */
+    std::vector<std::pair<std::string, std::string>> keys() const;
+
+
+    /** \brief gets the raw underlying pointer
+     *
+     * \return the bson pointer
+     */
+    bson* raw() const;
   private:
     bson* mBson; /**< BSON object pointer */
     bool mFinished; /**< whether the object is finished */
