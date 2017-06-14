@@ -24,6 +24,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <mongo-client/bson.h>
 #include <mongo-client/mongo.h>
 
 namespace simplechess
@@ -43,12 +44,17 @@ class BSON
     /** \brief default constructor */
     BSON();
 
+    /** \brief constructor with initial value */
+    BSON(bson * b);
+
     /** destructor */
     ~BSON();
 
 
-    //delete copy constructor and assignment operator
-    BSON(const BSON& other) = delete;
+    //copy constructor
+    BSON(const BSON& other);
+
+    //delete assignment operator
     BSON& operator=(const BSON& other) = delete;
 
 

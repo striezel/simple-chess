@@ -38,9 +38,23 @@ BSON::BSON()
     throw std::runtime_error("Could not create new BSON instance!");
 }
 
+BSON::BSON(bson * b)
+: mBson(b),
+  mFinished(true)
+{
+  if (nullptr == mBson)
+    throw std::runtime_error("Initial value for BSON is null!");
+}
+
 BSON::~BSON()
 {
   bson_free(mBson);
+}
+
+BSON::BSON(const BSON& other)
+{
+  mFinished = other.finished();
+  mBson = bson_new_from_data(bson_data(other.mBson), bson_size(other.mBson));
 }
 
 bool BSON::append(const std::string& key, const std::string& value)

@@ -43,6 +43,8 @@
 		<Unit filename="../db/mongo/BSON.hpp" />
 		<Unit filename="../db/mongo/Connection.cpp" />
 		<Unit filename="../db/mongo/Connection.hpp" />
+		<Unit filename="../db/mongo/Cursor.cpp" />
+		<Unit filename="../db/mongo/Cursor.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
 		<Unit filename="main.cpp" />
