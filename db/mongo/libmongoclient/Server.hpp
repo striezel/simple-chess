@@ -18,12 +18,11 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_DB_MONGO_CONNECTION_HPP
-#define SIMPLECHESS_DB_MONGO_CONNECTION_HPP
+#ifndef SIMPLECHESS_DB_MONGO_LMC_SERVER_HPP
+#define SIMPLECHESS_DB_MONGO_LMC_SERVER_HPP
 
-#include <cstdint>
-#include <string>
-#include <mongo-client/mongo-sync.h>
+#include "../Server.hpp"
+#include "Connection.hpp"
 
 namespace simplechess
 {
@@ -34,31 +33,45 @@ namespace db
 namespace mongo
 {
 
-class Connection
+namespace libmongoclient
+{
+
+class Server : public simplechess::db::mongo::Server
 {
   public:
-    /** \brief creates a connection and connects to a MongoDB server
+    /** \brief connects to a MongoDB server
      *
      * \param hostname  hostname or IP of the MongoDB server
      * \param port      port number for the server
      * \param slaveAcceptable  whether it is acceptable to connect to a slave in a replica set
      */
-    Connection(const std::string& hostname, const uint16_t port, const bool slaveAcceptable);
+    Server(const std::string& hostname, const uint16_t port, const bool slaveAcceptable);
 
 
-    ///deleted copy constructor
-    Connection(const Connection& other) = delete;
-
-
-    ///deleted assignment operator
-    Connection operator=(const Connection& other) = delete;
-
-
-    /** \brief destructor - disconnects and frees connection handle
+    /** \brief destructor - closes the connection to the server (if still open)
      */
-    ~Connection();
+    virtual ~Server();
+
+
+    /** \brief gets a list of board IDs from the server
+     *
+     * \param boardIds  vector that will be used to store the IDs
+     * \return Returns true, if retrieval was successful.
+     *         Returns false otherwise.
+     */
+    virtual bool boardList(std::vector<std::string>& boardIds);
+
+
+    /** \brief gets a single chess board from the database
+     *
+     * \param id   the ID of the board
+     * \param board   board instance that will be used to store the data
+     * \return Returns true, if retrieval was successful.
+     *         Returns false, if an error occurred.
+     */
+    virtual bool getBoard(const std::string& id, Board& board);
   private:
-    mongo_sync_connection * conn; /**< MongoDB connection handle */
+    Connection conn; /**< server connection */
 }; //class
 
 } //namespace
@@ -67,4 +80,6 @@ class Connection
 
 } //namespace
 
-#endif // SIMPLECHESS_DB_MONGO_CONNECTION_HPP
+} //namespace
+
+#endif // SIMPLECHESS_DB_MONGO_LMC_SERVER_HPP

@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include "Cursor.hpp"
+#include "QueryCursor.hpp"
 #include <stdexcept>
 
 namespace simplechess
@@ -30,24 +30,36 @@ namespace db
 namespace mongo
 {
 
-Cursor::Cursor(mongo_sync_cursor * cur)
-: mCursor(cur)
+QueryCursor::QueryCursor(mongo_sync_cursor * cur, mongo_packet* packet)
+: mCursor(cur),
+  mPacket(packet)
 {
   if (nullptr == mCursor)
     throw std::runtime_error("MongoDB cursor is null!");
 }
 
-Cursor::~Cursor()
+QueryCursor::~QueryCursor()
 {
-  mongo_sync_cursor_free(mCursor);
+  if (mCursor != nullptr)
+    mongo_sync_cursor_free(mCursor);
+  if (mPacket != nullptr)
+    mongo_wire_packet_free(mPacket);
 }
 
-bool Cursor::next()
+QueryCursor::QueryCursor(QueryCursor&& other)
+{
+  mCursor = other.mCursor;
+  other.mCursor = nullptr;
+  mPacket = other.mPacket;
+  other.mPacket = nullptr;
+}
+
+bool QueryCursor::next()
 {
   return mongo_sync_cursor_next(mCursor);
 }
 
-BSON Cursor::data() const
+BSON QueryCursor::data() const
 {
   bson* b = mongo_sync_cursor_get_data(mCursor);
   if (nullptr == b)

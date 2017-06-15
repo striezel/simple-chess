@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_DB_MONGO_BSON_HPP
-#define SIMPLECHESS_DB_MONGO_BSON_HPP
+#ifndef SIMPLECHESS_DB_MONGO_LMC_BSON_HPP
+#define SIMPLECHESS_DB_MONGO_LMC_BSON_HPP
 
 #include <string>
 #include <utility>
@@ -52,10 +52,15 @@ class BSON
 
 
     //copy constructor
-    BSON(const BSON& other);
+    BSON(const BSON& other) = delete;
+
 
     //delete assignment operator
     BSON& operator=(const BSON& other) = delete;
+
+
+    //move constructor
+    BSON(BSON&& other);
 
 
     /** \brief appends a string to the BSON
@@ -155,4 +160,4 @@ class BSON
 
 } //namespace
 
-#endif // SIMPLECHESS_DB_MONGO_BSON_HPP
+#endif // SIMPLECHESS_DB_MONGO_LMC_BSON_HPP

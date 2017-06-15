@@ -21,7 +21,7 @@
 #include "Connection.hpp"
 #include <cerrno>
 #include <stdexcept>
-#include "../../util/strings.hpp"
+#include "../../../util/strings.hpp"
 
 namespace simplechess
 {
@@ -51,6 +51,22 @@ Connection::Connection(const std::string& hostname, const uint16_t port, const b
 Connection::~Connection()
 {
   mongo_sync_disconnect(conn);
+}
+
+mongo_sync_connection * Connection::raw() const
+{
+  return conn;
+}
+
+QueryCursor Connection::query(const std::string& ns, const BSON& queryB, const unsigned int limit)
+{
+  mongo_packet* packet = mongo_sync_cmd_query(conn, ns.c_str(), 0, 0, limit, queryB.raw(), NULL);
+  if (nullptr == packet)
+    throw std::runtime_error("Could not perform MongoDB query!");
+  mongo_sync_cursor* lowLevelCursor = mongo_sync_cursor_new(conn, ns.c_str(), packet);
+  if (nullptr == lowLevelCursor)
+    throw std::runtime_error("Could not create query cursor from MongoDB query packet!");
+  return QueryCursor(lowLevelCursor, packet);
 }
 
 } //namespace

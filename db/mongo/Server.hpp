@@ -18,12 +18,13 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_DB_MONGO_CURSOR_HPP
-#define SIMPLECHESS_DB_MONGO_CURSOR_HPP
+#ifndef SIMPLECHESS_DB_MONGO_SERVER_HPP
+#define SIMPLECHESS_DB_MONGO_SERVER_HPP
 
+#include <cstdint>
 #include <string>
-#include <mongo-client/mongo-sync-cursor.h>
-#include "BSON.hpp"
+#include <vector>
+#include "../../data/Board.hpp"
 
 namespace simplechess
 {
@@ -34,53 +35,38 @@ namespace db
 namespace mongo
 {
 
-//forward declaration of Connection
-class Connection;
-
-
-class Cursor
+/** abstract base class for connecting to a MongoDB server */
+class Server
 {
   public:
-    /** \brief default constructor
-     *
-     * \param cur the underlying cursor
+    /** \brief destructor - closes the connection to the server (if still open)
      */
-    Cursor(mongo_sync_cursor * cur);
+    virtual ~Server() { }
 
 
-    /** destructor */
-    ~Cursor();
-
-
-    //delete copy constructor
-    Cursor(const Cursor& other) = delete;
-
-    //delete assignment operator
-    Cursor& operator=(const Cursor& other) = delete;
-
-
-    /** \brief moves the cursor to the next element
+    /** \brief gets a list of board IDs from the server
      *
-     * \return Returns true, if the cursor was moved.
-     *         Returns false, if the cursor was not moved or an error occurred.
+     * \param boardIds  vector that will be used to store the IDs
+     * \return Returns true, if retrieval was successful.
+     *         Returns false otherwise.
      */
-    bool next();
+    virtual bool boardList(std::vector<std::string>& boardIds) = 0;
 
 
-    /** \brief gets the data at the current cursor position
+    /** \brief gets a single chess board from the database
      *
-     * \return a BSON object that contains the data
+     * \param id   the ID of the board
+     * \param board   board instance that will be used to store the data
+     * \return Returns true, if retrieval was successful.
+     *         Returns false, if an error occurred.
      */
-    BSON data() const;
-  private:
-    mongo_sync_cursor * mCursor;
+    virtual bool getBoard(const std::string& id, Board& board) = 0;
 }; //class
 
-
 } //namespace
 
 } //namespace
 
 } //namespace
 
-#endif // SIMPLECHESS_DB_MONGO_CURSOR_HPP
+#endif // SIMPLECHESS_DB_MONGO_SERVER_HPP

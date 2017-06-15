@@ -39,12 +39,27 @@
 		<Linker>
 			<Add library="mongo-client" />
 		</Linker>
-		<Unit filename="../db/mongo/BSON.cpp" />
-		<Unit filename="../db/mongo/BSON.hpp" />
-		<Unit filename="../db/mongo/Connection.cpp" />
-		<Unit filename="../db/mongo/Connection.hpp" />
-		<Unit filename="../db/mongo/Cursor.cpp" />
-		<Unit filename="../db/mongo/Cursor.hpp" />
+		<Unit filename="../data/Board.cpp" />
+		<Unit filename="../data/Board.hpp" />
+		<Unit filename="../data/Castling.cpp" />
+		<Unit filename="../data/Castling.hpp" />
+		<Unit filename="../data/Field.cpp" />
+		<Unit filename="../data/Field.hpp" />
+		<Unit filename="../data/Piece.cpp" />
+		<Unit filename="../data/Piece.hpp" />
+		<Unit filename="../db/mongo/Server.hpp" />
+		<Unit filename="../db/mongo/libmongoclient/BSON.cpp" />
+		<Unit filename="../db/mongo/libmongoclient/BSON.hpp" />
+		<Unit filename="../db/mongo/libmongoclient/Connection.cpp" />
+		<Unit filename="../db/mongo/libmongoclient/Connection.hpp" />
+		<Unit filename="../db/mongo/libmongoclient/QueryCursor.cpp" />
+		<Unit filename="../db/mongo/libmongoclient/QueryCursor.hpp" />
+		<Unit filename="../db/mongo/libmongoclient/Server.cpp" />
+		<Unit filename="../db/mongo/libmongoclient/Server.hpp" />
+		<Unit filename="../rules/Moves.cpp" />
+		<Unit filename="../rules/Moves.hpp" />
+		<Unit filename="../rules/check.cpp" />
+		<Unit filename="../rules/check.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
 		<Unit filename="main.cpp" />

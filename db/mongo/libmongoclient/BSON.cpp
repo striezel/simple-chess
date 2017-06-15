@@ -51,10 +51,12 @@ BSON::~BSON()
   bson_free(mBson);
 }
 
-BSON::BSON(const BSON& other)
+BSON::BSON(BSON&& other)
 {
-  mFinished = other.finished();
-  mBson = bson_new_from_data(bson_data(other.mBson), bson_size(other.mBson));
+  mBson = other.mBson;
+  mFinished = other.mFinished;
+  other.mBson = bson_new();
+  other.mFinished = false;
 }
 
 bool BSON::append(const std::string& key, const std::string& value)
