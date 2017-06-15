@@ -27,8 +27,17 @@ fi
 $CXX --version
 echo
 
+# compiler flags for libmongo-client
+if [[ $(pkg-config --cflags libmongo-client) ]]
+then
+  CFLAGS=$(pkg-config --cflags libmongo-client)
+else
+  echo "There is a problem with pkg-config for libmongo-client!"
+  exit 1
+fi
+
 # find all .sh files and run them through Bash's syntax check
-find ./ \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) -print0 | xargs -0 -i $CXX -fsyntax-only -Wall -std=c++0x {}
+find ./ \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) -print0 | xargs -0 -i $CXX $CFLAGS -fsyntax-only -Wall -std=c++0x {}
 if [[ $? -ne 0 ]]
 then
   echo "Some source code files contain syntax errors!"
