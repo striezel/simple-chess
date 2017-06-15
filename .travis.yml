@@ -11,6 +11,8 @@ addons:
     - gcc-4.9
     - cmake
     - libboost-test-dev
+    - libglib2.0-dev
+    - libmongo-client-dev
 before_install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
 script:
