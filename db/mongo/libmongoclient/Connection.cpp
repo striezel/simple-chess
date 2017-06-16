@@ -38,7 +38,7 @@ Connection::Connection(const std::string& hostname, const uint16_t port, const b
   if (nullptr == conn)
   {
     throw std::runtime_error(std::string("Could not establish connection to MongoDB on ")
-              + hostname + ":" + util::intToString(port) + " ! Errno: "
+              + hostname + ":" + util::intToString(port) + "! Errno: "
               + util::intToString(errno) + ".");
   }
   if (!mongo_sync_conn_set_auto_reconnect(conn, TRUE))
