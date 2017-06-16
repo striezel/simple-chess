@@ -19,6 +19,7 @@
 */
 
 #include "BSON.hpp"
+#include <iostream>
 #include <stdexcept>
 
 namespace simplechess
@@ -118,6 +119,28 @@ std::vector<std::pair<std::string, std::string>> BSON::keys() const
   } //while
   bson_cursor_free(cursor);
   return result;
+}
+
+bool BSON::getString(const std::string& key, std::string& valueOut) const
+{
+  if (key.empty())
+    return false;
+  bson_cursor* bc = bson_find(mBson, key.c_str());
+  if (nullptr == bc)
+    return false;
+  const char* str = nullptr;
+  const auto success = bson_cursor_get_string(bc, &str);
+  if (success)
+  {
+    valueOut = std::string(str);
+  }
+  else
+  {
+    std::cout << "Error: Could not find element with key \"" << key << "\"!" << std::endl;
+  }
+  bson_cursor_free(bc);
+  bc = nullptr;
+  return success;
 }
 
 bson* BSON::raw() const

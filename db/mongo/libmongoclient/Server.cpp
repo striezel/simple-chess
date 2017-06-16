@@ -63,8 +63,11 @@ bool Server::boardList(std::vector<std::string>& boardIds)
      while (c.next())
      {
        const BSON elem = c.data();
-       //TODO!
-       throw std::runtime_error("lmc::Server::boardList() is not implemented yet!");
+       std::string out;
+       if (elem.getString("_id", out))
+         boardIds.push_back(out);
+       else
+         return false;
      } //while
    } //try-c
    catch(const std::exception& ex)

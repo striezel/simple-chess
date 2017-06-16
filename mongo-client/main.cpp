@@ -19,9 +19,22 @@
 */
 
 #include <iostream>
+#include "../db/mongo/libmongoclient/Server.hpp"
 
 int main()
 {
-  std::cout << "Hello world!" << std::endl;
+  simplechess::db::mongo::libmongoclient::Server server("localhost", 3001, true);
+  std::cout << "Connection attempt succeeded." << std::endl;
+  std::vector<std::string> boards;
+  if (!server.boardList(boards))
+  {
+    std::cerr << "Could not get board list from DB!" << std::endl;
+    return 1;
+  }
+  std::cout << "List of board IDs:" << std::endl;
+  for (const auto & id : boards)
+  {
+    std::cout << "  " << id << std::endl;
+  }
   return 0;
 }

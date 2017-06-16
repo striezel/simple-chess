@@ -144,6 +144,16 @@ class BSON
     std::vector<std::pair<std::string, std::string>> keys() const;
 
 
+    /** \brief gets the string value for a given key
+     *
+     * \param key   name of the key
+     * \param valueOut  string variable to save the value
+     * \return Returns true, if the value was found and valueOut was set.
+     *         Returns false, if an error occurred.
+     */
+    bool getString(const std::string& key, std::string& valueOut) const;
+
+
     /** \brief gets the raw underlying pointer
      *
      * \return the bson pointer
