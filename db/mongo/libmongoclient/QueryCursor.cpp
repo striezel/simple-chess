@@ -42,8 +42,8 @@ QueryCursor::~QueryCursor()
 {
   if (mCursor != nullptr)
     mongo_sync_cursor_free(mCursor);
-  if (mPacket != nullptr)
-    mongo_wire_packet_free(mPacket);
+  //if (mPacket != nullptr)
+  //  mongo_wire_packet_free(mPacket);
 }
 
 QueryCursor::QueryCursor(QueryCursor&& other)
