@@ -35,6 +35,13 @@ Piece::Piece(Colour c, PieceType pt)
 {
 }
 
+bool Piece::acceptable() const
+{
+  //Acceptable pieces are the ones where either both colour and piece type are
+  // none, or where both colour and piece type are not none.
+  return ((colour == Colour::none) == (piece == PieceType::none));
+}
+
 bool Piece::operator==(const Piece& other) const
 {
   return ((colour == other.colour) && (piece == other.piece));
@@ -46,7 +53,6 @@ bool Piece::operator!=(const Piece& other) const
 }
 
 } //namespace
-
 
 
 std::ostream& operator<<(std::ostream& str, const simplechess::Colour& c)

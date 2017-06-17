@@ -31,6 +31,8 @@ namespace simplechess
    /** enumeration type for types of pieces */
    enum class PieceType { none, king, queen, bishop, knight, rook, pawn};
 
+
+   /** struct that represents a player piece */
    struct Piece
    {
      Colour colour; /**< colour of the piece */
@@ -46,6 +48,15 @@ namespace simplechess
       */
      Piece(Colour c, PieceType pt);
 
+
+     /** \brief Checks whether the struct's content is a sensible, acceptable piece.
+      *
+      * \return Returns true, if the content is a sensible, acceptable piece.
+      *         Returns false otherwise.
+      */
+     bool acceptable() const;
+
+
      /** equality operator for Piece structures
       *
       * \param other  other piece against which this piece is compared
@@ -53,6 +64,7 @@ namespace simplechess
       *         Returns false otherwise.
       */
      bool operator==(const Piece& other) const;
+
 
      /** inequality operator for Piece structures
       *

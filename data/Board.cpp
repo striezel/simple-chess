@@ -80,6 +80,41 @@ const Castling& Board::castling() const
   return mCastling;
 }
 
+bool Board::setElement(const Field field, const Piece& piece)
+{
+  if ((field == Field::none) || !piece.acceptable())
+    return false;
+  //set element
+  mFields[field] = piece;
+  return true;
+}
+
+bool Board::setToMove(const Colour who)
+{
+  if (who == Colour::none)
+    return false;
+  //set player that is to move
+  mToMove = who;
+  return true;
+}
+
+bool Board::setEnPassant(const Field ep)
+{
+  //Allowed values are none for "no e.p." or any field on 3rd or 6th row.
+  if ((ep == Field::none) || (row(ep) == 3) || (row(ep) == 6))
+  {
+    mEnPassant = ep;
+    return true;
+  }
+  //invalid field given
+  return false;
+}
+
+void Board::setCastling(const Castling& castlingInfo)
+{
+  mCastling = castlingInfo;
+}
+
 bool Board::isInCheck(const Colour colour) const
 {
   switch(colour)
@@ -92,6 +127,13 @@ bool Board::isInCheck(const Colour colour) const
          //"None" can never be in check.
          return false;
   } //switch
+}
+
+void Board::updateCheckCache()
+{
+  //update info who is in check
+  mWhiteInCheck = simplechess::isInCheck(*this, Colour::white);
+  mBlackInCheck = simplechess::isInCheck(*this, Colour::black);
 }
 
 bool Board::fromFEN(const std::string& FEN)
@@ -218,8 +260,7 @@ bool Board::fromFEN(const std::string& FEN)
     mEnPassant = Field::none;
 
   //update info who is in check
-  mWhiteInCheck = simplechess::isInCheck(*this, Colour::white);
-  mBlackInCheck = simplechess::isInCheck(*this, Colour::black);
+  updateCheckCache();
 
   // Other info from FEN is not parsed yet, so return true for now.
   return true;
