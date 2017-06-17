@@ -41,6 +41,7 @@ Connection::Connection(const std::string& hostname, const uint16_t port, const b
               + hostname + ":" + util::intToString(port) + "! Errno: "
               + util::intToString(errno) + ".");
   }
+  //enable automatic reconnection to MongoDB
   if (!mongo_sync_conn_set_auto_reconnect(conn, TRUE))
   {
     throw std::runtime_error("Could not enable auto-reconnect in MongoDB connection to "
@@ -51,6 +52,7 @@ Connection::Connection(const std::string& hostname, const uint16_t port, const b
 Connection::~Connection()
 {
   mongo_sync_disconnect(conn);
+  conn = nullptr;
 }
 
 mongo_sync_connection * Connection::raw() const
