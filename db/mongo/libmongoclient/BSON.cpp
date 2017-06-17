@@ -53,9 +53,9 @@ BSON::~BSON()
 }
 
 BSON::BSON(BSON&& other)
+: mBson(other.mBson),
+  mFinished(other.mFinished)
 {
-  mBson = other.mBson;
-  mFinished = other.mFinished;
   other.mBson = bson_new();
   other.mFinished = false;
 }

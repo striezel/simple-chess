@@ -47,10 +47,10 @@ QueryCursor::~QueryCursor()
 }
 
 QueryCursor::QueryCursor(QueryCursor&& other)
+: mCursor(other.mCursor),
+  mPacket(other.mPacket)
 {
-  mCursor = other.mCursor;
   other.mCursor = nullptr;
-  mPacket = other.mPacket;
   other.mPacket = nullptr;
 }
 
