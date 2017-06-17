@@ -20,9 +20,15 @@
 
 #include <iostream>
 #include "../db/mongo/libmongoclient/Server.hpp"
+#include "../ui/Console.hpp"
 
-int main()
+int main(int argc, char** argv)
 {
+  std::string boardId;
+  if ((argc > 1) && (argv[1] != nullptr))
+  {
+    boardId = std::string(argv[1]);
+  }
   simplechess::db::mongo::libmongoclient::Server server("localhost", 3001, true);
   std::cout << "Connection attempt succeeded." << std::endl;
   std::vector<std::string> boards;
@@ -36,5 +42,26 @@ int main()
   {
     std::cout << "  " << id << std::endl;
   }
+  if (boards.empty())
+  {
+    std::cout << "  No boards are available in the database." << std::endl;
+    return 0;
+  }
+
+  //Just use the first board, if none is given.
+  if (boardId.empty())
+    boardId = boards[0];
+
+  simplechess::Board board;
+  if (!server.getBoard(boardId, board))
+  {
+    std::cerr << "Could not get board data for board " << boardId
+              << " from DB!" << std::endl;
+    return 1;
+  }
+  std::cout << "Board data retrieval for " << boardId << " succeeded."
+            << " (Pass a board ID as 1st argument to this program, if you want"
+            << " to see a different board.)" << std::endl;
+  simplechess::ui::Console::showBoard(board);
   return 0;
 }

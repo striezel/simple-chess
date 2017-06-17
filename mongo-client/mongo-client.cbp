@@ -48,6 +48,8 @@
 		<Unit filename="../data/Field.hpp" />
 		<Unit filename="../data/Piece.cpp" />
 		<Unit filename="../data/Piece.hpp" />
+		<Unit filename="../db/mongo/Convert.cpp" />
+		<Unit filename="../db/mongo/Convert.hpp" />
 		<Unit filename="../db/mongo/Server.hpp" />
 		<Unit filename="../db/mongo/libmongoclient/BSON.cpp" />
 		<Unit filename="../db/mongo/libmongoclient/BSON.hpp" />
@@ -61,6 +63,8 @@
 		<Unit filename="../rules/Moves.hpp" />
 		<Unit filename="../rules/check.cpp" />
 		<Unit filename="../rules/check.hpp" />
+		<Unit filename="../ui/Console.cpp" />
+		<Unit filename="../ui/Console.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
 		<Unit filename="main.cpp" />

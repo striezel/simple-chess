@@ -33,8 +33,8 @@ namespace mongo
 {
 
 Connection::Connection(const std::string& hostname, const uint16_t port, const bool slaveAcceptable)
+: conn(mongo_sync_connect(hostname.c_str(), port, slaveAcceptable))
 {
-  conn = mongo_sync_connect(hostname.c_str(), port, slaveAcceptable);
   if (nullptr == conn)
   {
     throw std::runtime_error(std::string("Could not establish connection to MongoDB on ")

@@ -52,6 +52,24 @@ BSON::~BSON()
   bson_free(mBson);
 }
 
+BSON& BSON::operator=(const BSON& other)
+{
+  //avoid self assignment
+  if (this == &other)
+    return *this;
+  //copy
+  mBson = bson_new_from_data(bson_data(other.mBson), bson_size(other.mBson));
+  //Objects created via bson_new_from_data() are never finished, so they have
+  // to be finished manually, if necessary.
+  if (other.mFinished)
+  {
+    if (!bson_finish(mBson))
+      throw std::runtime_error("BSON could not be finished!");
+  }
+  mFinished = other.mFinished;
+  return *this;
+}
+
 BSON::BSON(BSON&& other)
 : mBson(other.mBson),
   mFinished(other.mFinished)
@@ -121,6 +139,19 @@ std::vector<std::pair<std::string, std::string>> BSON::keys() const
   return result;
 }
 
+bool BSON::isNull(const std::string& key) const
+{
+  if (key.empty())
+    return false;
+  bson_cursor* bc = bson_find(mBson, key.c_str());
+  if (nullptr == bc)
+    return false;
+  const bool is_null = bson_cursor_type(bc) == BSON_TYPE_NULL;
+  bson_cursor_free(bc);
+  bc = nullptr;
+  return is_null;
+}
+
 bool BSON::getString(const std::string& key, std::string& valueOut) const
 {
   if (key.empty())
@@ -140,6 +171,95 @@ bool BSON::getString(const std::string& key, std::string& valueOut) const
   }
   bson_cursor_free(bc);
   bc = nullptr;
+  return success;
+}
+
+bool BSON::getInt32(const std::string& key, int32_t& valueOut) const
+{
+  if (key.empty())
+    return false;
+  bson_cursor* bc = bson_find(mBson, key.c_str());
+  if (nullptr == bc)
+    return false;
+  gint32 i32 = 0;
+  const auto success = bson_cursor_get_int32(bc, &i32);
+  if (success)
+  {
+    valueOut = i32;
+  }
+  else
+  {
+    std::cout << "Error: Could not find integer with key \"" << key << "\"!" << std::endl;
+  }
+  bson_cursor_free(bc);
+  bc = nullptr;
+  return success;
+}
+
+bool BSON::getInt64(const std::string& key, int64_t& valueOut) const
+{
+  if (key.empty())
+    return false;
+  bson_cursor* bc = bson_find(mBson, key.c_str());
+  if (nullptr == bc)
+    return false;
+  gint64 i64 = 0;
+  const auto success = bson_cursor_get_int64(bc, &i64);
+  if (success)
+  {
+    valueOut = i64;
+  }
+  else
+  {
+    std::cout << "Error: Could not find integer with key \"" << key << "\"!" << std::endl;
+  }
+  bson_cursor_free(bc);
+  bc = nullptr;
+  return success;
+}
+
+bool BSON::getBool(const std::string& key, bool& valueOut) const
+{
+  if (key.empty())
+    return false;
+  bson_cursor* bc = bson_find(mBson, key.c_str());
+  if (nullptr == bc)
+    return false;
+  gboolean b = 0;
+  const auto success = bson_cursor_get_boolean(bc, &b);
+  if (success)
+  {
+    valueOut = b;
+  }
+  else
+  {
+    std::cout << "Error: Could not find boolean with key \"" << key << "\"!" << std::endl;
+  }
+  bson_cursor_free(bc);
+  bc = nullptr;
+  return success;
+}
+
+bool BSON::getObject(const std::string& key, BSON& valueOut) const
+{
+  if (key.empty())
+    return false;
+  bson_cursor* bc = bson_find(mBson, key.c_str());
+  if (nullptr == bc)
+    return false;
+  bson* object = nullptr;
+  const auto success = bson_cursor_get_document(bc, &object);
+  if (success)
+  {
+    valueOut = BSON(object);
+  }
+  else
+  {
+    std::cout << "Error: Could not find object with key \"" << key << "\"!" << std::endl;
+  }
+  bson_cursor_free(bc);
+  bc = nullptr;
+  object = nullptr; //Don't free object, BSON class takes care of it.
   return success;
 }
 

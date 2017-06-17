@@ -72,6 +72,27 @@ class Server : public simplechess::db::mongo::Server
     virtual bool getBoard(const std::string& id, Board& board);
   private:
     Connection conn; /**< server connection */
+
+
+    /** \brief gets basic data like player to move, e.p., castling for a board
+     *         from the database
+     *
+     * \param elem BSON element for the board
+     * \param board   Board structure to save the data
+     * \return Returns true in case of success.
+     *         Returns false, if an error occurred.
+     */
+    bool getBasicBoardData(const BSON& elem, Board& board);
+
+
+    /** \brief gets the field data for a board
+     *
+     * \param id   the ID of the board
+     * \param board   board instance that will be used to store the data
+     * \return Returns true in case of success.
+     *         Returns false, if an error occurred.
+     */
+    bool getBoardFields(const std::string& id, Board& board);
 }; //class
 
 } //namespace

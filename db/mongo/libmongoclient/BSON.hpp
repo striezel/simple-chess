@@ -21,6 +21,7 @@
 #ifndef SIMPLECHESS_DB_MONGO_LMC_BSON_HPP
 #define SIMPLECHESS_DB_MONGO_LMC_BSON_HPP
 
+#include <cstdint>
 #include <string>
 #include <utility>
 #include <vector>
@@ -51,12 +52,12 @@ class BSON
     ~BSON();
 
 
-    //copy constructor
+    //delete copy constructor
     BSON(const BSON& other) = delete;
 
 
-    //delete assignment operator
-    BSON& operator=(const BSON& other) = delete;
+    //assignment operator
+    BSON& operator=(const BSON& other);
 
 
     //move constructor
@@ -144,6 +145,15 @@ class BSON
     std::vector<std::pair<std::string, std::string>> keys() const;
 
 
+    /** \brief checks whether the given key exists and its value is null
+     *
+     * \param key  name of the key
+     * \return Returns true, if the key exists and is null.
+     *         Returns false otherwise.
+     */
+    bool isNull(const std::string& key) const;
+
+
     /** \brief gets the string value for a given key
      *
      * \param key   name of the key
@@ -152,6 +162,46 @@ class BSON
      *         Returns false, if an error occurred.
      */
     bool getString(const std::string& key, std::string& valueOut) const;
+
+
+    /** \brief gets the 32 bit integer value for a given key
+     *
+     * \param key   name of the key
+     * \param valueOut  integer variable to save the value
+     * \return Returns true, if the value was found and valueOut was set.
+     *         Returns false, if an error occurred.
+     */
+    bool getInt32(const std::string& key, int32_t& valueOut) const;
+
+
+    /** \brief gets the 64 bit integer value for a given key
+     *
+     * \param key   name of the key
+     * \param valueOut  integer variable to save the value
+     * \return Returns true, if the value was found and valueOut was set.
+     *         Returns false, if an error occurred.
+     */
+    bool getInt64(const std::string& key, int64_t& valueOut) const;
+
+
+    /** \brief gets the boolean value for a given key
+     *
+     * \param key   name of the key
+     * \param valueOut  boolean variable to save the value
+     * \return Returns true, if the value was found and valueOut was set.
+     *         Returns false, if an error occurred.
+     */
+    bool getBool(const std::string& key, bool& valueOut) const;
+
+
+    /** \brief gets the BSON object value for a given key
+     *
+     * \param key   name of the key
+     * \param valueOut  BSON variable to save the value
+     * \return Returns true, if the value was found and valueOut was set.
+     *         Returns false, if an error occurred.
+     */
+    bool getObject(const std::string& key, BSON& valueOut) const;
 
 
     /** \brief gets the raw underlying pointer
