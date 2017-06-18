@@ -173,7 +173,7 @@ bool Server::getBasicBoardData(const BSON& elem, Board& board)
       std::cerr << "Error: Column in enPassant object in DB is empty!" << std::endl;
       return false;
     }
-    int epRow(0);
+    int32_t epRow(0);
     if (!dataObject.getInt32("row", epRow))
     {
       std::cerr << "Error: Could not find row in enPassant object in DB!" << std::endl;
@@ -336,6 +336,118 @@ bool Server::getBoardFields(const std::string& id, Board& board)
               << std::endl;
     return false;
   }
+}
+
+bool Server::setBoard(const std::string& id, const Board& board)
+{
+  BSON query;
+  if (!query.append("_id", id))
+  {
+    std::cerr << "Error: Could not append id to BSON object in lmc::Server::setBoard!"
+              << std::endl;
+    return false;
+  }
+  if (!query.finish())
+  {
+    std::cerr << "Error: Could not finish BSON object in lmc::Server::setBoard!"
+              << std::endl;
+    return false;
+  }
+  try
+  {
+    QueryCursor c = conn.query("meteor.boards", query);
+    if (!c.next())
+    {
+      std::cerr << "Error: Board with id \"" << id << "\" was not found!"
+                << std::endl;
+      return false;
+    } //while
+    if (!setBasicBoardData(id, board))
+      return false;
+    if (!setBoardFields(id, board))
+      return false;
+  } //try-c
+  catch(const std::exception& ex)
+  {
+    std::cerr << "Error: An Exception occurred while setting the board content!"
+              << std::endl << ex.what() << std::endl;
+    return false;
+  }
+  catch(...)
+  {
+    std::cerr << "Error: An Exception occurred while setting the board content!"
+              << std::endl;
+    return false;
+  }
+  return true;
+}
+
+bool Server::setBasicBoardData(const std::string& id, const Board& board)
+{
+  const Castling& c = board.castling();
+  std::string update = "db.boards.update({_id: \"" + id + "\"}, {$set: "
+      + "{toMove: \"" + Convert::colourToMongoDbString(board.toMove()) + "\", "
+      + " castling: {white: {kingside: " + Convert::boolToMongoDbString(c.white_kingside)
+      + ", queenside: " + Convert::boolToMongoDbString(c.white_queenside) + "},"
+      + " black: {kingside: " + Convert::boolToMongoDbString(c.black_kingside)
+      + ", queenside: " + Convert::boolToMongoDbString(c.black_queenside) + "}}, " //end of castling object
+      + " check: {white: " + Convert::boolToMongoDbString(board.isInCheck(Colour::white))
+      + ", black: " + Convert::boolToMongoDbString(board.isInCheck(Colour::black))
+      + "}, "; //end of check object
+  if (board.enPassant() == Field::none)
+  {
+    update += " enPassant: { column: null, row: null}";
+  }
+  else
+  {
+    update += " enPassant: { column: \"" + std::string(1, column(board.enPassant()))
+            + "\", row: " + std::string(1, '1' + row(board.enPassant()) - 1) + "}";
+  }
+  update += "} });";
+
+  bson* eval = bson_build_full (BSON_TYPE_JS_CODE, "$eval", FALSE,
+                                 update.c_str(), -1, BSON_TYPE_NONE);
+  bson_finish (eval);
+  mongo_packet* p = mongo_sync_cmd_custom (conn.raw(), "meteor", eval);
+  if (!p)
+  {
+    std::cerr << "Error while running db.eval!" << std::endl;
+    bson_free(eval);
+    return false;
+  }
+  mongo_wire_packet_free(p);
+  bson_free(eval);
+  return true;
+}
+
+bool Server::setBoardFields(const std::string& id, const Board& board)
+{
+  for (char col = 'a'; col <= 'h'; ++col)
+  {
+    for (int r = 1; r <= 8; ++r)
+    {
+      const auto& elem = board.element(toField(col, r));
+      const std::string rowString = std::string(1, '1' -1 + r);
+      std::string update = "db.fields.update({board: \"" + id + "\", "
+          + "column: \"" + std::string(1, col) + "\", row: " + rowString
+          + "}, {$set: {piece: \"" + Convert::pieceToString(elem.piece) + "\", "
+          + "colour: \"" + Convert::colourToMongoDbString(elem.colour) + "\" }});";
+      bson* eval = bson_build_full (BSON_TYPE_JS_CODE, "$eval", FALSE,
+                                 update.c_str(), -1, BSON_TYPE_NONE);
+      bson_finish (eval);
+      mongo_packet* p = mongo_sync_cmd_custom(conn.raw(), "meteor", eval);
+      if (!p)
+      {
+        std::cerr << "Error while running db.eval!" << std::endl;
+        bson_free(eval);
+        return false;
+      }
+      mongo_wire_packet_free(p);
+      bson_free(eval);
+      eval = nullptr;
+    } //for row
+  } //for column
+  return true;
 }
 
 } //namespace

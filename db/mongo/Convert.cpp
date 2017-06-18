@@ -19,6 +19,7 @@
 */
 
 #include "Convert.hpp"
+#include <stdexcept>
 
 namespace simplechess
 {
@@ -70,6 +71,52 @@ Field Convert::toField(const std::string& column, const int row)
   if ((column[0] < 'a') || (column[0] > 'h'))
     return Field::none;
   return simplechess::toField(column[0], row);
+}
+
+std::string Convert::colourToMongoDbString(const Colour col)
+{
+  switch (col)
+  {
+    case Colour::none:
+         return "empty";
+    case Colour::white:
+         return "white";
+    case Colour::black:
+         return "black";
+    default:
+         throw std::runtime_error("Invalid colour value given!");
+  } //swi
+}
+
+std::string Convert::boolToMongoDbString(const bool b)
+{
+  if (b)
+    return "true";
+  else
+    return "false";
+}
+
+std::string Convert::pieceToString(const PieceType pt)
+{
+  switch (pt)
+  {
+    case PieceType::none:
+         return "empty";
+    case PieceType::pawn:
+         return "pawn";
+    case PieceType::rook:
+         return "rook";
+    case PieceType::knight:
+         return "knight";
+    case PieceType::bishop:
+         return "bishop";
+    case PieceType::king:
+         return "king";
+    case PieceType::queen:
+         return "queen";
+    default:
+         throw std::runtime_error("Invalid piece type value given!");
+  } //swi
 }
 
 } //namespace

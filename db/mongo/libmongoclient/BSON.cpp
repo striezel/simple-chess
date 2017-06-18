@@ -50,6 +50,7 @@ BSON::BSON(bson * b)
 BSON::~BSON()
 {
   bson_free(mBson);
+  mBson = nullptr;
 }
 
 BSON& BSON::operator=(const BSON& other)
@@ -139,6 +140,19 @@ std::vector<std::pair<std::string, std::string>> BSON::keys() const
   return result;
 }
 
+std::string BSON::getTypeOfKey(const std::string& key) const
+{
+  if (key.empty())
+    return std::string();
+  bson_cursor* bc = bson_find(mBson, key.c_str());
+  if (nullptr == bc)
+    return std::string();
+  bson_type t =  bson_cursor_type(bc);
+  bson_cursor_free(bc);
+  bc = nullptr;
+  return std::string(bson_type_as_string(t));
+}
+
 bool BSON::isNull(const std::string& key) const
 {
   if (key.empty())
@@ -182,14 +196,28 @@ bool BSON::getInt32(const std::string& key, int32_t& valueOut) const
   if (nullptr == bc)
     return false;
   gint32 i32 = 0;
-  const auto success = bson_cursor_get_int32(bc, &i32);
+  auto success = bson_cursor_get_int32(bc, &i32);
   if (success)
   {
     valueOut = i32;
   }
   else
   {
-    std::cout << "Error: Could not find integer with key \"" << key << "\"!" << std::endl;
+    double dbl = 0.0d;
+    if (bson_cursor_get_double(bc, &dbl))
+    {
+      const int32_t temp = static_cast<int32_t>(dbl);
+      //check that we have an "integer" double and no fractional parts
+      if (temp == dbl)
+      {
+        valueOut = temp;
+        success = true;
+      }
+    } //if get_double succeeded
+    if (!success)
+    {
+      std::cout << "Error: Could not find integer with key \"" << key << "\"!" << std::endl;
+    }
   }
   bson_cursor_free(bc);
   bc = nullptr;

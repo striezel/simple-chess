@@ -57,6 +57,30 @@ class Convert
      *         Returns Field::none, if one of the parameters is invalid.
      */
     static Field toField(const std::string& column, const int row);
+
+
+    /** \brief converts a colour value to the corresponding string for MongoDB
+     *
+     * \param col  the colour, must not be Colour::none
+     * \return Returns the string representation of the colour.
+     */
+    static std::string colourToMongoDbString(const Colour col);
+
+
+    /** \brief translates a boolean to the corresponding string representation
+     *
+     * \param b   a boolean value
+     * \return Returns "true", if b is true. Returns "false" otherwise.
+     */
+    static std::string boolToMongoDbString(const bool b);
+
+
+    /** \brief translates a piece type to the corresponding MongoDB string
+     *
+     * \param pt   the piece type
+     * \return Returns a string representing the piece type for MongoDB.
+     */
+    static std::string pieceToString(const PieceType pt);
 }; //class
 
 } //namespace

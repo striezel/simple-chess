@@ -63,5 +63,17 @@ int main(int argc, char** argv)
             << " (Pass a board ID as 1st argument to this program, if you want"
             << " to see a different board.)" << std::endl;
   simplechess::ui::Console::showBoard(board);
+
+
+  if (board.element(simplechess::Field::a2) == simplechess::Piece(simplechess::Colour::white, simplechess::PieceType::pawn))
+  {
+    board.move(simplechess::Field::a2, simplechess::Field::a4, simplechess::PieceType::queen);
+    const auto a4 = board.element(simplechess::Field::a4);
+    std::cout << "a4: " << a4.colour << a4.piece << "\n";
+  }
+  if (server.setBoard(boardId, board))
+  {
+    std::cout << "Success.\n";
+  }
   return 0;
 }

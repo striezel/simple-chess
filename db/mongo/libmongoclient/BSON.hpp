@@ -145,6 +145,14 @@ class BSON
     std::vector<std::pair<std::string, std::string>> keys() const;
 
 
+    /** \brief gets the type of a key in the BSON
+     *
+     * \param key  name of the key
+     * \return Returns a string representing the type.
+     */
+    std::string getTypeOfKey(const std::string& key) const;
+
+
     /** \brief checks whether the given key exists and its value is null
      *
      * \param key  name of the key

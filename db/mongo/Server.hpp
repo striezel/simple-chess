@@ -61,6 +61,16 @@ class Server
      *         Returns false, if an error occurred.
      */
     virtual bool getBoard(const std::string& id, Board& board) = 0;
+
+
+    /** \brief updates a single chess board in the database
+     *
+     * \param id   the ID of the board
+     * \param board   board instance that contains the data that shall be written into the DB
+     * \return Returns true, if database update was successful.
+     *         Returns false, if an error occurred.
+     */
+    virtual bool setBoard(const std::string& id, const Board& board) = 0;
 }; //class
 
 } //namespace
