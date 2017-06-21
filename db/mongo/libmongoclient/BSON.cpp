@@ -104,6 +104,11 @@ bool BSON::append(const std::string& key, const int64_t i64)
   return bson_append_int64(mBson, key.c_str(), i64);
 }
 
+bool BSON::append(const std::string& key, const BSON& doc)
+{
+  return bson_append_document(mBson, key.c_str(), doc.mBson);
+}
+
 bool BSON::appendNull(const std::string& key)
 {
   return bson_append_null(mBson, key.c_str());

@@ -80,6 +80,17 @@ class Connection
      *         Throws an exception, if the query failed.
      */
     QueryCursor query(const std::string& ns, const BSON& queryB, const unsigned int limit = 100);
+
+
+    /** \brief performs an update in a MongoDB collection
+     *
+     * \param ns   database and collection name concatenated, separated with a single dot
+     * \param selector  query selector
+     * \param update    update object
+     * \return Returns true, if update succeeded.
+     *         Returns false, if an error occurred.
+     */
+    bool update(const std::string& ns, const BSON& selector, const BSON& update);
   private:
     mongo_sync_connection * conn; /**< MongoDB connection handle */
 }; //class

@@ -80,6 +80,17 @@ class Server : public simplechess::db::mongo::Server
      *         Returns false, if an error occurred.
      */
     virtual bool setBoard(const std::string& id, const Board& board);
+
+
+    /** \brief updates a single field on a chess board in the database
+     *
+     * \param id   the ID of the board in the MongoDB
+     * \param board   board instance that contains the data that shall be written into the DB
+     * \param f       field that shall be updated
+     * \return Returns true, if database update was successful.
+     *         Returns false, if an error occurred.
+     */
+    virtual bool updateFieldOnBoard(const std::string& id, const Board& board, const Field f);
   private:
     Connection conn; /**< server connection */
 

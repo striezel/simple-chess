@@ -382,6 +382,94 @@ bool Server::setBoard(const std::string& id, const Board& board)
   return true;
 }
 
+bool Server::updateFieldOnBoard(const std::string& id, const Board& board, const Field f)
+{
+  if ((f == Field::none) || id.empty())
+    return false;
+
+  const int fieldRow = row(f);
+  const std::string fieldColumn = std::string(1, column(f));
+
+  BSON selector;
+  if (!selector.append("board", id))
+  {
+    std::cerr << "Error: Could not append board id to BSON object in lmc::Server::updateFieldOnBoard!"
+              << std::endl;
+    return false;
+  }
+  if (!selector.append("column", fieldColumn))
+  {
+    std::cerr << "Error: Could not append column to BSON object in lmc::Server::updateFieldOnBoard!"
+              << std::endl;
+    return false;
+  }
+  if (!selector.append("row", fieldRow))
+  {
+    std::cerr << "Error: Could not append row to BSON object in lmc::Server::updateFieldOnBoard!"
+              << std::endl;
+    return false;
+  }
+  if (!selector.finish())
+  {
+    std::cerr << "Error: Could not finish BSON object in lmc::Server::updateFieldOnBoard!"
+              << std::endl;
+    return false;
+  }
+
+  const auto & elem = board.element(f);
+  BSON subUpdate;
+  if (!subUpdate.append("piece", Convert::pieceToString(elem.piece)))
+  {
+    std::cerr << "Error: Could not append piece to BSON object in lmc::Server::updateFieldOnBoard!"
+              << std::endl;
+    return false;
+  }
+  if (!subUpdate.append("colour", Convert::colourToMongoDbString(elem.colour)))
+  {
+    std::cerr << "Error: Could not append colour to BSON object in lmc::Server::updateFieldOnBoard!"
+              << std::endl;
+    return false;
+  }
+  if (!subUpdate.finish())
+  {
+    std::cerr << "Error: Could not finish BSON object (subUpdate) in lmc::Server::updateFieldOnBoard!"
+              << std::endl;
+    return false;
+  }
+
+  BSON update;
+  if (!update.append("$set", subUpdate))
+  {
+    std::cerr << "Error: Could not append document to BSON object in lmc::Server::updateFieldOnBoard!"
+              << std::endl;
+    return false;
+  }
+  if (!update.finish())
+  {
+    std::cerr << "Error: Could not finish BSON object (update) in lmc::Server::updateFieldOnBoard!"
+              << std::endl;
+    return false;
+  }
+
+
+  try
+  {
+    return conn.update("meteor.fields", selector, update);
+  } //try-c
+  catch(const std::exception& ex)
+  {
+    std::cerr << "Error: An exception occurred while updating a field on the board!"
+              << std::endl << ex.what() << std::endl;
+    return false;
+  }
+  catch(...)
+  {
+    std::cerr << "Error: An error occurred while updating a field on the board!"
+              << std::endl;
+    return false;
+  }
+}
+
 bool Server::setBasicBoardData(const std::string& id, const Board& board)
 {
   const Castling& c = board.castling();
@@ -426,25 +514,12 @@ bool Server::setBoardFields(const std::string& id, const Board& board)
   {
     for (int r = 1; r <= 8; ++r)
     {
-      const auto& elem = board.element(toField(col, r));
-      const std::string rowString = std::string(1, '1' -1 + r);
-      std::string update = "db.fields.update({board: \"" + id + "\", "
-          + "column: \"" + std::string(1, col) + "\", row: " + rowString
-          + "}, {$set: {piece: \"" + Convert::pieceToString(elem.piece) + "\", "
-          + "colour: \"" + Convert::colourToMongoDbString(elem.colour) + "\" }});";
-      bson* eval = bson_build_full (BSON_TYPE_JS_CODE, "$eval", FALSE,
-                                 update.c_str(), -1, BSON_TYPE_NONE);
-      bson_finish (eval);
-      mongo_packet* p = mongo_sync_cmd_custom(conn.raw(), "meteor", eval);
-      if (!p)
+      if (!updateFieldOnBoard(id, board, toField(col, r)))
       {
-        std::cerr << "Error while running db.eval!" << std::endl;
-        bson_free(eval);
+        std::cerr << "Error while updating field " << std::string(1, col) << r
+                  << " of board " << id << "!" << std::endl;
         return false;
       }
-      mongo_wire_packet_free(p);
-      bson_free(eval);
-      eval = nullptr;
     } //for row
   } //for column
   return true;

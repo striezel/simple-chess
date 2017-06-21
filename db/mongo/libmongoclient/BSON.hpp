@@ -114,6 +114,16 @@ class BSON
     bool append(const std::string& key, const int64_t i64);
 
 
+    /** \brief appends a document to the BSON
+     *
+     * \param key  name of the key
+     * \param doc  value to append
+     * \return Returns true, if the document was appended.
+     *         Returns false otherwise.
+     */
+    bool append(const std::string& key, const BSON& doc);
+
+
     /** \brief appends a null value to the BSON
      *
      * \param key  name of the key
