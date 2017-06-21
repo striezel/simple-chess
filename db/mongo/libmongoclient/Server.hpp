@@ -133,6 +133,10 @@ class Server : public simplechess::db::mongo::Server
      * \param board   board instance that contains the data to be set
      * \return Returns true in case of success.
      *         Returns false, if an error occurred.
+     * \remarks This method does not check whether a board with the given id
+     *          exists. If there is no matching board, the update will still
+     *          succeed, despite the fact that no documents have been updated
+     *          in that case.
      */
     bool setBoardFields(const std::string& id, const Board& board);
 }; //class
