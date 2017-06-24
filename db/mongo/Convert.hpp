@@ -67,14 +67,6 @@ class Convert
     static std::string colourToMongoDbString(const Colour col);
 
 
-    /** \brief translates a boolean to the corresponding string representation
-     *
-     * \param b   a boolean value
-     * \return Returns "true", if b is true. Returns "false" otherwise.
-     */
-    static std::string boolToMongoDbString(const bool b);
-
-
     /** \brief translates a piece type to the corresponding MongoDB string
      *
      * \param pt   the piece type

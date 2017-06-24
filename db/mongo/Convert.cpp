@@ -88,14 +88,6 @@ std::string Convert::colourToMongoDbString(const Colour col)
   } //swi
 }
 
-std::string Convert::boolToMongoDbString(const bool b)
-{
-  if (b)
-    return "true";
-  else
-    return "false";
-}
-
 std::string Convert::pieceToString(const PieceType pt)
 {
   switch (pt)
