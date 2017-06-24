@@ -338,7 +338,7 @@ bool Server::getBoardFields(const std::string& id, Board& board)
   }
 }
 
-bool Server::setBoard(const std::string& id, const Board& board)
+bool Server::updateBoard(const std::string& id, const Board& board)
 {
   BSON query;
   if (!query.append("_id", id))
@@ -362,9 +362,9 @@ bool Server::setBoard(const std::string& id, const Board& board)
                 << std::endl;
       return false;
     } //while
-    if (!setBasicBoardData(id, board))
+    if (!updateBasicBoardData(id, board))
       return false;
-    if (!setBoardFields(id, board))
+    if (!updateBoardFields(id, board))
       return false;
   } //try-c
   catch(const std::exception& ex)
@@ -470,7 +470,7 @@ bool Server::updateFieldOnBoard(const std::string& id, const Board& board, const
   }
 }
 
-bool Server::setBasicBoardData(const std::string& id, const Board& board)
+bool Server::updateBasicBoardData(const std::string& id, const Board& board)
 {
   BSON selector;
   if (!selector.append("_id", id))
@@ -647,7 +647,7 @@ bool Server::setBasicBoardData(const std::string& id, const Board& board)
   }
 }
 
-bool Server::setBoardFields(const std::string& id, const Board& board)
+bool Server::updateBoardFields(const std::string& id, const Board& board)
 {
   for (char col = 'a'; col <= 'h'; ++col)
   {

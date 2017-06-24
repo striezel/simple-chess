@@ -70,7 +70,7 @@ class Server
      * \return Returns true, if database update was successful.
      *         Returns false, if an error occurred.
      */
-    virtual bool setBoard(const std::string& id, const Board& board) = 0;
+    virtual bool updateBoard(const std::string& id, const Board& board) = 0;
 
 
     /** \brief updates a single field on a chess board in the database

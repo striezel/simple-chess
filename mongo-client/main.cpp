@@ -69,9 +69,9 @@ int main(int argc, char** argv)
   {
     board.move(simplechess::Field::a2, simplechess::Field::a4, simplechess::PieceType::queen);
     const auto a4 = board.element(simplechess::Field::a4);
-    std::cout << "a4: " << a4.colour << a4.piece << "\n";
+    std::cout << "a4: " << a4.colour << " " << a4.piece << "\n";
   }
-  if (server.setBoard(boardId, board))
+  if (server.updateBoard(boardId, board))
   {
     std::cout << "Success.\n";
   }

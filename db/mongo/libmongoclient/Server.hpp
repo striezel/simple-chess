@@ -79,7 +79,7 @@ class Server : public simplechess::db::mongo::Server
      * \return Returns true, if database update was successful.
      *         Returns false, if an error occurred.
      */
-    virtual bool setBoard(const std::string& id, const Board& board);
+    virtual bool updateBoard(const std::string& id, const Board& board);
 
 
     /** \brief updates a single field on a chess board in the database
@@ -116,7 +116,7 @@ class Server : public simplechess::db::mongo::Server
     bool getBoardFields(const std::string& id, Board& board);
 
 
-    /** \brief sets basic data like player to move, e.p., castling for a board
+    /** \brief updates basic data like player to move, e.p., castling for a board
      *         in the database
      *
      * \param id id of the board
@@ -124,10 +124,10 @@ class Server : public simplechess::db::mongo::Server
      * \return Returns true in case of success.
      *         Returns false, if an error occurred.
      */
-    bool setBasicBoardData(const std::string& id, const Board& board);
+    bool updateBasicBoardData(const std::string& id, const Board& board);
 
 
-    /** \brief sets the field data for a board in the database
+    /** \brief updates the field data for a board in the database
      *
      * \param id   the ID of the board
      * \param board   board instance that contains the data to be set
@@ -138,7 +138,7 @@ class Server : public simplechess::db::mongo::Server
      *          succeed, despite the fact that no documents have been updated
      *          in that case.
      */
-    bool setBoardFields(const std::string& id, const Board& board);
+    bool updateBoardFields(const std::string& id, const Board& board);
 }; //class
 
 } //namespace
