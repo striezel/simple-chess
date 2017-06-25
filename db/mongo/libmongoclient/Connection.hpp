@@ -82,6 +82,16 @@ class Connection
     QueryCursor query(const std::string& ns, const BSON& queryB, const unsigned int limit = 100);
 
 
+    /** \brief insert a document into a MongoDB collection
+     *
+     * \param ns   database and collection name concatenated, separated with a single dot
+     * \param document  document that shall be inserted
+     * \return Returns true, if insert succeeded.
+     *         Returns false, if an error occurred.
+     */
+    bool insert(const std::string& ns, const BSON& document);
+
+
     /** \brief performs an update in a MongoDB collection
      *
      * \param ns   database and collection name concatenated, separated with a single dot

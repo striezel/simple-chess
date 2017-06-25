@@ -21,6 +21,7 @@
 #ifndef SIMPLECHESS_DB_MONGO_LMC_BSON_HPP
 #define SIMPLECHESS_DB_MONGO_LMC_BSON_HPP
 
+#include <chrono>
 #include <cstdint>
 #include <string>
 #include <utility>
@@ -112,6 +113,16 @@ class BSON
      *         Returns false otherwise.
      */
     bool append(const std::string& key, const int64_t i64);
+
+
+    /** \brief appends a DateTime value to the BSON
+     *
+     * \param key  name of the key
+     * \param msSinceEpoch  number of milliseconds since Unix epoch
+     * \return Returns true, if the DateTime was appended.
+     *         Returns false otherwise.
+     */
+    bool append(const std::string& key, const std::chrono::milliseconds msSinceEpoch);
 
 
     /** \brief appends a document to the BSON

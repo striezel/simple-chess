@@ -19,6 +19,7 @@
 */
 
 #include <iostream>
+#include "../data/ForsythEdwardsNotation.hpp"
 #include "../db/mongo/libmongoclient/Server.hpp"
 #include "../ui/Console.hpp"
 
@@ -73,7 +74,21 @@ int main(int argc, char** argv)
   }
   if (server.updateBoard(boardId, board))
   {
-    std::cout << "Success.\n";
+    std::cout << "Update was successful.\n";
   }
+
+  //insert board
+  if (!board.fromFEN(simplechess::FEN::defaultInitialPosition))
+  {
+    std::cerr << "Could not initialize board from FEN!" << std::endl;
+    return 1;
+  }
+  const auto newBoardId = server.insertBoard(board);
+  if (newBoardId.empty())
+  {
+    std::cerr << "Could not insert new board!" << std::endl;
+    return 1;
+  }
+  std::cout << "Success. New board's ID is " << newBoardId << "." << std::endl;
   return 0;
 }

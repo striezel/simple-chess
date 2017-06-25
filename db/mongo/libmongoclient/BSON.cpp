@@ -104,6 +104,11 @@ bool BSON::append(const std::string& key, const int64_t i64)
   return bson_append_int64(mBson, key.c_str(), i64);
 }
 
+bool BSON::append(const std::string& key, const std::chrono::milliseconds msSinceEpoch)
+{
+  return bson_append_utc_datetime(mBson, key.c_str(), msSinceEpoch.count());
+}
+
 bool BSON::append(const std::string& key, const BSON& doc)
 {
   return bson_append_document(mBson, key.c_str(), doc.mBson);

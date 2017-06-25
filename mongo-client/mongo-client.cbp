@@ -46,10 +46,14 @@
 		<Unit filename="../data/Castling.hpp" />
 		<Unit filename="../data/Field.cpp" />
 		<Unit filename="../data/Field.hpp" />
+		<Unit filename="../data/ForsythEdwardsNotation.cpp" />
+		<Unit filename="../data/ForsythEdwardsNotation.hpp" />
 		<Unit filename="../data/Piece.cpp" />
 		<Unit filename="../data/Piece.hpp" />
 		<Unit filename="../db/mongo/Convert.cpp" />
 		<Unit filename="../db/mongo/Convert.hpp" />
+		<Unit filename="../db/mongo/IdGenerator.cpp" />
+		<Unit filename="../db/mongo/IdGenerator.hpp" />
 		<Unit filename="../db/mongo/Server.hpp" />
 		<Unit filename="../db/mongo/libmongoclient/BSON.cpp" />
 		<Unit filename="../db/mongo/libmongoclient/BSON.hpp" />

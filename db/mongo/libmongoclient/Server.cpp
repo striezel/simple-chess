@@ -19,12 +19,14 @@
 */
 
 #include "Server.hpp"
+#include <chrono>
 #include <iostream>
 #include <stdexcept>
 #include <set>
 #include "BSON.hpp"
 #include "QueryCursor.hpp"
 #include "../Convert.hpp"
+#include "../IdGenerator.hpp"
 
 namespace simplechess
 {
@@ -336,6 +338,240 @@ bool Server::getBoardFields(const std::string& id, Board& board)
               << std::endl;
     return false;
   }
+}
+
+std::string Server::insertBasicBoardData(const Board& board)
+{
+  //build insert object
+  BSON document;
+  std::vector<std::string> idList;
+  if (!boardList(idList))
+  {
+    std::cerr << "Error: Could not get existing IDs in lmc::Server::insertBasicBoardData!"
+             << std::endl;
+    return std::string();
+  }
+  const std::string id = IdGenerator::generate(idList);
+  if (!document.append("_id", id))
+  {
+    std::cerr << "Error: Could not append ID to BSON object in lmc::Server::insertBasicBoardData!"
+             << std::endl;
+    return std::string();
+  }
+  if (!document.append("toMove", Convert::colourToMongoDbString(board.toMove())))
+  {
+    std::cerr << "Error: Could not append toMove to BSON object in lmc::Server::insertBasicBoardData!"
+             << std::endl;
+    return std::string();
+  }
+  //get milliseconds since epoch
+  const std::chrono::milliseconds msse = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+  if (!document.append("created", msse))
+  {
+    std::cerr << "Error: Could not append created to BSON object in lmc::Server::insertBasicBoardData!"
+             << std::endl;
+    return std::string();
+  }
+  //build castling object
+  BSON castling;
+  {
+    const Castling& c = board.castling();
+    BSON white;
+    if (!white.append("kingside", c.white_kingside) || !white.append("queenside", c.white_queenside))
+    {
+      std::cerr << "Error: Could not append white castling data to BSON object in lmc::Server::insertBasicBoardData!"
+                << std::endl;
+      return std::string();
+    }
+    if (!white.finish())
+    {
+      std::cerr << "Error: Could not finish BSON object (white) in lmc::Server::insertBasicBoardData!"
+                << std::endl;
+      return std::string();
+    }
+    BSON black;
+    if (!black.append("kingside", c.black_kingside) || !black.append("queenside", c.black_queenside))
+    {
+      std::cerr << "Error: Could not append black castling data to BSON object in lmc::Server::insertBasicBoardData!"
+                << std::endl;
+      return std::string();
+    }
+    if (!black.finish())
+    {
+      std::cerr << "Error: Could not finish BSON object (black) in lmc::Server::insertBasicBoardData!"
+                << std::endl;
+      return std::string();
+    }
+    if (!castling.append("white", white) || !castling.append("black", black))
+    {
+      std::cerr << "Error: Could not append BSON objects to castling data in lmc::Server::insertBasicBoardData!"
+                << std::endl;
+      return std::string();
+    }
+  } //end of scope
+  if (!castling.finish())
+  {
+    std::cerr << "Error: Could not finish BSON object (castling) in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+    return std::string();
+  }
+  //build check object
+  BSON check;
+  if (!check.append("white", board.isInCheck(Colour::white)))
+  {
+    std::cerr << "Error: Could not append white to BSON object in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+    return std::string();
+  }
+  if (!check.append("black", board.isInCheck(Colour::black)))
+  {
+    std::cerr << "Error: Could not append black to BSON object in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+    return std::string();
+  }
+  if (!check.finish())
+  {
+    std::cerr << "Error: Could not finish BSON object (check) in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+    return std::string();
+  }
+  //build en passant object
+  BSON enPassant;
+  if (board.enPassant() == Field::none)
+  {
+    if (!enPassant.appendNull("column") || !enPassant.appendNull("row"))
+    {
+      std::cerr << "Error: Could not append column and row to BSON object in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+      return std::string();
+    }
+  }
+  else
+  {
+    if (!enPassant.append("column", std::string(1, column(board.enPassant()))))
+    {
+      std::cerr << "Error: Could not append column to BSON object in lmc::Server::insertBasicBoardData!"
+                << std::endl;
+      return std::string();
+    }
+    if (!enPassant.append("row", row(board.enPassant())))
+    {
+      std::cerr << "Error: Could not append row to BSON object in lmc::Server::insertBasicBoardData!"
+                << std::endl;
+      return std::string();
+    }
+  } //else
+  if (!enPassant.finish())
+  {
+    std::cerr << "Error: Could not finish BSON object (enPassant) in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+    return std::string();
+  }
+  //append all objects to subUpdate
+  if (!document.append("castling", castling))
+  {
+    std::cerr << "Error: Could not append castling to BSON object in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+    return std::string();
+  }
+  if (!document.append("check", check))
+  {
+    std::cerr << "Error: Could not append check to BSON object in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+    return std::string();
+  }
+  if (!document.append("enPassant", enPassant))
+  {
+    std::cerr << "Error: Could not append enPassant to BSON object in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+    return std::string();
+  }
+  if (!document.appendNull("winner"))
+  {
+    std::cerr << "Error: Could not append winner to BSON object in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+    return std::string();
+  }
+  if (!document.finish())
+  {
+    std::cerr << "Error: Could not finish BSON object (document) in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+    return std::string();
+  }
+  if (!conn.insert("meteor.boards", document))
+  {
+    std::cerr << "Error: Could not insert BSON document in lmc::Server::insertBasicBoardData!"
+              << std::endl;
+    return std::string();
+  }
+  //return board ID
+  return id;
+}
+
+std::string Server::insertBoard(const Board& board)
+{
+  std::string boardId = insertBasicBoardData(board);
+  if (boardId.empty())
+    return "";
+  //insert fields
+  for (char col = 'a'; col <= 'h'; ++col)
+  {
+    for (int r = 1; r <= 8; ++r)
+    {
+      BSON document;
+      const std::string fieldId = IdGenerator::generate();
+      if (!document.append("_id", fieldId))
+      {
+        std::cerr << "Error: Could not append _id to BSON object in lmc::Server::insertBoard!"
+                  << std::endl;
+        return "";
+      }
+      if (!document.append("board", boardId))
+      {
+        std::cerr << "Error: Could not append board id to BSON object in lmc::Server::insertBoard!"
+                  << std::endl;
+        return "";
+      }
+      const auto& elem = board.element(toField(col, r));
+      if (!document.append("piece", Convert::pieceToString(elem.piece)))
+      {
+        std::cerr << "Error: Could not append piece to BSON object in lmc::Server::insertBoard!"
+                  << std::endl;
+        return "";
+      }
+      if (!document.append("colour", Convert::colourToMongoDbString(elem.colour)))
+      {
+        std::cerr << "Error: Could not append colour to BSON object in lmc::Server::insertBoard!"
+                  << std::endl;
+        return "";
+      }
+      if (!document.append("column", std::string(1, col)))
+      {
+        std::cerr << "Error: Could not append column to BSON object in lmc::Server::insertBoard!"
+                  << std::endl;
+        return "";
+      }
+      if (!document.append("row", r))
+      {
+        std::cerr << "Error: Could not append row to BSON object in lmc::Server::insertBoard!"
+                  << std::endl;
+        return "";
+      }
+      if (!document.finish())
+      {
+        std::cerr << "Error: Could not finish BSON object in lmc::Server::insertBoard!"
+                  << std::endl;
+        return "";
+      }
+      if (!conn.insert("meteor.fields", document))
+      {
+        std::cerr << "Error: Could not insert document into database lmc::Server::insertBoard!"
+                  << std::endl;
+        return "";
+      }
+    } //for row
+  } //for column
+  return boardId;
 }
 
 bool Server::updateBoard(const std::string& id, const Board& board)

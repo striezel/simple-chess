@@ -71,6 +71,11 @@ QueryCursor Connection::query(const std::string& ns, const BSON& queryB, const u
   return QueryCursor(lowLevelCursor, packet);
 }
 
+bool Connection::insert(const std::string& ns, const BSON& document)
+{
+  return mongo_sync_cmd_insert(conn, ns.c_str(), document.raw(), nullptr);
+}
+
 bool Connection::update(const std::string& ns, const BSON& selector, const BSON& update)
 {
   return mongo_sync_cmd_update(conn, ns.c_str(), 0, selector.raw(), update.raw());
