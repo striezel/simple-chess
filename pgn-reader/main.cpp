@@ -38,7 +38,7 @@ void showHelp()
             << "\n"
             << "options:\n"
             << "  --help | -?      - displays this help message and quits\n"
-            << "  -pgn FILENAME    - sets the path for the Portable Game Notation file that\n"
+            << "  --pgn FILENAME   - sets the path for the Portable Game Notation file that\n"
             << "                     will be read. This parameter is mandatory.\n"
             << "  --delay MS       - sets the delay between moves to MS milliseconds.\n"
             << "                     The default value is 1000, i.e. one second.\n";

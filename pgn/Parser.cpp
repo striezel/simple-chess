@@ -117,7 +117,7 @@ bool FinalMove(const std::vector<Token>& tokens, unsigned int& idx, PortableGame
 bool Parser::parse(const std::vector<Token>& tokens, PortableGameNotation& result)
 {
   if (tokens.empty())
-    throw ParserException("There a no tokens to parse!");
+    throw ParserException("There are no tokens to parse!");
   if (tokens.back().type == TokenType::invalid)
   {
     std::clog << "Invalid token: \"" << tokens.back().text << "\"!" << std::endl;
@@ -133,7 +133,7 @@ bool Parser::parse(const std::vector<Token>& tokens, PortableGameNotation& resul
   }
   //There should be at least one token pair (or better: 7 or more).
   if (parsedTagPairs == 0)
-    throw ParserException("There a no tag pairs to parse!");
+    throw ParserException("There are no tag pairs to parse!");
 
   unsigned int parsedMoves = 0;
   while (FullMove(tokens, nextTokenIdx, result))
@@ -146,7 +146,7 @@ bool Parser::parse(const std::vector<Token>& tokens, PortableGameNotation& resul
   }
   //At least one move should have been parsed.
   if (parsedMoves == 0)
-    throw ParserException("There a no moves to parse!");
+    throw ParserException("There are no moves to parse!");
   //There should be no more tokens.
   if (nextTokenIdx < tokens.size())
     throw UnconsumedTokensException(nextTokenIdx, tokens.size(),
