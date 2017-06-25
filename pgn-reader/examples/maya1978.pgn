@@ -1,0 +1,24 @@
+% This is an example for a Portable Game Notation file.
+% It is a match that was played between Nona Gaprindashvili (Women's World
+% Chess Champion from 1962 until 1978) against Maya Chiburdanidze (Women's
+% World Chess Champion from 1978 until 1991) during the Women's World Chess
+% Championship in 1978.
+
+[Event "Women's World Chess Championship"]
+[Site "Pitsunda, Soviet Union"]
+[Date "1978.09.??"]
+[Round "9"]
+[White "Chiburdanidze, Maya"]
+[Black "Gaprindashvili, Nona"]
+[Result "1-0"]
+
+1. e4 d6 2. d4 Nf6 3. Nc3 g6 4.g3 Bg7
+5. Bg2 O-O 6. Nge2 Nbd7 7. O-O c5 8. h3 a6
+9. Be3 Qc7 10. Qd2 xd4 11. Nxd4 Ne5 12. b3 Nc6
+13. Nxc6 bxc6 14. Rad1 Bb7 15. Na4 c5 16. e5 xe5
+17. Bxb7 Qxb7 18. Nxc5 Qc8 19. Kh2 Ra7 20. c4 Rc7
+21. Na4 Ne4 22. Qd3 Nd6 23. Nb6 Qb7 24. Nd5 Rc6
+25. c5 Nc8 26. b4 e6 27. Nb6 e4 28. Qd2 Nxb6
+29. xb6 Bc3 30. Qd7 Rxb6 31. Bxb6 Qxb6 32. a3 Be5
+33. Kg2 e3 34. fxe3 Qxe3 35. Qd3 Qg5 36. Rf3 Rc8
+37. Rd2 Kg7 38. Rxf7+ Kh6 39. h4 1-0
