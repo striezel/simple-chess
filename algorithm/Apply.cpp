@@ -91,27 +91,46 @@ Field findOriginField(const Board& board, const HalfMove& hMove)
     return Field::none;
 
   const Piece piece = Piece(board.toMove(), hMove.piece());
-  Field origin = board.findNext(piece, Field::a1);
-  while (origin != Field::none)
+  std::vector<Field> possibleOrigins = findPieces(board, piece);
+  for (int i = possibleOrigins.size() - 1; i >= 0; --i)
   {
+    bool allowed = false;
     //If move is allowed, then it is a potential matching origin.
-    if (Moves::allowed(board, origin, hMove.destination()))
+    if (Moves::allowed(board, possibleOrigins[i], hMove.destination()))
     {
       const auto ot = hMove.originType();
-      // It is only the proper origin, if either files match for a file-only
+      // It is only a proper origin, if either files match for a file-only
       // origin or ranks match for a rank-only origin, or the origin was not
       // given at all. In that case there is only one possibility.
       if ((ot == pgn::OriginType::none)
-        || ((ot == pgn::OriginType::file) && sameFile(origin, hMove.origin()))
-        || ((ot == pgn::OriginType::rank) && sameRank(origin, hMove.origin())))
-        return origin;
+        || ((ot == pgn::OriginType::file) && sameFile(possibleOrigins[i], hMove.origin()))
+        || ((ot == pgn::OriginType::rank) && sameRank(possibleOrigins[i], hMove.origin())))
+        allowed = true;
     } //if move is allowed
+    //Remove field, if it is not allowed to move from there to destination.
+    if (!allowed)
+      possibleOrigins.erase(possibleOrigins.begin() + i);
+  } //for
+  if (possibleOrigins.size() == 1)
+    return possibleOrigins.front();
+  //There are either no matching fields or two or more matching fields. In both
+  // cases that indicates that the half move is invalid.
+  return Field::none;
+}
 
-    if (Field::h8 == origin)
-      return Field::none;
-    origin = board.findNext(piece, static_cast<Field>(static_cast<int>(origin) + 1));
+std::vector<Field> findPieces(const Board& board, const Piece& piece)
+{
+  std::vector<Field> result;
+  Field f = board.findNext(piece, Field::a1);
+  while (f != Field::none)
+  {
+    result.push_back(f);
+    //If we already are at the last field, return.
+    if (Field::h8 == f)
+      return result;
+    f = board.findNext(piece, static_cast<Field>(static_cast<int>(f) + 1));
   } //while
-  return origin;
+  return result;
 }
 
 bool checkPortableGameNotation(const PortableGameNotation& pgn)

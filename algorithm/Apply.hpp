@@ -21,6 +21,7 @@
 #ifndef SIMPLECHESS_ALGORITHM_APPLY_HPP
 #define SIMPLECHESS_ALGORITHM_APPLY_HPP
 
+#include <vector>
 #include "../data/Board.hpp"
 #include "../data/HalfMove.hpp"
 #include "../data/PortableGameNotation.hpp"
@@ -50,6 +51,17 @@ bool applyMove(Board& board, const HalfMove& hMove, const Colour toMove);
  *         Returns none, if no matching field was found
  */
 Field findOriginField(const Board& board, const HalfMove& hMove);
+
+
+/** \brief finds all fields where a certain piece is located
+ *
+ * \param board  the board on which the search takes place
+ * \param piece piece for which to search
+ * \return Returns a vector of all matching fields.
+ *         Result is empty, if no matches are found.
+ */
+
+std::vector<Field> findPieces(const Board& board, const Piece& piece);
 
 
 /** \brief checks the plausibility of a Portable Game Notation
