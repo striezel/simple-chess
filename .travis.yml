@@ -24,5 +24,6 @@ script:
   - cmake ../
   - make -j2
   - ./tests/boost/simple_chess_tests
+  - ./tests/catch/simple_chess_tests_catch
 notifications:
   email: false

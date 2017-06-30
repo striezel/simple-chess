@@ -3,3 +3,6 @@ cmake_minimum_required (VERSION 2.8)
 
 # Recurse into subdirectory for boost test framework.
 add_subdirectory (boost)
+
+# Recurse into subdirectory for catch test framework.
+add_subdirectory (catch)
