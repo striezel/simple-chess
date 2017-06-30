@@ -44,18 +44,19 @@ const std::string pgnExample =
 
 TEST_CASE("defaultPgnExample")
 {
-  std::vector<simplechess::pgn::Token> tokens;
-  bool success = simplechess::pgn::Tokenizer::fromString(pgnExample, tokens);
+  using namespace simplechess;
+  std::vector<pgn::Token> tokens;
+  bool success = pgn::Tokenizer::fromString(pgnExample, tokens);
   //tokenization should be successful
   REQUIRE(success);
 
   SECTION("Tokenizer")
   {
     //first token is left square bracket
-    REQUIRE(simplechess::pgn::TokenType::LeftBracket == tokens.front().type);
+    REQUIRE( pgn::TokenType::LeftBracket == tokens.front().type );
     //last token is game end
-    REQUIRE(simplechess::pgn::TokenType::GameEnd == tokens.back().type);
-    REQUIRE(std::string("1/2-1/2") == tokens.back().text);
+    REQUIRE( pgn::TokenType::GameEnd == tokens.back().type );
+    REQUIRE( std::string("1/2-1/2") == tokens.back().text );
   }
 
   SECTION("Parser")
@@ -63,8 +64,46 @@ TEST_CASE("defaultPgnExample")
     simplechess::PortableGameNotation pgn;
     success = simplechess::pgn::Parser::parse(tokens, pgn);
     //parsing should be successful
-    REQUIRE(success);
+    REQUIRE( success );
 
-    REQUIRE(pgn.event() == "F/S Return Match");
+
+    SECTION("Seven Tag Roster")
+    {
+      REQUIRE( pgn.event() == "F/S Return Match" );
+      REQUIRE( pgn.site() == "Belgrade, Serbia JUG" );
+      REQUIRE( pgn.date() == "1992.11.04" );
+      REQUIRE( pgn.round() == "29" );
+      REQUIRE( pgn.white() == "Fischer, Robert J." );
+      REQUIRE( pgn.black() == "Spassky, Boris V." );
+      REQUIRE( pgn.result() == simplechess::Result::Draw );
+    }
+
+    SECTION("Number of moves")
+    {
+      //Minimum and maximum move number should be 1 and 43.
+      REQUIRE( pgn.firstMoveNumber() == 1 );
+      REQUIRE( pgn.lastMoveNumber() == 43 );
+      //All moves in that interval should be present.
+      for (int i = 1; i <= 43; ++i)
+      {
+        REQUIRE( pgn.hasMove(i) );
+      }
+      //No move zero.
+      REQUIRE( !pgn.hasMove(0) );
+      //No move 44.
+      REQUIRE( !pgn.hasMove(44) );
+    }
+
+    SECTION("first move")
+    {
+      const auto firstMove = pgn.move(1);
+      REQUIRE( firstMove.first.piece() == PieceType::pawn );
+      REQUIRE( firstMove.first.destination() == Field::e4 );
+      REQUIRE( firstMove.first.toPGN() == "e4" );
+
+      REQUIRE( firstMove.second.piece() == PieceType::pawn );
+      REQUIRE( firstMove.second.destination() == Field::e5 );
+      REQUIRE( firstMove.second.toPGN() == "e5" );
+    }
   }
 }

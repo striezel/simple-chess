@@ -56,8 +56,8 @@
 		<Unit filename="../../util/strings.cpp" />
 		<Unit filename="../../util/strings.hpp" />
 		<Unit filename="main.cpp" />
-		<Unit filename="suiteFEN.cpp" />
-		<Unit filename="suitePGN.cpp" />
+		<Unit filename="testsFEN.cpp" />
+		<Unit filename="testsPGN.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />
