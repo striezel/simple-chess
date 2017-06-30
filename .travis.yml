@@ -10,6 +10,7 @@ addons:
     - g++-4.9
     - gcc-4.9
     - cmake
+    - catch
     - libboost-test-dev
     - libglib2.0-dev
     - libmongo-client-dev
