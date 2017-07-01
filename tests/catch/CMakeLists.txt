@@ -19,13 +19,13 @@ set(simple_chess_tests_catch_sources
     ../../rules/check.cpp
     ../../rules/Moves.cpp
     ../../util/strings.cpp
+    data/testsBoard.cpp
     data/testsCastling.cpp
     data/testsField.cpp
     data/testsForsythEdwardsNotation.cpp
     data/testsHalfMove.cpp
     data/testsPiece.cpp
     util/testsStrings.cpp
-    testsFEN.cpp
     testsPGN.cpp
     main.cpp)
 

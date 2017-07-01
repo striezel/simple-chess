@@ -234,7 +234,6 @@ bool Board::fromFEN(const std::string& FEN)
     }
   } //castling
 
-
   //parse info about en passant move
   if (parts.size() > 3)
   {
@@ -246,7 +245,7 @@ bool Board::fromFEN(const std::string& FEN)
     {
       try
       {
-        mEnPassant = toField(parts[3][0], parts[3][0] - '1' + 1);
+        mEnPassant = toField(parts[3].at(0), parts[3].at(1) - '1' + 1);
         if ((row(mEnPassant) != 3) && (row(mEnPassant) != 6))
           return false;
       }

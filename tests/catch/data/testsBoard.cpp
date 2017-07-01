@@ -1,0 +1,348 @@
+/*
+ -------------------------------------------------------------------------------
+    This file is part of the test suite for simple-chess.
+    Copyright (C) 2017  Dirk Stolle
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -------------------------------------------------------------------------------
+*/
+
+
+#include <catch.hpp>
+#include "../../../data/Board.hpp"
+
+TEST_CASE("Board::fromFEN() with default start position")
+{
+  using namespace simplechess;
+  Board board;
+  REQUIRE(board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"));
+
+  //There should be 32 empty fields in rows 3 to 6.
+  for(int i = 3; i<=6; ++i)
+  {
+    for (char j = 'a'; j < 'h'; ++j)
+    {
+      CHECK(Piece(Colour::none, PieceType::none) == board.element(toField(j, i)));
+    } //for j
+  } //for i
+  //There should be 8 white pawns in row 2, ...
+  for (char col = 'a'; col <= 'h'; ++col)
+  {
+    CHECK(Piece(Colour::white, PieceType::pawn) == board.element(toField(col, 2))
+    );
+  } //for
+  // ... and 8 black pawns in row 7.
+  for (char col = 'a'; col <= 'h'; ++col)
+  {
+    CHECK(
+        Piece(Colour::black, PieceType::pawn) == board.element(toField(col, 7))
+    );
+  } //for
+  //check white pieces
+  REQUIRE(
+      Piece(Colour::white, PieceType::rook) == board.element(Field::a1)
+  );
+  REQUIRE(
+      Piece(Colour::white, PieceType::knight) == board.element(Field::b1)
+  );
+  REQUIRE(
+      Piece(Colour::white, PieceType::bishop) == board.element(Field::c1)
+  );
+  REQUIRE(
+      Piece(Colour::white, PieceType::queen) == board.element(Field::d1)
+  );
+  REQUIRE(
+      Piece(Colour::white, PieceType::king) == board.element(Field::e1)
+  );
+  REQUIRE(
+      Piece(Colour::white, PieceType::bishop) == board.element(Field::f1)
+  );
+  REQUIRE(
+      Piece(Colour::white, PieceType::knight) == board.element(Field::g1)
+  );
+  REQUIRE(
+      Piece(Colour::white, PieceType::rook) == board.element(Field::h1)
+  );
+  //check black pieces
+  REQUIRE(
+      Piece(Colour::black, PieceType::rook) == board.element(Field::a8)
+  );
+  REQUIRE(
+      Piece(Colour::black, PieceType::knight) == board.element(Field::b8)
+  );
+  REQUIRE(
+      Piece(Colour::black, PieceType::bishop) == board.element(Field::c8)
+  );
+  REQUIRE(
+      Piece(Colour::black, PieceType::queen) == board.element(Field::d8)
+  );
+  REQUIRE(
+      Piece(Colour::black, PieceType::king) == board.element(Field::e8)
+  );
+  REQUIRE(
+      Piece(Colour::black, PieceType::bishop) == board.element(Field::f8)
+  );
+  REQUIRE(
+      Piece(Colour::black, PieceType::knight) == board.element(Field::g8)
+  );
+  REQUIRE(
+      Piece(Colour::black, PieceType::rook) == board.element(Field::h8)
+  );
+}
+
+TEST_CASE("Board::fromFEN() with custom position")
+{
+  using namespace simplechess;
+  Board board;
+  REQUIRE(board.fromFEN("r1b3R1/p1pp1k1Q/1p4n1/8/5p2/3P4/PPP3P1/7K b - -"));
+
+  //check white pieces
+  REQUIRE( board.element(Field::a2) == Piece(Colour::white, PieceType::pawn) );
+  REQUIRE( board.element(Field::b2) == Piece(Colour::white, PieceType::pawn) );
+  REQUIRE( board.element(Field::c2) == Piece(Colour::white, PieceType::pawn) );
+  REQUIRE( board.element(Field::d3) == Piece(Colour::white, PieceType::pawn) );
+  REQUIRE( board.element(Field::g2) == Piece(Colour::white, PieceType::pawn) );
+  REQUIRE( board.element(Field::h1) == Piece(Colour::white, PieceType::king) );
+  REQUIRE( board.element(Field::g8) == Piece(Colour::white, PieceType::rook) );
+  REQUIRE( board.element(Field::h7) == Piece(Colour::white, PieceType::queen) );
+  //check black pieces
+  REQUIRE( board.element(Field::a7) == Piece(Colour::black, PieceType::pawn) );
+  REQUIRE( board.element(Field::b6) == Piece(Colour::black, PieceType::pawn) );
+  REQUIRE( board.element(Field::c7) == Piece(Colour::black, PieceType::pawn) );
+  REQUIRE( board.element(Field::d7) == Piece(Colour::black, PieceType::pawn) );
+  REQUIRE( board.element(Field::f4) == Piece(Colour::black, PieceType::pawn) );
+  REQUIRE( board.element(Field::a8) == Piece(Colour::black, PieceType::rook) );
+  REQUIRE( board.element(Field::c8) == Piece(Colour::black, PieceType::bishop) );
+  REQUIRE( board.element(Field::f7) == Piece(Colour::black, PieceType::king) );
+  REQUIRE( board.element(Field::g6) == Piece(Colour::black, PieceType::knight) );
+  //count number of empty fields (easier than checking each field individually)
+  int emptyFields = 0;
+  Field currentField = Field::a1;
+  const Piece noPiece = Piece();
+  do
+  {
+    currentField = board.findNext(noPiece, currentField);
+    if (currentField != Field::none)
+    {
+      ++emptyFields;
+      if (currentField != Field::h8)
+        currentField = static_cast<Field>(static_cast<int>(currentField) + 1);
+    }
+  } while ((currentField != Field::none) && (currentField != Field::h8));
+  REQUIRE( emptyFields == 47 );
+  //check who is to move
+  REQUIRE( board.toMove() == Colour::black );
+  //check e.p. info
+  REQUIRE( board.enPassant() == Field::none );
+  //check castling info
+  const Castling& c = board.castling();
+  REQUIRE( !c.black_kingside );
+  REQUIRE( !c.black_queenside );
+  REQUIRE( !c.white_kingside );
+  REQUIRE( !c.white_queenside );
+}
+
+TEST_CASE("Board::findNext()")
+{
+  using namespace simplechess;
+  Board board;
+  REQUIRE(board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"));
+
+  //find piece that is only there once
+  Field f = board.findNext(Piece(Colour::white, PieceType::king), Field::a1);
+  REQUIRE( f == Field::e1 );
+  f = board.findNext(Piece(Colour::white, PieceType::king), Field::e2);
+  REQUIRE( f == Field::none );
+
+  //find piece that exists multiple times
+  f = board.findNext(Piece(Colour::black, PieceType::knight), Field::a1);
+  REQUIRE( f == Field::b8 );
+  f = board.findNext(Piece(Colour::black, PieceType::knight), Field::c1);
+  REQUIRE( f == Field::g8 );
+  f = board.findNext(Piece(Colour::black, PieceType::knight), Field::h1);
+  REQUIRE( f == Field::none );
+}
+
+TEST_CASE("Board::move()")
+{
+  using namespace simplechess;
+  Board board;
+
+  SECTION("simple pawn move")
+  {
+    REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR") );
+    //move shall be performable
+    REQUIRE( board.move(Field::e2, Field::e4, PieceType::queen) );
+    //e2 shall be empty
+    REQUIRE( board.element(Field::e2) == Piece() );
+    //e4 shall be white pawn
+    REQUIRE( board.element(Field::e4) == Piece(Colour::white, PieceType::pawn) );
+  }
+
+  SECTION("white pawn promotion")
+  {
+    REQUIRE( board.fromFEN("8/P7/8/8/8/8/8/8") );
+
+    SECTION("promote to queen")
+    {
+      //move shall be performable
+      REQUIRE( board.move(Field::a7, Field::a8, PieceType::queen) );
+      //a7 shall be empty
+      REQUIRE( board.element(Field::a7) == Piece() );
+      //a8 shall be white queen
+      REQUIRE( board.element(Field::a8) == Piece(Colour::white, PieceType::queen) );
+    }
+
+    SECTION("promote to knight")
+    {
+      //move shall be performable
+      REQUIRE( board.move(Field::a7, Field::a8, PieceType::knight) );
+      //a7 shall be empty
+      REQUIRE( board.element(Field::a7) == Piece() );
+      //a8 shall be white knight
+      REQUIRE( board.element(Field::a8) == Piece(Colour::white, PieceType::knight) );
+    }
+  }
+
+  SECTION("en passant capture of white pawn")
+  {
+    REQUIRE( board.fromFEN("k6K/8/8/8/4Pp2/8/8/8 b - e3") );
+    //e4 shall be white pawn
+    REQUIRE( board.element(Field::e4) == Piece(Colour::white, PieceType::pawn) );
+    //move black pawn from f4 to e3 - should be performed
+    REQUIRE( board.move(Field::f4, Field::e3, PieceType::queen) );
+    //e4 should not contain white pawn anymore
+    REQUIRE( board.element(Field::e4) == Piece(Colour::none, PieceType::none) );
+  }
+
+  SECTION("black pawn promotion")
+  {
+    REQUIRE( board.fromFEN("8/8/8/8/8/8/p7/8 b") );
+
+    SECTION("promote to queen")
+    {
+      //move shall be performable
+      REQUIRE( board.move(Field::a2, Field::a1, PieceType::queen) );
+      //a2 shall be empty
+      REQUIRE( board.element(Field::a2) == Piece() );
+      //a1 shall be black queen
+      REQUIRE( board.element(Field::a1) == Piece(Colour::black, PieceType::queen) );
+    }
+
+    SECTION("promote to knight")
+    {
+      //move shall be performable
+      REQUIRE( board.move(Field::a2, Field::a1, PieceType::knight) );
+      //a2 shall be empty
+      REQUIRE( board.element(Field::a2) == Piece() );
+      //a1 shall be black knight
+      REQUIRE( board.element(Field::a1) == Piece(Colour::black, PieceType::knight) );
+    }
+  }
+
+  SECTION("en passant capture of black pawn")
+  {
+    REQUIRE( board.fromFEN("k6K/8/8/4pP2/8/8/8/8 w - e6") );
+    //e5 shall be black pawn
+    REQUIRE( board.element(Field::e5) == Piece(Colour::black, PieceType::pawn) );
+    //move black pawn from f5 to e6 - should be performed
+    REQUIRE( board.move(Field::f5, Field::e6, PieceType::queen) );
+    //e5 should not contain black pawn anymore
+    REQUIRE( board.element(Field::e5) == Piece(Colour::none, PieceType::none) );
+  }
+
+  SECTION("white kingside castling")
+  {
+    REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R") );
+    //castling must be allowed
+    REQUIRE( board.castling().white_kingside );
+    REQUIRE( board.castling().white_queenside );
+    //move shall be performable
+    REQUIRE( board.move(Field::e1, Field::g1, PieceType::queen) );
+    //e1 shall be empty
+    REQUIRE( board.element(Field::e1) == Piece() );
+    //g1 shall be white king
+    REQUIRE( board.element(Field::g1) == Piece(Colour::white, PieceType::king) );
+    //h1 shall be empty
+    REQUIRE( board.element(Field::h1) == Piece() );
+    //f1 shall be white rook
+    REQUIRE( board.element(Field::f1) == Piece(Colour::white, PieceType::rook) );
+    //castling for white player is not allowed anymore
+    REQUIRE( !board.castling().white_kingside );
+    REQUIRE( !board.castling().white_queenside );
+  }
+
+  SECTION("white queenside castling")
+  {
+    REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/R3KBNR") );
+    //castling must be allowed
+    REQUIRE( board.castling().white_kingside );
+    REQUIRE( board.castling().white_queenside );
+    //move shall be performable
+    REQUIRE( board.move(Field::e1, Field::c1, PieceType::queen) );
+    //e1 shall be empty
+    REQUIRE( board.element(Field::e1) == Piece() );
+    //c1 shall be white king
+    REQUIRE( board.element(Field::c1) == Piece(Colour::white, PieceType::king) );
+    //a1 shall be empty
+    REQUIRE( board.element(Field::a1) == Piece() );
+    //d1 shall be white rook
+    REQUIRE( board.element(Field::d1) == Piece(Colour::white, PieceType::rook) );
+    //castling for white player is not allowed anymore
+    REQUIRE( !board.castling().white_kingside );
+    REQUIRE( !board.castling().white_queenside );
+  }
+
+  SECTION("black kingside castling")
+  {
+    REQUIRE( board.fromFEN("rnbqk2r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b") );
+    //castling must be allowed
+    REQUIRE( board.castling().black_kingside );
+    REQUIRE( board.castling().black_queenside );
+    //move shall be performable
+    REQUIRE( board.move(Field::e8, Field::g8, PieceType::queen) );
+    //e8 shall be empty
+    REQUIRE( board.element(Field::e8) == Piece() );
+    //g8 shall be white king
+    REQUIRE( board.element(Field::g8) == Piece(Colour::black, PieceType::king) );
+    //h8 shall be empty
+    REQUIRE( board.element(Field::h8) == Piece() );
+    //f8 shall be white rook
+    REQUIRE( board.element(Field::f8) == Piece(Colour::black, PieceType::rook) );
+    //castling for black player is not allowed anymore
+    REQUIRE( !board.castling().black_kingside );
+    REQUIRE( !board.castling().black_queenside );
+  }
+
+  SECTION("black queenside castling")
+  {
+    REQUIRE( board.fromFEN("r3kbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b") );
+    //castling must be allowed
+    REQUIRE( board.castling().black_kingside );
+    REQUIRE( board.castling().black_queenside );
+    //move shall be performable
+    REQUIRE( board.move(Field::e8, Field::c8, PieceType::queen) );
+    //e8 shall be empty
+    REQUIRE( board.element(Field::e8) == Piece() );
+    //c8 shall be black king
+    REQUIRE( board.element(Field::c8) == Piece(Colour::black, PieceType::king) );
+    //a8 shall be empty
+    REQUIRE( board.element(Field::a8) == Piece() );
+    //d8 shall be black rook
+    REQUIRE( board.element(Field::d8) == Piece(Colour::black, PieceType::rook) );
+    //castling for black player is not allowed anymore
+    REQUIRE( !board.castling().black_kingside );
+    REQUIRE( !board.castling().black_queenside );
+  }
+}

@@ -55,13 +55,13 @@
 		<Unit filename="../../rules/check.hpp" />
 		<Unit filename="../../util/strings.cpp" />
 		<Unit filename="../../util/strings.hpp" />
+		<Unit filename="data/testsBoard.cpp" />
 		<Unit filename="data/testsCastling.cpp" />
 		<Unit filename="data/testsField.cpp" />
 		<Unit filename="data/testsForsythEdwardsNotation.cpp" />
 		<Unit filename="data/testsHalfMove.cpp" />
 		<Unit filename="data/testsPiece.cpp" />
 		<Unit filename="main.cpp" />
-		<Unit filename="testsFEN.cpp" />
 		<Unit filename="testsPGN.cpp" />
 		<Unit filename="util/testsStrings.cpp" />
 		<Extensions>
