@@ -62,6 +62,7 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="testsFEN.cpp" />
 		<Unit filename="testsPGN.cpp" />
+		<Unit filename="util/testsStrings.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />
