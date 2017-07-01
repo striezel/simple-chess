@@ -22,7 +22,6 @@
 #include <catch.hpp>
 
 #include "../../data/Board.hpp"
-#include "../../data/ForsythEdwardsNotation.hpp"
 
 TEST_CASE("defaultStartPosition")
 {
@@ -101,16 +100,4 @@ TEST_CASE("defaultStartPosition")
   REQUIRE(
       Piece(Colour::black, PieceType::rook) == board.element(Field::h8)
   );
-}
-
-TEST_CASE("fromBoardToFEN")
-{
-  const std::string fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
-
-  simplechess::Board board;
-  REQUIRE(board.fromFEN(fenString));
-
-  const std::string fen = simplechess::ForsythEdwardsNotation::fromBoard(board);
-
-  REQUIRE(fen == fenString);
 }
