@@ -32,15 +32,29 @@
 #include "../pgn/ParserException.hpp"
 #include "../ui/Console.hpp"
 
+//return codes in case of failure
+const int rcInvalidParameter = 1;
+const int rcTokenizationError = 2;
+const int rcParserError = 3;
+const int rcDataImplausible = 4;
+const int rcBoardInitializationFailure = 5;
+const int rcMoveNotPossible = 6;
+
+void showVersion()
+{
+  std::cout << "pgn-reader, version 0.7, 2017-07-01" << std::endl;
+}
+
 void showHelp()
 {
   std::cout << "\npgn-reader --pgn FILENAME [--delay MILLISECONDS]\n"
             << "\n"
             << "options:\n"
             << "  --help | -?      - displays this help message and quits\n"
+            << "  --version | -v   - show version information\n"
             << "  --pgn FILENAME   - sets the path for the Portable Game Notation file that\n"
             << "                     will be read. This parameter is mandatory.\n"
-            << "  --delay MS       - sets the delay between moves to MS milliseconds.\n"
+            << "  --delay N        - sets the delay between moves to N milliseconds.\n"
             << "                     The default value is 1000, i.e. one second.\n";
 }
 
@@ -51,17 +65,22 @@ int main(int argc, char** argv)
   {
     std::cout << "Invalid parameters encountered, program will exit.\n"
               << "Use --help to show recognized parameters.\n";
-    return 1;
+    return rcInvalidParameter;
   }
   if (options.help)
   {
     showHelp();
     return 0;
   }
+  if (options.version)
+  {
+    showVersion();
+    return 0;
+  }
   if (options.inputFile.empty())
   {
     std::cout << "Error: No input file with portable game notation was given!\n";
-    return 1;
+    return rcInvalidParameter;
   }
 
   std::vector<simplechess::pgn::Token> tokens;
@@ -69,7 +88,7 @@ int main(int argc, char** argv)
   if (!success)
   {
     std::cout << "Could not tokenize PGN from file " + options.inputFile + "!\n";
-    return 1;
+    return rcTokenizationError;
   }
   simplechess::PortableGameNotation pgn;
   try
@@ -87,12 +106,12 @@ int main(int argc, char** argv)
     {
       std::cout << "Type: " << static_cast<int>(tokens[i].type) << " text: \"" << tokens[i].text << "\"\n";
     } //for
-    return 2;
+    return rcParserError;
   }
   catch(const simplechess::pgn::ParserException& ex)
   {
     std::cout << "ParserException: " << ex.what() << "\n";
-    return 2;
+    return rcParserError;
   }
   std::cout << "Successfully parsed input data. :)\n";
   std::cout << "\n"
@@ -104,7 +123,7 @@ int main(int argc, char** argv)
   if (!simplechess::algorithm::checkPortableGameNotation(pgn))
   {
     std::cout << "Error: Portable game notation data is implausible!\n";
-    return 2;
+    return rcDataImplausible;
   }
 
   //start game
@@ -116,7 +135,7 @@ int main(int argc, char** argv)
   if (!board.fromFEN(fen))
   {
     std::cout << "Could not initialize chess board with the given initial position!\n";
-    return 3;
+    return rcBoardInitializationFailure;
   }
 
   std::cout << "\n\nInitial position:\n\n";
@@ -131,7 +150,7 @@ int main(int argc, char** argv)
     {
       std::cout << "Error: Could not perform move " << i << " of white player!\n"
                 << "Move would have been " << moves.first.toPGN() << ".\n";
-      return 4;
+      return rcMoveNotPossible;
     }
     std::cout << "\nAfter move " << i << " of white player:\n";
     simplechess::ui::Console::showBoard(board);
@@ -141,7 +160,7 @@ int main(int argc, char** argv)
     {
       std::cout << "Error: Could not perform move " << i << " of black player!\n"
                 << "Move would have been " << moves.second.toPGN() << ".\n";
-      return 4;
+      return rcMoveNotPossible;
     }
     std::cout << "\nAfter move " << i << " of black player:\n";
     simplechess::ui::Console::showBoard(board);

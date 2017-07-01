@@ -32,6 +32,7 @@ struct PgnReaderOptions
   std::string inputFile; /**< input file with Portable Game Notation */
   unsigned int delayMilliseconds; /**< delay between moves in milliseconds */
   bool help; /**< whether the program help was requested */
+  bool version; /**< whether the version information was requested */
 
 
   /** default constructor */

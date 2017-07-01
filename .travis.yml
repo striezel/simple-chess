@@ -23,5 +23,6 @@ script:
   - cmake ../
   - make -j2
   - ./tests/catch/simple_chess_tests_catch
+  - ctest -V
 notifications:
   email: false

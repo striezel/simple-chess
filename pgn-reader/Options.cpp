@@ -28,7 +28,8 @@ namespace simplechess
 PgnReaderOptions::PgnReaderOptions()
 : inputFile(""),
   delayMilliseconds(1000),
-  help(false)
+  help(false),
+  version(false)
 {
 }
 
@@ -86,6 +87,10 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
     else if ((param == "--help") || (param == "-?") || (param == "/?"))
     {
       help = true;
+    }
+    else if ((param == "--version") || (param == "-v") || (param == "/v"))
+    {
+      version = true;
     }
     else
     {

@@ -32,3 +32,22 @@ endif (CMAKE_COMPILER_IS_GNUCC)
 set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
 
 add_executable(pgn_reader ${pgn_reader_sources})
+
+
+# # # tests for pgn-reader # # #
+
+# different invocations for help
+add_test(NAME pgn-reader-help-default
+         COMMAND $<TARGET_FILE:pgn_reader> --help)
+add_test(NAME pgn-reader-help-question-mark
+         COMMAND $<TARGET_FILE:pgn_reader> -?)
+add_test(NAME pgn-reader-help-windows-style
+         COMMAND $<TARGET_FILE:pgn_reader> /?)
+
+# version information
+add_test(NAME pgn-reader-version
+         COMMAND $<TARGET_FILE:pgn_reader> --version)
+
+# test run with example PGN file, 1 ms delay (to keep test fast)
+add_test(NAME pgn-reader-steinitz
+         COMMAND $<TARGET_FILE:pgn_reader> --pgn ${CMAKE_CURRENT_SOURCE_DIR}/examples/steinitz1887.pgn --delay 1)
