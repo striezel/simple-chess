@@ -56,6 +56,7 @@
 		<Unit filename="../../util/strings.cpp" />
 		<Unit filename="../../util/strings.hpp" />
 		<Unit filename="data/testsCastling.cpp" />
+		<Unit filename="data/testsField.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="testsFEN.cpp" />
 		<Unit filename="testsPGN.cpp" />
