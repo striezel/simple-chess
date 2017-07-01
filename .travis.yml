@@ -12,7 +12,6 @@ addons:
     - gcc-4.9
     - cmake
     - catch
-    - libboost-test-dev
     - libglib2.0-dev
     - libmongo-client-dev
 before_install:
@@ -23,7 +22,6 @@ script:
   - cd ./build
   - cmake ../
   - make -j2
-  - ./tests/boost/simple_chess_tests
   - ./tests/catch/simple_chess_tests_catch
 notifications:
   email: false
