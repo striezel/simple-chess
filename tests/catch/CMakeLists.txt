@@ -21,6 +21,7 @@ set(simple_chess_tests_catch_sources
     ../../util/strings.cpp
     data/testsCastling.cpp
     data/testsField.cpp
+    data/testsHafMove.cpp
     data/testsPiece.cpp
     testsFEN.cpp
     testsPGN.cpp

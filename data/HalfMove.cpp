@@ -243,8 +243,6 @@ std::string HalfMove::toPGN() const
       result += std::string(1, column(mOrigin));
     if ((mOriginType == pgn::OriginType::full) || (mOriginType == pgn::OriginType::rank))
       result += std::string(1, '1' + row(mOrigin) - 1);
-    if (!captures)
-      result += "-";
   }
   if (captures)
     result += "x";
