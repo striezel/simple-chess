@@ -63,6 +63,16 @@ class Server
     virtual bool getBoard(const std::string& id, Board& board) = 0;
 
 
+    /** \brief inserts a chess board into the database
+     *
+     * \param id   the ID of the board
+     * \param board   board instance that contains the data that shall be written into the DB
+     * \return Returns the ID of the new board, if successful.
+     *         Returns an empty string, if an error occurred.
+     */
+    virtual std::string insertBoard(const Board& board) = 0;
+
+
     /** \brief updates a single chess board in the database
      *
      * \param id   the ID of the board

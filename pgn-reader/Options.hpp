@@ -21,6 +21,7 @@
 #ifndef SIMPLECHESS_PGNREADER_OPTIONS_HPP
 #define SIMPLECHESS_PGNREADER_OPTIONS_HPP
 
+#include <cstdint>
 #include <string>
 
 namespace simplechess
@@ -33,6 +34,11 @@ struct PgnReaderOptions
   unsigned int delayMilliseconds; /**< delay between moves in milliseconds */
   bool help; /**< whether the program help was requested */
   bool version; /**< whether the version information was requested */
+  #ifndef NO_METEOR_CHESS
+  bool meteorChess; /**< whether meteor-chess will be used for output */
+  std::string hostname; /**< host name of the MongoDB server for meteor-chess */
+  uint16_t port; /**< port of the MongoDB server for meteor-chess */
+  #endif // NO_METEOR_CHESS
 
 
   /** default constructor */

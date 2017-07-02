@@ -26,6 +26,11 @@
 #include "../data/Board.hpp"
 #include "../data/ForsythEdwardsNotation.hpp"
 #include "../data/PortableGameNotation.hpp"
+#ifndef NO_METEOR_CHESS
+#include "../db/mongo/Server.hpp"
+#include "../db/mongo/libmongoclient/Server.hpp"
+#include <memory>
+#endif // NO_METEOR_CHESS
 #include "../pgn/Parser.hpp"
 #include "../pgn/Tokenizer.hpp"
 #include "../pgn/UnconsumedTokensException.hpp"
@@ -39,10 +44,13 @@ const int rcParserError = 3;
 const int rcDataImplausible = 4;
 const int rcBoardInitializationFailure = 5;
 const int rcMoveNotPossible = 6;
+#ifndef NO_METEOR_CHESS
+const int rcMongoDbError = 7;
+#endif // NO_METEOR_CHESS
 
 void showVersion()
 {
-  std::cout << "pgn-reader, version 0.7, 2017-07-01" << std::endl;
+  std::cout << "pgn-reader, version 0.8, 2017-07-02" << std::endl;
 }
 
 void showHelp()
@@ -56,6 +64,14 @@ void showHelp()
             << "                     will be read. This parameter is mandatory.\n"
             << "  --delay N        - sets the delay between moves to N milliseconds.\n"
             << "                     The default value is 1000, i.e. one second.\n";
+  #ifndef NO_METEOR_CHESS
+  std::cout << "  --meteor-chess   - displays board in meteor-chess instance, too\n"
+            << "  --host hostname  - host name of the meteor-chess MongoDB server. The default\n"
+            << "                     value is \"localhost\".\n"
+            << "  --port N         - port number of the meteor-chess MongoDB server. The\n"
+            << "                     default value is 3001.\n";
+
+  #endif // NO_METEOR_CHESS
 }
 
 int main(int argc, char** argv)
@@ -126,6 +142,17 @@ int main(int argc, char** argv)
     return rcDataImplausible;
   }
 
+  #ifndef NO_METEOR_CHESS
+  //set default values for meteor-chess, if necessary
+  if (options.meteorChess)
+  {
+    if (options.port == 0)
+      options.port = 3001;
+    if (options.hostname.empty())
+      options.hostname = "localhost";
+  }
+  #endif // NO_METEOR_CHESS
+
   //start game
   simplechess::Board board;
   std::string fen = simplechess::FEN::defaultInitialPosition;
@@ -138,8 +165,53 @@ int main(int argc, char** argv)
     return rcBoardInitializationFailure;
   }
 
+  #ifndef NO_METEOR_CHESS
+  std::unique_ptr<simplechess::db::mongo::Server> mongo = nullptr;
+  if (options.meteorChess)
+  {
+    try
+    {
+      auto mongoPtr = new simplechess::db::mongo::libmongoclient::Server(options.hostname, options.port, true);
+      mongo = std::unique_ptr<simplechess::db::mongo::Server>(mongoPtr);
+    }
+    catch(...)
+    {
+      std::cerr << "Error: Could not establish connection to MongoDB on "
+                << options.hostname << ":" << options.port << "!\n";
+      return rcMongoDbError;
+    }
+  } //if
+
+  std::string boardId;
+  #endif // NO_METEOR_CHESS
+
   std::cout << "\n\nInitial position:\n\n";
   simplechess::ui::Console::showBoard(board);
+
+  #ifndef NO_METEOR_CHESS
+  if (options.meteorChess)
+  {
+    try
+    {
+      boardId = mongo->insertBoard(board);
+    }
+    catch(...)
+    {
+      std::cerr << "Error: Could not insert board into MongoDB on "
+                << options.hostname << ":" << options.port << "!\n";
+      mongo = nullptr;
+      return rcMongoDbError;
+    }
+    if (boardId.empty())
+    {
+      std::cerr << "Error: Could not insert board into MongoDB on "
+                << options.hostname << ":" << options.port << ", empty ID!\n";
+      mongo = nullptr;
+      return rcMongoDbError;
+    }
+    std::cout << "Inserted board ID is " << boardId << ".\n";
+  } //if
+  #endif // NO_METEOR_CHESS
 
   const std::chrono::milliseconds delay(options.delayMilliseconds);
   for (unsigned int i = pgn.firstMoveNumber(); i <= pgn.lastMoveNumber(); ++i)
@@ -154,6 +226,28 @@ int main(int argc, char** argv)
     }
     std::cout << "\nAfter move " << i << " of white player:\n";
     simplechess::ui::Console::showBoard(board);
+    #ifndef NO_METEOR_CHESS
+    if (options.meteorChess)
+    {
+      try
+      {
+        if (!mongo->updateBoard(boardId, board))
+        {
+          std::cerr << "Error: Could not update board in MongoDB on "
+                    << options.hostname << ":" << options.port << "!\n";
+          mongo = nullptr;
+          return rcMongoDbError;
+        } //if
+      }
+      catch(...)
+      {
+        std::cerr << "Error: Failed to update board in MongoDB on "
+                  << options.hostname << ":" << options.port << "!\n";
+        mongo = nullptr;
+        return rcMongoDbError;
+      }
+    } //if
+    #endif // NO_METEOR_CHESS
 
     std::this_thread::sleep_for(delay);
     if (!simplechess::algorithm::applyMove(board, moves.second, simplechess::Colour::black))
@@ -164,6 +258,28 @@ int main(int argc, char** argv)
     }
     std::cout << "\nAfter move " << i << " of black player:\n";
     simplechess::ui::Console::showBoard(board);
+    #ifndef NO_METEOR_CHESS
+    if (options.meteorChess)
+    {
+      try
+      {
+        if (!(mongo->updateBoard(boardId, board)))
+        {
+          std::cerr << "Error: Could not update board in MongoDB on "
+                    << options.hostname << ":" << options.port << "!\n";
+          mongo = nullptr;
+          return rcMongoDbError;
+        } //if
+      }
+      catch(...)
+      {
+        std::cerr << "Error: Failed to update board in MongoDB on "
+                  << options.hostname << ":" << options.port << "!\n";
+        mongo = nullptr;
+        return rcMongoDbError;
+      }
+    } //if
+    #endif // NO_METEOR_CHESS
   } //for
 
   switch (pgn.result())

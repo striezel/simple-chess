@@ -24,7 +24,7 @@ set(pgn_reader_sources
     Options.cpp
     main.cpp)
 
-add_definitions(-std=c++0x)
+add_definitions(-std=c++0x -DNO_METEOR_CHESS)
 if (CMAKE_COMPILER_IS_GNUCC)
     add_definitions(-Wall -O3 -fexceptions -std=c++11)
 endif (CMAKE_COMPILER_IS_GNUCC)

@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DNO_METEOR_CHESS" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,9 +23,41 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-DNO_METEOR_CHESS" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Target title="Debug-with-meteor-chess">
+				<Option output="bin/Debug/pgn-reader-with-meteor-chess" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug-m/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="/usr/include/mongo-client" />
+					<Add directory="/usr/include/glib-2.0" />
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include" />
+				</Compiler>
+				<Linker>
+					<Add library="mongo-client" />
+				</Linker>
+			</Target>
+			<Target title="Release-with-meteor-chess">
+				<Option output="bin/Release/pgn-reader-with-meteor-chess" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release-m/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="/usr/include/mongo-client" />
+					<Add directory="/usr/include/glib-2.0" />
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="mongo-client" />
 				</Linker>
 			</Target>
 		</Build>
@@ -49,6 +82,58 @@
 		<Unit filename="../data/Piece.hpp" />
 		<Unit filename="../data/PortableGameNotation.cpp" />
 		<Unit filename="../data/PortableGameNotation.hpp" />
+		<Unit filename="../db/mongo/Convert.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/Convert.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/IdGenerator.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/IdGenerator.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/Server.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/libmongoclient/BSON.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/libmongoclient/BSON.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/libmongoclient/Connection.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/libmongoclient/Connection.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/libmongoclient/QueryCursor.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/libmongoclient/QueryCursor.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/libmongoclient/Server.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../db/mongo/libmongoclient/Server.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
 		<Unit filename="../pgn/OriginType.hpp" />
 		<Unit filename="../pgn/Parser.cpp" />
 		<Unit filename="../pgn/Parser.hpp" />

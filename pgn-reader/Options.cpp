@@ -30,6 +30,11 @@ PgnReaderOptions::PgnReaderOptions()
   delayMilliseconds(1000),
   help(false),
   version(false)
+  #ifndef NO_METEOR_CHESS
+  , meteorChess(false),
+  hostname(""),
+  port(0)
+  #endif // NO_METEOR_CHESS
 {
 }
 
@@ -92,6 +97,64 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
     {
       version = true;
     }
+    #ifdef NO_METEOR_CHESS
+    else if ((param == "--meteor-chess") || (param == "--meteor"))
+    {
+      std::cout << "Error: This version of pgn-reader has been compiled without"
+                << " support for meteor-chess!\n";
+      return false;
+    }
+    #else
+    else if ((param == "--meteor-chess") || (param == "--meteor"))
+    {
+      meteorChess = true;
+    }
+    else if ((param == "--hostname") || (param == "--host"))
+    {
+      if (!hostname.empty())
+      {
+        std::cout << "Error: The host name cannot be specified more than once!\n";
+        return false;
+      }
+      if (argc > i + 1)
+      {
+        hostname = std::string(argv[i+1]);
+        //Skip next argument, because that was already processed as hostname.
+        ++i;
+      }
+      else
+      {
+        std::cout << "There must be a host name after " << param << "!\n";
+        return false;
+      }
+    } //hostname
+    else if (param == "--port")
+    {
+      if (argc > i + 1)
+      {
+        const std::string portString = std::string(argv[i+1]);
+        int dummy = -1;
+        if (!util::stringToInt(portString, dummy))
+        {
+          std::cout << "Parameter " << param << " must be followed by a port number!\n";
+          return false;
+        }
+        if ((dummy <= 0) || (dummy > 32767))
+        {
+          std::cout << "The given port number is out of range. Is must be in [1;32767].\n";
+          return false;
+        }
+        port = static_cast<uint16_t>(dummy);
+        //Skip next argument, because that was already processed as port number.
+        ++i;
+      }
+      else
+      {
+        std::cout << "There must be a port number after " << param << "!\n";
+        return false;
+      }
+    } //if port number
+    #endif // NO_METEOR_CHESS
     else
     {
       std::cout << "Error: Invalid parameter \"" << param << "\"!\n";
