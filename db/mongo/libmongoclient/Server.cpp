@@ -76,13 +76,13 @@ bool Server::boardList(std::vector<std::string>& boardIds)
    } //try-c
    catch(const std::exception& ex)
    {
-     std::cerr << "Error: An Exception occurred while querying the list of board IDs!"
+     std::cerr << "Error: An exception occurred while querying the list of board IDs!"
                << std::endl << ex.what() << std::endl;
      return false;
    }
    catch(...)
    {
-     std::cerr << "Error: An Exception occurred while querying the list of board IDs!"
+     std::cerr << "Error: An error occurred while querying the list of board IDs!"
                << std::endl;
      return false;
    }
