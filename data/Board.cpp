@@ -45,7 +45,8 @@ char nextColumn(const char column)
 
 
 Board::Board()
-: mToMove(Colour::white),
+: mFields(std::map<Field, Piece>()),
+  mToMove(Colour::white),
   mEnPassant(Field::none),
   mCastling(Castling()),
   mBlackInCheck(false),
