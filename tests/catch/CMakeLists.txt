@@ -11,6 +11,7 @@ set(simple_chess_tests_catch_sources
     ../../data/HalfMove.cpp
     ../../data/Piece.cpp
     ../../data/PortableGameNotation.cpp
+    ../../evaluation/MaterialEvaluator.cpp
     ../../pgn/Parser.cpp
     ../../pgn/ParserException.cpp
     ../../pgn/Token.cpp
@@ -25,6 +26,7 @@ set(simple_chess_tests_catch_sources
     data/testsForsythEdwardsNotation.cpp
     data/testsHalfMove.cpp
     data/testsPiece.cpp
+    evaluation/testsMaterialEvaluator.cpp
     util/testsStrings.cpp
     testsPGN.cpp
     main.cpp)
@@ -37,3 +39,7 @@ endif (CMAKE_COMPILER_IS_GNUCC)
 set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
 
 add_executable(simple_chess_tests_catch ${simple_chess_tests_catch_sources})
+
+# add test run
+add_test(NAME simple-chess-tests
+         COMMAND $<TARGET_FILE:simple_chess_tests_catch> /?)

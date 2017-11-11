@@ -43,10 +43,13 @@
 		<Unit filename="../data/ForsythEdwardsNotation.hpp" />
 		<Unit filename="../data/Piece.cpp" />
 		<Unit filename="../data/Piece.hpp" />
-		<Unit filename="../rules/check.cpp" />
-		<Unit filename="../rules/check.hpp" />
+		<Unit filename="../evaluation/Evaluator.hpp" />
+		<Unit filename="../evaluation/MaterialEvaluator.cpp" />
+		<Unit filename="../evaluation/MaterialEvaluator.hpp" />
 		<Unit filename="../rules/Moves.cpp" />
 		<Unit filename="../rules/Moves.hpp" />
+		<Unit filename="../rules/check.cpp" />
+		<Unit filename="../rules/check.hpp" />
 		<Unit filename="../ui/Console.cpp" />
 		<Unit filename="../ui/Console.hpp" />
 		<Unit filename="../util/strings.cpp" />
