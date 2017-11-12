@@ -79,6 +79,22 @@ namespace simplechess
     *         Returns false otherwise, or if one of the fields is none.
     */
    bool sameRank(const Field f1, const Field f2);
+
+   /** \brief Gets the field left of the given field, as seen from the white player's perspective.
+    *
+    * \param f the field
+    * \return Returns the field to the left of the given field, i.e. a1 for b1.
+    * Returns Field::none, if there is no left field.
+    */
+   Field leftField(const Field f);
+
+   /** \brief Gets the field right of the given field, as seen from the white player's perspective.
+    *
+    * \param f the field
+    * \return Returns the field to the right of the given field, i.e. a1 for b1.
+    * Returns Field::none, if there is no right field.
+    */
+   Field rightField(const Field f);
 } //namespace
 
 #endif // SIMPLE_CHESS_FIELD_HPP

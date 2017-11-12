@@ -180,3 +180,63 @@ TEST_CASE("Field: sameRank()")
   REQUIRE( !sameRank(Field::none, Field::a1) );
   REQUIRE( !sameRank(Field::none, Field::none) );
 }
+
+TEST_CASE("Field: leftField()")
+{
+  using namespace simplechess;
+
+  REQUIRE( leftField(Field::none) == Field::none );
+  REQUIRE( leftField(Field::a1) == Field::none );
+  REQUIRE( leftField(Field::a2) == Field::none );
+  REQUIRE( leftField(Field::a3) == Field::none );
+  REQUIRE( leftField(Field::a4) == Field::none );
+  REQUIRE( leftField(Field::a5) == Field::none );
+  REQUIRE( leftField(Field::a6) == Field::none );
+  REQUIRE( leftField(Field::a7) == Field::none );
+  REQUIRE( leftField(Field::a8) == Field::none );
+
+  REQUIRE( leftField(Field::b1) == Field::a1 );
+  REQUIRE( leftField(Field::c1) == Field::b1 );
+  REQUIRE( leftField(Field::d1) == Field::c1 );
+  REQUIRE( leftField(Field::e1) == Field::d1 );
+  REQUIRE( leftField(Field::f1) == Field::e1 );
+  REQUIRE( leftField(Field::g1) == Field::f1 );
+
+  REQUIRE( leftField(Field::e2) == Field::d2 );
+  REQUIRE( leftField(Field::e3) == Field::d3 );
+  REQUIRE( leftField(Field::e4) == Field::d4 );
+  REQUIRE( leftField(Field::e5) == Field::d5 );
+  REQUIRE( leftField(Field::e6) == Field::d6 );
+  REQUIRE( leftField(Field::e7) == Field::d7 );
+  REQUIRE( leftField(Field::e8) == Field::d8 );
+}
+
+TEST_CASE("Field: rightField()")
+{
+  using namespace simplechess;
+
+  REQUIRE( rightField(Field::none) == Field::none );
+  REQUIRE( rightField(Field::h1) == Field::none );
+  REQUIRE( rightField(Field::h2) == Field::none );
+  REQUIRE( rightField(Field::h3) == Field::none );
+  REQUIRE( rightField(Field::h4) == Field::none );
+  REQUIRE( rightField(Field::h5) == Field::none );
+  REQUIRE( rightField(Field::h6) == Field::none );
+  REQUIRE( rightField(Field::h7) == Field::none );
+  REQUIRE( rightField(Field::h8) == Field::none );
+
+  REQUIRE( rightField(Field::a1) == Field::b1 );
+  REQUIRE( rightField(Field::b1) == Field::c1 );
+  REQUIRE( rightField(Field::c1) == Field::d1 );
+  REQUIRE( rightField(Field::d1) == Field::e1 );
+  REQUIRE( rightField(Field::e1) == Field::f1 );
+  REQUIRE( rightField(Field::f1) == Field::g1 );
+
+  REQUIRE( rightField(Field::d2) == Field::e2 );
+  REQUIRE( rightField(Field::d3) == Field::e3 );
+  REQUIRE( rightField(Field::d4) == Field::e4 );
+  REQUIRE( rightField(Field::d5) == Field::e5 );
+  REQUIRE( rightField(Field::d6) == Field::e6 );
+  REQUIRE( rightField(Field::d7) == Field::e7 );
+  REQUIRE( rightField(Field::d8) == Field::e8 );
+}

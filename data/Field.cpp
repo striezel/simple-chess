@@ -205,4 +205,24 @@ bool sameRank(const Field f1, const Field f2)
   return ((f1 != Field::none) && (f2 != Field::none) && (row(f1) == row(f2)));
 }
 
+Field leftField(const Field f)
+{
+  if (f == Field::none)
+    return Field::none;
+  const char col = column(f);
+  if (col == 'a')
+    return Field::none;
+  return toField(static_cast<char>(static_cast<int>(col) - 1), row(f));
+}
+
+Field rightField(const Field f)
+{
+  if (f == Field::none)
+    return Field::none;
+  const char col = column(f);
+  if (col == 'h')
+    return Field::none;
+  return toField(static_cast<char>(static_cast<int>(col) + 1), row(f));
+}
+
 } //namespace
