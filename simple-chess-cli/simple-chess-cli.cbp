@@ -46,6 +46,8 @@
 		<Unit filename="../evaluation/Evaluator.hpp" />
 		<Unit filename="../evaluation/MaterialEvaluator.cpp" />
 		<Unit filename="../evaluation/MaterialEvaluator.hpp" />
+		<Unit filename="../evaluation/PromotionEvaluator.cpp" />
+		<Unit filename="../evaluation/PromotionEvaluator.hpp" />
 		<Unit filename="../rules/Moves.cpp" />
 		<Unit filename="../rules/Moves.hpp" />
 		<Unit filename="../rules/check.cpp" />

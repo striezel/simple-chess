@@ -12,6 +12,7 @@ set(simple_chess_tests_catch_sources
     ../../data/Piece.cpp
     ../../data/PortableGameNotation.cpp
     ../../evaluation/MaterialEvaluator.cpp
+    ../../evaluation/PromotionEvaluator.cpp
     ../../pgn/Parser.cpp
     ../../pgn/ParserException.cpp
     ../../pgn/Token.cpp
@@ -27,6 +28,7 @@ set(simple_chess_tests_catch_sources
     data/testsHalfMove.cpp
     data/testsPiece.cpp
     evaluation/testsMaterialEvaluator.cpp
+    evaluation/testsPromotionEvaluator.cpp
     util/testsStrings.cpp
     testsPGN.cpp
     main.cpp)
