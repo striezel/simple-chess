@@ -39,6 +39,14 @@ class MaterialEvaluator: public Evaluator
      * indicate that black has an advantage. Zero means both players are even.
      */
     virtual int score(const Board& board) const;
+
+
+    /** \brief Gets the material value of a piece in centipawns.
+     *
+     * \param pt piece type that shall be evaluated
+     * \return Returns the value of a piece in centipawns.
+     */
+    static int pieceValue(const PieceType& pt);
 }; //class
 
 } //namespace
