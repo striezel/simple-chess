@@ -41,6 +41,8 @@
 		<Unit filename="../../evaluation/Evaluator.hpp" />
 		<Unit filename="../../evaluation/MaterialEvaluator.cpp" />
 		<Unit filename="../../evaluation/MaterialEvaluator.hpp" />
+		<Unit filename="../../evaluation/MobilityEvaluator.cpp" />
+		<Unit filename="../../evaluation/MobilityEvaluator.hpp" />
 		<Unit filename="../../evaluation/PromotionEvaluator.cpp" />
 		<Unit filename="../../evaluation/PromotionEvaluator.hpp" />
 		<Unit filename="../../pgn/Parser.cpp" />
@@ -67,6 +69,7 @@
 		<Unit filename="data/testsHalfMove.cpp" />
 		<Unit filename="data/testsPiece.cpp" />
 		<Unit filename="evaluation/testsMaterialEvaluator.cpp" />
+		<Unit filename="evaluation/testsMobilityEvaluator.cpp" />
 		<Unit filename="evaluation/testsPromotionEvaluator.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="testsPGN.cpp" />
