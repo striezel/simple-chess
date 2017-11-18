@@ -18,18 +18,26 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_EVALUATOR_HPP
-#define SIMPLECHESS_EVALUATOR_HPP
+#ifndef SIMPLECHESS_CONSTANTEVALUATOR_HPP
+#define SIMPLECHESS_CONSTANTEVALUATOR_HPP
 
-#include "../data/Board.hpp"
+#include "../../../evaluation/Evaluator.hpp"
 
 namespace simplechess
 {
 
-/** Base class for all evaluators. */
-class Evaluator
+/** Evaluator that always returns the same score, regardless of board.
+ */
+class ConstantEvaluator: public Evaluator
 {
   public:
+    /** \brief Default constructor.
+     *
+     * \param c  constant score that this evaluator shall return.
+     */
+    ConstantEvaluator(const int c);
+
+
     /** \brief Evaluates the current situation on the board.
      *
      * \param board  the board that shall be evaluated.
@@ -37,14 +45,11 @@ class Evaluator
      * Positive values means that white has an advantage, negative values
      * indicate that black has an advantage. Zero means both players are even.
      */
-    virtual int score(const Board& board) const = 0;
-
-
-    /** \brief Virtual destructor.
-     */
-    virtual ~Evaluator() { }
+    virtual int score(const Board& board) const;
+  private:
+    int constantScore; /**< score that the evaluator returns on every call */
 }; //class
 
 } //namespace
 
-#endif // SIMPLECHESS_EVALUATOR_HPP
+#endif // SIMPLECHESS_CONSTANTEVALUATOR_HPP

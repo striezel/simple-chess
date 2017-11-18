@@ -18,18 +18,26 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_EVALUATOR_HPP
-#define SIMPLECHESS_EVALUATOR_HPP
+#ifndef SIMPLECHESS_COMPOUNDEVALUATOR_HPP
+#define SIMPLECHESS_COMPOUNDEVALUATOR_HPP
 
-#include "../data/Board.hpp"
+#include "Evaluator.hpp"
+#include <memory>
+#include <vector>
 
 namespace simplechess
 {
 
-/** Base class for all evaluators. */
-class Evaluator
+/** Evaluator that considers the sum of scores of several other evaluators.
+ */
+class CompoundEvaluator: public Evaluator
 {
   public:
+    /** \brief Default constructor.
+     */
+    CompoundEvaluator();
+
+
     /** \brief Evaluates the current situation on the board.
      *
      * \param board  the board that shall be evaluated.
@@ -37,14 +45,18 @@ class Evaluator
      * Positive values means that white has an advantage, negative values
      * indicate that black has an advantage. Zero means both players are even.
      */
-    virtual int score(const Board& board) const = 0;
+    virtual int score(const Board& board) const;
 
 
-    /** \brief Virtual destructor.
+    /** \brief Adds another evaluator to the evaluator list.
+     *
+     * \param eval  the evaluator to add
      */
-    virtual ~Evaluator() { }
+    void add(std::unique_ptr<Evaluator>&& eval);
+  private:
+    std::vector<std::unique_ptr<Evaluator>> evaluators; /**< vector of evaluators to sum up */
 }; //class
 
 } //namespace
 
-#endif // SIMPLECHESS_EVALUATOR_HPP
+#endif // SIMPLECHESS_COMPOUNDEVALUATOR_HPP
