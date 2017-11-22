@@ -22,6 +22,8 @@ set(simple_chess_tests_catch_sources
     ../../pgn/UnconsumedTokensException.cpp
     ../../rules/check.cpp
     ../../rules/Moves.cpp
+    ../../search/Node.cpp
+    ../../search/Search.cpp
     ../../util/strings.cpp
     data/testsBoard.cpp
     data/testsCastling.cpp
@@ -34,6 +36,7 @@ set(simple_chess_tests_catch_sources
     evaluation/testsMaterialEvaluator.cpp
     evaluation/testsMobilityEvaluator.cpp
     evaluation/testsPromotionEvaluator.cpp
+    search/testsSearch.cpp
     util/testsStrings.cpp
     testsPGN.cpp
     main.cpp)
@@ -49,4 +52,4 @@ add_executable(simple_chess_tests_catch ${simple_chess_tests_catch_sources})
 
 # add test run
 add_test(NAME simple-chess-tests
-         COMMAND $<TARGET_FILE:simple_chess_tests_catch> /?)
+         COMMAND $<TARGET_FILE:simple_chess_tests_catch>)

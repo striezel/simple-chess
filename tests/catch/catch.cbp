@@ -62,6 +62,10 @@
 		<Unit filename="../../rules/Moves.hpp" />
 		<Unit filename="../../rules/check.cpp" />
 		<Unit filename="../../rules/check.hpp" />
+		<Unit filename="../../search/Node.cpp" />
+		<Unit filename="../../search/Node.hpp" />
+		<Unit filename="../../search/Search.cpp" />
+		<Unit filename="../../search/Search.hpp" />
 		<Unit filename="../../util/strings.cpp" />
 		<Unit filename="../../util/strings.hpp" />
 		<Unit filename="data/testsBoard.cpp" />
@@ -77,6 +81,7 @@
 		<Unit filename="evaluation/testsMobilityEvaluator.cpp" />
 		<Unit filename="evaluation/testsPromotionEvaluator.cpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="search/testsSearch.cpp" />
 		<Unit filename="testsPGN.cpp" />
 		<Unit filename="util/testsStrings.cpp" />
 		<Extensions>
