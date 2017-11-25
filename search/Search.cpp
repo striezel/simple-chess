@@ -59,6 +59,8 @@ void Search::expandNode(Node& node, const Evaluator& eval, const unsigned int de
       } //if move is allowed
     } //for j
   } //for i
+  // sort children
+  node.sortChildren();
   // expand child nodes
   for(auto& child : node.children)
   {

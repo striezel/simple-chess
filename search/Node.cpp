@@ -19,6 +19,7 @@
 */
 
 #include "Node.hpp"
+#include <algorithm>
 
 namespace simplechess
 {
@@ -37,6 +38,16 @@ Node::Node(const Board& b, const HalfMove& hm, const int _score)
   score(_score),
   children(std::vector<std::unique_ptr<Node>>())
 {
+}
+
+bool lessNode(const std::unique_ptr<Node>& a, const std::unique_ptr<Node>& b)
+{
+  return a->score < b->score;
+}
+
+void Node::sortChildren()
+{
+  std::sort(children.begin(), children.end(), lessNode);
 }
 
 } //namespace

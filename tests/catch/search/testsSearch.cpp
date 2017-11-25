@@ -36,6 +36,15 @@ TEST_CASE("Search: default start position with depth == 1")
   REQUIRE_FALSE( searchNode.children.empty() );
   // Number of child nodes should be 20, because there are 20 possible moves.
   REQUIRE( searchNode.children.size() == 20 );
+  // Child nodes should be ordered by score.
+  for (std::size_t i = 0; i < searchNode.children.size() -1; ++i)
+  {
+    for (std::size_t j = i + 1; j < searchNode.children.size(); ++j)
+    {
+      REQUIRE( searchNode.children[i]->score <= searchNode.children[j]->score );
+    } //for j
+  } //for i
+
   // Child nodes of child nodes should be empty, because depth is only one.
   for(const auto& child : searchNode.children)
   {

@@ -50,6 +50,11 @@ struct Node
     HalfMove move; /**< half move that led to the current position */
     int score; /**< score of the position */
     std::vector<std::unique_ptr<Node>> children; /**< pointers to child nodes */
+
+
+    /** \brief Sorts the children by score.
+     */
+    void sortChildren();
 }; //class
 
 } //namespace
