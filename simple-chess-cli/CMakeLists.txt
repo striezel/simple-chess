@@ -8,9 +8,16 @@ set(simple_chess_cli_sources
     ../data/Castling.cpp
     ../data/Field.cpp
     ../data/ForsythEdwardsNotation.cpp
+    ../data/HalfMove.cpp
     ../data/Piece.cpp
+    ../evaluation/CompoundEvaluator.cpp
+    ../evaluation/MaterialEvaluator.cpp
+    ../evaluation/MobilityEvaluator.cpp
+    ../evaluation/PromotionEvaluator.cpp
     ../rules/check.cpp
     ../rules/Moves.cpp
+    ../search/Node.cpp
+    ../search/Search.cpp
     ../ui/Console.cpp
     ../util/strings.cpp
     main.cpp)

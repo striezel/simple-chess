@@ -20,6 +20,11 @@
 
 #include <iostream>
 #include "../data/Board.hpp"
+#include "../evaluation/CompoundEvaluator.hpp"
+#include "../evaluation/MaterialEvaluator.hpp"
+#include "../evaluation/MobilityEvaluator.hpp"
+#include "../evaluation/PromotionEvaluator.hpp"
+#include "../search/Search.hpp"
 #include "../ui/Console.hpp"
 
 
@@ -57,40 +62,100 @@ simplechess::Field getField()
 int main(int argc, char** argv)
 {
   simplechess::Board board;
-  if ((argc > 1) && (argv != nullptr))
+  simplechess::Colour computerPlayer = simplechess::Colour::none;
+  if (argv != nullptr)
   {
-    const std::string fenString = std::string(argv[1]);
-    if (!board.fromFEN(fenString))
+    if ((argc > 1) && (argv[1] != nullptr))
     {
-      std::cerr << "Could not initialize board from FEN string \"" << fenString
-                << "\"!\n";
-      return 1;
-    }
-  } //if one argument is given
-  else
-  {
-    //use default start position
-    if (!board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+      const std::string fenString = std::string(argv[1]);
+      if (!board.fromFEN(fenString))
+      {
+        std::cerr << "Could not initialize board from FEN string \"" << fenString
+                  << "\"!\n";
+        return 1;
+      }
+    } //if one argument is given
+    else
     {
-      std::cerr << "Could not initialize board from FEN string!\n";
-      return 1;
-    }
-  } //else
-
+      //use default start position
+      if (!board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+      {
+        std::cerr << "Could not initialize board from FEN string!\n";
+        return 1;
+      }
+    } //else
+    if ((argc > 2) && (argv[2] != nullptr))
+    {
+      const std::string colourString = std::string(argv[2]);
+      if ((colourString == "white") || (colourString == "w"))
+      {
+        computerPlayer = simplechess::Colour::white;
+      }
+      else if ((colourString == "black") || (colourString == "b"))
+      {
+        computerPlayer = simplechess::Colour::black;
+      }
+      else
+      {
+        std::cerr << "The string \"" << colourString << "\" does not name a valid colour / player!\n";
+        return 1;
+      } //else (unrecognized colour)
+    } // if second argument is given
+  } // if arguments are there
   //potentially endless game loop
   while (true)
   {
     showBoard(board);
-    std::cout << "\n"
-              << "Your move starts from field: ";
-    const simplechess::Field start = getField();
-    std::cout << "Your move goes to field: ";
-    const simplechess::Field destination = getField();
-    if (!board.move(start, destination, simplechess::PieceType::queen))
+    std::cout << "\n";
+    if (board.toMove() != computerPlayer)
     {
-      std::cout << "The move is not allowed!\n";
-      return 2;
-    }
+      std::cout << "Your move starts from field: ";
+      const simplechess::Field start = getField();
+      std::cout << "Your move goes to field: ";
+      const simplechess::Field destination = getField();
+      if (!board.move(start, destination, simplechess::PieceType::queen))
+      {
+        std::cout << "The move is not allowed!\n";
+        return 2;
+      }
+    } // user moves
+    else
+    {
+      // Let's find a suitable move.
+      simplechess::Search s;
+      simplechess::CompoundEvaluator evaluator;
+      // Add the three evaluators we have so far.
+      evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MaterialEvaluator()));
+      evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MobilityEvaluator()));
+      evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::PromotionEvaluator()));
+      // Search for best move, only one ply.
+      const auto node = s.search(board, evaluator, 1);
+      // Did the search find any moves?
+      if (node.children.empty())
+      {
+        std::cout << "simplechess AI could not find a valid move. User wins!\n";
+        return 0;
+      }
+      simplechess::Field from = simplechess::Field::none;
+      simplechess::Field to = simplechess::Field::none;
+      if (board.toMove() == simplechess::Colour::black)
+      {
+        from = node.children.front()->move.origin();
+        to = node.children.front()->move.destination();
+      }
+      else
+      {
+        from = node.children.back()->move.origin();
+        to = node.children.back()->move.destination();
+      }
+      std::cout << "Computer moves from " << simplechess::column(from) << simplechess::row(from)
+                << " to " << simplechess::column(to) << simplechess::row(to) << ".\n";
+      if (!board.move(from, to, simplechess::PieceType::queen))
+      {
+        std::cout << "The computer move is not allowed!\n";
+        return 2;
+      }
+    } // computer moves
   } //while
 
   return 0;
