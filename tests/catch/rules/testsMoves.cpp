@@ -182,3 +182,27 @@ TEST_CASE("Moves::allowed(): king")
     REQUIRE_FALSE( Moves::allowed(board, Field::e1, Field::h1) );
   }
 }
+
+TEST_CASE("Moves::allowed(): player may not put himself/herself into check")
+{
+  using namespace simplechess;
+  Board board;
+  REQUIRE( board.fromFEN("k7/8/8/8/8/8/r7/4K3") );
+
+  // Usual fields in row 1 are allowed.
+  REQUIRE( Moves::allowed(board, Field::e1, Field::d1) );
+  REQUIRE( Moves::allowed(board, Field::e1, Field::f1) );
+
+  // Fields in row 2 are all forbidden, because of check by rook.
+  if (Moves::allowed(board, Field::e1, Field::d2))
+  {
+    std::cout << "Erlaubt!\n";
+  }
+  else
+  {
+    std::cout << "Verboten!\n";
+  }
+  REQUIRE_FALSE( Moves::allowed(board, Field::e1, Field::d2) );
+  REQUIRE_FALSE( Moves::allowed(board, Field::e1, Field::e2) );
+  REQUIRE_FALSE( Moves::allowed(board, Field::e1, Field::f2) );
+}
