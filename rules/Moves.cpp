@@ -164,22 +164,22 @@ bool allowedKnight(const Field from, const Field to)
 
 bool allowedBishop(const Board& board, const Field from, const Field to)
 {
-  //Bishop moves diagonally, i.e. absolute difference between rows and columns
-  //of start and end point must be equal and non-zero.
+  // Bishop moves diagonally, i.e. absolute difference between rows and columns
+  // of start and end point must be equal and non-zero.
   const int rowDiff = std::abs(row(from) - row(to));
   const int colDiff = std::abs(column(from) - column(to));
   if ((colDiff == rowDiff) && (rowDiff != 0))
   {
-    //Move is allowed, if fields between start and end are empty.
+    // Move is allowed, if fields between start and end are empty.
     return isEmptyStraightOrDiagonal(board, from, to);
   }
-  //not allowed
+  // not allowed
   return false;
 }
 
 bool allowedQueen(const Board& board, const Field from, const Field to)
 {
-  //Queen can move like rook or like bishop.
+  // Queen can move like rook or like bishop.
   if (allowedRook(board, from, to))
     return true;
   return allowedBishop(board, from, to);
@@ -187,59 +187,79 @@ bool allowedQueen(const Board& board, const Field from, const Field to)
 
 bool allowedKing(const Board& board, const Field from, const Field to)
 {
-  //King can move one field in any direction, i.e. the difference between
-  //start and end point must not be more than one in any direction.
-  //Only one exception is castling.
+  // King can move one field in any direction, i.e. the difference between
+  // start and end point must not be more than one in any direction.
+  // Only one exception is castling.
 
-  //Check for castling.
+  // Check for castling.
   const bool ca = isCastlingAttemptAllowed(board, from, to);
   if (ca)
     return true;
 
-  //regular move
+  // regular move
   return ((std::abs(row(from) - row(to)) <= 1)
     && (std::abs(column(from) - column(to)) <= 1));
 }
 
 bool Moves::allowed(const Board& board, const Field from, const Field to)
 {
-  //If start and destination are equal, it's not a valid move.
+  // If start and destination are equal, it's not a valid move.
   if (from == to)
     return false;
   if ((from == Field::none) || (to == Field::none))
     return false;
   const Piece & start = board.element(from);
-  //If the field is empty, it is no valid start point.
+  // If the field is empty, it is no valid start point.
   if (start.piece == PieceType::none)
     return false;
   const Piece & destination = board.element(to);
-  //If there is a piece of the same colour on the destination field, then the
+  // If there is a piece of the same colour on the destination field, then the
   // move is not allowed.
   if (start.colour == destination.colour)
     return false;
 
+  bool ok = false;
   switch(start.piece)
   {
     case PieceType::pawn:
          if (start.colour == Colour::white)
-           return allowedPawnWhite(board, from, to);
+           ok = allowedPawnWhite(board, from, to);
          //Must be a black pawn then.
-         return allowedPawnBlack(board, from, to);
+         else
+           ok = allowedPawnBlack(board, from, to);
+         break;
     case PieceType::rook:
-         return allowedRook(board, from, to);
+         ok = allowedRook(board, from, to);
+         break;
     case PieceType::knight:
-         return allowedKnight(from, to);
+         ok = allowedKnight(from, to);
+         break;
     case PieceType::bishop:
-         return allowedBishop(board, from, to);
+         ok = allowedBishop(board, from, to);
+         break;
     case PieceType::queen:
-         return allowedQueen(board, from, to);
+         ok = allowedQueen(board, from, to);
+         break;
     case PieceType::king:
-         return allowedKing(board, from, to);
+         ok = allowedKing(board, from, to);
+         break;
     case PieceType::none:
-         //will never happen
+         // This will never happen.
          return false;
+    default:
+         // Will never happen either, unless someone adds new pieces.
+         throw std::range_error("Piece type is out of range!");
   } //switch
-  throw std::range_error("Piece type is out of range!");
+  // If the move itself is not legal so far, then return it.
+  if (!ok)
+    return false;
+  // Check whether player puts himself/herself into check after move.
+  Board b2(board);
+  if (!b2.move(from, to, PieceType::queen, false))
+    return false;
+  // Move is only allowed, if the original player did not move himself/herself
+  // into check.
+  return !b2.isInCheck(board.toMove());
 }
 
 void Moves::sanitizePromotion(PieceType& promoteTo)

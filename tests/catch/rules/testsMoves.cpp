@@ -194,14 +194,6 @@ TEST_CASE("Moves::allowed(): player may not put himself/herself into check")
   REQUIRE( Moves::allowed(board, Field::e1, Field::f1) );
 
   // Fields in row 2 are all forbidden, because of check by rook.
-  if (Moves::allowed(board, Field::e1, Field::d2))
-  {
-    std::cout << "Erlaubt!\n";
-  }
-  else
-  {
-    std::cout << "Verboten!\n";
-  }
   REQUIRE_FALSE( Moves::allowed(board, Field::e1, Field::d2) );
   REQUIRE_FALSE( Moves::allowed(board, Field::e1, Field::e2) );
   REQUIRE_FALSE( Moves::allowed(board, Field::e1, Field::f2) );

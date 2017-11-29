@@ -26,12 +26,14 @@ namespace simplechess
 
 bool isUnderAttack(const Board& board, const Colour by, const Field field)
 {
+  Board boardCopy(board);
+  boardCopy.setToMove(by);
   for(int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
     const Piece& piece = board.element(static_cast<Field>(i));
     if (piece.colour == by)
     {
-      if (Moves::allowed(board, static_cast<Field>(i), field))
+      if (Moves::allowed(boardCopy, static_cast<Field>(i), field))
         return true;
     }
   } //for
