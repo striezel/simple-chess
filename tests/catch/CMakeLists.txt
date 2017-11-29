@@ -36,6 +36,7 @@ set(simple_chess_tests_catch_sources
     evaluation/testsMaterialEvaluator.cpp
     evaluation/testsMobilityEvaluator.cpp
     evaluation/testsPromotionEvaluator.cpp
+    rules/testsMoves.cpp
     search/testsSearch.cpp
     util/testsStrings.cpp
     testsPGN.cpp

@@ -81,6 +81,7 @@
 		<Unit filename="evaluation/testsMobilityEvaluator.cpp" />
 		<Unit filename="evaluation/testsPromotionEvaluator.cpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="rules/testsMoves.cpp" />
 		<Unit filename="search/testsSearch.cpp" />
 		<Unit filename="testsPGN.cpp" />
 		<Unit filename="util/testsStrings.cpp" />
