@@ -122,10 +122,15 @@ class Board
      * \param to         field where the move ends
      * \param promoteTo  type of piece that a pawn shall be promoted to,
                          if the move allows pawn promotion
+     * \param onlyAllowed If set to true, then only moves that are allowed are
+                          performed. Otherwise some disallowed moves may be
+                          accepted. This is mainly to reduce the number of
+                          required rule checks if the move has already been
+                          verified before.
      * \return Returns true, if move could be performed.
      * Returns false, if move was not performed.
      */
-    bool move(const Field from, const Field to, PieceType promoteTo);
+    bool move(const Field from, const Field to, PieceType promoteTo, const bool onlyAllowed = true);
 
 
     /** \brief finds the next field where a certain figure is located

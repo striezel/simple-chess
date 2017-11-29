@@ -266,7 +266,7 @@ bool Board::fromFEN(const std::string& FEN)
   return true;
 }
 
-bool Board::move(const Field from, const Field to, PieceType promoteTo)
+bool Board::move(const Field from, const Field to, PieceType promoteTo, const bool onlyAllowed)
 {
   if ((from == Field::none) || (to == Field::none))
     return false;
@@ -278,7 +278,7 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo)
     return false;
   }
 
-  const bool allow = Moves::allowed(*this, from, to);
+  const bool allow = onlyAllowed ? Moves::allowed(*this, from, to) : true;
   if (!allow)
     return false;
   //save for possible later use
