@@ -98,6 +98,13 @@ class HalfMove
     bool check() const;
 
 
+    /** \brief whether the opponent is checkmate after the move
+     *
+     * \return Returns true, if the opponent is checkmate after the move.
+     */
+    bool checkmate() const;
+
+
     /** \brief checks whether the move was kingside castling
      *
      * \return Returns true, if the move was kingside castling.
@@ -142,6 +149,7 @@ class HalfMove
     bool captures; /**< whether a piece was captured during the move */
     Field mDestination; /**< destination field of the move */
     bool mChecked; /**< whether the opponent is in check after the move */
+    bool mCheckmate; /**< whether the opponent is checkmate after the move */
     bool mKingsideCastling; /**< whether the move is kingside castling */
     bool mQueensideCastling; /**< whether the move is queenside castling */
 }; //class

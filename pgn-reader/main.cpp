@@ -50,7 +50,7 @@ const int rcMongoDbError = 7;
 
 void showVersion()
 {
-  std::cout << "pgn-reader, version 0.8, 2017-07-02" << std::endl;
+  std::cout << "pgn-reader, version 0.9, 2017-12-01" << std::endl;
   #ifndef NO_METEOR_CHESS
   std::cout << "This version has support for meteor-chess.\n";
   #endif // NO_METEOR_CHESS

@@ -30,6 +30,7 @@ HalfMove::HalfMove()
   captures(false),
   mDestination(Field::none),
   mChecked(false),
+  mCheckmate(false),
   mKingsideCastling(false),
   mQueensideCastling(false)
 {
@@ -42,6 +43,7 @@ HalfMove::HalfMove(PieceType pt, Field destination, bool capture)
   captures(capture),
   mDestination(destination),
   mChecked(false),
+  mCheckmate(false),
   mKingsideCastling(false),
   mQueensideCastling(false)
 {
@@ -54,6 +56,7 @@ HalfMove::HalfMove(PieceType pt, Field origin, Field destination, bool capture)
   captures(capture),
   mDestination(destination),
   mChecked(false),
+  mCheckmate(false),
   mKingsideCastling(false),
   mQueensideCastling(false)
 {
@@ -89,6 +92,11 @@ bool HalfMove::check() const
   return mChecked;
 }
 
+bool HalfMove::checkmate() const
+{
+  return mCheckmate;
+}
+
 bool HalfMove::kingsideCastling() const
 {
   return mKingsideCastling;
@@ -122,7 +130,7 @@ bool HalfMove::fromPGN(const std::string& pgn)
     return true;
   }
   //Regular moves follow a certain pattern that can be expressed as regex.
-  const std::regex regExPGN = std::regex("^([PRNBQK])?([a-h][1-8]|[a-h]|[1-8])?(x)?([a-h][1-8])(\\+)?$");
+  const std::regex regExPGN = std::regex("^([PRNBQK])?([a-h][1-8]|[a-h]|[1-8])?(x)?([a-h][1-8])([\\+|#])?$");
   std::smatch matches;
   if(!std::regex_search(pgn, matches, regExPGN))
     return false;
@@ -200,7 +208,9 @@ bool HalfMove::fromPGN(const std::string& pgn)
     return false;
 
   //opponent is in check now?
-  mChecked = matches[5].matched;
+  mChecked = matches[5].matched && (matches.str(5) == "+");
+  //opponent is checkmate?
+  mCheckmate = matches[5].matched && (matches.str(5) == "#");
 
   return true;
 }
@@ -251,6 +261,8 @@ std::string HalfMove::toPGN() const
   result += std::string(1, '1' + row(mDestination) - 1);
   if (mChecked)
     result += "+";
+  else if (mCheckmate)
+    result += "#";
   return result;
 }
 

@@ -29,7 +29,7 @@ TEST_CASE("HalfMove::empty()")
   REQUIRE( hm.empty() );
 
   hm = HalfMove(PieceType::knight, Field::d3, Field::e1, true);
-  REQUIRE( !hm.empty() );
+  REQUIRE_FALSE( hm.empty() );
 }
 
 TEST_CASE("HalfMove::fromPGN()")
@@ -45,6 +45,7 @@ TEST_CASE("HalfMove::fromPGN()")
     REQUIRE( hm.destination() == Field::e4 );
     REQUIRE( !hm.capture() );
     REQUIRE( !hm.check() );
+    REQUIRE( !hm.checkmate() );
     REQUIRE( !hm.kingsideCastling() );
     REQUIRE( !hm.queensideCastling() );
   }
@@ -57,8 +58,22 @@ TEST_CASE("HalfMove::fromPGN()")
     REQUIRE( hm.destination() == Field::e4 );
     REQUIRE( hm.capture() );
     REQUIRE( hm.check() );
-    REQUIRE( !hm.kingsideCastling() );
-    REQUIRE( !hm.queensideCastling() );
+    REQUIRE_FALSE( hm.checkmate() );
+    REQUIRE_FALSE( hm.kingsideCastling() );
+    REQUIRE_FALSE( hm.queensideCastling() );
+  }
+
+  SECTION("Bd3xe4#")
+  {
+    REQUIRE( hm.fromPGN("Bd3xe4#") );
+    REQUIRE( hm.piece() == PieceType::bishop );
+    REQUIRE( hm.origin() == Field::d3 );
+    REQUIRE( hm.destination() == Field::e4 );
+    REQUIRE( hm.capture() );
+    REQUIRE_FALSE( hm.check() );
+    REQUIRE( hm.checkmate() );
+    REQUIRE_FALSE( hm.kingsideCastling() );
+    REQUIRE_FALSE( hm.queensideCastling() );
   }
 
   SECTION("O-O")
@@ -67,10 +82,10 @@ TEST_CASE("HalfMove::fromPGN()")
     REQUIRE( hm.piece() == PieceType::king );
     REQUIRE( hm.origin() == Field::none );
     REQUIRE( hm.destination() == Field::none );
-    REQUIRE( !hm.capture() );
-    REQUIRE( !hm.check() );
+    REQUIRE_FALSE( hm.capture() );
+    REQUIRE_FALSE( hm.check() );
     REQUIRE( hm.kingsideCastling() );
-    REQUIRE( !hm.queensideCastling() );
+    REQUIRE_FALSE( hm.queensideCastling() );
   }
 
   SECTION("O-O-O")
@@ -79,9 +94,10 @@ TEST_CASE("HalfMove::fromPGN()")
     REQUIRE( hm.piece() == PieceType::king );
     REQUIRE( hm.origin() == Field::none );
     REQUIRE( hm.destination() == Field::none );
-    REQUIRE( !hm.capture() );
-    REQUIRE( !hm.check() );
-    REQUIRE( !hm.kingsideCastling() );
+    REQUIRE_FALSE( hm.capture() );
+    REQUIRE_FALSE( hm.check() );
+    REQUIRE_FALSE( hm.checkmate() );
+    REQUIRE_FALSE( hm.kingsideCastling() );
     REQUIRE( hm.queensideCastling() );
   }
 }
@@ -113,6 +129,16 @@ TEST_CASE("HalfMove::toPGN()")
   {
     REQUIRE( hm.fromPGN("Qd6xf8+") );
     REQUIRE( hm.toPGN() == "Qd6xf8+" );
+    REQUIRE( hm.check() );
+    REQUIRE_FALSE( hm.checkmate() );
+  }
+
+  SECTION("Qd6xf8#")
+  {
+    REQUIRE( hm.fromPGN("Qd6xf8#") );
+    REQUIRE( hm.toPGN() == "Qd6xf8#" );
+    REQUIRE_FALSE( hm.check() );
+    REQUIRE( hm.checkmate() );
   }
 
   SECTION("O-O")
