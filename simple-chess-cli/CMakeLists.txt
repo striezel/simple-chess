@@ -10,6 +10,7 @@ set(simple_chess_cli_sources
     ../data/ForsythEdwardsNotation.cpp
     ../data/HalfMove.cpp
     ../data/Piece.cpp
+    ../evaluation/CheckEvaluator.cpp
     ../evaluation/CompoundEvaluator.cpp
     ../evaluation/MaterialEvaluator.cpp
     ../evaluation/MobilityEvaluator.cpp

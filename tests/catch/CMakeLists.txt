@@ -11,6 +11,7 @@ set(simple_chess_tests_catch_sources
     ../../data/HalfMove.cpp
     ../../data/Piece.cpp
     ../../data/PortableGameNotation.cpp
+    ../../evaluation/CheckEvaluator.cpp
     ../../evaluation/CompoundEvaluator.cpp
     ../../evaluation/MaterialEvaluator.cpp
     ../../evaluation/MobilityEvaluator.cpp
@@ -32,6 +33,7 @@ set(simple_chess_tests_catch_sources
     data/testsHalfMove.cpp
     data/testsPiece.cpp
     evaluation/ConstantEvaluator.cpp
+    evaluation/testsCheckEvaluator.cpp
     evaluation/testsCompoundEvaluator.cpp
     evaluation/testsMaterialEvaluator.cpp
     evaluation/testsMobilityEvaluator.cpp

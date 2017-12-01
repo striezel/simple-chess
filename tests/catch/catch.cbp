@@ -38,6 +38,8 @@
 		<Unit filename="../../data/Piece.hpp" />
 		<Unit filename="../../data/PortableGameNotation.cpp" />
 		<Unit filename="../../data/PortableGameNotation.hpp" />
+		<Unit filename="../../evaluation/CheckEvaluator.cpp" />
+		<Unit filename="../../evaluation/CheckEvaluator.hpp" />
 		<Unit filename="../../evaluation/CompoundEvaluator.cpp" />
 		<Unit filename="../../evaluation/CompoundEvaluator.hpp" />
 		<Unit filename="../../evaluation/Evaluator.hpp" />
@@ -76,6 +78,7 @@
 		<Unit filename="data/testsPiece.cpp" />
 		<Unit filename="evaluation/ConstantEvaluator.cpp" />
 		<Unit filename="evaluation/ConstantEvaluator.hpp" />
+		<Unit filename="evaluation/testsCheckEvaluator.cpp" />
 		<Unit filename="evaluation/testsCompoundEvaluator.cpp" />
 		<Unit filename="evaluation/testsMaterialEvaluator.cpp" />
 		<Unit filename="evaluation/testsMobilityEvaluator.cpp" />

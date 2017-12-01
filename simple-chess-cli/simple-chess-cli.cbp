@@ -45,6 +45,8 @@
 		<Unit filename="../data/HalfMove.hpp" />
 		<Unit filename="../data/Piece.cpp" />
 		<Unit filename="../data/Piece.hpp" />
+		<Unit filename="../evaluation/CheckEvaluator.cpp" />
+		<Unit filename="../evaluation/CheckEvaluator.hpp" />
 		<Unit filename="../evaluation/CompoundEvaluator.cpp" />
 		<Unit filename="../evaluation/CompoundEvaluator.hpp" />
 		<Unit filename="../evaluation/Evaluator.hpp" />

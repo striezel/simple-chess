@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include "../data/Board.hpp"
+#include "../evaluation/CheckEvaluator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
 #include "../evaluation/MaterialEvaluator.hpp"
 #include "../evaluation/MobilityEvaluator.hpp"
@@ -124,10 +125,11 @@ int main(int argc, char** argv)
       // Let's find a suitable move.
       simplechess::Search s;
       simplechess::CompoundEvaluator evaluator;
-      // Add the three evaluators we have so far.
+      // Add the four evaluators we have so far.
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MaterialEvaluator()));
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MobilityEvaluator()));
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::PromotionEvaluator()));
+      evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::CheckEvaluator()));
       // Search for best move, only one ply.
       const auto node = s.search(board, evaluator, 1);
       // Did the search find any moves?
