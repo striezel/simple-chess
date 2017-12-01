@@ -50,7 +50,8 @@ TEST_CASE("CheckEvaluator: black is in check")
   SECTION( "CheckEvaluator with custom check value" )
   {
     const int customValue = 123;
-    CheckEvaluator evaluator(customValue);
+    const int customMateValue = 456;
+    CheckEvaluator evaluator(customValue, customMateValue);
     const int score = evaluator.score(board);
     REQUIRE( score > 0 );
     REQUIRE( score == customValue );
@@ -71,7 +72,8 @@ TEST_CASE("CheckEvaluator: black is not in check")
   SECTION( "CheckEvaluator with custom check value" )
   {
     const int customValue = 123;
-    CheckEvaluator evaluator(customValue);
+    const int customMateValue = 456;
+    CheckEvaluator evaluator(customValue, customMateValue);
     const int score = evaluator.score(board);
     REQUIRE( score == 0 );
   }
@@ -92,7 +94,8 @@ TEST_CASE("CheckEvaluator: white is in check")
   SECTION( "CheckEvaluator with custom check value" )
   {
     const int customValue = 123;
-    CheckEvaluator evaluator(customValue);
+    const int customMateValue = 456;
+    CheckEvaluator evaluator(customValue, customMateValue);
     const int score = evaluator.score(board);
     REQUIRE( score < 0 );
     REQUIRE( score == -customValue );
@@ -113,8 +116,53 @@ TEST_CASE("CheckEvaluator: white is not in check")
   SECTION( "CheckEvaluator with custom check value" )
   {
     const int customValue = 123;
-    CheckEvaluator evaluator(customValue);
+    const int customMateValue = 456;
+    CheckEvaluator evaluator(customValue, customMateValue);
     const int score = evaluator.score(board);
     REQUIRE( score == 0 );
+  }
+}
+
+TEST_CASE( "CheckEvaluator: white is checkmate" )
+{
+  using namespace simplechess;
+  Board board;
+  REQUIRE(board.fromFEN("8/8/8/8/8/4r3/4q3/4K3"));
+
+  // Evaluation should be less than zero - black has an advantage.
+  CheckEvaluator evaluator;
+  const int score = evaluator.score(board);
+  REQUIRE( score < 0 );
+  REQUIRE( score == -(CheckEvaluator::defaultCheckValue + CheckEvaluator::defaultCheckmateValue) );
+
+  SECTION( "CheckEvaluator with custom check value" )
+  {
+    const int customValue = 123;
+    const int customMateValue = 456;
+    CheckEvaluator evaluator(customValue, customMateValue);
+    const int score = evaluator.score(board);
+    REQUIRE( score == -(customValue + customMateValue) );
+  }
+}
+
+TEST_CASE( "CheckEvaluator: black is checkmate" )
+{
+  using namespace simplechess;
+  Board board;
+  REQUIRE(board.fromFEN("8/8/8/8/8/4K3/4Q3/4k3 b"));
+
+  // Evaluation should be greater than zero - white has an advantage.
+  CheckEvaluator evaluator;
+  const int score = evaluator.score(board);
+  REQUIRE( score > 0 );
+  REQUIRE( score == (CheckEvaluator::defaultCheckValue + CheckEvaluator::defaultCheckmateValue) );
+
+  SECTION( "CheckEvaluator with custom check value" )
+  {
+    const int customValue = 123;
+    const int customMateValue = 456;
+    CheckEvaluator evaluator(customValue, customMateValue);
+    const int score = evaluator.score(board);
+    REQUIRE( score == (customValue + customMateValue) );
   }
 }

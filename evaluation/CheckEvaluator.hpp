@@ -26,21 +26,25 @@
 namespace simplechess
 {
 
-/** Evaluator that only considers whether a player is in check.
+/** Evaluator that only considers whether a player is in check or checkmate.
  */
 class CheckEvaluator: public Evaluator
 {
   public:
-
-    /** The default value of checking other player in centipawns. */
+    /** The default score for checking other player in centipawns. */
     static const int defaultCheckValue;
+
+
+    /** The default score for checkmating other player in centipawns. */
+    static const int defaultCheckmateValue;
 
 
     /** \brief Constructor with initial value.
      *
-     * \param value for checking other player in centipawns
+     * \param checkValue value for checking other player in centipawns
+     * \param checkmateValue value for checkmating other player in centipawns
      */
-    explicit CheckEvaluator(const int checkValue = defaultCheckValue);
+    explicit CheckEvaluator(const int checkValue = defaultCheckValue, const int checkmateValue = defaultCheckmateValue);
 
 
     /** \brief Evaluates the current situation on the board.
@@ -53,6 +57,7 @@ class CheckEvaluator: public Evaluator
     virtual int score(const Board& board) const;
   private:
     int mCheckValue; /**< bonus / penalty for checking a player in centipawns */
+    int mCheckmateValue; /**< bonus / penalty for checkmating a player in centipawns */
 }; //class
 
 } //namespace

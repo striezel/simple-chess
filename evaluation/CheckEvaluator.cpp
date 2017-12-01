@@ -19,14 +19,18 @@
 */
 
 #include "CheckEvaluator.hpp"
+#include "MaterialEvaluator.hpp"
+#include "../rules/check.hpp"
 
 namespace simplechess
 {
 
 const int CheckEvaluator::defaultCheckValue = 50;
+const int CheckEvaluator::defaultCheckmateValue = 2 * MaterialEvaluator::pieceValue(PieceType::king);
 
-CheckEvaluator::CheckEvaluator(const int checkValue)
-: mCheckValue(checkValue)
+CheckEvaluator::CheckEvaluator(const int checkValue, const int checkmateValue)
+: mCheckValue(checkValue),
+  mCheckmateValue(checkmateValue)
 {
 }
 
@@ -35,8 +39,12 @@ int CheckEvaluator::score(const Board& board) const
   int result = 0;
   if (board.isInCheck(Colour::white))
     result -= mCheckValue;
+  if (isCheckMate(board, Colour::white))
+    result -= mCheckmateValue;
   if (board.isInCheck(Colour::black))
     result += mCheckValue;
+  if (isCheckMate(board, Colour::black))
+    result += mCheckmateValue;
 
   return result;
 }
