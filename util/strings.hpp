@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_CHESS_UTIL_STRINGS_HPP
-#define SIMPLE_CHESS_UTIL_STRINGS_HPP
+#ifndef SIMPLECHESS_UTIL_STRINGS_HPP
+#define SIMPLECHESS_UTIL_STRINGS_HPP
 
 #include <string>
 #include <vector>
@@ -65,8 +65,8 @@ bool stringToInt(const std::string& str, int& value);
  */
 void trimLeft(std::string& str1);
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
-#endif // SIMPLE_CHESS_UTIL_STRINGS_HPP
+#endif // SIMPLECHESS_UTIL_STRINGS_HPP

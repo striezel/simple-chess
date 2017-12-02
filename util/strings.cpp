@@ -42,7 +42,7 @@ std::vector<std::string> split(std::string line, const char separator)
     result.push_back(line.substr(0, pos));
     line = line.substr(pos+1);
     pos = line.find(separator);
-  }//while
+  } // while
   if (!line.empty())
   {
     result.push_back(line);
@@ -79,7 +79,7 @@ bool stringToInt(const std::string& str, int& value)
   }
   for ( ; i < str.size(); ++i)
   {
-    if ((str[i] >= '0') and (str[i] <= '9'))
+    if ((str[i] >= '0') && (str[i] <= '9'))
     {
       /* If the result of the multiplication in the next line would go out of
          the type range, then the result is not useful anyway, so quit here. */
@@ -91,13 +91,13 @@ bool stringToInt(const std::string& str, int& value)
       if (value > cRealLimit - (str[i] - '0'))
         return false;
       value = value + (str[i] - '0');
-    }//if
+    } // if
     else
     {
-      //unknown or invalid character detected
+      // unknown or invalid character detected
       return false;
     }
-  }//for
+  } // for
   if (negative)
     value = -value;
   return true;
@@ -106,14 +106,14 @@ bool stringToInt(const std::string& str, int& value)
 void trimLeft(std::string& str1)
 {
   if (str1.empty()) return;
-  //trim stuff at begin
+  // trim stuff at begin
   int len = str1.length();
   int pos = 0;
   bool goOn = true;
   while (goOn)
   {
     const char ch = str1.at(pos);
-    if ((ch == ' ') or (ch == '\t') || (ch == '\n') || (ch == '\r') || (ch == '\v'))
+    if ((ch == ' ') || (ch == '\t') || (ch == '\n') || (ch == '\r') || (ch == '\v'))
     {
       ++pos;
       goOn = (pos < len);
@@ -122,7 +122,7 @@ void trimLeft(std::string& str1)
     {
       goOn = false;
     }
-  }//while
+  } // while
   if (pos >= len)
   {
     str1.clear();
@@ -135,6 +135,6 @@ void trimLeft(std::string& str1)
   return;
 }
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
