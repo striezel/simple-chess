@@ -4,7 +4,15 @@ cmake_minimum_required (VERSION 2.8)
 project(simple_chess_engine)
 
 set(simple_chess_engine_sources
+    Engine.cpp
     io-utils.cpp
+    ../data/Board.cpp
+    ../data/Castling.cpp
+    ../data/Field.cpp
+    ../data/Piece.cpp
+    ../rules/Moves.cpp
+    ../rules/check.cpp
+    ../util/strings.cpp
     xboard/Error.cpp
     xboard/NoOperation.cpp
     main.cpp)

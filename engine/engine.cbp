@@ -33,6 +33,22 @@
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../data/Board.cpp" />
+		<Unit filename="../data/Board.hpp" />
+		<Unit filename="../data/Castling.cpp" />
+		<Unit filename="../data/Castling.hpp" />
+		<Unit filename="../data/Field.cpp" />
+		<Unit filename="../data/Field.hpp" />
+		<Unit filename="../data/Piece.cpp" />
+		<Unit filename="../data/Piece.hpp" />
+		<Unit filename="../rules/Moves.cpp" />
+		<Unit filename="../rules/Moves.hpp" />
+		<Unit filename="../rules/check.cpp" />
+		<Unit filename="../rules/check.hpp" />
+		<Unit filename="../util/strings.cpp" />
+		<Unit filename="../util/strings.hpp" />
+		<Unit filename="Engine.cpp" />
+		<Unit filename="Engine.hpp" />
 		<Unit filename="io-utils.cpp" />
 		<Unit filename="io-utils.hpp" />
 		<Unit filename="main.cpp" />
