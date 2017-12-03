@@ -18,33 +18,32 @@
  -------------------------------------------------------------------------------
 */
 
-#include <iostream>
-#include "io-utils.hpp"
 #include "CommandParser.hpp"
 #include "Engine.hpp"
+#include "xboard/Command.hpp"
+#include "xboard/Error.hpp"
+#include "xboard/Quit.hpp"
+#include "xboard/Xboard.hpp"
 
-int main()
+namespace simplechess
 {
-  using namespace simplechess;
 
-  // No output buffering.
-  disableStdoutBuffering();
-  // No input buffering.
-  disableStdinBuffering();
-
-  while (!Engine::get().quitRequested())
+void CommandParser::parse(const std::string& commandString)
+{
+  if (commandString.empty())
+    return;
+  if (commandString == "xboard")
   {
-    bool hasData = readableDataOnStandardInput();
-    while (hasData)
-    {
-      std::string command;
-      std::getline(std::cin, command, '\n');
-      CommandParser::parse(command);
-      hasData = readableDataOnStandardInput();
-    }
-    // TODO: separate thread for command processing by engine
-    Engine::get().processQueue();
-  } // while
-
-  return 0;
+    Engine::get().addCommand(std::unique_ptr<Command>(new Xboard()));
+  }
+  else if (commandString == "quit")
+  {
+    Engine::get().addCommand(std::unique_ptr<Command>(new Quit()));
+  }
+  else
+  {
+    Engine::get().addCommand(std::unique_ptr<Command>(new Error("unknown command", commandString)));
+  }
 }
+
+} // namespace

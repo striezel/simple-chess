@@ -33,8 +33,19 @@ Engine::Engine()
 : mProtocolVersion(1), // assume version 1 until we get more information
   mEnginePlayer(Colour::none), // engine plays no side be default
   mBoard(Board()),
-  mSearchDepth(1) // default search depth: one ply
+  mSearchDepth(1), // default search depth: one ply
+  mQueue(std::deque<std::unique_ptr<Command> >()) // empty queue
 {
+}
+
+bool Engine::quitRequested() const
+{
+  return mQuit.load();
+}
+
+void Engine::terminate()
+{
+  mQuit.store(true);
 }
 
 unsigned int Engine::protocolVersion() const
@@ -75,6 +86,30 @@ void Engine::setSearchDepth(const unsigned int newSearchDepth)
 {
   // TODO: Allow higher search depths.
   mSearchDepth = 1;
+}
+
+void Engine::addCommand(std::unique_ptr<Command>&& com)
+{
+  if (com != nullptr)
+    mQueue.push_back(std::move(com));
+}
+
+const std::deque<std::unique_ptr<Command> >& Engine::queue() const
+{
+  return mQueue;
+}
+
+int Engine::processQueue()
+{
+  int processedCommands = 0;
+  while (!mQueue.empty() && !mQuit.load())
+  {
+    const auto& cmd = mQueue.front();
+    cmd->process();
+    mQueue.pop_front();
+    ++processedCommands;
+  } // while
+  return processedCommands;
 }
 
 } // namespace

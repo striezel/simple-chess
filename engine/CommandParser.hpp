@@ -18,33 +18,25 @@
  -------------------------------------------------------------------------------
 */
 
-#include <iostream>
-#include "io-utils.hpp"
-#include "CommandParser.hpp"
-#include "Engine.hpp"
+#ifndef SIMPLECHESS_COMMANDPARSER_HPP
+#define SIMPLECHESS_COMMANDPARSER_HPP
 
-int main()
+#include <string>
+
+namespace simplechess
 {
-  using namespace simplechess;
 
-  // No output buffering.
-  disableStdoutBuffering();
-  // No input buffering.
-  disableStdinBuffering();
+/** Class that can parse xboard commands received from standard input. */
+class CommandParser
+{
+  public:
+    /** \brief Parses the given command.
+     *
+     * \param commandString  the string received via standard input (one line only)
+     */
+    static void parse(const std::string& commandString);
+}; // class
 
-  while (!Engine::get().quitRequested())
-  {
-    bool hasData = readableDataOnStandardInput();
-    while (hasData)
-    {
-      std::string command;
-      std::getline(std::cin, command, '\n');
-      CommandParser::parse(command);
-      hasData = readableDataOnStandardInput();
-    }
-    // TODO: separate thread for command processing by engine
-    Engine::get().processQueue();
-  } // while
+} // namespace
 
-  return 0;
-}
+#endif // SIMPLECHESS_COMMANDPARSER_HPP

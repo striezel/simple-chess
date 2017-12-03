@@ -4,6 +4,7 @@ cmake_minimum_required (VERSION 2.8)
 project(simple_chess_engine)
 
 set(simple_chess_engine_sources
+    CommandParser.cpp
     Engine.cpp
     io-utils.cpp
     ../data/Board.cpp
@@ -15,6 +16,7 @@ set(simple_chess_engine_sources
     ../util/strings.cpp
     xboard/Error.cpp
     xboard/NoOperation.cpp
+    xboard/Quit.cpp
     main.cpp)
 
 add_definitions(-std=c++11)

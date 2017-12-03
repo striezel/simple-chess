@@ -18,33 +18,25 @@
  -------------------------------------------------------------------------------
 */
 
-#include <iostream>
-#include "io-utils.hpp"
-#include "CommandParser.hpp"
-#include "Engine.hpp"
+#ifndef SIMPLECHESS_XBOARD_QUIT_HPP
+#define SIMPLECHESS_XBOARD_QUIT_HPP
 
-int main()
+#include "Command.hpp"
+
+namespace simplechess
 {
-  using namespace simplechess;
 
-  // No output buffering.
-  disableStdoutBuffering();
-  // No input buffering.
-  disableStdinBuffering();
+/** Command for quitting the engine process. */
+class Quit: public Command
+{
+  public:
+    /** \brief Processes the command, i.e. performs required actions.
+     *
+     * \return True if command was processed successfully.
+     */
+    virtual bool process();
+}; // class
 
-  while (!Engine::get().quitRequested())
-  {
-    bool hasData = readableDataOnStandardInput();
-    while (hasData)
-    {
-      std::string command;
-      std::getline(std::cin, command, '\n');
-      CommandParser::parse(command);
-      hasData = readableDataOnStandardInput();
-    }
-    // TODO: separate thread for command processing by engine
-    Engine::get().processQueue();
-  } // while
+} // namespace
 
-  return 0;
-}
+#endif // SIMPLECHESS_XBOARD_QUIT_HPP

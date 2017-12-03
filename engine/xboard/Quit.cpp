@@ -18,33 +18,16 @@
  -------------------------------------------------------------------------------
 */
 
-#include <iostream>
-#include "io-utils.hpp"
-#include "CommandParser.hpp"
-#include "Engine.hpp"
+#include "Quit.hpp"
+#include "../Engine.hpp"
 
-int main()
+namespace simplechess
 {
-  using namespace simplechess;
 
-  // No output buffering.
-  disableStdoutBuffering();
-  // No input buffering.
-  disableStdinBuffering();
-
-  while (!Engine::get().quitRequested())
-  {
-    bool hasData = readableDataOnStandardInput();
-    while (hasData)
-    {
-      std::string command;
-      std::getline(std::cin, command, '\n');
-      CommandParser::parse(command);
-      hasData = readableDataOnStandardInput();
-    }
-    // TODO: separate thread for command processing by engine
-    Engine::get().processQueue();
-  } // while
-
-  return 0;
+bool Quit::process()
+{
+  Engine::get().terminate();
+  return true;
 }
+
+} // namespace

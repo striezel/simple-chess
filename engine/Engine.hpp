@@ -21,7 +21,12 @@
 #ifndef SIMPLECHESS_ENGINE_HPP
 #define SIMPLECHESS_ENGINE_HPP
 
+#include <atomic>
+#include <deque>
+#include <memory>
+
 #include "../data/Board.hpp"
+#include "xboard/Command.hpp"
 
 namespace simplechess
 {
@@ -42,6 +47,20 @@ class Engine
 
     /** Avoid implicit move constructor (singleton). */
     Engine(Engine&& e) = delete;
+
+
+    /** \brief Checks whether the engine has received the quit command.
+     *
+     * \return Returns true, if the quit command has been received.
+     */
+    bool quitRequested() const;
+
+
+    /** \brief Request the termination of command processing and any further
+     *         engine activity to the earliest possible convenient moment.
+     * \remarks Only call this method if you want to shutdown the engine.
+     */
+    void terminate();
 
 
     /** \brief Gets the xboard protocol version.
@@ -94,11 +113,34 @@ class Engine
      *          what the engine can currently handle.
      */
     void setSearchDepth(const unsigned int newSearchDepth);
+
+
+    /** \brief Adds another command to the command queue.
+     *
+     * \param com  the command that shall be added
+     */
+    void addCommand(std::unique_ptr<Command>&& com);
+
+
+    /** \brief Gets a constant reference to the current command queue.
+     *
+     * \return Returns a constant reference to command queue.
+     */
+    const std::deque<std::unique_ptr<Command> >& queue() const;
+
+
+    /** \brief Processes all remaining commands in the queue.
+     *
+     * \return Returns the number of processed commands.
+     */
+    int processQueue();
   private:
+    std::atomic<bool> mQuit; /**< quit flag - it true, termination has been requested */
     unsigned int mProtocolVersion; /**< xboard protocol version */
     Colour mEnginePlayer; /**< colour that is controlled by the engine */
     Board mBoard; /**< current chess board */
     unsigned int mSearchDepth; /**< search depth of the engine in plys */
+    std::deque<std::unique_ptr<Command> > mQueue; /**< command queue */
 
 
     /** Default constructor - private due to singleton. */
