@@ -19,6 +19,12 @@
 */
 
 #include "Engine.hpp"
+#include "../evaluation/CheckEvaluator.hpp"
+#include "../evaluation/CompoundEvaluator.hpp"
+#include "../evaluation/MaterialEvaluator.hpp"
+#include "../evaluation/MobilityEvaluator.hpp"
+#include "../evaluation/PromotionEvaluator.hpp"
+#include "../search/Search.hpp"
 
 namespace simplechess
 {
@@ -30,7 +36,8 @@ Engine& Engine::get()
 }
 
 Engine::Engine()
-: mProtocolVersion(1), // assume version 1 until we get more information
+: mQuit(false),
+  mProtocolVersion(1), // assume version 1 until we get more information
   mEnginePlayer(Colour::none), // engine plays no side be default
   mBoard(Board()),
   mSearchDepth(1), // default search depth: one ply
@@ -110,6 +117,63 @@ int Engine::processQueue()
     ++processedCommands;
   } // while
   return processedCommands;
+}
+
+void Engine::move()
+{
+  // Only think about moving, if engine is the one to move.
+  if (board().toMove() != player())
+    return;
+
+  // Let's find a suitable move.
+  Search s;
+  CompoundEvaluator evaluator;
+  // Add the four evaluators we have so far.
+  evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
+  evaluator.add(std::unique_ptr<Evaluator>(new MobilityEvaluator()));
+  evaluator.add(std::unique_ptr<Evaluator>(new PromotionEvaluator()));
+  evaluator.add(std::unique_ptr<Evaluator>(new CheckEvaluator()));
+  // Search for best move, only one ply. (TODO: Implement variable search depth.)
+  const auto node = s.search(board(), evaluator, 1);
+  // Did the search find any moves?
+  if (node.children.empty())
+  {
+    // No moves have been found. This is probably due to the fact that the
+    // engine has been checkmated, so give up here.
+    std::cout << "resign\n";
+    return;
+  }
+  Field from = simplechess::Field::none;
+  Field to = simplechess::Field::none;
+  if (board().toMove() == simplechess::Colour::black)
+  {
+    from = node.children.front()->move.origin();
+    to = node.children.front()->move.destination();
+  }
+  else
+  {
+    from = node.children.back()->move.origin();
+    to = node.children.back()->move.destination();
+  }
+  // Perform move.
+  if (!board().move(from, to, simplechess::PieceType::queen))
+  {
+    // The move the engine found is not allowed. (Should not happen, but who knows?)
+    // To avoid any complication, the engine will resign here.
+    std::cout << "# The computer move is not allowed. Resigning.\n";
+    if (board().toMove() == Colour::white)
+    {
+      std::cout << "0-1 {White resigns because it could not find an acceptable move}\n";
+    }
+    else
+    {
+      std::cout << "1-0 {Black resigns because it could not find an acceptable move}\n";
+    }
+    return;
+  }
+  // Send move to xboard.
+  std::cout << "moves " << simplechess::column(from) << simplechess::row(from)
+            << simplechess::column(to) << simplechess::row(to) << "\n";
 }
 
 } // namespace

@@ -134,6 +134,12 @@ class Engine
      * \return Returns the number of processed commands.
      */
     int processQueue();
+
+
+    /** \brief Ask the engine to think about and eventually perform the next
+     *         move for the current player.
+     */
+    void move();
   private:
     std::atomic<bool> mQuit; /**< quit flag - it true, termination has been requested */
     unsigned int mProtocolVersion; /**< xboard protocol version */

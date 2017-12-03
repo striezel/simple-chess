@@ -29,6 +29,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Weffc++" />
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
@@ -39,12 +40,31 @@
 		<Unit filename="../data/Castling.hpp" />
 		<Unit filename="../data/Field.cpp" />
 		<Unit filename="../data/Field.hpp" />
+		<Unit filename="../data/ForsythEdwardsNotation.cpp" />
+		<Unit filename="../data/ForsythEdwardsNotation.hpp" />
+		<Unit filename="../data/HalfMove.cpp" />
+		<Unit filename="../data/HalfMove.hpp" />
 		<Unit filename="../data/Piece.cpp" />
 		<Unit filename="../data/Piece.hpp" />
+		<Unit filename="../evaluation/CheckEvaluator.cpp" />
+		<Unit filename="../evaluation/CheckEvaluator.hpp" />
+		<Unit filename="../evaluation/CompoundEvaluator.cpp" />
+		<Unit filename="../evaluation/CompoundEvaluator.hpp" />
+		<Unit filename="../evaluation/Evaluator.hpp" />
+		<Unit filename="../evaluation/MaterialEvaluator.cpp" />
+		<Unit filename="../evaluation/MaterialEvaluator.hpp" />
+		<Unit filename="../evaluation/MobilityEvaluator.cpp" />
+		<Unit filename="../evaluation/MobilityEvaluator.hpp" />
+		<Unit filename="../evaluation/PromotionEvaluator.cpp" />
+		<Unit filename="../evaluation/PromotionEvaluator.hpp" />
 		<Unit filename="../rules/Moves.cpp" />
 		<Unit filename="../rules/Moves.hpp" />
 		<Unit filename="../rules/check.cpp" />
 		<Unit filename="../rules/check.hpp" />
+		<Unit filename="../search/Node.cpp" />
+		<Unit filename="../search/Node.hpp" />
+		<Unit filename="../search/Search.cpp" />
+		<Unit filename="../search/Search.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
 		<Unit filename="CommandParser.cpp" />
@@ -57,10 +77,16 @@
 		<Unit filename="xboard/Command.hpp" />
 		<Unit filename="xboard/Error.cpp" />
 		<Unit filename="xboard/Error.hpp" />
+		<Unit filename="xboard/New.cpp" />
+		<Unit filename="xboard/New.hpp" />
 		<Unit filename="xboard/NoOperation.cpp" />
 		<Unit filename="xboard/NoOperation.hpp" />
+		<Unit filename="xboard/ProtocolVersion.cpp" />
+		<Unit filename="xboard/ProtocolVersion.hpp" />
 		<Unit filename="xboard/Quit.cpp" />
 		<Unit filename="xboard/Quit.hpp" />
+		<Unit filename="xboard/Usermove.cpp" />
+		<Unit filename="xboard/Usermove.hpp" />
 		<Unit filename="xboard/Xboard.hpp" />
 		<Extensions>
 			<envvars />

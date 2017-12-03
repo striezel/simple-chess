@@ -10,13 +10,25 @@ set(simple_chess_engine_sources
     ../data/Board.cpp
     ../data/Castling.cpp
     ../data/Field.cpp
+    ../data/ForsythEdwardsNotation.cpp
+    ../data/HalfMove.cpp
     ../data/Piece.cpp
+    ../evaluation/CheckEvaluator.cpp
+    ../evaluation/CompoundEvaluator.cpp
+    ../evaluation/MaterialEvaluator.cpp
+    ../evaluation/MobilityEvaluator.cpp
+    ../evaluation/PromotionEvaluator.cpp
     ../rules/Moves.cpp
     ../rules/check.cpp
+    ../search/Node.cpp
+    ../search/Search.cpp
     ../util/strings.cpp
     xboard/Error.cpp
+    xboard/New.cpp
     xboard/NoOperation.cpp
+    xboard/ProtocolVersion.cpp
     xboard/Quit.cpp
+    xboard/Usermove.cpp
     main.cpp)
 
 add_definitions(-std=c++11)
