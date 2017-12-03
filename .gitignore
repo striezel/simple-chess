@@ -6,5 +6,9 @@
 bin/
 obj/
 
+# a.out and object files
+a.out
+*.o
+
 # files from cppcheck
 CppCheckResults.xml

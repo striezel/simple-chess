@@ -12,5 +12,8 @@ add_subdirectory (pgn-reader)
 # Recurse into subdirectory for pgn-reader with meteor-chess support.
 add_subdirectory (pgn-reader-with-meteor-chess)
 
+# Recurse into subdirectory for engine.
+add_subdirectory (engine)
+
 # Recurse into subdirectory for tests.
 add_subdirectory (tests)
