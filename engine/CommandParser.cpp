@@ -23,6 +23,7 @@
 #include "Engine.hpp"
 #include "xboard/Command.hpp"
 #include "xboard/Error.hpp"
+#include "xboard/Go.hpp"
 #include "xboard/New.hpp"
 #include "xboard/ProtocolVersion.hpp"
 #include "xboard/Quit.hpp"
@@ -99,6 +100,22 @@ void CommandParser::parse(const std::string& commandString)
   else if (commandString == "hard")
   {
     // No operation required, we currently ignore this.
+  }
+  else if (commandString.substr(0, 6) == "level ")
+  {
+    // No operation required, we currently ignore this.
+  }
+  else if (commandString == "force")
+  {
+    // No operation required, we currently ignore force mode.
+  }
+  else if (commandString == "post")
+  {
+    // No operation required, we currently ignore this.
+  }
+  else if (commandString == "go")
+  {
+    Engine::get().addCommand(std::unique_ptr<Command>(new Go()));
   }
   else
   {

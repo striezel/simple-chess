@@ -77,6 +77,8 @@
 		<Unit filename="xboard/Command.hpp" />
 		<Unit filename="xboard/Error.cpp" />
 		<Unit filename="xboard/Error.hpp" />
+		<Unit filename="xboard/Go.cpp" />
+		<Unit filename="xboard/Go.hpp" />
 		<Unit filename="xboard/New.cpp" />
 		<Unit filename="xboard/New.hpp" />
 		<Unit filename="xboard/NoOperation.cpp" />

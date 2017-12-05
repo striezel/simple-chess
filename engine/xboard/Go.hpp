@@ -18,32 +18,25 @@
  -------------------------------------------------------------------------------
 */
 
-#include "ProtocolVersion.hpp"
-#include <iostream>
-#include "../Engine.hpp"
+#ifndef SIMPLECHESS_XBOARD_GO_HPP
+#define SIMPLECHESS_XBOARD_GO_HPP
+
+#include "Command.hpp"
 
 namespace simplechess
 {
 
-ProtocolVersion::ProtocolVersion(const unsigned int protoVer)
-: protocolVersion(protoVer)
+/** Command for making a move. */
+class Go: public Command
 {
-}
-
-bool ProtocolVersion::process()
-{
-  Engine::get().setProtocolVersion(protocolVersion);
-  // Send feature commands, if protocol is version 2 or higher.
-  if (protocolVersion >= 2)
-  {
-    std::cout << "feature done=0\n";
-    const std::string features = std::string("feature myname=\"simple-chess version zero\"\n")
-        + "feature ping=0 setboard=1 playother=0 san=0 usermove=1 time=0 sigint=0 sigterm=0 colors=0\n"
-        + "feature variants=\"normal\"\n";
-    std::cout << features;
-    std::cout << "feature done=1\n";
-  }
-  return true;
-}
+  public:
+    /** \brief Processes the command, i.e. performs required actions.
+     *
+     * \return True if command was processed successfully.
+     */
+    virtual bool process();
+}; // class
 
 } // namespace
+
+#endif // SIMPLECHESS_XBOARD_GO_HPP

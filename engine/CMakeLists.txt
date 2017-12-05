@@ -24,6 +24,7 @@ set(simple_chess_engine_sources
     ../search/Search.cpp
     ../util/strings.cpp
     xboard/Error.cpp
+    xboard/Go.cpp
     xboard/New.cpp
     xboard/NoOperation.cpp
     xboard/ProtocolVersion.cpp
