@@ -115,6 +115,20 @@ class Engine
     void setSearchDepth(const unsigned int newSearchDepth);
 
 
+    /** \brief Checks whether the engine is currently in force mode.
+     *
+     * \return Returns true, if engine is in force mode. Returns false otherwise.
+     */
+    bool forceMode() const;
+
+
+    /** \brief Sets whether force mode is on or not.
+     *
+     * \param newForceMode true to set force mode, false to leave force mode
+     */
+    void setForceMode(const bool newForceMode);
+
+
     /** \brief Adds another command to the command queue.
      *
      * \param com  the command that shall be added
@@ -146,6 +160,7 @@ class Engine
     Colour mEnginePlayer; /**< colour that is controlled by the engine */
     Board mBoard; /**< current chess board */
     unsigned int mSearchDepth; /**< search depth of the engine in plys */
+    bool mForceMode; /**< whether the engine is in force mode */
     std::deque<std::unique_ptr<Command> > mQueue; /**< command queue */
 
 

@@ -63,10 +63,11 @@ bool Usermove::process()
     std::cout << illegalMove;
     return true;
   }
-  // own move
-  if (Engine::get().player() == b.toMove())
+  // Make own move, but only if not in force mode and it is engine's turn.
+  if (!Engine::get().forceMode() && (Engine::get().player() == b.toMove()))
   {
-    // TODO: start making own move
+    // start making own move
+    Engine::get().move();
   }
   return true;
 }

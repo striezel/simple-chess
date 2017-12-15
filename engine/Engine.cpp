@@ -41,6 +41,7 @@ Engine::Engine()
   mEnginePlayer(Colour::none), // engine plays no side be default
   mBoard(Board()),
   mSearchDepth(1), // default search depth: one ply
+  mForceMode(false),
   mQueue(std::deque<std::unique_ptr<Command> >()) // empty queue
 {
 }
@@ -93,6 +94,16 @@ void Engine::setSearchDepth(const unsigned int newSearchDepth)
 {
   // TODO: Allow higher search depths.
   mSearchDepth = 1;
+}
+
+bool Engine::forceMode() const
+{
+  return mForceMode;
+}
+
+void Engine::setForceMode(const bool newForceMode)
+{
+  mForceMode = newForceMode;
 }
 
 void Engine::addCommand(std::unique_ptr<Command>&& com)

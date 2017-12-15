@@ -18,33 +18,16 @@
  -------------------------------------------------------------------------------
 */
 
-#include "New.hpp"
+#include "Force.hpp"
 #include "../Engine.hpp"
-#include "../../data/ForsythEdwardsNotation.hpp"
 
 namespace simplechess
 {
 
-bool New::process()
+bool Force::process()
 {
-  Board& board = Engine::get().board();
-  // Reset the board to the standard chess starting position.
-  if (!board.fromFEN(FEN::defaultInitialPosition))
-  {
-    return false;
-  }
-  // Set White on move.
-  board.setToMove(Colour::white);
-  // Leave force mode...
-  Engine::get().setForceMode(false);
-  // ... and set the engine to play Black.
-  Engine::get().setPlayer(Colour::black);
-  // TODO: Associate the engine's clock with Black and the opponent's clock with White.
-  //       Reset clocks and time controls to the start of a new game.
-  //       Use wall clock for time measurement. Stop clocks.
-  //       Do not ponder on this move, even if pondering is on.
-  //       Remove any search depth limit previously set by the sd command.
+  Engine::get().setForceMode(true);
   return true;
 }
 
-} // namespace
+} //namespace

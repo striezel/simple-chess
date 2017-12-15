@@ -23,6 +23,7 @@
 #include "Engine.hpp"
 #include "xboard/Command.hpp"
 #include "xboard/Error.hpp"
+#include "xboard/Force.hpp"
 #include "xboard/Go.hpp"
 #include "xboard/New.hpp"
 #include "xboard/ProtocolVersion.hpp"
@@ -107,7 +108,8 @@ void CommandParser::parse(const std::string& commandString)
   }
   else if (commandString == "force")
   {
-    // No operation required, we currently ignore force mode.
+    // Switch to force mode.
+    Engine::get().addCommand(std::unique_ptr<Command>(new Force()));
   }
   else if (commandString == "post")
   {

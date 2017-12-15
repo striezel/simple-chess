@@ -18,33 +18,25 @@
  -------------------------------------------------------------------------------
 */
 
-#include "New.hpp"
-#include "../Engine.hpp"
-#include "../../data/ForsythEdwardsNotation.hpp"
+#ifndef SIMPLECHESS_XBOARD_FORCE_HPP
+#define SIMPLECHESS_XBOARD_FORCE_HPP
+
+#include "Command.hpp"
 
 namespace simplechess
 {
 
-bool New::process()
+/** Command for starting force mode. */
+class Force: public Command
 {
-  Board& board = Engine::get().board();
-  // Reset the board to the standard chess starting position.
-  if (!board.fromFEN(FEN::defaultInitialPosition))
-  {
-    return false;
-  }
-  // Set White on move.
-  board.setToMove(Colour::white);
-  // Leave force mode...
-  Engine::get().setForceMode(false);
-  // ... and set the engine to play Black.
-  Engine::get().setPlayer(Colour::black);
-  // TODO: Associate the engine's clock with Black and the opponent's clock with White.
-  //       Reset clocks and time controls to the start of a new game.
-  //       Use wall clock for time measurement. Stop clocks.
-  //       Do not ponder on this move, even if pondering is on.
-  //       Remove any search depth limit previously set by the sd command.
-  return true;
-}
+  public:
+    /** \brief Processes the command, i.e. performs required actions.
+     *
+     * \return True if command was processed successfully.
+     */
+    virtual bool process();
+}; // class
 
 } // namespace
+
+#endif // SIMPLECHESS_XBOARD_FORCE_HPP
