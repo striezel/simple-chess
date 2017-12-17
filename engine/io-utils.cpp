@@ -30,12 +30,13 @@ namespace simplechess
 void disableStdinBuffering()
 {
   std::cin.rdbuf()->pubsetbuf(nullptr, 0);
+  std::cin.setf(std::ios_base::unitbuf);
 }
 
 void disableStdoutBuffering()
 {
   std::cout.rdbuf()->pubsetbuf(nullptr, 0);
-  std::cout << std::ios_base::unitbuf;
+  std::cout.setf(std::ios_base::unitbuf);
 }
 
 

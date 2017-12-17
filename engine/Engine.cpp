@@ -186,7 +186,7 @@ void Engine::move()
   }
   // Send move to xboard.
   std::ostringstream oss;
-  oss << "moves " << simplechess::column(from) << simplechess::row(from)
+  oss << "move " << simplechess::column(from) << simplechess::row(from)
       << simplechess::column(to) << simplechess::row(to);
   sendCommand(oss.str());
 }

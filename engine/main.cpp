@@ -34,14 +34,9 @@ int main()
 
   while (!Engine::get().quitRequested())
   {
-    bool hasData = readableDataOnStandardInput();
-    while (hasData)
-    {
-      std::string command;
-      std::getline(std::cin, command, '\n');
-      CommandParser::parse(command);
-      hasData = readableDataOnStandardInput();
-    }
+    std::string command;
+    std::getline(std::cin, command, '\n');
+    CommandParser::parse(command);
     // TODO: separate thread for command processing by engine
     Engine::get().processQueue();
   } // while
