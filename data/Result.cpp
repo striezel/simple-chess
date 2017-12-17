@@ -18,33 +18,39 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_RESULT_HPP
-#define SIMPLECHESS_RESULT_HPP
-
-#include <string>
+#include "Result.hpp"
+#include <stdexcept>
 
 namespace simplechess
 {
 
-/** enumeration value to denote the result of a chess game */
-enum class Result { Unknown, WhiteWins, BlackWins, Draw };
+std::string resultToString(const Result& res)
+{
+  switch(res)
+  {
+    case Result::Unknown:
+         return "*";
+    case Result::WhiteWins:
+         return "1-0";
+    case Result::BlackWins:
+         return "0-1";
+    case Result::Draw:
+         return "1/2-1/2";
+    default:
+         throw std::invalid_argument("Invalid result type in resultToString()!");
+  } //switch
+}
 
+Result stringToResult(const std::string& res)
+{
+  if (res == "1-0")
+    return Result::WhiteWins;
+  else if (res == "0-1")
+    return Result::BlackWins;
+  else if (res == "1/2-1/2")
+    return Result::Draw;
+  else
+    return Result::Unknown;
+}
 
-/** \brief gets the string representation of a result
- *
- * \param res   the result
- * \return Returns a string indicating the result.
- */
-std::string resultToString(const Result& res);
-
-
-/** \brief Converts the string representation of a result into an enumeration value.
- *
- * \param res   the result as string
- * \return Returns a enumeration value indicating the result.
- */
-Result stringToResult(const std::string& res);
-
-} //namespace
-
-#endif // SIMPLECHESS_RESULT_HPP
+} // namespace

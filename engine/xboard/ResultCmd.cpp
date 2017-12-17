@@ -18,33 +18,21 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_RESULT_HPP
-#define SIMPLECHESS_RESULT_HPP
-
-#include <string>
+#include "ResultCmd.hpp"
 
 namespace simplechess
 {
 
-/** enumeration value to denote the result of a chess game */
-enum class Result { Unknown, WhiteWins, BlackWins, Draw };
+ResultCmd::ResultCmd(const Result res, const std::string& comment)
+: result(res),
+  comment(comment)
+{
+}
 
+bool ResultCmd::process()
+{
+  // No operation necessary yet.
+  return true;
+}
 
-/** \brief gets the string representation of a result
- *
- * \param res   the result
- * \return Returns a string indicating the result.
- */
-std::string resultToString(const Result& res);
-
-
-/** \brief Converts the string representation of a result into an enumeration value.
- *
- * \param res   the result as string
- * \return Returns a enumeration value indicating the result.
- */
-Result stringToResult(const std::string& res);
-
-} //namespace
-
-#endif // SIMPLECHESS_RESULT_HPP
+} // namespace

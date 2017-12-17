@@ -11,6 +11,7 @@ set(simple_chess_tests_catch_sources
     ../../data/HalfMove.cpp
     ../../data/Piece.cpp
     ../../data/PortableGameNotation.cpp
+    ../../data/Result.cpp
     ../../evaluation/CheckEvaluator.cpp
     ../../evaluation/CompoundEvaluator.cpp
     ../../evaluation/MaterialEvaluator.cpp

@@ -13,6 +13,7 @@ set(simple_chess_engine_sources
     ../data/ForsythEdwardsNotation.cpp
     ../data/HalfMove.cpp
     ../data/Piece.cpp
+    ../data/Result.cpp
     ../evaluation/CheckEvaluator.cpp
     ../evaluation/CompoundEvaluator.cpp
     ../evaluation/MaterialEvaluator.cpp
@@ -30,6 +31,7 @@ set(simple_chess_engine_sources
     xboard/NoOperation.cpp
     xboard/ProtocolVersion.cpp
     xboard/Quit.cpp
+    xboard/ResultCmd.cpp
     xboard/Usermove.cpp
     main.cpp)
 

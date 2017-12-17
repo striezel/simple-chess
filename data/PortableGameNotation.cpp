@@ -40,23 +40,6 @@ PortableGameNotation::PortableGameNotation()
 {
 }
 
-std::string PortableGameNotation::resultToString(const Result& res)
-{
-  switch(res)
-  {
-    case Result::Unknown:
-         return "*";
-    case Result::WhiteWins:
-         return "1-0";
-    case Result::BlackWins:
-         return "0-1";
-    case Result::Draw:
-         return "1/2-1/2";
-    default:
-         throw std::invalid_argument("Invalid result type in resultToString()!");
-  } //switch
-}
-
 const std::string& PortableGameNotation::event() const
 {
   return mEvent;
@@ -158,14 +141,7 @@ void PortableGameNotation::setTag(const std::string& tagName, const std::string&
     mBlack = content;
   else if (tagName == "Result")
   {
-    if (content == "1-0")
-      mResult = Result::WhiteWins;
-    else if (content == "0-1")
-      mResult = Result::BlackWins;
-    else if (content == "1/2-1/2")
-      mResult = Result::Draw;
-    else
-      mResult = Result::Unknown;
+    mResult = stringToResult(content);
   } //else (Result)
   else
   {

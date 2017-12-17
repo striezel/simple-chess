@@ -28,8 +28,10 @@
 #include "xboard/New.hpp"
 #include "xboard/ProtocolVersion.hpp"
 #include "xboard/Quit.hpp"
+#include "xboard/ResultCmd.hpp"
 #include "xboard/Usermove.hpp"
 #include "xboard/Xboard.hpp"
+#include "../data/Result.hpp"
 #include "../util/strings.hpp"
 
 namespace simplechess
@@ -118,6 +120,25 @@ void CommandParser::parse(const std::string& commandString)
   else if (commandString == "go")
   {
     Engine::get().addCommand(std::unique_ptr<Command>(new Go()));
+  }
+  else if (commandString.substr(0, 7) == "result ")
+  {
+    const std::vector<std::string> parts = util::split(commandString, ' ');
+    Result res = Result::Unknown;
+    if (parts.size() >= 2)
+    {
+      res = stringToResult(parts.at(1));
+    } // result type
+    std::string comment = "";
+    if (parts.size() >= 3)
+    {
+      comment = parts[2];
+      for (std::size_t i = 3; i < parts.size(); ++i)
+      {
+        comment += std::string(" ") + parts[i];
+      } //for
+    }
+    Engine::get().addCommand(std::unique_ptr<Command>(new ResultCmd(res, comment)));
   }
   else
   {

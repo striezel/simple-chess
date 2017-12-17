@@ -12,6 +12,7 @@ set(pgn_reader_sources
     ../data/HalfMove.cpp
     ../data/Piece.cpp
     ../data/PortableGameNotation.cpp
+    ../data/Result.cpp
     ../pgn/Parser.cpp
     ../pgn/ParserException.cpp
     ../pgn/Token.cpp

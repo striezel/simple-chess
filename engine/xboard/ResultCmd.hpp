@@ -18,33 +18,39 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_RESULT_HPP
-#define SIMPLECHESS_RESULT_HPP
+#ifndef SIMPLECHESS_XBOARD_RESULTCMD_HPP
+#define SIMPLECHESS_XBOARD_RESULTCMD_HPP
 
+#include "Command.hpp"
 #include <string>
+#include "../../data/Result.hpp"
 
 namespace simplechess
 {
 
-/** enumeration value to denote the result of a chess game */
-enum class Result { Unknown, WhiteWins, BlackWins, Draw };
-
-
-/** \brief gets the string representation of a result
- *
- * \param res   the result
- * \return Returns a string indicating the result.
+/** \brief Class for that handles the result command.
  */
-std::string resultToString(const Result& res);
+class ResultCmd : public Command
+{
+  public:
+    /** \brief Constructor.
+     *
+     * \param res result of the game
+     * \param comment comment / reason for result
+     */
+    ResultCmd(const Result res, const std::string& comment);
 
 
-/** \brief Converts the string representation of a result into an enumeration value.
- *
- * \param res   the result as string
- * \return Returns a enumeration value indicating the result.
- */
-Result stringToResult(const std::string& res);
+    /** \brief Processes the command, i.e. performs required actions.
+     *
+     * \return True if command was processed successfully.
+     */
+    virtual bool process();
+  private:
+    Result result; /**< result of the game */
+    std::string comment; /**< the comment, if any */
+}; // class
 
-} //namespace
+} // namespace
 
-#endif // SIMPLECHESS_RESULT_HPP
+#endif // SIMPLECHESS_XBOARD_RESULTCMD_HPP

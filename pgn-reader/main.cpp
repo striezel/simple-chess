@@ -291,7 +291,7 @@ int main(int argc, char** argv)
          std::cout << "Outcome of the game is unknown.\n";
          break;
     default:
-         std::cout << "Result of the game is " << pgn.resultToString(pgn.result()) << ".\n";
+         std::cout << "Result of the game is " << simplechess::resultToString(pgn.result()) << ".\n";
          break;
   } //switch
 

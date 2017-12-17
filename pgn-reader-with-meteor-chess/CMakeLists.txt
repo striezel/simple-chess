@@ -12,6 +12,7 @@ set(pgn_reader_with_meteor_chess_sources
     ../data/HalfMove.cpp
     ../data/Piece.cpp
     ../data/PortableGameNotation.cpp
+    ../data/Result.cpp
     ../db/mongo/Convert.cpp
     ../db/mongo/IdGenerator.cpp
     ../db/mongo/libmongoclient/BSON.cpp

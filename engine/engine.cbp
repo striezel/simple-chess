@@ -46,6 +46,8 @@
 		<Unit filename="../data/HalfMove.hpp" />
 		<Unit filename="../data/Piece.cpp" />
 		<Unit filename="../data/Piece.hpp" />
+		<Unit filename="../data/Result.cpp" />
+		<Unit filename="../data/Result.hpp" />
 		<Unit filename="../evaluation/CheckEvaluator.cpp" />
 		<Unit filename="../evaluation/CheckEvaluator.hpp" />
 		<Unit filename="../evaluation/CompoundEvaluator.cpp" />
@@ -89,6 +91,8 @@
 		<Unit filename="xboard/ProtocolVersion.hpp" />
 		<Unit filename="xboard/Quit.cpp" />
 		<Unit filename="xboard/Quit.hpp" />
+		<Unit filename="xboard/ResultCmd.cpp" />
+		<Unit filename="xboard/ResultCmd.hpp" />
 		<Unit filename="xboard/Usermove.cpp" />
 		<Unit filename="xboard/Usermove.hpp" />
 		<Unit filename="xboard/Xboard.hpp" />

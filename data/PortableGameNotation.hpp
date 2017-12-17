@@ -39,14 +39,6 @@ class PortableGameNotation
     PortableGameNotation();
 
 
-    /** \brief gets the string representation of a result
-     *
-     * \param res   the result
-     * \return Returns a string indicating the result.
-     */
-    static std::string resultToString(const Result& res);
-
-
     /** \brief get the name of the tournament or match event
      *
      * \return name of the tournament or match event
