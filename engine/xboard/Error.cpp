@@ -19,7 +19,7 @@
 */
 
 #include "Error.hpp"
-#include <iostream>
+#include "../io-utils.hpp"
 
 namespace simplechess
 {
@@ -34,7 +34,7 @@ bool Error::process()
 {
   // send error command to xboard
   const std::string fullCommand = "Error (" + mType + "): " + mCommand;
-  std::cout << fullCommand + "\n";
+  sendCommand(fullCommand);
   return true;
 }
 

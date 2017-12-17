@@ -20,6 +20,7 @@
 
 #include "Go.hpp"
 #include "../Engine.hpp"
+#include "../io-utils.hpp"
 
 namespace simplechess
 {
@@ -28,6 +29,8 @@ bool Go::process()
 {
   // TODO: Check whether this implementation does what the protocol
   // specification expects the engine to do.
+  sendCommand("# go handler invoked");
+  Engine::get().setForceMode(false);
   Engine::get().move();
   return true;
 }

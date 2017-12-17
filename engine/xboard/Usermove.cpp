@@ -20,6 +20,7 @@
 
 #include "Usermove.hpp"
 #include <sstream>
+#include "../io-utils.hpp"
 #include "../Engine.hpp"
 #include "../../rules/Moves.hpp"
 
@@ -59,8 +60,7 @@ bool Usermove::process()
       default:
            break;
     } // switch
-    const std::string illegalMove = oss.str() + "\n";
-    std::cout << illegalMove;
+    sendCommand(oss.str());
     return true;
   }
   // Make own move, but only if not in force mode and it is engine's turn.

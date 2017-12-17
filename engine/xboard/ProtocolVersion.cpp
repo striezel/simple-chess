@@ -19,7 +19,7 @@
 */
 
 #include "ProtocolVersion.hpp"
-#include <iostream>
+#include "../io-utils.hpp"
 #include "../Engine.hpp"
 
 namespace simplechess
@@ -36,12 +36,11 @@ bool ProtocolVersion::process()
   // Send feature commands, if protocol is version 2 or higher.
   if (protocolVersion >= 2)
   {
-    std::cout << "feature done=0\n";
-    const std::string features = std::string("feature myname=\"simple-chess version zero\"\n")
-        + "feature ping=0 setboard=1 playother=0 san=0 usermove=1 time=0 sigint=0 sigterm=0 colors=0\n"
-        + "feature variants=\"normal\"\n";
-    std::cout << features;
-    std::cout << "feature done=1\n";
+    sendCommand("feature done=0");
+    sendCommand("feature myname=\"simple-chess version zero\"");
+    sendCommand("feature ping=0 setboard=1 playother=0 san=0 usermove=1 time=0 sigint=0 sigterm=0 colors=0");
+    sendCommand("feature variants=\"normal\"");
+    sendCommand("feature done=1");
   }
   return true;
 }

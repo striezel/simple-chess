@@ -21,6 +21,8 @@
 #ifndef SIMPLECHESS_IO_UTILS_HPP
 #define SIMPLECHESS_IO_UTILS_HPP
 
+#include <string>
+
 namespace simplechess
 {
 
@@ -43,6 +45,14 @@ void disableStdoutBuffering();
  *          small timespan (ca. 0.5 seconds) for data before returning.
  */
 bool readableDataOnStandardInput();
+
+
+/** \brief Sends a command from the engine to xboard.
+ *
+ * \param cmd the command to send, excluding newline character
+ * \remarks The command should be one line only.
+ */
+void sendCommand(const std::string& cmd);
 
 } // namespace
 

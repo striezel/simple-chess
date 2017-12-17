@@ -19,6 +19,8 @@
 */
 
 #include "Engine.hpp"
+#include <sstream>
+#include "io-utils.hpp"
 #include "../evaluation/CheckEvaluator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
 #include "../evaluation/MaterialEvaluator.hpp"
@@ -151,7 +153,7 @@ void Engine::move()
   {
     // No moves have been found. This is probably due to the fact that the
     // engine has been checkmated, so give up here.
-    std::cout << "resign\n";
+    sendCommand("resign");
     return;
   }
   Field from = simplechess::Field::none;
@@ -171,20 +173,22 @@ void Engine::move()
   {
     // The move the engine found is not allowed. (Should not happen, but who knows?)
     // To avoid any complication, the engine will resign here.
-    std::cout << "# The computer move is not allowed. Resigning.\n";
+    sendCommand("# The computer move is not allowed. Resigning.");
     if (board().toMove() == Colour::white)
     {
-      std::cout << "0-1 {White resigns because it could not find an acceptable move}\n";
+      sendCommand("0-1 {White resigns because it could not find an acceptable move}");
     }
     else
     {
-      std::cout << "1-0 {Black resigns because it could not find an acceptable move}\n";
+      sendCommand("1-0 {Black resigns because it could not find an acceptable move}");
     }
     return;
   }
   // Send move to xboard.
-  std::cout << "moves " << simplechess::column(from) << simplechess::row(from)
-            << simplechess::column(to) << simplechess::row(to) << "\n";
+  std::ostringstream oss;
+  oss << "moves " << simplechess::column(from) << simplechess::row(from)
+      << simplechess::column(to) << simplechess::row(to);
+  sendCommand(oss.str());
 }
 
 } // namespace
