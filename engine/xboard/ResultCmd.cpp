@@ -19,6 +19,7 @@
 */
 
 #include "ResultCmd.hpp"
+#include "../Engine.hpp"
 
 namespace simplechess
 {
@@ -31,7 +32,14 @@ ResultCmd::ResultCmd(const Result res, const std::string& comment)
 
 bool ResultCmd::process()
 {
-  // No operation necessary yet.
+  /* Note: We might want to create and save a PGN file of the game here for
+     further analysis, but that requires that the moves are recorded by the
+     engine in the first place. They are not (yet). */
+
+  // Reset board and the one side that is played by the engine.
+  Engine::get().board() = Board();
+  Engine::get().setPlayer(Colour::none);
+  Engine::get().setForceMode(false);
   return true;
 }
 
