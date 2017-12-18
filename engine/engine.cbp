@@ -87,6 +87,8 @@
 		<Unit filename="xboard/New.hpp" />
 		<Unit filename="xboard/NoOperation.cpp" />
 		<Unit filename="xboard/NoOperation.hpp" />
+		<Unit filename="xboard/Ping.cpp" />
+		<Unit filename="xboard/Ping.hpp" />
 		<Unit filename="xboard/ProtocolVersion.cpp" />
 		<Unit filename="xboard/ProtocolVersion.hpp" />
 		<Unit filename="xboard/Quit.cpp" />

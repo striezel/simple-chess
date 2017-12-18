@@ -26,6 +26,7 @@
 #include "xboard/Force.hpp"
 #include "xboard/Go.hpp"
 #include "xboard/New.hpp"
+#include "xboard/Ping.hpp"
 #include "xboard/ProtocolVersion.hpp"
 #include "xboard/Quit.hpp"
 #include "xboard/ResultCmd.hpp"
@@ -120,6 +121,14 @@ void CommandParser::parse(const std::string& commandString)
   else if (commandString == "go")
   {
     Engine::get().addCommand(std::unique_ptr<Command>(new Go()));
+  }
+  else if (commandString == "ping")
+  {
+    Engine::get().addCommand(std::unique_ptr<Command>(new Error("no ping number given", "ping")));
+  }
+  else if (commandString.substr(0, 5) == "ping ")
+  {
+    Engine::get().addCommand(std::unique_ptr<Command>(new Ping(commandString.substr(5))));
   }
   else if (commandString.substr(0, 7) == "result ")
   {

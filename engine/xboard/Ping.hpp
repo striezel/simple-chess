@@ -18,31 +18,36 @@
  -------------------------------------------------------------------------------
 */
 
-#include "ProtocolVersion.hpp"
-#include "../io-utils.hpp"
-#include "../Engine.hpp"
+#ifndef SIMPLECHESS_XBOARD_PING_HPP
+#define SIMPLECHESS_XBOARD_PING_HPP
+
+#include "Command.hpp"
+#include <string>
 
 namespace simplechess
 {
 
-ProtocolVersion::ProtocolVersion(const unsigned int protoVer)
-: protocolVersion(protoVer)
+/** \brief Class for that handles the ping command.
+ */
+class Ping : public Command
 {
-}
+  public:
+    /** \brief Constructor.
+     *
+     * \param num  the ping string, usually a number like "1"
+     */
+    Ping(const std::string& num);
 
-bool ProtocolVersion::process()
-{
-  Engine::get().setProtocolVersion(protocolVersion);
-  // Send feature commands, if protocol is version 2 or higher.
-  if (protocolVersion >= 2)
-  {
-    sendCommand("feature done=0");
-    sendCommand("feature myname=\"simple-chess version zero\"");
-    sendCommand("feature ping=1 setboard=1 playother=0 san=0 usermove=1 time=0 sigint=0 sigterm=0 colors=0");
-    sendCommand("feature variants=\"normal\"");
-    sendCommand("feature done=1");
-  }
-  return true;
-}
+
+    /** \brief Processes the command, i.e. performs required actions.
+     *
+     * \return True if command was processed successfully.
+     */
+    virtual bool process();
+  private:
+    std::string number; /**< the ping number */
+}; // class
 
 } // namespace
+
+#endif // SIMPLECHESS_XBOARD_PING_HPP

@@ -29,6 +29,7 @@ set(simple_chess_engine_sources
     xboard/Go.cpp
     xboard/New.cpp
     xboard/NoOperation.cpp
+    xboard/Ping.cpp
     xboard/ProtocolVersion.cpp
     xboard/Quit.cpp
     xboard/ResultCmd.cpp

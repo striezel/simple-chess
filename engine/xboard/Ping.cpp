@@ -18,29 +18,28 @@
  -------------------------------------------------------------------------------
 */
 
-#include "ProtocolVersion.hpp"
+#include "Ping.hpp"
 #include "../io-utils.hpp"
-#include "../Engine.hpp"
 
 namespace simplechess
 {
 
-ProtocolVersion::ProtocolVersion(const unsigned int protoVer)
-: protocolVersion(protoVer)
+Ping::Ping(const std::string& num)
+: number(num)
 {
 }
 
-bool ProtocolVersion::process()
+bool Ping::process()
 {
-  Engine::get().setProtocolVersion(protocolVersion);
-  // Send feature commands, if protocol is version 2 or higher.
-  if (protocolVersion >= 2)
+  if (!number.empty())
   {
-    sendCommand("feature done=0");
-    sendCommand("feature myname=\"simple-chess version zero\"");
-    sendCommand("feature ping=1 setboard=1 playother=0 san=0 usermove=1 time=0 sigint=0 sigterm=0 colors=0");
-    sendCommand("feature variants=\"normal\"");
-    sendCommand("feature done=1");
+    // Reply by sending the same number back to engine.
+    sendCommand("pong " + number);
+  }
+  else
+  {
+    // "Empty" ping commands, i.e. ping without any argument, are not well-formed.
+    sendCommand("Error (no ping number given): ping ");
   }
   return true;
 }
