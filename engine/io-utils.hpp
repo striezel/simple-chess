@@ -36,17 +36,6 @@ void disableStdinBuffering();
 void disableStdoutBuffering();
 
 
-/** \brief Checks whether std::cin has data to be read.
- *
- * \return Returns true, if there is data that can be read.
- *         Returns false otherwise.
- * \remarks This function returns immediately, if there is readable data.
- *          If there is no readable data yet, then this function waits for a
- *          small timespan (ca. 0.5 seconds) for data before returning.
- */
-bool readableDataOnStandardInput();
-
-
 /** \brief Sends a command from the engine to xboard.
  *
  * \param cmd the command to send, excluding newline character
