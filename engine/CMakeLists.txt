@@ -24,9 +24,13 @@ set(simple_chess_engine_sources
     ../search/Node.cpp
     ../search/Search.cpp
     ../util/strings.cpp
+    time/Clock.cpp
+    time/Timing.cpp
     xboard/Error.cpp
+    xboard/ExactTime.cpp
     xboard/Force.cpp
     xboard/Go.cpp
+    xboard/Level.cpp
     xboard/New.cpp
     xboard/NoOperation.cpp
     xboard/Ping.cpp

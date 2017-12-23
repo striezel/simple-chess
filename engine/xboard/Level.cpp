@@ -18,37 +18,44 @@
  -------------------------------------------------------------------------------
 */
 
-#include "New.hpp"
+#include "Level.hpp"
 #include "../Engine.hpp"
-#include "../../data/ForsythEdwardsNotation.hpp"
+#include "../io-utils.hpp"
 
 namespace simplechess
 {
 
-bool New::process()
+Level::Level(const int moveCount, const std::chrono::seconds& base, const std::chrono::seconds& inc)
+: moves(moveCount),
+  base(base),
+  increment(inc)
 {
-  Board& board = Engine::get().board();
-  // Reset the board to the standard chess starting position.
-  if (!board.fromFEN(FEN::defaultInitialPosition))
+}
+
+bool Level::process()
+{
+  if (moves > 0)
   {
-    return false;
+    // conventional mode
+    Timing& timing = Engine::get().timing();
+    timing.setMode(TimeControlMode::conventional);
+    timing.setConventional(moves, base);
+    return true;
   }
-  // Set White on move.
-  board.setToMove(Colour::white);
-  // Leave force mode...
-  Engine::get().setForceMode(false);
-  // ... and set the engine to play Black.
-  Engine::get().setPlayer(Colour::black);
-  // Reset clocks and time controls to the start of a new game.
-  Timing& timing = Engine::get().timing();
-  timing.self().reset();
-  timing.opponent().reset();
-  // Use wall clock for time measurement. Stop clocks.
-  timing.self().stop();
-  timing.opponent().stop();
-  // TODO: Do not ponder on this move, even if pondering is on.
-  //       Remove any search depth limit previously set by the sd command.
-  return true;
+  else if (moves == 0)
+  {
+    // incremental mode
+    Timing& timing = Engine::get().timing();
+    timing.setMode(TimeControlMode::incremental);
+    timing.setIncremental(base, increment);
+    return true;
+  }
+  else
+  {
+    // syntax error
+    sendCommand("Error (incorrect command syntax, moves is less than zero): level");
+    return true;
+  }
 }
 
 } // namespace

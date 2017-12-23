@@ -22,9 +22,11 @@
 #include <regex>
 #include "Engine.hpp"
 #include "xboard/Command.hpp"
+#include "xboard/ExactTime.hpp"
 #include "xboard/Error.hpp"
 #include "xboard/Force.hpp"
 #include "xboard/Go.hpp"
+#include "xboard/Level.hpp"
 #include "xboard/New.hpp"
 #include "xboard/Ping.hpp"
 #include "xboard/ProtocolVersion.hpp"
@@ -107,7 +109,56 @@ void CommandParser::parse(const std::string& commandString)
   }
   else if (commandString.substr(0, 6) == "level ")
   {
-    // No operation required, we currently ignore this.
+    const auto parts = util::split(commandString.substr(6), ' ');
+    if (parts.size() < 3)
+    {
+      Engine::get().addCommand(std::unique_ptr<Command>(new Error("command expects three parameters", "level")));
+      return;
+    }
+    int moves = -1;
+    if (!util::stringToInt(parts[0], moves))
+    {
+      Engine::get().addCommand(std::unique_ptr<Command>(new Error("first parameter must be integer", commandString)));
+      return;
+    }
+    std::chrono::seconds base = std::chrono::seconds::zero();
+    const auto minSec = util::split(parts[1], ':');
+    int minutes = -1;
+    if (minSec.size() >= 1)
+    {
+      if (!util::stringToInt(minSec[0], minutes))
+      {
+        Engine::get().addCommand(std::unique_ptr<Command>(new Error("minute parameter must be an integer", commandString)));
+        return;
+      }
+    }
+    int seconds = 0;
+    if (minSec.size() >= 2)
+    {
+      if (!util::stringToInt(minSec[1], seconds))
+      {
+        Engine::get().addCommand(std::unique_ptr<Command>(new Error("seconds parameter must be an integer", commandString)));
+        return;
+      }
+    }
+    base = std::chrono::seconds(60 * minutes + seconds);
+    int increment = -1;
+    if (!util::stringToInt(parts[2], increment))
+    {
+      Engine::get().addCommand(std::unique_ptr<Command>(new Error("increment parameter must be an integer", commandString)));
+      return;
+    }
+    Engine::get().addCommand(std::unique_ptr<Command>(new Level(moves, base, std::chrono::seconds(increment))));
+  }
+  else if (commandString.substr(0, 3) == "st ")
+  {
+    int seconds = -1;
+    if (!util::stringToInt(commandString.substr(3), seconds))
+    {
+      Engine::get().addCommand(std::unique_ptr<Command>(new Error("seconds parameter must be an integer", commandString)));
+      return;
+    }
+    Engine::get().addCommand(std::unique_ptr<Command>(new ExactTime(std::chrono::seconds(seconds))));
   }
   else if (commandString == "force")
   {

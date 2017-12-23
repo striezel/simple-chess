@@ -26,6 +26,7 @@
 #include <memory>
 
 #include "../data/Board.hpp"
+#include "time/Timing.hpp"
 #include "xboard/Command.hpp"
 
 namespace simplechess
@@ -129,6 +130,13 @@ class Engine
     void setForceMode(const bool newForceMode);
 
 
+    /** \brief Gets the timing control of the engine.
+     *
+     * \return timing control instance
+     */
+    Timing& timing();
+
+
     /** \brief Adds another command to the command queue.
      *
      * \param com  the command that shall be added
@@ -161,6 +169,7 @@ class Engine
     Board mBoard; /**< current chess board */
     unsigned int mSearchDepth; /**< search depth of the engine in plys */
     bool mForceMode; /**< whether the engine is in force mode */
+    Timing mTiming; /**< time controls */
     std::deque<std::unique_ptr<Command> > mQueue; /**< command queue */
 
 

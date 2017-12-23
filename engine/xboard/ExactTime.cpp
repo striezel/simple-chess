@@ -18,36 +18,20 @@
  -------------------------------------------------------------------------------
 */
 
-#include "New.hpp"
+#include "ExactTime.hpp"
 #include "../Engine.hpp"
-#include "../../data/ForsythEdwardsNotation.hpp"
 
 namespace simplechess
 {
 
-bool New::process()
+ExactTime::ExactTime(const std::chrono::seconds& secsPerMove)
+: secondsPerMove(secsPerMove)
 {
-  Board& board = Engine::get().board();
-  // Reset the board to the standard chess starting position.
-  if (!board.fromFEN(FEN::defaultInitialPosition))
-  {
-    return false;
-  }
-  // Set White on move.
-  board.setToMove(Colour::white);
-  // Leave force mode...
-  Engine::get().setForceMode(false);
-  // ... and set the engine to play Black.
-  Engine::get().setPlayer(Colour::black);
-  // Reset clocks and time controls to the start of a new game.
-  Timing& timing = Engine::get().timing();
-  timing.self().reset();
-  timing.opponent().reset();
-  // Use wall clock for time measurement. Stop clocks.
-  timing.self().stop();
-  timing.opponent().stop();
-  // TODO: Do not ponder on this move, even if pondering is on.
-  //       Remove any search depth limit previously set by the sd command.
+}
+
+bool ExactTime::process()
+{
+  Engine::get().timing().setExact(secondsPerMove);
   return true;
 }
 

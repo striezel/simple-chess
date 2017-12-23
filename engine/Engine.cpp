@@ -44,6 +44,7 @@ Engine::Engine()
   mBoard(Board()),
   mSearchDepth(1), // default search depth: one ply
   mForceMode(false),
+  mTiming(Timing()),
   mQueue(std::deque<std::unique_ptr<Command> >()) // empty queue
 {
 }
@@ -106,6 +107,11 @@ bool Engine::forceMode() const
 void Engine::setForceMode(const bool newForceMode)
 {
   mForceMode = newForceMode;
+}
+
+Timing& Engine::timing()
+{
+  return mTiming;
 }
 
 void Engine::addCommand(std::unique_ptr<Command>&& com)

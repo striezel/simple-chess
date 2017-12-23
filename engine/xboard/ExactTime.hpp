@@ -18,37 +18,35 @@
  -------------------------------------------------------------------------------
 */
 
-#include "New.hpp"
-#include "../Engine.hpp"
-#include "../../data/ForsythEdwardsNotation.hpp"
+#ifndef SIMPLECHESS_XBOARD_EXACTTIME_HPP
+#define SIMPLECHESS_XBOARD_EXACTTIME_HPP
+
+#include "Command.hpp"
+#include <chrono>
 
 namespace simplechess
 {
 
-bool New::process()
+/** Command for setting exact timing mode. */
+class ExactTime: public Command
 {
-  Board& board = Engine::get().board();
-  // Reset the board to the standard chess starting position.
-  if (!board.fromFEN(FEN::defaultInitialPosition))
-  {
-    return false;
-  }
-  // Set White on move.
-  board.setToMove(Colour::white);
-  // Leave force mode...
-  Engine::get().setForceMode(false);
-  // ... and set the engine to play Black.
-  Engine::get().setPlayer(Colour::black);
-  // Reset clocks and time controls to the start of a new game.
-  Timing& timing = Engine::get().timing();
-  timing.self().reset();
-  timing.opponent().reset();
-  // Use wall clock for time measurement. Stop clocks.
-  timing.self().stop();
-  timing.opponent().stop();
-  // TODO: Do not ponder on this move, even if pondering is on.
-  //       Remove any search depth limit previously set by the sd command.
-  return true;
-}
+  public:
+    /** \brief Constructor.
+     *
+     * \param secsPerMove maximum number of seconds per move
+     */
+    ExactTime(const std::chrono::seconds& secsPerMove);
+
+
+    /** \brief Processes the command, i.e. performs required actions.
+     *
+     * \return True if command was processed successfully.
+     */
+    virtual bool process();
+  private:
+    std::chrono::seconds secondsPerMove; /**< max. seconds per move */
+}; // class
 
 } // namespace
+
+#endif // SIMPLECHESS_XBOARD_EXACTTIME_HPP
