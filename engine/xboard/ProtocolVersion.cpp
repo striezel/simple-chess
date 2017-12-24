@@ -38,7 +38,7 @@ bool ProtocolVersion::process()
   {
     sendCommand("feature done=0");
     sendCommand("feature myname=\"simple-chess version zero\"");
-    sendCommand("feature ping=1 setboard=1 playother=0 san=0 usermove=1 time=0 sigint=0 sigterm=0 colors=0");
+    sendCommand("feature ping=1 setboard=1 playother=0 san=0 usermove=1 time=1 sigint=0 sigterm=0 colors=0");
     sendCommand("feature variants=\"normal\"");
     sendCommand("feature done=1");
   }

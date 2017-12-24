@@ -37,6 +37,7 @@ set(simple_chess_engine_sources
     xboard/ProtocolVersion.cpp
     xboard/Quit.cpp
     xboard/ResultCmd.cpp
+    xboard/SetTime.cpp
     xboard/Usermove.cpp
     main.cpp)
 

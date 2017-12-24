@@ -18,36 +18,23 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_PING_HPP
-#define SIMPLECHESS_XBOARD_PING_HPP
-
-#include "Command.hpp"
-#include <string>
+#include "SetTime.hpp"
+#include "../Engine.hpp"
 
 namespace simplechess
 {
 
-/** \brief Class that handles the ping command.
- */
-class Ping : public Command
+SetTime::SetTime(const int centiseconds, const bool opponent)
+: mCentiseconds(centiseconds),
+  mOpponent(opponent)
 {
-  public:
-    /** \brief Constructor.
-     *
-     * \param num  the ping string, usually a number like "1"
-     */
-    Ping(const std::string& num);
+}
 
-
-    /** \brief Processes the command, i.e. performs required actions.
-     *
-     * \return True if command was processed successfully.
-     */
-    virtual bool process();
-  private:
-    std::string number; /**< the ping number */
-}; // class
+bool SetTime::process()
+{
+  Clock& cl = mOpponent ? Engine::get().timing().opponent() : Engine::get().timing().self();
+  cl.setRemaining(centiseconds(mCentiseconds));
+  return true;
+}
 
 } // namespace
-
-#endif // SIMPLECHESS_XBOARD_PING_HPP

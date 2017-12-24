@@ -66,8 +66,11 @@ bool Usermove::process()
   // Make own move, but only if not in force mode and it is engine's turn.
   if (!Engine::get().forceMode() && (Engine::get().player() == b.toMove()))
   {
+    // start clock
+    Engine::get().timing().self().start();
     // start making own move
     Engine::get().move();
+    Engine::get().timing().self().stop();
   }
   return true;
 }

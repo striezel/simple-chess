@@ -68,6 +68,14 @@ centiseconds Clock::remaining() const
   }
 }
 
+void Clock::setRemaining(const centiseconds& timeLeft)
+{
+  if (!running())
+  {
+    mRemaining = timeLeft;
+  }
+}
+
 centiseconds Clock::elapsed() const
 {
   if (running())

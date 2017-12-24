@@ -32,6 +32,7 @@
 #include "xboard/ProtocolVersion.hpp"
 #include "xboard/Quit.hpp"
 #include "xboard/ResultCmd.hpp"
+#include "xboard/SetTime.hpp"
 #include "xboard/Usermove.hpp"
 #include "xboard/Xboard.hpp"
 #include "../data/Result.hpp"
@@ -172,6 +173,16 @@ void CommandParser::parse(const std::string& commandString)
   else if (commandString == "go")
   {
     Engine::get().addCommand(std::unique_ptr<Command>(new Go()));
+  }
+  else if ((commandString.substr(0, 5) == "otim ") || (commandString.substr(0, 5) == "time "))
+  {
+    int centiS = -1;
+    if (!util::stringToInt(commandString.substr(5), centiS))
+    {
+      Engine::get().addCommand(std::unique_ptr<Command>(new Error("parameter must be an integer", commandString)));
+      return;
+    }
+    Engine::get().addCommand(std::unique_ptr<Command>(new SetTime(centiS, commandString.substr(0,4) == "otim")));
   }
   else if (commandString == "ping")
   {

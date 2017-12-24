@@ -31,7 +31,9 @@ bool Go::process()
   // specification expects the engine to do.
   sendCommand("# go handler invoked");
   Engine::get().setForceMode(false);
+  Engine::get().timing().self().start();
   Engine::get().move();
+  Engine::get().timing().self().stop();
   return true;
 }
 

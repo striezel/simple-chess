@@ -71,6 +71,14 @@ class Clock
     centiseconds remaining() const;
 
 
+    /** \brief Sets the remaining time on the clock.
+     *
+     * \param timeLeft the time that is left on the clock in centiseconds
+     * \remarks This has only an effect if the clock is not running.
+     */
+    void setRemaining(const centiseconds& timeLeft);
+
+
     /** \brief Gets the time that has elapsed since the last start in centiseconds.
      *
      * \return elapsed time since start in centiseconds
@@ -85,7 +93,7 @@ class Clock
 
     /** \brief Stops the clock and resets the remaining time to the initial amount.
      *
-     * \param initialAmount the new intial amount to which the clock will be reset
+     * \param initialAmount the new initial amount to which the clock will be reset
      */
     void reset(const centiseconds& initialAmount);
   private:
