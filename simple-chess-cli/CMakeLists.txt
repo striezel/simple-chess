@@ -32,6 +32,14 @@ set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
 
 add_executable(simple_chess_cli ${simple_chess_cli_sources})
 
+# create git-related constants
+# -- get the current commit hash
+execute_process(
+  COMMAND git rev-parse HEAD
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
 # -- get the commit date
 execute_process(
   COMMAND git show -s --format=%ci
