@@ -19,22 +19,33 @@
 */
 
 #include "Search.hpp"
+#include <algorithm>
 #include "../rules/Moves.hpp"
 
 namespace simplechess
 {
 
 Search::Search(const Board& board)
-: root(board, Field::none, Field::none, PieceType::none, 0)
+: root(board, Field::none, Field::none, PieceType::none, 0),
+  searchDepth(0)
 {
 }
 
 void Search::search(const Evaluator& eval, const unsigned int depth)
 {
+  // Currently only up to one ply may be searched, because deeper levels of the
+  // search tree will not be looked into when getting the best move. Yet.
+  const unsigned int maximumSearchDepth = 1;
+
   // Clear children, if any.
   root.children.clear();
+  // The real search depth must not be zero (std::max(1u, ...) takes care of that),
+  // so that we get at least some moves. The search depth must also not be
+  // greater than the maximum supported search depth (the std::min(...) part
+  // takes care of that) to avoid exhaustive time and resource consumption.
+  searchDepth = std::max(1u , std::min(depth, maximumSearchDepth));
   // Expand search node into tree.
-  expandNode(root, eval, depth);
+  expandNode(root, eval, searchDepth);
 }
 
 std::tuple<Field, Field, PieceType> Search::bestMove() const
@@ -70,6 +81,11 @@ std::tuple<Field, Field, PieceType> Search::bestMove() const
 const Node& Search::rootNode() const
 {
   return root;
+}
+
+unsigned int Search::depth() const
+{
+  return searchDepth;
 }
 
 bool Search::hasMove() const
@@ -109,9 +125,9 @@ void Search::expandNode(Node& node, const Evaluator& eval, const unsigned int de
             std::unique_ptr<Node>(
             new Node(movedBoard, from, to, PieceType::queen,
             eval.score(movedBoard))));
-      } //if move is allowed
-    } //for j
-  } //for i
+      } // if move is allowed
+    } // for j
+  } // for i
   // sort children
   node.sortChildren();
   // expand child nodes

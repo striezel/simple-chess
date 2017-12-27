@@ -31,7 +31,9 @@ TEST_CASE("Search: default start position with depth == 1")
 
   MaterialEvaluator evaluator;
   simplechess::Search s(board);
+  REQUIRE( s.depth() == 0 );
   s.search(evaluator, 1);
+  REQUIRE( s.depth() == 1 );
   const Node& searchNode = s.rootNode();
 
   // There should be some child nodes.

@@ -72,6 +72,14 @@ class Search
     const Node& rootNode() const;
 
 
+    /** \brief Gets the depth of the last search in number of plys / half moves.
+     *
+     * \return Returns the depth of the last search, or zero if no search has
+     *         been performed by this instance yet.
+     */
+    unsigned int depth() const;
+
+
     /** \brief Searches for the best next move on the given board.
      *
      * \param board the current position
@@ -92,6 +100,7 @@ class Search
 
 
     Node root; /**< root node of search for the current starting position */
+    unsigned int searchDepth; /**< depth of last search in plys / half moves */
 }; //class
 
 } //namespace
