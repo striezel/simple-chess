@@ -1,7 +1,7 @@
 # We might support earlier versions, too, but it's only tested with 2.8.9.
 cmake_minimum_required (VERSION 2.8)
 
-project(simple_chess_cli)
+project(simple-chess-cli)
 
 set(simple_chess_cli_sources
     ../data/Board.cpp
@@ -30,7 +30,7 @@ endif (CMAKE_COMPILER_IS_GNUCC)
 
 set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
 
-add_executable(simple_chess_cli ${simple_chess_cli_sources})
+add_executable(simple-chess-cli ${simple_chess_cli_sources})
 
 # create git-related constants
 # -- get the current commit hash

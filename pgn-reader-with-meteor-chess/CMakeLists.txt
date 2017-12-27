@@ -1,7 +1,7 @@
 # We might support earlier versions, too, but it's only tested with 3.0.2.
 cmake_minimum_required (VERSION 3.0)
 
-project(pgn_reader_with_meteor_chess)
+project(pgn-reader-with-meteor-chess)
 
 set(pgn_reader_with_meteor_chess_sources
     ../algorithm/Apply.cpp
@@ -38,14 +38,14 @@ endif (CMAKE_COMPILER_IS_GNUCC)
 
 set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
 
-add_executable(pgn_reader_with_meteor_chess ${pgn_reader_with_meteor_chess_sources})
+add_executable(pgn-reader-with-meteor-chess ${pgn_reader_with_meteor_chess_sources})
 
 # find libmongo-client
 find_package(PkgConfig)
 pkg_search_module (LibMongoClient REQUIRED libmongo-client)
 if (LibMongoClient_FOUND)
   include_directories(${LibMongoClient_INCLUDE_DIRS})
-  target_link_libraries (pgn_reader_with_meteor_chess ${LibMongoClient_LIBRARIES})
+  target_link_libraries (pgn-reader-with-meteor-chess ${LibMongoClient_LIBRARIES})
 else ()
   message ( FATAL_ERROR "libmongo-client was not found!" )
 endif (LibMongoClient_FOUND)
@@ -55,16 +55,16 @@ endif (LibMongoClient_FOUND)
 
 # different invocations for help
 add_test(NAME pgn-reader-with-mc-help-default
-         COMMAND $<TARGET_FILE:pgn_reader_with_meteor_chess> --help)
+         COMMAND $<TARGET_FILE:pgn-reader-with-meteor-chess> --help)
 add_test(NAME pgn-reader-with-mc-help-question-mark
-         COMMAND $<TARGET_FILE:pgn_reader_with_meteor_chess> -?)
+         COMMAND $<TARGET_FILE:pgn-reader-with-meteor-chess> -?)
 add_test(NAME pgn-reader-with-mc-help-windows-style
-         COMMAND $<TARGET_FILE:pgn_reader_with_meteor_chess> /?)
+         COMMAND $<TARGET_FILE:pgn-reader-with-meteor-chess> /?)
 
 # version information
 add_test(NAME pgn-reader-with-mc-version
-         COMMAND $<TARGET_FILE:pgn_reader_with_meteor_chess> --version)
+         COMMAND $<TARGET_FILE:pgn-reader-with-meteor-chess> --version)
 
 # test run with example PGN file, 1 ms delay (to keep test fast)
 add_test(NAME pgn-reader-with-mc-steinitz
-         COMMAND $<TARGET_FILE:pgn_reader_with_meteor_chess> --pgn ${CMAKE_CURRENT_SOURCE_DIR}/../pgn-reader/examples/steinitz1887.pgn --delay 1)
+         COMMAND $<TARGET_FILE:pgn-reader-with-meteor-chess> --pgn ${CMAKE_CURRENT_SOURCE_DIR}/../pgn-reader/examples/steinitz1887.pgn --delay 1)
