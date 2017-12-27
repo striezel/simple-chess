@@ -22,10 +22,54 @@
 #include "io-utils.hpp"
 #include "CommandParser.hpp"
 #include "Engine.hpp"
+#include "../util/GitInfos.hpp"
+#include "../util/Version.hpp"
 
-int main()
+void showVersion()
+{
+  simplechess::GitInfos info;
+  std::cout << "simplechess-engine, " << simplechess::version << "\n"
+            << "\n"
+            << "Version control commit: " << info.commit() << "\n"
+            << "Version control date:   " << info.date() << std::endl;
+}
+
+void showHelp()
+{
+  std::cout << "simplechess-engine [OPTIONS]\n"
+            << "\n"
+            << "options:\n"
+            << "  -? | --help     - shows this help message and exits\n"
+            << "  -v | --version  - shows version information and exits\n";
+}
+
+int main(int argc, char** argv)
 {
   using namespace simplechess;
+
+  if ((argc > 1) && (argv != nullptr))
+  {
+    for (int i = 1; i < argc; ++i)
+    {
+      if (argv[i] == nullptr)
+      {
+        std::cerr << "Error: Parameter at index " << i << " is null pointer!\n";
+        return 1;
+      }
+      const std::string param(argv[i]);
+      if ((param == "-v") || (param == "--version"))
+      {
+        showVersion();
+        return 0;
+      } // if version
+      else
+      {
+        std::cerr << "Error: Unknown parameter " << param << "!\n"
+                  << "Use --help to show available parameters." << std::endl;
+        return 1;
+      }
+    } // for i
+  } // if arguments are there
 
   // No output buffering.
   disableStdoutBuffering();

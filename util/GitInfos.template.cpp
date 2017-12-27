@@ -18,32 +18,37 @@
  -------------------------------------------------------------------------------
 */
 
-#include "ProtocolVersion.hpp"
-#include "../io-utils.hpp"
-#include "../Engine.hpp"
-#include "../../util/Version.hpp"
+#include "GitInfos.hpp"
 
 namespace simplechess
 {
 
-ProtocolVersion::ProtocolVersion(const unsigned int protoVer)
-: protocolVersion(protoVer)
+GitInfos::GitInfos()
+: mCommit(""),
+  mDate("")
 {
+  const std::string git_hash = "@GIT_HASH@";
+  const std::string git_time = "@GIT_TIME@";
+
+  if ((git_hash != std::string("@GIT_") + "HASH@") && !git_hash.empty())
+    mCommit = git_hash;
+  else
+    mCommit = "unknown";
+
+  if ((git_time != std::string("@GIT_") + "TIME@") && !git_time.empty())
+    mDate = git_time;
+  else
+    mDate = "unknown";
 }
 
-bool ProtocolVersion::process()
+const std::string& GitInfos::commit() const
 {
-  Engine::get().setProtocolVersion(protocolVersion);
-  // Send feature commands, if protocol is version 2 or higher.
-  if (protocolVersion >= 2)
-  {
-    sendCommand("feature done=0");
-    sendCommand("feature myname=\"simple-chess, " + version + "\"");
-    sendCommand("feature ping=1 setboard=1 playother=0 san=0 usermove=1 time=1 sigint=0 sigterm=0 colors=0");
-    sendCommand("feature variants=\"normal\"");
-    sendCommand("feature done=1");
-  }
-  return true;
+  return mCommit;
+}
+
+const std::string& GitInfos::date() const
+{
+  return mDate;
 }
 
 } // namespace

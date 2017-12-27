@@ -18,32 +18,39 @@
  -------------------------------------------------------------------------------
 */
 
-#include "ProtocolVersion.hpp"
-#include "../io-utils.hpp"
-#include "../Engine.hpp"
-#include "../../util/Version.hpp"
+#ifndef SIMPLECHESS_GITINFOS_HPP
+#define SIMPLECHESS_GITINFOS_HPP
+
+#include <string>
 
 namespace simplechess
 {
 
-ProtocolVersion::ProtocolVersion(const unsigned int protoVer)
-: protocolVersion(protoVer)
+class GitInfos
 {
-}
+  public:
+    /** \brief default constructor
+     */
+    GitInfos();
 
-bool ProtocolVersion::process()
-{
-  Engine::get().setProtocolVersion(protocolVersion);
-  // Send feature commands, if protocol is version 2 or higher.
-  if (protocolVersion >= 2)
-  {
-    sendCommand("feature done=0");
-    sendCommand("feature myname=\"simple-chess, " + version + "\"");
-    sendCommand("feature ping=1 setboard=1 playother=0 san=0 usermove=1 time=1 sigint=0 sigterm=0 colors=0");
-    sendCommand("feature variants=\"normal\"");
-    sendCommand("feature done=1");
-  }
-  return true;
-}
+
+    /** \brief gets the SHA1 hash of the current commit (40 hex digits)
+     *
+     * \return Returns the SHA1 hash of the current commit.
+     */
+    const std::string& commit() const;
+
+
+    /** \brief gets date of the last commit (e.g. "2017-01-29 14:59:33 +0200")
+     *
+     * \return Returns the date of the last commit.
+     */
+    const std::string& date() const;
+  private:
+    std::string mCommit; /**< commit hash */
+    std::string mDate; /**< time of the commit */
+}; // class
 
 } // namespace
+
+#endif // SIMPLECHESS_GITINFOS_HPP

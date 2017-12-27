@@ -18,32 +18,17 @@
  -------------------------------------------------------------------------------
 */
 
-#include "ProtocolVersion.hpp"
-#include "../io-utils.hpp"
-#include "../Engine.hpp"
-#include "../../util/Version.hpp"
+#ifndef SIMPLECHESS_VERSION_HPP
+#define SIMPLECHESS_VERSION_HPP
+
+#include <string>
 
 namespace simplechess
 {
 
-ProtocolVersion::ProtocolVersion(const unsigned int protoVer)
-: protocolVersion(protoVer)
-{
-}
-
-bool ProtocolVersion::process()
-{
-  Engine::get().setProtocolVersion(protocolVersion);
-  // Send feature commands, if protocol is version 2 or higher.
-  if (protocolVersion >= 2)
-  {
-    sendCommand("feature done=0");
-    sendCommand("feature myname=\"simple-chess, " + version + "\"");
-    sendCommand("feature ping=1 setboard=1 playother=0 san=0 usermove=1 time=1 sigint=0 sigterm=0 colors=0");
-    sendCommand("feature variants=\"normal\"");
-    sendCommand("feature done=1");
-  }
-  return true;
-}
+/** \brief version information */
+const std::string version = "version 0.1, 2017-12-27";
 
 } // namespace
+
+#endif // SIMPLECHESS_VERSION_HPP
