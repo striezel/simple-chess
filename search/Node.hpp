@@ -24,7 +24,6 @@
 #include <memory>
 #include <vector>
 #include "../data/Board.hpp"
-#include "../data/HalfMove.hpp"
 
 namespace simplechess
 {
@@ -40,14 +39,18 @@ struct Node
     /** \brief Constructor with initial values.
      *
      * \param b the current board
-     * \param hm half move
+     * \param orig origin field of the move
+     * \param dest destination field of the move
+     * \param promo promotion piece type for the move
      * \param score  the score of the node
      */
-    Node(const Board& b, const HalfMove& hm, const int score);
+    Node(const Board& b, const Field& orig, const Field& dest, const PieceType& promo, const int score);
 
 
     Board board; /**< current board for position at that node */
-    HalfMove move; /**< half move that led to the current position */
+    Field origin; /**< origin of the half move that led to the current position */
+    Field destination; /**< destination of the half move that led to the current position */
+    PieceType promoteTo; /**< promotion piece (if any) of the half move that led to the current position */
     int score; /**< score of the position */
     std::vector<std::unique_ptr<Node>> children; /**< pointers to child nodes */
 

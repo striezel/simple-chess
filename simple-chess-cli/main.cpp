@@ -140,19 +140,22 @@ int main(int argc, char** argv)
       }
       simplechess::Field from = simplechess::Field::none;
       simplechess::Field to = simplechess::Field::none;
+      simplechess::PieceType promo = simplechess::PieceType::queen;
       if (board.toMove() == simplechess::Colour::black)
       {
-        from = node.children.front()->move.origin();
-        to = node.children.front()->move.destination();
+        from = node.children.front()->origin;
+        to = node.children.front()->destination;
+        promo = node.children.front()->promoteTo;
       }
       else
       {
-        from = node.children.back()->move.origin();
-        to = node.children.back()->move.destination();
+        from = node.children.back()->origin;
+        to = node.children.back()->destination;
+        promo = node.children.back()->promoteTo;
       }
       std::cout << "Computer moves from " << simplechess::column(from) << simplechess::row(from)
                 << " to " << simplechess::column(to) << simplechess::row(to) << ".\n";
-      if (!board.move(from, to, simplechess::PieceType::queen))
+      if (!board.move(from, to, promo))
       {
         std::cout << "The computer move is not allowed!\n";
         return 2;

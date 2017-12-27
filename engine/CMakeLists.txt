@@ -11,7 +11,6 @@ set(simple_chess_engine_sources
     ../data/Castling.cpp
     ../data/Field.cpp
     ../data/ForsythEdwardsNotation.cpp
-    ../data/HalfMove.cpp
     ../data/Piece.cpp
     ../data/Result.cpp
     ../evaluation/CheckEvaluator.cpp

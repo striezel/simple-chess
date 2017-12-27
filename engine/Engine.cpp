@@ -162,20 +162,23 @@ void Engine::move()
     sendCommand("resign");
     return;
   }
-  Field from = simplechess::Field::none;
-  Field to = simplechess::Field::none;
+  Field from = Field::none;
+  Field to = Field::none;
+  PieceType promo = PieceType::queen;
   if (board().toMove() == simplechess::Colour::black)
   {
-    from = node.children.front()->move.origin();
-    to = node.children.front()->move.destination();
+    from = node.children.front()->origin;
+    to = node.children.front()->destination;
+    promo = node.children.front()->promoteTo;
   }
   else
   {
-    from = node.children.back()->move.origin();
-    to = node.children.back()->move.destination();
+    from = node.children.back()->origin;
+    to = node.children.back()->destination;
+    promo = node.children.back()->promoteTo;
   }
   // Perform move.
-  if (!board().move(from, to, simplechess::PieceType::queen))
+  if (!board().move(from, to, promo))
   {
     // The move the engine found is not allowed. (Should not happen, but who knows?)
     // To avoid any complication, the engine will resign here.

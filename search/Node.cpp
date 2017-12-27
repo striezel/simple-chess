@@ -26,15 +26,19 @@ namespace simplechess
 
 Node::Node()
 : board(Board()),
-  move(HalfMove()),
+  origin(Field::none),
+  destination(Field::none),
+  promoteTo(PieceType::none),
   score(0),
   children(std::vector<std::unique_ptr<Node>>())
 {
 }
 
-Node::Node(const Board& b, const HalfMove& hm, const int _score)
+Node::Node(const Board& b, const Field& orig, const Field& dest, const PieceType& promo, const int _score)
 : board(b),
-  move(hm),
+  origin(orig),
+  destination(dest),
+  promoteTo(promo),
   score(_score),
   children(std::vector<std::unique_ptr<Node>>())
 {

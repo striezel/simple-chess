@@ -26,7 +26,7 @@ namespace simplechess
 
 Node Search::search(const Board& board, const Evaluator& eval, const unsigned int depth)
 {
-  Node current(board, HalfMove(), 0);
+  Node current(board, Field::none, Field::none, PieceType::none, 0);
   expandNode(current, eval, depth);
   return std::move(current);
 }
@@ -54,7 +54,7 @@ void Search::expandNode(Node& node, const Evaluator& eval, const unsigned int de
         movedBoard.move(from, to, PieceType::queen);
         node.children.push_back(
             std::unique_ptr<Node>(
-            new Node(movedBoard, HalfMove(elem.piece, from, to, false),
+            new Node(movedBoard, from, to, PieceType::queen,
             eval.score(movedBoard))));
       } //if move is allowed
     } //for j

@@ -43,8 +43,6 @@
 		<Unit filename="../data/Field.hpp" />
 		<Unit filename="../data/ForsythEdwardsNotation.cpp" />
 		<Unit filename="../data/ForsythEdwardsNotation.hpp" />
-		<Unit filename="../data/HalfMove.cpp" />
-		<Unit filename="../data/HalfMove.hpp" />
 		<Unit filename="../data/Piece.cpp" />
 		<Unit filename="../data/Piece.hpp" />
 		<Unit filename="../data/Result.cpp" />
