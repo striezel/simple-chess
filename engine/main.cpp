@@ -62,6 +62,11 @@ int main(int argc, char** argv)
         showVersion();
         return 0;
       } // if version
+      else if ((param == "-?") || (param == "--help") || (param == "/?"))
+      {
+        showHelp();
+        return 0;
+      } // if help
       else
       {
         std::cerr << "Error: Unknown parameter " << param << "!\n"

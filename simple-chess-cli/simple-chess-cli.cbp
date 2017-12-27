@@ -64,6 +64,9 @@
 		<Unit filename="../search/Search.hpp" />
 		<Unit filename="../ui/Console.cpp" />
 		<Unit filename="../ui/Console.hpp" />
+		<Unit filename="../util/GitInfos.cpp" />
+		<Unit filename="../util/GitInfos.hpp" />
+		<Unit filename="../util/Version.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
 		<Unit filename="main.cpp" />

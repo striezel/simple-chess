@@ -27,9 +27,35 @@
 #include "../evaluation/PromotionEvaluator.hpp"
 #include "../search/Search.hpp"
 #include "../ui/Console.hpp"
+#include "../util/GitInfos.hpp"
+#include "../util/Version.hpp"
 
 
-/** \brief prints a board to the standard output
+void showVersion()
+{
+  simplechess::GitInfos info;
+  std::cout << "simple-chess-cli, " << simplechess::version << "\n"
+            << "\n"
+            << "Version control commit: " << info.commit() << "\n"
+            << "Version control date:   " << info.date() << std::endl;
+}
+
+void showHelp()
+{
+  std::cout << "simple-chess-cli [OPTIONS]\n"
+            << "\n"
+            << "options:\n"
+            << "  -? | --help     - shows this help message and exits\n"
+            << "  -v | --version  - shows version information and exits\n"
+            << "  w | white       - let the engine be the white player\n"
+            << "  b | black       - let the engine be the black player\n"
+            << "                    (The default is to play none, i.e. both sides are human.)\n"
+            << " FEN              - a valid Forsyth-Edwards notation that indicates the\n"
+            << "                    initial position for the chess game. Default is the normal\n"
+            << "                    chess start position.\n";
+}
+
+/** \brief Prints a board to the standard output.
  *
  * \param board   the chess board
  */
@@ -44,7 +70,7 @@ void showBoard(const simplechess::Board& board)
 }
 
 
-/** \brief gets a field from the standard input
+/** \brief Gets a field from the standard input.
  *
  * \return Returns the field that was entered by the user.
  */
@@ -64,45 +90,61 @@ int main(int argc, char** argv)
 {
   simplechess::Board board;
   simplechess::Colour computerPlayer = simplechess::Colour::none;
-  if (argv != nullptr)
+
+  // Use default start position.
+  if (!board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
   {
-    if ((argc > 1) && (argv[1] != nullptr))
+    std::cerr << "Could not initialize board from FEN string!\n";
+    return 1;
+  }
+
+  if ((argc > 1) && (argv != nullptr))
+  {
+    for (int i = 1; i < argc; ++i)
     {
-      const std::string fenString = std::string(argv[1]);
-      if (!board.fromFEN(fenString))
+      if (argv[i] == nullptr)
       {
-        std::cerr << "Could not initialize board from FEN string \"" << fenString
-                  << "\"!\n";
+        std::cerr << "Error: Parameter at index " << i << " is null pointer!\n";
         return 1;
       }
-    } //if one argument is given
-    else
-    {
-      //use default start position
-      if (!board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+      const std::string param(argv[i]);
+      if ((param == "-v") || (param == "--version"))
       {
-        std::cerr << "Could not initialize board from FEN string!\n";
-        return 1;
-      }
-    } //else
-    if ((argc > 2) && (argv[2] != nullptr))
-    {
-      const std::string colourString = std::string(argv[2]);
-      if ((colourString == "white") || (colourString == "w"))
+        showVersion();
+        return 0;
+      } // if version
+      else if ((param == "-?") || (param == "--help") || (param == "/?"))
+      {
+        showHelp();
+        return 0;
+      } // if help
+      // Set engine's side.
+      else if ((param == "white") || (param == "w"))
       {
         computerPlayer = simplechess::Colour::white;
       }
-      else if ((colourString == "black") || (colourString == "b"))
+      else if ((param == "black") || (param == "b"))
       {
         computerPlayer = simplechess::Colour::black;
       }
+      else if (!board.fromFEN(param))
+      {
+        std::cerr << "Could not initialize board from FEN string \"" << param
+                  << "\"!\n";
+        std::cerr << "If this was meant to be some other program parameter, "
+                  << "then use --help to show available parameters.\n";
+        return 1;
+      }
+      // Should never happen.
       else
       {
-        std::cerr << "The string \"" << colourString << "\" does not name a valid colour / player!\n";
+        std::cerr << "Error: Unknown parameter " << param << "!\n"
+                  << "Use --help to show available parameters." << std::endl;
         return 1;
-      } //else (unrecognized colour)
-    } // if second argument is given
+      }
+    } // for i
   } // if arguments are there
+
   //potentially endless game loop
   while (true)
   {
@@ -146,11 +188,11 @@ int main(int argc, char** argv)
                 << " to " << simplechess::column(to) << simplechess::row(to) << ".\n";
       if (!board.move(from, to, promo))
       {
-        std::cout << "The computer move is not allowed!\n";
+        std::cout << "The computer move is not allowed! User wins.\n";
         return 2;
       }
     } // computer moves
-  } //while
+  } // while
 
   return 0;
 }
