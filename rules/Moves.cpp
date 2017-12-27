@@ -278,6 +278,16 @@ void Moves::sanitizePromotion(PieceType& promoteTo)
   } //switch
 }
 
+bool Moves::isPromotion(const Board& board, const Field from, const Field to)
+{
+  if (to == Field::none)
+  {
+    return false;
+  }
+  return ((board.element(from) == Piece(Colour::white, PieceType::pawn)) && (row(to) == 8))
+  || ((board.element(from) == Piece(Colour::black, PieceType::pawn)) && (row(to) == 1));
+}
+
 bool Moves::performMove(Board& board, const Field from, const Field to, PieceType promoteTo)
 {
   return board.move(from, to, promoteTo);

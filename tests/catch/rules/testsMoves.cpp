@@ -25,41 +25,41 @@
 TEST_CASE("Moves::sanitizePromotion() test")
 {
   using namespace simplechess;
-  // "none" is not allowed and should be changed during sanitization.
+  // "none" is not allowed and should be changed during sanitation.
   PieceType pt = PieceType::none;
   Moves::sanitizePromotion(pt);
   REQUIRE( pt != PieceType::none );
   // Fallback is queen.
   REQUIRE( pt == PieceType::queen );
 
-  // Pawn is not allowed and should be changed during sanitization.
+  // Pawn is not allowed and should be changed during sanitation.
   pt = PieceType::pawn;
   Moves::sanitizePromotion(pt);
   REQUIRE( pt != PieceType::pawn );
   // Fallback is queen.
   REQUIRE( pt == PieceType::queen );
 
-  // Rook is allowed and should not be changed during sanitization.
+  // Rook is allowed and should not be changed during sanitation.
   pt = PieceType::rook;
   Moves::sanitizePromotion(pt);
   REQUIRE( pt == PieceType::rook );
 
-  // Knight is allowed and should not be changed during sanitization.
+  // Knight is allowed and should not be changed during sanitation.
   pt = PieceType::knight;
   Moves::sanitizePromotion(pt);
   REQUIRE( pt == PieceType::knight );
 
-  // Bishop is allowed and should not be changed during sanitization.
+  // Bishop is allowed and should not be changed during sanitation.
   pt = PieceType::bishop;
   Moves::sanitizePromotion(pt);
   REQUIRE( pt == PieceType::bishop );
 
-  // Queen is allowed and should not be changed during sanitization.
+  // Queen is allowed and should not be changed during sanitation.
   pt = PieceType::queen;
   Moves::sanitizePromotion(pt);
   REQUIRE( pt == PieceType::queen );
 
-  // King is not allowed and should be changed during sanitization.
+  // King is not allowed and should be changed during sanitation.
   pt = PieceType::king;
   Moves::sanitizePromotion(pt);
   REQUIRE( pt != PieceType::king );
@@ -197,4 +197,44 @@ TEST_CASE("Moves::allowed(): player may not put himself/herself into check")
   REQUIRE_FALSE( Moves::allowed(board, Field::e1, Field::d2) );
   REQUIRE_FALSE( Moves::allowed(board, Field::e1, Field::e2) );
   REQUIRE_FALSE( Moves::allowed(board, Field::e1, Field::f2) );
+}
+
+TEST_CASE("Moves::isPromotion() test")
+{
+  using namespace simplechess;
+  Board board;
+
+  SECTION( "promotable white pawn" )
+  {
+    REQUIRE( board.fromFEN("8/pPpppppp/8/8/8/8/8/8") );
+    REQUIRE( Moves::isPromotion(board, Field::b7, Field::b8) );
+  }
+
+  SECTION( "promotable white pawn" )
+  {
+    REQUIRE( board.fromFEN("8/8/8/8/8/8/PpPPPPPP/8") );
+    REQUIRE( Moves::isPromotion(board, Field::b2, Field::b1) );
+  }
+
+  SECTION( "start position - no promotions" )
+  {
+    REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR") );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::a2, Field::a3) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::b2, Field::b3) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::c2, Field::c3) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::d2, Field::d3) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::e2, Field::e3) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::f2, Field::f3) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::g2, Field::g3) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::h2, Field::h3) );
+
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::a7, Field::a6) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::b7, Field::b6) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::c7, Field::c6) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::d7, Field::d6) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::e7, Field::e6) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::f7, Field::f6) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::g7, Field::g6) );
+    REQUIRE_FALSE( Moves::isPromotion(board, Field::h7, Field::h6) );
+  }
 }

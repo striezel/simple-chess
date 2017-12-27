@@ -118,13 +118,30 @@ void Search::expandNode(Node& node, const Evaluator& eval, const unsigned int de
       const Field to = static_cast<Field>(j);
       if (Moves::allowed(node.board, from, to))
       {
-        Board movedBoard(node.board);
-        // TODO: Check other promotions, too.
-        movedBoard.move(from, to, PieceType::queen);
-        node.children.push_back(
-            std::unique_ptr<Node>(
-            new Node(movedBoard, from, to, PieceType::queen,
-            eval.score(movedBoard))));
+        // Default: Not a pawn promotion.
+        if (!Moves::isPromotion(node.board, from, to))
+        {
+          Board movedBoard(node.board);
+          movedBoard.move(from, to, PieceType::queen);
+          node.children.push_back(
+              std::unique_ptr<Node>(
+              new Node(movedBoard, from, to, PieceType::queen,
+              eval.score(movedBoard))));
+        } // if not pawn promotion
+        else
+        {
+          // Same move but with different promotions.
+          const auto types = { PieceType::queen, PieceType::knight, PieceType::bishop, PieceType::rook };
+          for ( const auto promo : types )
+          {
+            Board movedBoard(node.board);
+            movedBoard.move(from, to, PieceType::queen);
+            node.children.push_back(
+                std::unique_ptr<Node>(
+                new Node(movedBoard, from, to, promo,
+                eval.score(movedBoard))));
+          } // for
+        } // else (It's a pawn promotion.)
       } // if move is allowed
     } // for j
   } // for i
@@ -134,7 +151,7 @@ void Search::expandNode(Node& node, const Evaluator& eval, const unsigned int de
   for(auto& child : node.children)
   {
     expandNode(*child, eval, depth - 1);
-  } //for
+  } // for
 }
 
-} //namespace
+} // namespace

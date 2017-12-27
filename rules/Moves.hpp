@@ -30,7 +30,7 @@ namespace simplechess
 class Moves
 {
   public:
-    /** \brief checks whether a move is allowed
+    /** \brief Checks whether a move is allowed.
      *
      * \param board  the chess board
      * \param from   field where the move begins
@@ -40,7 +40,7 @@ class Moves
     static bool allowed(const Board& board, const Field from, const Field to);
 
 
-    /** \brief sanitizes piece selected promotion piece type
+    /** \brief Sanitizes selected promotion piece type.
      *
      * \param promoteTo   the type of piece a pawn should get promoted to
      * \remarks The value of promoteTo will be changed to an allowed value, if
@@ -49,7 +49,21 @@ class Moves
     static void sanitizePromotion(PieceType& promoteTo);
 
 
-    /** \brief move a piece on the given board
+    /** \brief Checks whether a move will cause a pawn promotion.
+     *
+     * \param board  the chess board
+     * \param from   field where the move begins
+     * \param to     field where the move ends (destination)
+     * \return Returns true, if the move is a pawn promotion.
+     *         Returns false otherwise.
+     * \remarks Note that this method will _not_ check whether the move is
+     *          allowed. It just checks whether the move would be a pawn
+     *          promotion, were it allowed.
+     */
+    static bool isPromotion(const Board& board, const Field from, const Field to);
+
+
+    /** \brief Move a piece on the given board.
      *
      * \param from field where the move starts
      * \param to   field where the move ends
@@ -60,8 +74,8 @@ class Moves
      * against the chess rules.
      */
     static bool performMove(Board& board, const Field from, const Field to, PieceType promoteTo);
-}; //class
+}; // class
 
-} //namespace
+} // namespace
 
 #endif // SIMPLE_CHESS_MOVES_HPP
