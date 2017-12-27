@@ -21,6 +21,7 @@
 #ifndef SIMPLECHESS_SEARCH_HPP
 #define SIMPLECHESS_SEARCH_HPP
 
+#include <tuple>
 #include "../data/Board.hpp"
 #include "../evaluation/Evaluator.hpp"
 #include "Node.hpp"
@@ -32,13 +33,54 @@ namespace simplechess
 class Search
 {
   public:
-    /** \brief Searches for the best move.
+    /** \brief Constructor.
+     *
+     * \param board the current position
+     */
+    Search(const Board& board);
+
+
+    /** \brief Searches for the best move from the current position.
+     *
+     * \param eval evaluator for positions
+     * \param depth search depth
+     * \remarks Call bestMove() afterwards to get the best move from the search.
+     */
+    void search(const Evaluator& eval, const unsigned int depth);
+
+
+    /** \brief Checks whether the search result (if any) has a possible move.
+     *
+     * \return Returns true, if there is a move. Returns false otherwise.
+     */
+    bool hasMove() const;
+
+
+    /** \brief Gets the best move (if any moves are available).
+     *
+     * \return Returns a tuple (origin, destination, promotion type) indicating the best move.
+     *         Returns (Field::none, Field::none, PieceType::none) if there is no best move.
+     * \remarks You need to call search(eval, depth) before calling bestMove().
+     */
+    std::tuple<Field, Field, PieceType> bestMove() const;
+
+
+    /** \brief Gets the root node of the search.
+     *
+     * \return Returns a constant reference to the root node of the search tree.
+     */
+    const Node& rootNode() const;
+
+
+    /** \brief Searches for the best next move on the given board.
      *
      * \param board the current position
      * \param eval evaluator for positions
      * \param depth search depth
+     * \return Returns a tuple (origin, destination, promotion type) indicating the best move.
+     *         Returns (Field::none, Field::none, PieceType::none) if there is no best move.
      */
-    static Node search(const Board& board, const Evaluator& eval, const unsigned int depth);
+    static std::tuple<Field, Field, PieceType> search(const Board& board, const Evaluator& eval, const unsigned int depth);
   private:
     /** \brief Creates child nodes for a given node.
      *
@@ -47,6 +89,9 @@ class Search
      * \param depth search depth
      */
     static void expandNode(Node& node, const Evaluator& eval, const unsigned int depth);
+
+
+    Node root; /**< root node of search for the current starting position */
 }; //class
 
 } //namespace

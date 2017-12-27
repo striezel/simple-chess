@@ -123,7 +123,7 @@ int main(int argc, char** argv)
     else
     {
       // Let's find a suitable move.
-      simplechess::Search s;
+      simplechess::Search s(board);
       simplechess::CompoundEvaluator evaluator;
       // Add the four evaluators we have so far.
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MaterialEvaluator()));
@@ -131,28 +131,17 @@ int main(int argc, char** argv)
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::PromotionEvaluator()));
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::CheckEvaluator()));
       // Search for best move, only one ply.
-      const auto node = s.search(board, evaluator, 1);
+      s.search(evaluator, 1);
       // Did the search find any moves?
-      if (node.children.empty())
+      if (!s.hasMove())
       {
         std::cout << "simplechess AI could not find a valid move. User wins!\n";
         return 0;
       }
-      simplechess::Field from = simplechess::Field::none;
-      simplechess::Field to = simplechess::Field::none;
-      simplechess::PieceType promo = simplechess::PieceType::queen;
-      if (board.toMove() == simplechess::Colour::black)
-      {
-        from = node.children.front()->origin;
-        to = node.children.front()->destination;
-        promo = node.children.front()->promoteTo;
-      }
-      else
-      {
-        from = node.children.back()->origin;
-        to = node.children.back()->destination;
-        promo = node.children.back()->promoteTo;
-      }
+      const auto bestMove = s.bestMove();
+      const simplechess::Field from = std::get<0>(bestMove);
+      const simplechess::Field to = std::get<1>(bestMove);
+      const simplechess::PieceType promo = std::get<2>(bestMove);
       std::cout << "Computer moves from " << simplechess::column(from) << simplechess::row(from)
                 << " to " << simplechess::column(to) << simplechess::row(to) << ".\n";
       if (!board.move(from, to, promo))

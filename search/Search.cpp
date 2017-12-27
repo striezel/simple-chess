@@ -24,11 +24,64 @@
 namespace simplechess
 {
 
-Node Search::search(const Board& board, const Evaluator& eval, const unsigned int depth)
+Search::Search(const Board& board)
+: root(board, Field::none, Field::none, PieceType::none, 0)
 {
-  Node current(board, Field::none, Field::none, PieceType::none, 0);
-  expandNode(current, eval, depth);
-  return std::move(current);
+}
+
+void Search::search(const Evaluator& eval, const unsigned int depth)
+{
+  // Clear children, if any.
+  root.children.clear();
+  // Expand search node into tree.
+  expandNode(root, eval, depth);
+}
+
+std::tuple<Field, Field, PieceType> Search::bestMove() const
+{
+  // If there are no moves, then there's nothing we can do here.
+  if (!hasMove())
+  {
+    return std::tuple<Field, Field, PieceType>(Field::none, Field::none, PieceType::none);
+  }
+  Field from = Field::none;
+  Field to = Field::none;
+  PieceType promo = PieceType::queen;
+  // Simple strategy: Get the move with the minimum or maximum score, depending
+  // on the side who is to move in the original position. Since the child nodes
+  // of an expanded search node are sorted by score in ascending order, the 1st
+  // (or front) node has the lowest score, and the last (or back) node has the
+  // highest score.
+  if (root.board.toMove() == Colour::black)
+  {
+    from = root.children.front()->origin;
+    to = root.children.front()->destination;
+    promo = root.children.front()->promoteTo;
+  }
+  else
+  {
+    from = root.children.back()->origin;
+    to = root.children.back()->destination;
+    promo = root.children.back()->promoteTo;
+  }
+  return std::tuple<Field, Field, PieceType>(from, to, promo);
+}
+
+const Node& Search::rootNode() const
+{
+  return root;
+}
+
+bool Search::hasMove() const
+{
+  return !root.children.empty();
+}
+
+std::tuple<Field, Field, PieceType> Search::search(const Board& board, const Evaluator& eval, const unsigned int depth)
+{
+  Search s(board);
+  s.search(eval, depth);
+  return s.bestMove();
 }
 
 void Search::expandNode(Node& node, const Evaluator& eval, const unsigned int depth)

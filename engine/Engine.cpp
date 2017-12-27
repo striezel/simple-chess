@@ -145,7 +145,7 @@ void Engine::move()
     return;
 
   // Let's find a suitable move.
-  Search s;
+  Search s(board());
   CompoundEvaluator evaluator;
   // Add the four evaluators we have so far.
   evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
@@ -153,30 +153,19 @@ void Engine::move()
   evaluator.add(std::unique_ptr<Evaluator>(new PromotionEvaluator()));
   evaluator.add(std::unique_ptr<Evaluator>(new CheckEvaluator()));
   // Search for best move, only one ply. (TODO: Implement variable search depth.)
-  const auto node = s.search(board(), evaluator, 1);
+  s.search(evaluator, 1);
   // Did the search find any moves?
-  if (node.children.empty())
+  if (!s.hasMove())
   {
     // No moves have been found. This is probably due to the fact that the
     // engine has been checkmated, so give up here.
     sendCommand("resign");
     return;
   }
-  Field from = Field::none;
-  Field to = Field::none;
-  PieceType promo = PieceType::queen;
-  if (board().toMove() == simplechess::Colour::black)
-  {
-    from = node.children.front()->origin;
-    to = node.children.front()->destination;
-    promo = node.children.front()->promoteTo;
-  }
-  else
-  {
-    from = node.children.back()->origin;
-    to = node.children.back()->destination;
-    promo = node.children.back()->promoteTo;
-  }
+  const auto bestMove = s.bestMove();
+  const Field from = std::get<0>(bestMove);
+  const Field to = std::get<1>(bestMove);
+  const PieceType promo = std::get<2>(bestMove);
   // Perform move.
   if (!board().move(from, to, promo))
   {
