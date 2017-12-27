@@ -36,6 +36,10 @@ bool ResultCmd::process()
      further analysis, but that requires that the moves are recorded by the
      engine in the first place. They are not (yet). */
 
+  // stop clocks
+  Engine::get().timing().self().stop();
+  Engine::get().timing().opponent().stop();
+
   // Reset board and the one side that is played by the engine.
   Engine::get().board() = Board();
   Engine::get().setPlayer(Colour::none);

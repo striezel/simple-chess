@@ -63,6 +63,9 @@ bool Usermove::process()
     sendCommand(oss.str());
     return true;
   }
+  // Stop opponent's clock.
+  Engine::get().timing().opponent().stop();
+
   // Make own move, but only if not in force mode and it is engine's turn.
   if (!Engine::get().forceMode() && (Engine::get().player() == b.toMove()))
   {
@@ -70,7 +73,10 @@ bool Usermove::process()
     Engine::get().timing().self().start();
     // start making own move
     Engine::get().move();
+    // stop own clock ...
     Engine::get().timing().self().stop();
+    // ... and start clock of opponent
+    Engine::get().timing().opponent().start();
   }
   return true;
 }

@@ -20,6 +20,10 @@
 
 #include "SetTime.hpp"
 #include "../Engine.hpp"
+#ifdef DEBUG
+#include "../io-utils.hpp"
+#include "../../util/strings.hpp"
+#endif // DEBUG
 
 namespace simplechess
 {
@@ -33,6 +37,10 @@ SetTime::SetTime(const int centiseconds, const bool opponent)
 bool SetTime::process()
 {
   Clock& cl = mOpponent ? Engine::get().timing().opponent() : Engine::get().timing().self();
+  #ifdef DEBUG
+  const auto origCentis = cl.remaining().count();
+  sendCommand("# clock time was " + util::intToString(origCentis) + " cs and got set to " + util::intToString(mCentiseconds) + " cs");
+  #endif // DEBUG
   cl.setRemaining(centiseconds(mCentiseconds));
   return true;
 }
