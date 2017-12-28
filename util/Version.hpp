@@ -27,7 +27,7 @@ namespace simplechess
 {
 
 /** \brief version information */
-const std::string version = "version 0.1, 2017-12-27";
+const std::string version = "version 0.2, 2017-12-28";
 
 } // namespace
 
