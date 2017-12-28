@@ -105,14 +105,14 @@ bool allowedPawnBlack(const Board& board, const Field from, const Field to)
     const auto & field3 = board.element(toField(column(from), 6));
     if ((colDiff == 0) && ((rowDiff == 1) || ((rowDiff == 2) && (row(from) == 7) && (field3.piece == PieceType::none))))
       return true;
-    //It may also be an en passant move.
+    // It may also be an en passant move.
     return ((colDiff == 1) && (rowDiff == 1) && (board.enPassant() == to));
   }
   if (destination.colour == Colour::white)
   {
     return ((colDiff == 1) && (rowDiff == 1));
   }
-  //everything else is not allowed
+  // Everything else is not allowed.
   return false;
 }
 
@@ -127,14 +127,14 @@ bool allowedPawnWhite(const Board& board, const Field from, const Field to)
     const auto & field3 = board.element(toField(column(from), 3));
     if ((colDiff == 0) && ((rowDiff == 1) || ((rowDiff == 2) && (row(from) == 2) && (field3.colour == Colour::none))))
       return true;
-    //It may also be an en passant move.
+    // It may also be an en passant move.
     return ((colDiff == 1) && (rowDiff == 1) && (to == board.enPassant()));
   }
   if (destination.colour == Colour::black)
   {
     return ((colDiff == 1) && (rowDiff == 1));
   }
-  //everything else is not allowed
+  // Everything else is not allowed.
   return false;
 }
 
@@ -206,6 +206,7 @@ bool Moves::allowed(const Board& board, const Field from, const Field to)
   // If start and destination are equal, it's not a valid move.
   if (from == to)
     return false;
+  // None is neither a valid origin nor a valid destination.
   if ((from == Field::none) || (to == Field::none))
     return false;
   const Piece & start = board.element(from);

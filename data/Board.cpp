@@ -404,12 +404,8 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
   mEnPassant = enPassantData;
   // -- determine whether anyone is in check
   const bool whiteCheck = simplechess::isInCheck(*this, Colour::white);
-  /* if (whiteCheck && m_whiteInCheck)
-    Boards.update({_id: board._id}, {$set: {winner: 'black'}}); */
   mWhiteInCheck = whiteCheck;
   const bool blackCheck = simplechess::isInCheck(*this, Colour::black);
-  /* if (blackCheck && m_blackInCheck)
-    Boards.update({_id: board._id}, {$set: {winner: 'white'}}); */
   mBlackInCheck = blackCheck;
   //TODO: check for checkmate
   // -- update colour that is to move
