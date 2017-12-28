@@ -42,7 +42,7 @@ Engine::Engine()
   mProtocolVersion(1), // assume version 1 until we get more information
   mEnginePlayer(Colour::none), // engine plays no side be default
   mBoard(Board()),
-  mSearchDepth(1), // default search depth: one ply
+  mSearchDepth(2), // default search depth: two ply search
   mForceMode(false),
   mTiming(Timing()),
   mQueue(std::deque<std::unique_ptr<Command> >()) // empty queue
@@ -95,8 +95,7 @@ unsigned int Engine::searchDepth() const
 
 void Engine::setSearchDepth(const unsigned int newSearchDepth)
 {
-  // TODO: Allow higher search depths.
-  mSearchDepth = 1;
+  mSearchDepth = newSearchDepth;
 }
 
 bool Engine::forceMode() const
@@ -152,8 +151,8 @@ void Engine::move()
   evaluator.add(std::unique_ptr<Evaluator>(new MobilityEvaluator()));
   evaluator.add(std::unique_ptr<Evaluator>(new PromotionEvaluator()));
   evaluator.add(std::unique_ptr<Evaluator>(new CheckEvaluator()));
-  // Search for best move, only one ply. (TODO: Implement variable search depth.)
-  s.search(evaluator, 1);
+  // Search for best move with defined search depth.
+  s.search(evaluator, mSearchDepth);
   // Did the search find any moves?
   if (!s.hasMove())
   {

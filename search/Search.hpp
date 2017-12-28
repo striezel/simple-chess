@@ -99,6 +99,22 @@ class Search
     static void expandNode(Node& node, const Evaluator& eval, const unsigned int depth);
 
 
+    /** \brief Gets the best move (if any moves are available) for a one ply search.
+     *
+     * \return Returns a tuple (origin, destination, promotion type) indicating the best move.
+     *         Returns (Field::none, Field::none, PieceType::none) if there is no best move.
+     */
+    std::tuple<Field, Field, PieceType> bestMoveOnePly() const;
+
+
+    /** \brief Gets the best move (if any moves are available) for a two ply search.
+     *
+     * \return Returns a tuple (origin, destination, promotion type) indicating the best move.
+     *         Returns (Field::none, Field::none, PieceType::none) if there is no best move.
+     */
+    std::tuple<Field, Field, PieceType> bestMoveTwoPly() const;
+
+
     Node root; /**< root node of search for the current starting position */
     unsigned int searchDepth; /**< depth of last search in plys / half moves */
 }; //class

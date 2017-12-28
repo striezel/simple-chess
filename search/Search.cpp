@@ -20,6 +20,7 @@
 
 #include "Search.hpp"
 #include <algorithm>
+#include <map>
 #include "../rules/Moves.hpp"
 
 namespace simplechess
@@ -35,7 +36,7 @@ void Search::search(const Evaluator& eval, const unsigned int depth)
 {
   // Currently only up to one ply may be searched, because deeper levels of the
   // search tree will not be looked into when getting the best move. Yet.
-  const unsigned int maximumSearchDepth = 1;
+  const unsigned int maximumSearchDepth = 2;
 
   // Clear children, if any.
   root.children.clear();
@@ -55,14 +56,22 @@ std::tuple<Field, Field, PieceType> Search::bestMove() const
   {
     return std::tuple<Field, Field, PieceType>(Field::none, Field::none, PieceType::none);
   }
-  Field from = Field::none;
-  Field to = Field::none;
-  PieceType promo = PieceType::queen;
+  if (searchDepth >= 2)
+    return bestMoveTwoPly();
+  else
+    return bestMoveOnePly();
+}
+
+std::tuple<Field, Field, PieceType> Search::bestMoveOnePly() const
+{
   // Simple strategy: Get the move with the minimum or maximum score, depending
   // on the side who is to move in the original position. Since the child nodes
   // of an expanded search node are sorted by score in ascending order, the 1st
   // (or front) node has the lowest score, and the last (or back) node has the
   // highest score.
+  Field from = Field::none;
+  Field to = Field::none;
+  PieceType promo = PieceType::queen;
   if (root.board.toMove() == Colour::black)
   {
     from = root.children.front()->origin;
@@ -76,6 +85,80 @@ std::tuple<Field, Field, PieceType> Search::bestMove() const
     promo = root.children.back()->promoteTo;
   }
   return std::tuple<Field, Field, PieceType>(from, to, promo);
+}
+
+std::tuple<Field, Field, PieceType> Search::bestMoveTwoPly() const
+{
+  // Basic idea: The best move is the one where the best possible reply of the
+  // opponent has the worst score for the opponent. Even better are the moves
+  // where the opponent has no reply at all, because that usually means
+  // checkmate.
+
+  // First: Search for checkmate moves.
+  for (const auto& node : root.children)
+  {
+    if (node->children.empty())
+    {
+      return std::tuple<Field, Field, PieceType>(
+          node->origin, node->destination, node->promoteTo);
+    }
+  } // for
+
+  // Search for move with worst possible best reply of opponent.
+  std::map<int, int> idxWithScore;
+  for (std::size_t i = 0; i < root.children.size(); ++i)
+  {
+    // Use first possible reply as initial value. (At least one reply must
+    // exist, because otherwise it would have been handled by the first search
+    // for checkmate.)
+    idxWithScore[i] = root.children[i]->children[0]->score;
+    // Loop through remaining replies. First reply (index 0) can be omitted.
+    for (std::size_t j = 1; j < root.children[i]->children.size(); ++j)
+    {
+      if (root.board.toMove() == Colour::black)
+      {
+        // Engine plays black. That means best score for white is max. score.
+        if (root.children[i]->children[j]->score > idxWithScore[i])
+        {
+          idxWithScore[i] = root.children[i]->children[j]->score;
+        }
+      } // if
+      else
+      {
+        // Engine plays white. That means best score for black is min. score.
+        if (root.children[i]->children[j]->score < idxWithScore[i])
+        {
+          idxWithScore[i] = root.children[i]->children[j]->score;
+        }
+      } // else
+    } // for
+  } // for
+
+  // Find best (for current player).
+  int bestIdx = 0;
+  if (root.board.toMove() == Colour::black)
+  {
+    for (std::size_t i = 1; i < root.children.size(); ++i)
+    {
+      if (idxWithScore[i] < idxWithScore[bestIdx])
+      {
+        bestIdx = i;
+      }
+    }
+  } // if
+  else // player == white
+  {
+    for (std::size_t i = 1; i < root.children.size(); ++i)
+    {
+      if (idxWithScore[i] > idxWithScore[bestIdx])
+      {
+        bestIdx = i;
+      }
+    }
+  } // else
+  return std::tuple<Field, Field, PieceType>(
+          root.children[bestIdx]->origin, root.children[bestIdx]->destination,
+          root.children[bestIdx]->promoteTo);
 }
 
 const Node& Search::rootNode() const
