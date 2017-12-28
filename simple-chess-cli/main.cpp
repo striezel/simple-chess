@@ -90,6 +90,7 @@ int main(int argc, char** argv)
 {
   simplechess::Board board;
   simplechess::Colour computerPlayer = simplechess::Colour::none;
+  bool doneFEN = false;
 
   // Use default start position.
   if (!board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
@@ -122,18 +123,17 @@ int main(int argc, char** argv)
       else if ((param == "white") || (param == "w"))
       {
         computerPlayer = simplechess::Colour::white;
+        std::cout << "Engine will play as white.\n";
       }
       else if ((param == "black") || (param == "b"))
       {
         computerPlayer = simplechess::Colour::black;
+        std::cout << "Engine will play as black.\n";
       }
-      else if (!board.fromFEN(param))
+      else if (!doneFEN && board.fromFEN(param))
       {
-        std::cerr << "Could not initialize board from FEN string \"" << param
-                  << "\"!\n";
-        std::cerr << "If this was meant to be some other program parameter, "
-                  << "then use --help to show available parameters.\n";
-        return 1;
+        std::cout << "Initialized board from FEN string \"" << param << "\".\n";
+        doneFEN = true;
       }
       // Should never happen.
       else
@@ -145,7 +145,7 @@ int main(int argc, char** argv)
     } // for i
   } // if arguments are there
 
-  //potentially endless game loop
+  // potentially endless game loop
   while (true)
   {
     showBoard(board);
@@ -172,8 +172,8 @@ int main(int argc, char** argv)
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MobilityEvaluator()));
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::PromotionEvaluator()));
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::CheckEvaluator()));
-      // Search for best move, only one ply.
-      s.search(evaluator, 1);
+      // Search for best move, only two plies.
+      s.search(evaluator, 2);
       // Did the search find any moves?
       if (!s.hasMove())
       {
