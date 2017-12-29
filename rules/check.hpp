@@ -55,9 +55,8 @@ bool isInCheck(const Board& board, const Colour colour);
  * \return Returns true, if the given player is checkmate.
  *         Returns false otherwise.
  */
-
 bool isCheckMate(const Board& board, const Colour colour);
 
-} //namespace
+} // namespace
 
 #endif // SIMPLE_CHESS_CHECK_HPP

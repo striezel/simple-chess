@@ -278,7 +278,12 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
     return false;
   }
 
-  const bool allow = onlyAllowed ? Moves::allowed(*this, from, to) : true;
+  // Check whether the move is allowed.
+  const bool allow = onlyAllowed ?
+      // If only allowed moves shall be performed, do the full check.
+      Moves::allowed(*this, from, to)
+      // Otherwise just do whatever the move is.
+      : true;
   if (!allow)
     return false;
   //save for possible later use
@@ -312,8 +317,8 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
     // check for en passant capture
     else if (to == enPassant())
     {
-      int colDiff = std::abs(column(from) - column(to));
-      int rowDiff = std::abs(row(to) - row(from));
+      const int colDiff = std::abs(column(from) - column(to));
+      const int rowDiff = std::abs(row(to) - row(from));
       if ((colDiff == 1) && (rowDiff == 1))
       {
         //remove captured pawn
