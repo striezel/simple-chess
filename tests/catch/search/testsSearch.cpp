@@ -20,7 +20,10 @@
 
 
 #include <catch.hpp>
+#include "../../../evaluation/CompoundEvaluator.hpp"
 #include "../../../evaluation/MaterialEvaluator.hpp"
+#include "../../../evaluation/MobilityEvaluator.hpp"
+#include "../../../rules/check.hpp"
 #include "../../../search/Search.hpp"
 
 TEST_CASE("Search: default start position with depth == 1")
@@ -29,7 +32,9 @@ TEST_CASE("Search: default start position with depth == 1")
   Board board;
   REQUIRE(board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"));
 
-  MaterialEvaluator evaluator;
+  CompoundEvaluator evaluator;
+  evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
+  evaluator.add(std::unique_ptr<Evaluator>(new MobilityEvaluator()));
   simplechess::Search s(board);
   REQUIRE( s.depth() == 0 );
   s.search(evaluator, 1);
@@ -48,8 +53,11 @@ TEST_CASE("Search: default start position with depth == 1")
     for (std::size_t j = i + 1; j < searchNode.children.size(); ++j)
     {
       REQUIRE( searchNode.children[i]->score <= searchNode.children[j]->score );
-    } //for j
-  } //for i
+    } // for j
+  } // for i
+
+  // Score of first node should be less than that of the last node.
+  REQUIRE( searchNode.children.front()->score < searchNode.children.back()->score );
 
   // Child nodes of child nodes should be empty, because depth is only one.
   for(const auto& child : searchNode.children)
@@ -70,7 +78,9 @@ TEST_CASE("Search: default start position with depth == 2")
   Board board;
   REQUIRE(board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"));
 
-  MaterialEvaluator evaluator;
+  CompoundEvaluator evaluator;
+  evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
+  evaluator.add(std::unique_ptr<Evaluator>(new MobilityEvaluator()));
   simplechess::Search s(board);
   REQUIRE( s.depth() == 0 );
   s.search(evaluator, 2);
@@ -89,8 +99,8 @@ TEST_CASE("Search: default start position with depth == 2")
     for (std::size_t j = i + 1; j < searchNode.children.size(); ++j)
     {
       REQUIRE( searchNode.children[i]->score <= searchNode.children[j]->score );
-    } //for j
-  } //for i
+    } // for j
+  } // for i
 
   // Child nodes of child nodes should not be empty, because depth is two.
   for(const auto& child : searchNode.children)
@@ -103,8 +113,8 @@ TEST_CASE("Search: default start position with depth == 2")
       for (std::size_t j = i + 1; j < child->children.size(); ++j)
       {
         REQUIRE( child->children[i]->score <= child->children[j]->score );
-      } //for j
-    } //for i
+      } // for j
+    } // for i
   } // outer for
 
   // There must be a best move, i.e. its members must not equal none.
