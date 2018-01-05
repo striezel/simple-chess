@@ -35,16 +35,16 @@ namespace db
 namespace mongo
 {
 
-/** abstract base class for connecting to a MongoDB server */
+/** Abstract base class for connecting to a MongoDB server. */
 class Server
 {
   public:
-    /** \brief destructor - closes the connection to the server (if still open)
+    /** \brief Destructor - closes the connection to the server (if still open).
      */
     virtual ~Server() { }
 
 
-    /** \brief gets a list of board IDs from the server
+    /** \brief Gets a list of board IDs from the server.
      *
      * \param boardIds  vector that will be used to store the IDs
      * \return Returns true, if retrieval was successful.
@@ -53,7 +53,7 @@ class Server
     virtual bool boardList(std::vector<std::string>& boardIds) = 0;
 
 
-    /** \brief gets a single chess board from the database
+    /** \brief Gets a single chess board from the database.
      *
      * \param id   the ID of the board
      * \param board   board instance that will be used to store the data
@@ -63,9 +63,8 @@ class Server
     virtual bool getBoard(const std::string& id, Board& board) = 0;
 
 
-    /** \brief inserts a chess board into the database
+    /** \brief Inserts a chess board into the database.
      *
-     * \param id   the ID of the board
      * \param board   board instance that contains the data that shall be written into the DB
      * \return Returns the ID of the new board, if successful.
      *         Returns an empty string, if an error occurred.
@@ -73,9 +72,9 @@ class Server
     virtual std::string insertBoard(const Board& board) = 0;
 
 
-    /** \brief updates a single chess board in the database
+    /** \brief Updates a single chess board in the database.
      *
-     * \param id   the ID of the board
+     * \param id   the ID of the board to update
      * \param board   board instance that contains the data that shall be written into the DB
      * \return Returns true, if database update was successful.
      *         Returns false, if an error occurred.
@@ -83,7 +82,7 @@ class Server
     virtual bool updateBoard(const std::string& id, const Board& board) = 0;
 
 
-    /** \brief updates a single field on a chess board in the database
+    /** \brief Updates a single field on a chess board in the database.
      *
      * \param id   the ID of the board in the MongoDB
      * \param board   board instance that contains the data that shall be written into the DB
@@ -96,12 +95,12 @@ class Server
      *          in that case.
      */
     virtual bool updateFieldOnBoard(const std::string& id, const Board& board, const Field f) = 0;
-}; //class
+}; // class
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_DB_MONGO_SERVER_HPP

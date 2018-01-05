@@ -31,14 +31,13 @@ namespace db
 namespace mongo
 {
 
-
 std::string IdGenerator::generate()
 {
   static const std::string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   const std::string::size_type idLength = 17;
   std::random_device randDev;
   std::mt19937 generator(randDev());
-  std::uniform_int_distribution<unsigned int> distrib(0, alphabet.size()-1);
+  std::uniform_int_distribution<unsigned int> distrib(0, alphabet.size() - 1);
   std::string id(idLength, 'a');
   for (std::string::size_type i = 0; i < idLength; ++i)
   {
@@ -46,7 +45,6 @@ std::string IdGenerator::generate()
   }
   return id;
 }
-
 
 std::string IdGenerator::generate(const std::vector<std::string>& existingIds)
 {
@@ -58,8 +56,8 @@ std::string IdGenerator::generate(const std::vector<std::string>& existingIds)
   return id;
 }
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace

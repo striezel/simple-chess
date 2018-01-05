@@ -36,10 +36,11 @@ namespace mongo
 namespace libmongoclient
 {
 
+/** Class for connecting to a MongoDB server with libmongoclient. */
 class Server : public simplechess::db::mongo::Server
 {
   public:
-    /** \brief connects to a MongoDB server
+    /** \brief Connects to a MongoDB server.
      *
      * \param hostname  hostname or IP of the MongoDB server
      * \param port      port number for the server
@@ -48,12 +49,12 @@ class Server : public simplechess::db::mongo::Server
     Server(const std::string& hostname, const uint16_t port, const bool slaveAcceptable);
 
 
-    /** \brief destructor - closes the connection to the server (if still open)
+    /** \brief Destructor - closes the connection to the server (if still open).
      */
     virtual ~Server();
 
 
-    /** \brief gets a list of board IDs from the server
+    /** \brief Gets a list of board IDs from the server.
      *
      * \param boardIds  vector that will be used to store the IDs
      * \return Returns true, if retrieval was successful.
@@ -62,7 +63,7 @@ class Server : public simplechess::db::mongo::Server
     virtual bool boardList(std::vector<std::string>& boardIds);
 
 
-    /** \brief gets a single chess board from the database
+    /** \brief Gets a single chess board from the database.
      *
      * \param id   the ID of the board
      * \param board   board instance that will be used to store the data
@@ -72,9 +73,8 @@ class Server : public simplechess::db::mongo::Server
     virtual bool getBoard(const std::string& id, Board& board);
 
 
-    /** \brief inserts a chess board into the database
+    /** \brief Inserts a chess board into the database.
      *
-     * \param id   the ID of the board
      * \param board   board instance that contains the data that shall be written into the DB
      * \return Returns the ID of the new board, if successful.
      *         Returns an empty string, if an error occurred.
@@ -82,7 +82,7 @@ class Server : public simplechess::db::mongo::Server
     virtual std::string insertBoard(const Board& board);
 
 
-    /** \brief updates a single chess board in the database
+    /** \brief Updates a single chess board in the database.
      *
      * \param id   the ID of the board in the MongoDB
      * \param board   board instance that contains the data that shall be written into the DB
@@ -92,7 +92,7 @@ class Server : public simplechess::db::mongo::Server
     virtual bool updateBoard(const std::string& id, const Board& board);
 
 
-    /** \brief updates a single field on a chess board in the database
+    /** \brief Updates a single field on a chess board in the database.
      *
      * \param id   the ID of the board in the MongoDB
      * \param board   board instance that contains the data that shall be written into the DB
@@ -105,8 +105,8 @@ class Server : public simplechess::db::mongo::Server
     Connection conn; /**< server connection */
 
 
-    /** \brief gets basic data like player to move, e.p., castling for a board
-     *         from the database
+    /** \brief Gets basic data like player to move, e.p., castling for a board
+     *         from the database.
      *
      * \param elem BSON element for the board
      * \param board   Board structure to save the data
@@ -116,7 +116,7 @@ class Server : public simplechess::db::mongo::Server
     bool getBasicBoardData(const BSON& elem, Board& board);
 
 
-    /** \brief gets the field data for a board
+    /** \brief Gets the field data for a board.
      *
      * \param id   the ID of the board
      * \param board   board instance that will be used to store the data
@@ -126,8 +126,8 @@ class Server : public simplechess::db::mongo::Server
     bool getBoardFields(const std::string& id, Board& board);
 
 
-    /** \brief inserts basic data like player to move, e.p., castling for a new
-     *         board into the database
+    /** \brief Inserts basic data like player to move, e.p., castling for a new
+     *         board into the database.
      *
      * \param board   Board structure that contains the data to be inserted
      * \return Returns ID of the board in case of success.
@@ -136,8 +136,8 @@ class Server : public simplechess::db::mongo::Server
     std::string insertBasicBoardData(const Board& board);
 
 
-    /** \brief updates basic data like player to move, e.p., castling for a board
-     *         in the database
+    /** \brief Updates basic data like player to move, e.p., castling for a board
+     *         in the database.
      *
      * \param id id of the board
      * \param board   Board structure that contains the data to be set
@@ -147,7 +147,7 @@ class Server : public simplechess::db::mongo::Server
     bool updateBasicBoardData(const std::string& id, const Board& board);
 
 
-    /** \brief updates the field data for a board in the database
+    /** \brief Updates the field data for a board in the database.
      *
      * \param id   the ID of the board
      * \param board   board instance that contains the data to be set
@@ -159,14 +159,14 @@ class Server : public simplechess::db::mongo::Server
      *          in that case.
      */
     bool updateBoardFields(const std::string& id, const Board& board);
-}; //class
+}; // class
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_DB_MONGO_LMC_SERVER_HPP

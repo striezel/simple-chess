@@ -43,7 +43,6 @@ namespace libmongoclient
 Server::Server(const std::string& hostname, const uint16_t port, const bool slaveAcceptable)
 : conn(hostname, port, slaveAcceptable)
 {
-
 }
 
 Server::~Server()
@@ -72,8 +71,8 @@ bool Server::boardList(std::vector<std::string>& boardIds)
          boardIds.push_back(out);
        else
          return false;
-     } //while
-   } //try-c
+     } // while
+   } // try-c
    catch(const std::exception& ex)
    {
      std::cerr << "Error: An exception occurred while querying the list of board IDs!"
@@ -112,13 +111,13 @@ bool Server::getBoard(const std::string& id, Board& board)
       std::cerr << "Error: Board with id \"" << id << "\" was not found!"
                 << std::endl;
       return false;
-    } //while
+    } // while
     const BSON elem = c.data();
     if (!getBasicBoardData(elem, board))
       return false;
     if (!getBoardFields(id, board))
       return false;
-  } //try-c
+  } // try-c
   catch(const std::exception& ex)
   {
     std::cerr << "Error: An Exception occurred while querying the board content!"
@@ -137,7 +136,7 @@ bool Server::getBoard(const std::string& id, Board& board)
 bool Server::getBasicBoardData(const BSON& elem, Board& board)
 {
   std::string data;
-  //to move
+  // to move
   if (!elem.getString("toMove", data))
     return false;
   Colour toMove = Colour::none;
@@ -153,7 +152,7 @@ bool Server::getBasicBoardData(const BSON& elem, Board& board)
   if (!board.setToMove(toMove))
     return false;
 
-  //en passant
+  // en passant
   BSON dataObject;
   if (!elem.getObject("enPassant", dataObject))
   {
@@ -161,7 +160,7 @@ bool Server::getBasicBoardData(const BSON& elem, Board& board)
     return false;
   }
   Field ep = Field::none;
-  //Elements column and row are both null, if no en passant field is set.
+  // Elements column and row are both null, if no en passant field is set.
   if (!dataObject.isNull("column"))
   {
     std::string epColumn;
@@ -192,14 +191,14 @@ bool Server::getBasicBoardData(const BSON& elem, Board& board)
                 << ") in DB!" << std::endl;
       return false;
     }
-  } //if enPassant.column == null
+  } // if enPassant.column == null
   if (!board.setEnPassant(ep))
   {
     std::cerr << "Error: Could not set en passant field for board!" << std::endl;
     return false;
   }
 
-  //castling
+  // castling
   Castling c;
   if (!elem.getObject("castling", dataObject))
   {
@@ -296,14 +295,14 @@ bool Server::getBoardFields(const std::string& id, Board& board)
         std::cerr << "Error: Could not get row information of field from DB!" << std::endl;
         return false;
       }
-      Field f = Convert::toField(columnDB, rowDB);
+      const Field f = Convert::toField(columnDB, rowDB);
       if (f == Field::none)
       {
         std::cerr << "Error: Got invalid field (" << columnDB << rowDB
                   << ") from DB!" << std::endl;
         return false;
       }
-      //Has the same element already been set?
+      // Has the same element already been set?
       if (fieldsDone.find(f) != fieldsDone.end())
       {
         std::cerr << "Error: Information of field " << columnDB << rowDB
@@ -317,7 +316,7 @@ bool Server::getBoardFields(const std::string& id, Board& board)
         return false;
       }
       fieldsDone.insert(f);
-    } //while
+    } // while
     if (fieldsDone.size() < 64)
     {
       std::cerr << "Error: Only " << fieldsDone.size() << " of 64 fields have"
@@ -325,7 +324,7 @@ bool Server::getBoardFields(const std::string& id, Board& board)
       return false;
     }
     return true;
-  } //try-c
+  } // try-c
   catch(const std::exception& ex)
   {
     std::cerr << "Error: An Exception occurred while querying the board content!"
@@ -342,7 +341,7 @@ bool Server::getBoardFields(const std::string& id, Board& board)
 
 std::string Server::insertBasicBoardData(const Board& board)
 {
-  //build insert object
+  // build insert object
   BSON document;
   std::vector<std::string> idList;
   if (!boardList(idList))
@@ -364,7 +363,7 @@ std::string Server::insertBasicBoardData(const Board& board)
              << std::endl;
     return std::string();
   }
-  //get milliseconds since epoch
+  // Get milliseconds since epoch.
   const std::chrono::milliseconds msse = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
   if (!document.append("created", msse))
   {
@@ -372,7 +371,7 @@ std::string Server::insertBasicBoardData(const Board& board)
              << std::endl;
     return std::string();
   }
-  //build castling object
+  // build castling object
   BSON castling;
   {
     const Castling& c = board.castling();
@@ -408,14 +407,14 @@ std::string Server::insertBasicBoardData(const Board& board)
                 << std::endl;
       return std::string();
     }
-  } //end of scope
+  } // end of scope
   if (!castling.finish())
   {
     std::cerr << "Error: Could not finish BSON object (castling) in lmc::Server::insertBasicBoardData!"
               << std::endl;
     return std::string();
   }
-  //build check object
+  // build check object
   BSON check;
   if (!check.append("white", board.isInCheck(Colour::white)))
   {
@@ -435,14 +434,14 @@ std::string Server::insertBasicBoardData(const Board& board)
               << std::endl;
     return std::string();
   }
-  //build en passant object
+  // build en passant object
   BSON enPassant;
   if (board.enPassant() == Field::none)
   {
     if (!enPassant.appendNull("column") || !enPassant.appendNull("row"))
     {
       std::cerr << "Error: Could not append column and row to BSON object in lmc::Server::insertBasicBoardData!"
-              << std::endl;
+                << std::endl;
       return std::string();
     }
   }
@@ -460,14 +459,14 @@ std::string Server::insertBasicBoardData(const Board& board)
                 << std::endl;
       return std::string();
     }
-  } //else
+  } // else
   if (!enPassant.finish())
   {
     std::cerr << "Error: Could not finish BSON object (enPassant) in lmc::Server::insertBasicBoardData!"
               << std::endl;
     return std::string();
   }
-  //append all objects to subUpdate
+  // append all objects to subUpdate
   if (!document.append("castling", castling))
   {
     std::cerr << "Error: Could not append castling to BSON object in lmc::Server::insertBasicBoardData!"
@@ -504,7 +503,7 @@ std::string Server::insertBasicBoardData(const Board& board)
               << std::endl;
     return std::string();
   }
-  //return board ID
+  // return board ID
   return id;
 }
 
@@ -513,7 +512,7 @@ std::string Server::insertBoard(const Board& board)
   std::string boardId = insertBasicBoardData(board);
   if (boardId.empty())
     return "";
-  //insert fields
+  // insert fields
   for (char col = 'a'; col <= 'h'; ++col)
   {
     for (int r = 1; r <= 8; ++r)
@@ -569,8 +568,8 @@ std::string Server::insertBoard(const Board& board)
                   << std::endl;
         return "";
       }
-    } //for row
-  } //for column
+    } // for row
+  } // for column
   return boardId;
 }
 
@@ -597,12 +596,12 @@ bool Server::updateBoard(const std::string& id, const Board& board)
       std::cerr << "Error: Board with id \"" << id << "\" was not found!"
                 << std::endl;
       return false;
-    } //while
+    } // while
     if (!updateBasicBoardData(id, board))
       return false;
     if (!updateBoardFields(id, board))
       return false;
-  } //try-c
+  } // try-c
   catch(const std::exception& ex)
   {
     std::cerr << "Error: An Exception occurred while setting the board content!"
@@ -691,7 +690,7 @@ bool Server::updateFieldOnBoard(const std::string& id, const Board& board, const
   try
   {
     return conn.update("meteor.fields", selector, update);
-  } //try-c
+  } // try-c
   catch(const std::exception& ex)
   {
     std::cerr << "Error: An exception occurred while updating a field on the board!"
@@ -722,7 +721,7 @@ bool Server::updateBasicBoardData(const std::string& id, const Board& board)
     return false;
   }
 
-  //build sub update object
+  // build sub update object
   BSON subUpdate;
   if (!subUpdate.append("toMove", Convert::colourToMongoDbString(board.toMove())))
   {
@@ -730,7 +729,7 @@ bool Server::updateBasicBoardData(const std::string& id, const Board& board)
              << std::endl;
     return false;
   }
-  //build castling object
+  // build castling object
   BSON castling;
   {
     const Castling& c = board.castling();
@@ -766,14 +765,14 @@ bool Server::updateBasicBoardData(const std::string& id, const Board& board)
                 << std::endl;
       return false;
     }
-  } //end of scope
+  } // end of scope
   if (!castling.finish())
   {
     std::cerr << "Error: Could not finish BSON object (castling) in lmc::Server::setBasicBoardData!"
               << std::endl;
     return false;
   }
-  //build check object
+  // build check object
   BSON check;
   if (!check.append("white", board.isInCheck(Colour::white)))
   {
@@ -793,7 +792,7 @@ bool Server::updateBasicBoardData(const std::string& id, const Board& board)
               << std::endl;
     return false;
   }
-  //build en passant object
+  // build en passant object
   BSON enPassant;
   if (board.enPassant() == Field::none)
   {
@@ -818,7 +817,7 @@ bool Server::updateBasicBoardData(const std::string& id, const Board& board)
                 << std::endl;
       return false;
     }
-  } //else
+  } // else
   if (!enPassant.finish())
   {
     std::cerr << "Error: Could not finish BSON object (enPassant) in lmc::Server::setBasicBoardData!"
@@ -868,7 +867,7 @@ bool Server::updateBasicBoardData(const std::string& id, const Board& board)
   try
   {
     return conn.update("meteor.boards", selector, update);
-  } //try-c
+  } // try-c
   catch(const std::exception& ex)
   {
     std::cerr << "Error: An exception occurred while updating the basic board information!"
@@ -895,15 +894,15 @@ bool Server::updateBoardFields(const std::string& id, const Board& board)
                   << " of board " << id << "!" << std::endl;
         return false;
       }
-    } //for row
-  } //for column
+    } // for row
+  } // for column
   return true;
 }
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace

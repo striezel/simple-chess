@@ -33,29 +33,29 @@ namespace db
 namespace mongo
 {
 
-/** class to generate a random string ID */
+/** Class to generate a random string ID. */
 class IdGenerator
 {
   public:
-    /** \brief generates a random string ID
+    /** \brief Generates a random string ID.
      *
      * \return Returns the generated string.
      */
     static std::string generate();
 
 
-    /** \brief generates a random string ID, avoiding existing IDs
+    /** \brief Generates a random string ID, avoiding existing IDs.
      *
      * \param existingIds  a vector of already existing IDs
      * \return Returns the generated string.
      */
     static std::string generate(const std::vector<std::string>& existingIds);
-}; //class
+}; // class
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_DB_MONGO_IDGENERATOR_HPP
