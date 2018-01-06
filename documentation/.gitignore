@@ -1,0 +1,4 @@
+# ignore generated documentation
+html/
+latex/
+doxygen_sqlite3.db
