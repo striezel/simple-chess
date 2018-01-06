@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,10 +31,12 @@ namespace simplechess
 namespace pgn
 {
 
+/** Specialized exception class of PGN parser for situations where some tokens
+    from the PNG could not be processed. */
 class UnconsumedTokensException: public ParserException
 {
   public:
-    /** \brief constructor
+    /** \brief Constructor.
      *
      * \param _nextIdx  next index that would have been processed
      * \param tokenSize  total number of tokens
@@ -68,9 +70,9 @@ class UnconsumedTokensException: public ParserException
     std::vector<Token> remainingTokens; /**< vector of unprocessed tokens */
 };
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_PGN_UNCONSUMEDTOKENSEXCEPTION_HPP
 

@@ -32,6 +32,7 @@
 namespace simplechess
 {
 
+/** Central class for the XBoard-compatible chess engine of simple-chess. */
 class Engine
 {
   public:

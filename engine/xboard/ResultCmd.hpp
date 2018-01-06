@@ -45,7 +45,7 @@ class ResultCmd : public Command
      *
      * \return True if command was processed successfully.
      */
-    virtual bool process();
+    virtual bool process() override;
   private:
     Result result; /**< result of the game */
     std::string comment; /**< the comment, if any */

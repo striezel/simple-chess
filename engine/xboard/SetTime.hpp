@@ -43,7 +43,7 @@ class SetTime : public Command
      *
      * \return True if command was processed successfully.
      */
-    virtual bool process();
+    virtual bool process() override;
   private:
     int mCentiseconds; /**< amount of centiseconds left */
     bool mOpponent; /**< true for opponent, false for engine time */

@@ -44,7 +44,7 @@ class Level: public Command
      *
      * \return True if command was processed successfully.
      */
-    virtual bool process();
+    virtual bool process() override;
   private:
     int moves; /**< number of moves (conventional mode) */
     std::chrono::seconds base; /**< base time (conventional or incremental mode) */

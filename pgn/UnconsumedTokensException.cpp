@@ -52,6 +52,6 @@ const std::vector<Token>& UnconsumedTokensException::unprocessedTokens() const
   return remainingTokens;
 }
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@
 namespace simplechess
 {
 
+/** \brief Class for that handles the protover command from XBoard.
+ */
 class ProtocolVersion: public Command
 {
   public:
@@ -39,7 +41,7 @@ class ProtocolVersion: public Command
      *
      * \return True if command was processed successfully.
      */
-    virtual bool process();
+    virtual bool process() override;
   private:
     unsigned int protocolVersion; /**< protocol version */
 }; // class

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,10 +30,11 @@ namespace simplechess
 namespace pgn
 {
 
+/** Generic class for PGN parser exceptions. */
 class ParserException: public std::exception
 {
   public:
-    /** \brief constructor
+    /** \brief Constructor with custom exception message.
      *
      * \param message  the exception message
      */
@@ -49,8 +50,8 @@ class ParserException: public std::exception
     std::string exceptMessage; /**< exception message */
 };
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_PGN_PARSEREXCEPTION_HPP

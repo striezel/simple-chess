@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,12 +24,15 @@
 namespace simplechess
 {
 
+/** Base class for all classes that handle XBoard protocol commands. */
 class Command
 {
   public:
     /** \brief Processes the command, i.e. performs required actions.
      *
      * \return True if command was processed successfully.
+     * \remarks This method is pure virtual, i.e. each derived class has to
+     *          override it and implement its own version of the method.
      */
     virtual bool process() = 0;
 

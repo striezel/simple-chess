@@ -1,4 +1,10 @@
-# ignore generated documentation
+# We want to ignore generated Doxygen documentation.
+
+# directories withHTML and LaTeX documentation
 html/
 latex/
+
 doxygen_sqlite3.db
+
+# logfile for warnings
+doxygen-warnings.log

@@ -65,6 +65,7 @@ class Moves
 
     /** \brief Move a piece on the given board.
      *
+     * \param board  the chess board where the move shall be performed
      * \param from field where the move starts
      * \param to   field where the move ends
      * \param promoteTo type of piece that a pawn shall be promoted to, if the

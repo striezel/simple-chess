@@ -45,7 +45,7 @@ class Usermove: public Command
      *
      * \return True if command was processed successfully.
      */
-    virtual bool process();
+    virtual bool process() override;
   private:
     Field origin; /**< field of origin for the move */
     Field destination; /**< field of destination for the move */

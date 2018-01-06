@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -103,7 +103,7 @@ std::string PortableGameNotation::tag(const std::string& tagName) const
   const auto iter = mOtherTags.find(tagName);
   if (iter != mOtherTags.end())
     return iter->second;
-  //tag from standard tag roster?
+  // Is it a tag from the standard tag roster?
   if (tagName == "Event")
     return event();
   if (tagName == "Site")
@@ -118,13 +118,13 @@ std::string PortableGameNotation::tag(const std::string& tagName) const
     return black();
   if (tagName == "Result")
     return resultToString(result());
-  //tag not found
+  // Tag was not found.
   return std::string();
 }
 
 void PortableGameNotation::setTag(const std::string& tagName, const std::string& content)
 {
-  //tag from standard tag roster?
+  // Is it a tag from standard tag roster?
   if (tagName == "Event")
     mEvent = content;
   else if (tagName == "Site")
@@ -142,7 +142,7 @@ void PortableGameNotation::setTag(const std::string& tagName, const std::string&
   else if (tagName == "Result")
   {
     mResult = stringToResult(content);
-  } //else (Result)
+  } // else (Result)
   else
   {
     mOtherTags[tagName] = content;
@@ -151,7 +151,7 @@ void PortableGameNotation::setTag(const std::string& tagName, const std::string&
 
 void PortableGameNotation::clearTag(const std::string& tagName)
 {
-  //tag from standard tag roster?
+  // Is it a tag from standard tag roster?
   if (tagName == "Event")
     mEvent = "?";
   else if (tagName == "Site")
@@ -231,7 +231,7 @@ std::pair<HalfMove, HalfMove> PortableGameNotation::move(const unsigned int move
   const auto iter = mMoves.find(moveNumber);
   if (iter != mMoves.end())
     return iter->second;
-  //not found, return empty move
+  // not found, return empty move
   return std::pair<HalfMove, HalfMove>(HalfMove(), HalfMove());
 }
 
@@ -250,7 +250,7 @@ void PortableGameNotation::setMove(const unsigned int moveNumber, const std::pai
 std::string PortableGameNotation::toString() const
 {
   std::string pgn;
-  //seven tag roster
+  // seven tag roster
   pgn = "[Event \"" + event() + "\"]\n"
       + "[Site \"" + site() + "\"]\n"
       + "[Date \"" + date() + "\"]\n"
@@ -261,7 +261,7 @@ std::string PortableGameNotation::toString() const
   for(const auto& item : mOtherTags)
   {
     pgn += "[" + item.first + " \"" + item.second + "\"]\n";
-  } //for
+  } // for
   pgn += "\n";
   unsigned int moves = 0;
   for(const auto& mv : mMoves)
@@ -270,15 +270,16 @@ std::string PortableGameNotation::toString() const
     if (!mv.second.second.empty())
       pgn += " " + mv.second.second.toPGN();
     ++moves;
-    //add line break after four moves
+    // Add line break after four moves.
     if (moves % 4 == 0)
       pgn += "\n";
+    // Otherwise add a space character after the move.
     else
       pgn += " ";
-  } //for
+  } // for
   if (result() != Result::Unknown)
     pgn += " " + resultToString(result());
   return pgn;
 }
 
-} //namespace
+} // namespace

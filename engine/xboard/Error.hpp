@@ -45,7 +45,7 @@ class Error : public Command
      *
      * \return True if command was processed successfully.
      */
-    virtual bool process();
+    virtual bool process() override;
   private:
     std::string mType; /**< type of error */
     std::string mCommand; /**< original command that caused the error */

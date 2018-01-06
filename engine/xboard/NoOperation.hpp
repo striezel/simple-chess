@@ -35,7 +35,7 @@ class NoOperation : public Command
      *
      * \return True if command was processed successfully.
      */
-    virtual bool process();
+    virtual bool process() override;
 }; // class
 
 } // namespace
