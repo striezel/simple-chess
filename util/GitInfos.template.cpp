@@ -27,6 +27,8 @@ GitInfos::GitInfos()
 : mCommit(""),
   mDate("")
 {
+  // The following both placeholders will get replaces by CMake during the
+  // creation of the Makefile.
   const std::string git_hash = "@GIT_HASH@";
   const std::string git_time = "@GIT_TIME@";
 

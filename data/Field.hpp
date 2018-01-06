@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 
 namespace simplechess
 {
-  //enumeration type for fields on chess board
+  /** enumeration type for fields on chess board */
   enum class Field { none,
       a1, a2, a3, a4, a5, a6, a7, a8,
       b1, b2, b3, b4, b5, b6, b7, b8,
@@ -36,7 +36,7 @@ namespace simplechess
    };
 
 
-   /** \brief gets the column/file of a given field
+   /** \brief Gets the column/file of a given field.
     *
     * \param  f a field, must not be none
     * \return Returns the column/file of the given field.
@@ -44,7 +44,7 @@ namespace simplechess
    char column(const Field f);
 
 
-   /** \brief returns the row of a given field
+   /** \brief Gets the row/rank of a given field.
     *
     * \param  f a field, must not be none
     * \return Returns the row/rank of the given field.
@@ -52,7 +52,7 @@ namespace simplechess
    int row(const Field f);
 
 
-   /** \brief converts (column;row) pair to Field
+   /** \brief Converts a (column;row) pair to Field.
     *
     * \param column column (file) of the field
     * \param row    row (rank) of the field
@@ -61,7 +61,7 @@ namespace simplechess
    Field toField(const char column, const int row);
 
 
-   /** \brief determines whether both fields have the same file
+   /** \brief Determines whether both fields have the same file.
     *
     * \param f1  first field
     * \param f2  second field
@@ -71,7 +71,7 @@ namespace simplechess
    bool sameFile(const Field f1, const Field f2);
 
 
-   /** \brief determines whether both fields have the same rank
+   /** \brief Determines whether both fields have the same rank.
     *
     * \param f1  first field
     * \param f2  second field
@@ -95,6 +95,6 @@ namespace simplechess
     * Returns Field::none, if there is no right field.
     */
    Field rightField(const Field f);
-} //namespace
+} // namespace
 
 #endif // SIMPLE_CHESS_FIELD_HPP

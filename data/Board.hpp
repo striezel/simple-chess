@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,34 +29,45 @@
 namespace simplechess
 {
 
-/** class that represents a chess board */
+/** Class that represents a chess board. */
 class Board
 {
   public:
-    /** \brief default constructor */
+    /** \brief Default constructor. */
     Board();
 
 
-    /** \brief gets data for a given field on the board
+    /** \brief Gets data for a given field on the board.
      *
      * \param f a field on the board
+     * \return Returns the piece on the given field.
      */
     const Piece& element(const Field f) const;
 
 
-    /** \brief gets the player / colour who is to move next */
+    /** \brief Gets the player / colour who is to move next.
+     *
+     * \return Returns the player / colour who is to move next.
+     */
     const Colour& toMove() const;
 
 
-    /** \brief gets the field which can be used for en passant capture, if any */
+    /** \brief Gets the field which can be used for en passant capture, if any.
+     *
+     * \return Returns the field eligible for en passant capture.
+     *         Returns Field::none, if no field is eligible.
+     */
     const Field& enPassant() const;
 
 
-    /** \brief castling information for the board */
+    /** \brief Gets the castling information for the board.
+     *
+     * \return Returns castling information of the board.
+     */
     const Castling& castling() const;
 
 
-    /** \brief sets piece on a field on the board
+    /** \brief Sets a piece on a field on the board.
      *
      * \param field  the field that shall be set
      * \param piece  the piece that shall be set for the field
@@ -66,7 +77,7 @@ class Board
     bool setElement(const Field field, const Piece& piece);
 
 
-    /** \brief sets the player who currently is to move
+    /** \brief Sets the player who currently is to move
      *
      * \param who  player/colour that is to move next (none is not allowed)
      * \return Returns true, if the change was applied.
@@ -76,7 +87,7 @@ class Board
     bool setToMove(const Colour who);
 
 
-    /** \brief sets the current en passant field
+    /** \brief Sets the current en passant field.
      *
      * \param ep  the en passant field (use none, if no e.p. is set)
      * \return Returns true, if the new field could be set.
@@ -86,27 +97,27 @@ class Board
     bool setEnPassant(const Field ep);
 
 
-    /** \brief sets the current castling information
+    /** \brief Sets the current castling information.
      *
      * \param castlingInfo  the new castling information
      */
     void setCastling(const Castling& castlingInfo);
 
 
-    /** \brief determines whether one side is currently in check
+    /** \brief Determines whether one side is currently in check.
      *
      * \param colour   the colour that is (or is not) in check
-     * \return Returns true, if the given colour is in check;
+     * \return Returns true, if the given colour is in check.
      */
     bool isInCheck(const Colour colour) const;
 
 
-    /** \brief updates the internal cache for whether a player is in check
+    /** \brief Updates the internal cache for whether a player is in check.
      */
     void updateCheckCache();
 
 
-    /** \brief initializes the board's content with the data from a Forsyth-Edwards notation string
+    /** \brief Initializes the board's content with the data from a Forsyth-Edwards notation string.
      *
      * \param FEN  Forsyth-Edwards notation of the board
      * \return Returns true, if initialization was successful.
@@ -116,7 +127,7 @@ class Board
     bool fromFEN(const std::string& FEN);
 
 
-    /** \brief tries to move a piece on the board
+    /** \brief Tries to move a piece on the board.
      *
      * \param from       field where the move starts
      * \param to         field where the move ends
@@ -128,12 +139,12 @@ class Board
                           required rule checks if the move has already been
                           verified before.
      * \return Returns true, if move could be performed.
-     * Returns false, if move was not performed.
+     *         Returns false, if move was not performed.
      */
     bool move(const Field from, const Field to, PieceType promoteTo, const bool onlyAllowed = true);
 
 
-    /** \brief finds the next field where a certain figure is located
+    /** \brief Finds the next field where a certain piece is located.
      *
      * \param piece piece for which to search
      * \param start field where search shall start (set to a1, if not sure)
@@ -148,8 +159,8 @@ class Board
     Castling mCastling; /**< castling information (i.e. where is castling still allowed) */
     bool mBlackInCheck; /**< whether black player is in check */
     bool mWhiteInCheck; /**< whether white player is in check */
-}; //class
+}; // class
 
-} //namespace
+} // namespace
 
 #endif // SIMPLE_CHESS_BOARD_HPP

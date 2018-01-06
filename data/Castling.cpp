@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016  Dirk Stolle
+    Copyright (C) 2016, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -55,4 +55,4 @@ void Castling::fromFEN(const std::string& FEN)
   black_queenside = (FEN.find('q') != std::string::npos);
 }
 
-} //namespace
+} // namespace

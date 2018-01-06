@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ namespace simplechess
 namespace util
 {
 
-/** \brief splits a string into several strings, using the given separator
+/** \brief Splits a string into several strings, using the given separator.
  *
  * \param line    the string that shall be split
  * \param separator   character that works as separator for parts / substrings
@@ -39,7 +39,7 @@ namespace util
 std::vector<std::string> split(std::string line, const char separator = ' ');
 
 
-/** \brief gets the string representation of an integer value
+/** \brief Gets the string representation of an integer value.
  *
  * \param value   integer value
  * \return Returns a string containing the given integer.
@@ -47,7 +47,7 @@ std::vector<std::string> split(std::string line, const char separator = ' ');
 std::string intToString(const int value);
 
 
-/** \brief tries to convert the string representation of an integer number into
+/** \brief Tries to convert the string representation of an integer number into
  * an int and returns true on success, false on failure.
  *
  * \param str    the string that contains the number
@@ -58,7 +58,7 @@ std::string intToString(const int value);
 bool stringToInt(const std::string& str, int& value);
 
 
-/** \brief removes all leading whitespace characters from the given string
+/** \brief Removes all leading whitespace characters from the given string.
  *
  * \param str1   the affected string
  * \remarks The function works in place, i.e. it modifies the string directly.

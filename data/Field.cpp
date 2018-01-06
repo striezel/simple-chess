@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -103,7 +103,7 @@ char column(const Field f)
     case Field::none:
     default:
          throw std::invalid_argument("None is not allowed as argument of column()!");
-  } //switch
+  } // switch
 }
 
 int row(const Field f)
@@ -185,7 +185,7 @@ int row(const Field f)
     case Field::none:
     default:
          throw std::invalid_argument("None is not allowed as argument of row()!");
-  } //switch
+  } // switch
 }
 
 Field toField(const char column, const int row)
@@ -225,4 +225,4 @@ Field rightField(const Field f)
   return toField(static_cast<char>(static_cast<int>(col) + 1), row(f));
 }
 
-} //namespace
+} // namespace
