@@ -2,6 +2,10 @@
 
 _Note: This changelog may be incomplete._
 
+## Version 0.3.0 (2018-01-20)
+- meteor-chess-client: initial version of engine client for interaction with
+  meteor-chess
+
 ## Version 0.2.1 (2017-12-28)
 - simple-chess-cli: fix incorrect handling of Forsyth-Edwards notation command
   line paramater

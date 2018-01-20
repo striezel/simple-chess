@@ -15,5 +15,8 @@ add_subdirectory (pgn-reader-with-meteor-chess)
 # Recurse into subdirectory for engine.
 add_subdirectory (engine)
 
+# Recurse into subdirectory for meteor-chess-client.
+add_subdirectory (meteor-chess-client)
+
 # Recurse into subdirectory for tests.
 add_subdirectory (tests)

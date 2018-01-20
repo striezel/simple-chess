@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,20 +25,16 @@
 namespace simplechess
 {
 
-PgnReaderOptions::PgnReaderOptions()
-: inputFile(""),
-  delayMilliseconds(1000),
+MeteorChessOptions::MeteorChessOptions()
+: boardId(""),
+  hostname(""),
+  port(0),
   help(false),
   version(false)
-  #ifndef NO_METEOR_CHESS
-  , meteorChess(false),
-  hostname(""),
-  port(0)
-  #endif // NO_METEOR_CHESS
 {
 }
 
-bool PgnReaderOptions::parse(const int argc, char** argv)
+bool MeteorChessOptions::parse(const int argc, char** argv)
 {
   if (nullptr == argv)
     return false;
@@ -47,68 +43,37 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
     if (nullptr == argv[i])
       return false;
     const std::string param = std::string(argv[i]);
-    if (param == "--delay")
-    {
-      if (argc > i + 1)
-      {
-        const std::string ms = std::string(argv[i+1]);
-        int dummy = -1;
-        if (!util::stringToInt(ms, dummy))
-        {
-          std::cout << "Parameter " << param << " must be followed by an integer!\n";
-          return false;
-        }
-        if (dummy < 0)
-        {
-          std::cout << "The given value for delay is out of range. It must be a positive number.\n";
-          return false;
-        }
-        delayMilliseconds = dummy;
-        // Skip next argument, because that was already processed as delay value.
-        ++i;
-      }
-      else
-      {
-        std::cout << "There must be a number after " << param << " to specifiy"
-                  << " the delay in milliseconds!\n";
-        return false;
-      }
-    } // if delay
-    else if ((param == "--pgn") || (param == "--file"))
-    {
-      if (argc > i + 1)
-      {
-        inputFile = std::string(argv[i+1]);
-        // Skip next argument, because that was already processed as file name.
-        ++i;
-      }
-      else
-      {
-        std::cout << "There must be a file name after " << param << " to path "
-                  << " to the Portable Game Notation file!\n";
-        return false;
-      }
-    }
-    else if ((param == "--help") || (param == "-?") || (param == "/?"))
+    // help?
+    if ((param == "--help") || (param == "-?") || (param == "/?"))
     {
       help = true;
     }
+    // version
     else if ((param == "--version") || (param == "-v") || (param == "/v"))
     {
       version = true;
     }
-    #ifdef NO_METEOR_CHESS
-    else if ((param == "--meteor-chess") || (param == "--meteor"))
+    // id of board in meteor-chess
+    else if ((param == "--board") || (param == "--board-id"))
     {
-      std::cout << "Error: This version of pgn-reader has been compiled without"
-                << " support for meteor-chess!\n";
-      return false;
-    }
-    #else
-    else if ((param == "--meteor-chess") || (param == "--meteor"))
-    {
-      meteorChess = true;
-    }
+      if (!boardId.empty())
+      {
+        std::cout << "Error: The board ID cannot be specified more than once!\n";
+        return false;
+      }
+      if (argc > i + 1)
+      {
+        boardId = std::string(argv[i+1]);
+        //Skip next argument, because that was already processed as board ID.
+        ++i;
+      }
+      else
+      {
+        std::cout << "There must be a board ID after " << param << "!\n";
+        return false;
+      }
+    } // board ID
+    // hostname of MongoDB
     else if ((param == "--hostname") || (param == "--host"))
     {
       if (!hostname.empty())
@@ -119,7 +84,7 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
       if (argc > i + 1)
       {
         hostname = std::string(argv[i+1]);
-        // Skip next argument, because that was already processed as hostname.
+        //Skip next argument, because that was already processed as hostname.
         ++i;
       }
       else
@@ -128,6 +93,7 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
         return false;
       }
     } // hostname
+    // port of MongoDB
     else if (param == "--port")
     {
       if (argc > i + 1)
@@ -141,7 +107,7 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
         }
         if ((dummy <= 0) || (dummy > 32767))
         {
-          std::cout << "The given port number is out of range. Is must be in [1;32767].\n";
+          std::cout << "The given port number is out of range. It must be in [1;32767].\n";
           return false;
         }
         port = static_cast<uint16_t>(dummy);
@@ -154,14 +120,23 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
         return false;
       }
     } // if port number
-    #endif // NO_METEOR_CHESS
     else
     {
       std::cout << "Error: Invalid parameter \"" << param << "\"!\n";
       return false;
     }
   } // for
+
+  // Set default values.
+  if (hostname.empty())
+  {
+    hostname = "localhost";
+  }
+  if (port == 0)
+  {
+    port = 3001;
+  }
   return true;
 }
 
-} //namespace
+} // namespace

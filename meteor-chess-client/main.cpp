@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,76 +19,133 @@
 */
 
 #include <iostream>
-#include "../data/ForsythEdwardsNotation.hpp"
 #include "../db/mongo/libmongoclient/Server.hpp"
-#include "../ui/Console.hpp"
+#include "../evaluation/CheckEvaluator.hpp"
+#include "../evaluation/CompoundEvaluator.hpp"
+#include "../evaluation/MaterialEvaluator.hpp"
+#include "../evaluation/MobilityEvaluator.hpp"
+#include "../evaluation/PromotionEvaluator.hpp"
+#include "../search/Search.hpp"
+#include "../util/GitInfos.hpp"
+#include "../util/Version.hpp"
+#include "Options.hpp"
+
+const int rcInvalidParameter = 1;
+const int rcEngineResigns = 2;
+const int rcMongoDbError = 7;
+const int rcUnknown = 8;
+
+void showVersion()
+{
+  simplechess::GitInfos info;
+  std::cout << "meteor-chess-client, " << simplechess::version << "\n"
+            << "\n"
+            << "Version control commit: " << info.commit() << "\n"
+            << "Version control date:   " << info.date() << std::endl;
+}
+
+void showHelp()
+{
+  std::cout << "meteor-chess-client [OPTIONS]\n"
+            << "\n"
+            << "options:\n"
+            << "  -? | --help      - shows this help message and exits\n"
+            << "  -v | --version   - shows version information and exits\n"
+            << "  --board ID       - sets the ID of the chess board that will be read.\n"
+            << "                     This parameter is mandatory.\n"
+            << "  --host hostname  - host name of the meteor-chess MongoDB server. The default\n"
+            << "                     value is \"localhost\".\n"
+            << "  --port N         - port number of the meteor-chess MongoDB server. The\n"
+            << "                     default value is 3001.\n";
+}
 
 int main(int argc, char** argv)
 {
-  std::string boardId;
-  if ((argc > 1) && (argv[1] != nullptr))
+  simplechess::MeteorChessOptions options;
+  if (!options.parse(argc, argv))
   {
-    boardId = std::string(argv[1]);
+    std::cout << "Invalid parameters encountered, program will exit.\n"
+              << "Use --help to show recognized parameters.\n";
+    return rcInvalidParameter;
   }
-  simplechess::db::mongo::libmongoclient::Server server("localhost", 3001, true);
-  std::cout << "Connection attempt succeeded." << std::endl;
-  std::vector<std::string> boards;
-  if (!server.boardList(boards))
+  // Help requested?
+  if (options.help)
   {
-    std::cerr << "Could not get board list from DB!" << std::endl;
-    return 1;
-  }
-  std::cout << "List of board IDs:" << std::endl;
-  for (const auto & id : boards)
-  {
-    std::cout << "  " << id << std::endl;
-  }
-  if (boards.empty())
-  {
-    std::cout << "  No boards are available in the database." << std::endl;
+    showHelp();
     return 0;
   }
-
-  //Just use the first board, if none is given.
-  if (boardId.empty())
-    boardId = boards[0];
-
-  simplechess::Board board;
-  if (!server.getBoard(boardId, board))
+  // Version information requested?
+  if (options.version)
   {
-    std::cerr << "Could not get board data for board " << boardId
-              << " from DB!" << std::endl;
-    return 1;
+    showVersion();
+    return 0;
   }
-  std::cout << "Board data retrieval for " << boardId << " succeeded."
-            << " (Pass a board ID as 1st argument to this program, if you want"
-            << " to see a different board.)" << std::endl;
-  simplechess::ui::Console::showBoard(board);
-
-
-  if (board.element(simplechess::Field::a2) == simplechess::Piece(simplechess::Colour::white, simplechess::PieceType::pawn))
+  // Is there a board id?
+  if (options.boardId.empty())
   {
-    board.move(simplechess::Field::a2, simplechess::Field::a4, simplechess::PieceType::queen);
-    const auto a4 = board.element(simplechess::Field::a4);
-    std::cout << "a4: " << a4.colour << " " << a4.piece << "\n";
-  }
-  if (server.updateBoard(boardId, board))
-  {
-    std::cout << "Update was successful.\n";
+    std::cout << "Error: No board id was set!\n";
+    return rcInvalidParameter;
   }
 
-  //insert board
-  if (!board.fromFEN(simplechess::FEN::defaultInitialPosition))
+  try
   {
-    std::cerr << "Could not initialize board from FEN!" << std::endl;
-    return 1;
-  }
-  const auto newBoardId = server.insertBoard(board);
-  if (newBoardId.empty())
+    simplechess::db::mongo::libmongoclient::Server server(options.hostname, options.port, true);
+    simplechess::Board board;
+    if (!server.getBoard(options.boardId, board))
+    {
+      std::cerr << "Could not get board data for board " << options.boardId
+                << " from DB!" << std::endl;
+      return rcMongoDbError;
+    }
+
+    // Let's find a suitable move.
+    simplechess::Search s(board);
+    simplechess::CompoundEvaluator evaluator;
+    // Add the four evaluators we have so far.
+    evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MaterialEvaluator()));
+    evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MobilityEvaluator()));
+    evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::PromotionEvaluator()));
+    evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::CheckEvaluator()));
+    // Search for best move, only two plies.
+    s.search(evaluator, 2);
+    // Did the search find any moves?
+    if (!s.hasMove())
+    {
+      std::cout << "simplechess AI could not find a valid move. User wins!\n";
+      return rcEngineResigns;
+    }
+    const auto bestMove = s.bestMove();
+    const simplechess::Field from = std::get<0>(bestMove);
+    const simplechess::Field to = std::get<1>(bestMove);
+    const simplechess::PieceType promo = std::get<2>(bestMove);
+    std::cout << "Computer moves from " << simplechess::column(from) << simplechess::row(from)
+              << " to " << simplechess::column(to) << simplechess::row(to) << ".\n";
+    if (!board.move(from, to, promo))
+    {
+      std::cout << "The computer move is not allowed! User wins.\n";
+      return rcEngineResigns;
+    }
+    if (!server.updateBoard(options.boardId, board))
+    {
+      std::cout << "Could not update board in MongoDB!\n";
+      return rcMongoDbError;
+    }
+  } // try
+  catch (const std::exception& ex)
   {
-    std::cerr << "Could not insert new board!" << std::endl;
-    return 1;
-  }
-  std::cout << "Success. New board's ID is " << newBoardId << "." << std::endl;
+    const std::string reason = ex.what();
+    std::cout << "Error: An exception occurred!\n"
+              << reason << "\n";
+    if (reason.find("MongoDB") != std::string::npos)
+    {
+      std::cout << "Hint: It seems that the error is related to MongoDB. "
+                << "Please check that meteor-chess is running and its MongoDB "
+                << "instance can be reached at " << options.hostname << ":" << options.port
+                << ".\n";
+      return rcMongoDbError;
+    }
+    // Other error type.
+    return rcUnknown;
+  } // try-catch
   return 0;
 }

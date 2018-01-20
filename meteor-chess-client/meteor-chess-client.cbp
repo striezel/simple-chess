@@ -46,8 +46,6 @@
 		<Unit filename="../data/Castling.hpp" />
 		<Unit filename="../data/Field.cpp" />
 		<Unit filename="../data/Field.hpp" />
-		<Unit filename="../data/ForsythEdwardsNotation.cpp" />
-		<Unit filename="../data/ForsythEdwardsNotation.hpp" />
 		<Unit filename="../data/Piece.cpp" />
 		<Unit filename="../data/Piece.hpp" />
 		<Unit filename="../db/mongo/Convert.cpp" />
@@ -63,14 +61,32 @@
 		<Unit filename="../db/mongo/libmongoclient/QueryCursor.hpp" />
 		<Unit filename="../db/mongo/libmongoclient/Server.cpp" />
 		<Unit filename="../db/mongo/libmongoclient/Server.hpp" />
+		<Unit filename="../evaluation/CheckEvaluator.cpp" />
+		<Unit filename="../evaluation/CheckEvaluator.hpp" />
+		<Unit filename="../evaluation/CompoundEvaluator.cpp" />
+		<Unit filename="../evaluation/CompoundEvaluator.hpp" />
+		<Unit filename="../evaluation/Evaluator.hpp" />
+		<Unit filename="../evaluation/MaterialEvaluator.cpp" />
+		<Unit filename="../evaluation/MaterialEvaluator.hpp" />
+		<Unit filename="../evaluation/MobilityEvaluator.cpp" />
+		<Unit filename="../evaluation/MobilityEvaluator.hpp" />
+		<Unit filename="../evaluation/PromotionEvaluator.cpp" />
+		<Unit filename="../evaluation/PromotionEvaluator.hpp" />
 		<Unit filename="../rules/Moves.cpp" />
 		<Unit filename="../rules/Moves.hpp" />
 		<Unit filename="../rules/check.cpp" />
 		<Unit filename="../rules/check.hpp" />
-		<Unit filename="../ui/Console.cpp" />
-		<Unit filename="../ui/Console.hpp" />
+		<Unit filename="../search/Node.cpp" />
+		<Unit filename="../search/Node.hpp" />
+		<Unit filename="../search/Search.cpp" />
+		<Unit filename="../search/Search.hpp" />
+		<Unit filename="../util/GitInfos.cpp" />
+		<Unit filename="../util/GitInfos.hpp" />
+		<Unit filename="../util/Version.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
+		<Unit filename="Options.cpp" />
+		<Unit filename="Options.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<envvars />
