@@ -73,7 +73,6 @@ void showHelp()
             << "                     value is \"localhost\".\n"
             << "  --port N         - port number of the meteor-chess MongoDB server. The\n"
             << "                     default value is 3001.\n";
-
   #endif // NO_METEOR_CHESS
 }
 
