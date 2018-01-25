@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,7 +37,18 @@ class Moves
      * \param to     field where the move ends (destination)
      * \return Returns true, if the move is allowed. Returns false otherwise.
      */
-    static bool allowed(const Board& board, const Field from, const Field to);
+    static bool isAllowed(const Board& board, const Field from, const Field to);
+
+
+    /** \brief Checks whether a move of a piece follows its usual pattern.
+     *
+     * \param board  the chess board
+     * \param from   field where the move begins
+     * \param to     field where the move ends (destination)
+     * \return Returns true, if the move follows the allowed pattern for that
+     *         piece. Returns false otherwise.
+     */
+    static bool isAllowedPattern(const Board& board, const Field from, const Field to);
 
 
     /** \brief Sanitizes selected promotion piece type.

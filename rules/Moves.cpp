@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ bool isCastlingAttemptAllowed(const Board& board, const Field from, const Field 
   return false;
 }
 
-bool allowedPawnBlack(const Board& board, const Field from, const Field to)
+bool allowedPatternPawnBlack(const Board& board, const Field from, const Field to)
 {
   const int rowDiff = row(from) - row(to);
   const int colDiff = std::abs(column(from) - column(to));
@@ -116,7 +116,7 @@ bool allowedPawnBlack(const Board& board, const Field from, const Field to)
   return false;
 }
 
-bool allowedPawnWhite(const Board& board, const Field from, const Field to)
+bool allowedPatternPawnWhite(const Board& board, const Field from, const Field to)
 {
   const int rowDiff = row(to) - row(from);
   const int colDiff = std::abs(column(from) - column(to));
@@ -138,7 +138,7 @@ bool allowedPawnWhite(const Board& board, const Field from, const Field to)
   return false;
 }
 
-bool allowedRook(const Board& board, const Field from, const Field to)
+bool allowedPatternRook(const Board& board, const Field from, const Field to)
 {
   //Rook moves horizontally or vertically only, i.e. either column or row
   //must be identical.
@@ -151,7 +151,7 @@ bool allowedRook(const Board& board, const Field from, const Field to)
   return false;
 }
 
-bool allowedKnight(const Field from, const Field to)
+bool allowedPatternKnight(const Field from, const Field to)
 {
   // Knight moves in an L-shaped step: two fields on a horizontal or vertical
   // line and one field orthogonally from that move. That is: Row and column
@@ -162,7 +162,7 @@ bool allowedKnight(const Field from, const Field to)
     || ((rowDiff == 2) && (colDiff == 1)));
 }
 
-bool allowedBishop(const Board& board, const Field from, const Field to)
+bool allowedPatternBishop(const Board& board, const Field from, const Field to)
 {
   // Bishop moves diagonally, i.e. absolute difference between rows and columns
   // of start and end point must be equal and non-zero.
@@ -177,15 +177,15 @@ bool allowedBishop(const Board& board, const Field from, const Field to)
   return false;
 }
 
-bool allowedQueen(const Board& board, const Field from, const Field to)
+bool allowedPatternQueen(const Board& board, const Field from, const Field to)
 {
   // Queen can move like rook or like bishop.
-  if (allowedRook(board, from, to))
+  if (allowedPatternRook(board, from, to))
     return true;
-  return allowedBishop(board, from, to);
+  return allowedPatternBishop(board, from, to);
 }
 
-bool allowedKing(const Board& board, const Field from, const Field to)
+bool allowedPatternKing(const Board& board, const Field from, const Field to)
 {
   // King can move one field in any direction, i.e. the difference between
   // start and end point must not be more than one in any direction.
@@ -201,7 +201,22 @@ bool allowedKing(const Board& board, const Field from, const Field to)
     && (std::abs(column(from) - column(to)) <= 1));
 }
 
-bool Moves::allowed(const Board& board, const Field from, const Field to)
+bool Moves::isAllowed(const Board& board, const Field from, const Field to)
+{
+  const bool ok = isAllowedPattern(board, from, to);
+  // If the move itself is not legal so far, then return it.
+  if (!ok)
+    return false;
+  // Check whether player puts himself/herself into check after move.
+  Board b2(board);
+  if (!b2.move(from, to, PieceType::queen, false))
+    return false;
+  // Move is only allowed, if the original player did not move himself/herself
+  // into check.
+  return !b2.isInCheck(board.toMove());
+}
+
+bool Moves::isAllowedPattern(const Board& board, const Field from, const Field to)
 {
   // If start and destination are equal, it's not a valid move.
   if (from == to)
@@ -219,48 +234,31 @@ bool Moves::allowed(const Board& board, const Field from, const Field to)
   if (start.colour == destination.colour)
     return false;
 
-  bool ok = false;
   switch(start.piece)
   {
     case PieceType::pawn:
          if (start.colour == Colour::white)
-           ok = allowedPawnWhite(board, from, to);
+           return allowedPatternPawnWhite(board, from, to);
          //Must be a black pawn then.
          else
-           ok = allowedPawnBlack(board, from, to);
-         break;
+           return allowedPatternPawnBlack(board, from, to);
     case PieceType::rook:
-         ok = allowedRook(board, from, to);
-         break;
+         return allowedPatternRook(board, from, to);
     case PieceType::knight:
-         ok = allowedKnight(from, to);
-         break;
+         return allowedPatternKnight(from, to);
     case PieceType::bishop:
-         ok = allowedBishop(board, from, to);
-         break;
+         return allowedPatternBishop(board, from, to);
     case PieceType::queen:
-         ok = allowedQueen(board, from, to);
-         break;
+         return allowedPatternQueen(board, from, to);
     case PieceType::king:
-         ok = allowedKing(board, from, to);
-         break;
+         return allowedPatternKing(board, from, to);
     case PieceType::none:
          // This will never happen.
          return false;
     default:
          // Will never happen either, unless someone adds new pieces.
          throw std::range_error("Piece type is out of range!");
-  } //switch
-  // If the move itself is not legal so far, then return it.
-  if (!ok)
-    return false;
-  // Check whether player puts himself/herself into check after move.
-  Board b2(board);
-  if (!b2.move(from, to, PieceType::queen, false))
-    return false;
-  // Move is only allowed, if the original player did not move himself/herself
-  // into check.
-  return !b2.isInCheck(board.toMove());
+  } // switch
 }
 
 void Moves::sanitizePromotion(PieceType& promoteTo)
@@ -276,7 +274,7 @@ void Moves::sanitizePromotion(PieceType& promoteTo)
          //Some other piece - change to queen.
          promoteTo = PieceType::queen;
          break;
-  } //switch
+  } // switch
 }
 
 bool Moves::isPromotion(const Board& board, const Field from, const Field to)
@@ -294,4 +292,4 @@ bool Moves::performMove(Board& board, const Field from, const Field to, PieceTyp
   return board.move(from, to, promoteTo);
 }
 
-} //namespace
+} // namespace
