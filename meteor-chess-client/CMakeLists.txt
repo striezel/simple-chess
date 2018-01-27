@@ -47,6 +47,30 @@ else ()
   message ( FATAL_ERROR "libmongo-client was not found!" )
 endif (LibMongoClient_FOUND)
 
+# create git-related constants
+# -- get the current commit hash
+execute_process(
+  COMMAND git rev-parse HEAD
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+# -- get the commit date
+execute_process(
+  COMMAND git show -s --format=%ci
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_TIME
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+message("GIT_HASH is ${GIT_HASH}.")
+message("GIT_TIME is ${GIT_TIME}.")
+
+# replace git-related constants in GitInfos.cpp
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../util/GitInfos.template.cpp
+               ${CMAKE_CURRENT_SOURCE_DIR}/../util/GitInfos.cpp
+               ESCAPE_QUOTES)
+
 
 ### tests for meteor-chess-client ###
 
