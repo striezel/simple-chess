@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -122,4 +122,45 @@ TEST_CASE("Search: default start position with depth == 2")
   REQUIRE( std::get<0>(bestMove) != Field::none );
   REQUIRE( std::get<1>(bestMove) != Field::none );
   REQUIRE( std::get<2>(bestMove) != PieceType::none );
+}
+
+TEST_CASE("Search tree results must not put player in check")
+{
+  // This is a regression test for a scenario that occurred when the cli was
+  // started with the position given below and black to move. Instead of moving
+  // the black king out of check, the engine moved a pawn from c2 to c1. Of
+  // course, this is against the rules, because black was still in check then.
+  using namespace simplechess;
+  Board board;
+
+  // Position where black is in check, because white queen attacks black king.
+  REQUIRE(board.fromFEN("rnb2bnN/ppp1k1pp/8/3BQ3/4P3/8/PPp2PPP/RN2K2R b"));
+  // White player is not in check.
+  REQUIRE_FALSE( isInCheck(board, Colour::white) );
+  REQUIRE_FALSE( board.isInCheck(Colour::white) );
+  // Black player is in check.
+  REQUIRE( isInCheck(board, Colour::black) );
+  REQUIRE( board.isInCheck(Colour::black) );
+
+  CompoundEvaluator evaluator;
+  evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
+  evaluator.add(std::unique_ptr<Evaluator>(new MobilityEvaluator()));
+  simplechess::Search s(board);
+  REQUIRE( s.depth() == 0 );
+  s.search(evaluator, 1);
+  REQUIRE( s.depth() == 1 );
+  const Node& searchNode = s.rootNode();
+  bool found = false;
+  // In each child position, black must not be in check anymore.
+  for(const auto& child : searchNode.children)
+  {
+    // Must not be in check.
+    REQUIRE_FALSE( child->board.isInCheck(Colour::black) );
+    // Find move c2-c1 in list.
+    if ((child->origin == Field::c2) && (child->destination == Field::c1))
+      found = true;
+  } // for
+
+  // Move c2-c1 must not be in list.
+  REQUIRE_FALSE( found );
 }
