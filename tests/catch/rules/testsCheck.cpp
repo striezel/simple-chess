@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 
 #include <catch.hpp>
 #include "../../../rules/check.hpp"
+#include "../../../rules/Moves.hpp"
 
 TEST_CASE("isUnderAttack() test")
 {
@@ -251,6 +252,33 @@ TEST_CASE("isInCheck() test")
     REQUIRE( isInCheck(board, Colour::black) );
   }
 }
+
+TEST_CASE("isInCheck(): test scenario with black in check")
+{
+  // This is a regression test for a scenario that occurred when the cli was
+  // started with the position given below and black to move. Instead of moving
+  // the black king out of check, the engine moved a pawn from c2 to c1.
+  using namespace simplechess;
+  Board board;
+
+  // Position where black is in check, because white queen attacks black king.
+  REQUIRE(board.fromFEN("rnb2bnN/ppp1k1pp/8/3BQ3/4P3/8/PPp2PPP/RN2K2R b"));
+  // White player is not in check.
+  REQUIRE_FALSE( isInCheck(board, Colour::white) );
+  REQUIRE_FALSE( board.isInCheck(Colour::white) );
+  // Black player is in check.
+  REQUIRE( isInCheck(board, Colour::black) );
+  REQUIRE( board.isInCheck(Colour::black) );
+  // Move from c2 to c1 is not allowed, because king is still in check.
+  REQUIRE_FALSE( Moves::isAllowed(board, Field::c2, Field::c1)  );
+  REQUIRE_FALSE( board.move(Field::c2, Field::c1, PieceType::queen) );
+
+  // White player is not in check.
+  board.setToMove(Colour::white);
+  REQUIRE_FALSE( isInCheck(board, Colour::white) );
+  REQUIRE( isInCheck(board, Colour::black) );
+}
+
 
 TEST_CASE("isCheckMate() test")
 {

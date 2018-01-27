@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -199,7 +199,7 @@ void Search::expandNode(Node& node, const Evaluator& eval, const unsigned int de
     {
       const Field from = static_cast<Field>(i);
       const Field to = static_cast<Field>(j);
-      if (Moves::allowed(node.board, from, to))
+      if (Moves::isAllowed(node.board, from, to))
       {
         // Default: Not a pawn promotion.
         if (!Moves::isPromotion(node.board, from, to))

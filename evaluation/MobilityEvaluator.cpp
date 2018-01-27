@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,16 +43,16 @@ int MobilityEvaluator::score(const Board& board) const
 
     for (int j = static_cast<int>(Field::a1); j <= static_cast<int>(Field::h8); ++j)
     {
-      if (Moves::allowed(moveBoard, static_cast<Field>(i), static_cast<Field>(j)))
+      if (Moves::isAllowed(moveBoard, static_cast<Field>(i), static_cast<Field>(j)))
       {
         if (elem.colour == Colour::white)
           result += centipawnsPerMove;
         else
           result -= centipawnsPerMove;
-      } //if move is allowed
-    } //for j
-  } //for i
+      } // if move is allowed
+    } // for j
+  } // for i
   return result;
 }
 
-} //namespace
+} // namespace

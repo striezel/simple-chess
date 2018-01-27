@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,13 +30,13 @@ namespace algorithm
 
 bool applyMove(Board& board, const HalfMove& hMove, const Colour toMove)
 {
-  //Empty move is a no-op.
+  // Empty move is a no-op.
   if (hMove.empty())
     return true;
-  //Player that is to move on board must be identical to half move player.
+  // Player that is to move on board must be identical to half move player.
   if (board.toMove() != toMove)
     return false;
-  //treat kingside castling
+  // treat kingside castling
   if (hMove.kingsideCastling())
   {
     switch (toMove)
@@ -49,9 +49,9 @@ bool applyMove(Board& board, const HalfMove& hMove, const Colour toMove)
                && board.move(Field::e8, Field::g8, PieceType::queen));
       case Colour::none:
            return false;
-    } //switch
-  } //if kingside castling
-  //treat queenside castling
+    } // switch
+  } // if kingside castling
+  // treat queenside castling
   if (hMove.queensideCastling())
   {
     switch (toMove)
@@ -64,12 +64,12 @@ bool applyMove(Board& board, const HalfMove& hMove, const Colour toMove)
                && board.move(Field::e8, Field::c8, PieceType::queen));
       case Colour::none:
            return false;
-    } //switch
-  } //if queenside castling
+    } // switch
+  } // if queenside castling
 
   if (hMove.destination() == Field::none)
     return false;
-  //find start field on board
+  // find start field on board
   Field from = hMove.origin();
   if (hMove.originType() != pgn::OriginType::full)
   {
@@ -77,10 +77,10 @@ bool applyMove(Board& board, const HalfMove& hMove, const Colour toMove)
     if (from == Field::none)
       return false;
   }
-  //check whether piece on start field matches the piece in half move
+  // check whether piece on start field matches the piece in half move
   if (Piece(toMove, hMove.piece()) != board.element(from))
     return false;
-  //finally apply the move
+  // finally apply the move
   // -- TODO: get proper promotion piece!
   return board.move(from, hMove.destination(), PieceType::queen);
 }
@@ -95,8 +95,8 @@ Field findOriginField(const Board& board, const HalfMove& hMove)
   for (int i = possibleOrigins.size() - 1; i >= 0; --i)
   {
     bool allowed = false;
-    //If move is allowed, then it is a potential matching origin.
-    if (Moves::allowed(board, possibleOrigins[i], hMove.destination()))
+    // If move is allowed, then it is a potential matching origin.
+    if (Moves::isAllowed(board, possibleOrigins[i], hMove.destination()))
     {
       const auto ot = hMove.originType();
       // It is only a proper origin, if either files match for a file-only
@@ -106,14 +106,14 @@ Field findOriginField(const Board& board, const HalfMove& hMove)
         || ((ot == pgn::OriginType::file) && sameFile(possibleOrigins[i], hMove.origin()))
         || ((ot == pgn::OriginType::rank) && sameRank(possibleOrigins[i], hMove.origin())))
         allowed = true;
-    } //if move is allowed
-    //Remove field, if it is not allowed to move from there to destination.
+    } // if move is allowed
+    // Remove field, if it is not allowed to move from there to destination.
     if (!allowed)
       possibleOrigins.erase(possibleOrigins.begin() + i);
   } //for
   if (possibleOrigins.size() == 1)
     return possibleOrigins.front();
-  //There are either no matching fields or two or more matching fields. In both
+  // There are either no matching fields or two or more matching fields. In both
   // cases that indicates that the half move is invalid.
   return Field::none;
 }
@@ -125,17 +125,17 @@ std::vector<Field> findPieces(const Board& board, const Piece& piece)
   while (f != Field::none)
   {
     result.push_back(f);
-    //If we already are at the last field, return.
+    // If we already are at the last field, return.
     if (Field::h8 == f)
       return result;
     f = board.findNext(piece, static_cast<Field>(static_cast<int>(f) + 1));
-  } //while
+  } // while
   return result;
 }
 
 bool checkPortableGameNotation(const PortableGameNotation& pgn)
 {
-  //check move number range
+  // check move number range
   const auto min = pgn.firstMoveNumber();
   if (min == 0)
     return false;
@@ -146,7 +146,7 @@ bool checkPortableGameNotation(const PortableGameNotation& pgn)
   {
     if (!pgn.hasMove(i))
       return false;
-  } //for
+  } // for
   std::string fen = pgn.tag("FEN");
   if (fen.empty())
     fen = FEN::defaultInitialPosition;
@@ -160,11 +160,11 @@ bool checkPortableGameNotation(const PortableGameNotation& pgn)
       return false;
     if (!simplechess::algorithm::applyMove(board, moves.second, simplechess::Colour::black))
       return false;
-  } //for
-  //All seems to be OK.
+  } // for
+  // All seems to be OK.
   return true;
 }
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace

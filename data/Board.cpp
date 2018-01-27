@@ -282,7 +282,7 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
   // Check whether the move is allowed.
   const bool allow = onlyAllowed ?
       // If only allowed moves shall be performed, do the full check.
-      Moves::allowed(*this, from, to)
+      Moves::isAllowed(*this, from, to)
       // Otherwise just do whatever the move is.
       : true;
   if (!allow)
