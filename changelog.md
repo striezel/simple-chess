@@ -2,6 +2,10 @@
 
 _Note: This changelog may be incomplete._
 
+## Version 0.3.1 (2018-01-27)
+- improve method to determine whether a move is legal, avoiding some false
+  positives
+
 ## Version 0.3.0 (2018-01-20)
 - meteor-chess-client: initial version of engine client for interaction with
   meteor-chess
