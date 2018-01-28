@@ -22,7 +22,7 @@
 #include <catch.hpp>
 #include "../../../evaluation/CompoundEvaluator.hpp"
 #include "../../../evaluation/MaterialEvaluator.hpp"
-#include "../../../evaluation/MobilityEvaluator.hpp"
+#include "../../../evaluation/LinearMobilityEvaluator.hpp"
 #include "../../../rules/check.hpp"
 #include "../../../search/Search.hpp"
 
@@ -34,7 +34,7 @@ TEST_CASE("Search: default start position with depth == 1")
 
   CompoundEvaluator evaluator;
   evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
-  evaluator.add(std::unique_ptr<Evaluator>(new MobilityEvaluator()));
+  evaluator.add(std::unique_ptr<Evaluator>(new LinearMobilityEvaluator()));
   simplechess::Search s(board);
   REQUIRE( s.depth() == 0 );
   s.search(evaluator, 1);
@@ -80,7 +80,7 @@ TEST_CASE("Search: default start position with depth == 2")
 
   CompoundEvaluator evaluator;
   evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
-  evaluator.add(std::unique_ptr<Evaluator>(new MobilityEvaluator()));
+  evaluator.add(std::unique_ptr<Evaluator>(new LinearMobilityEvaluator()));
   simplechess::Search s(board);
   REQUIRE( s.depth() == 0 );
   s.search(evaluator, 2);
@@ -144,7 +144,7 @@ TEST_CASE("Search tree results must not put player in check")
 
   CompoundEvaluator evaluator;
   evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
-  evaluator.add(std::unique_ptr<Evaluator>(new MobilityEvaluator()));
+  evaluator.add(std::unique_ptr<Evaluator>(new LinearMobilityEvaluator()));
   simplechess::Search s(board);
   REQUIRE( s.depth() == 0 );
   s.search(evaluator, 1);

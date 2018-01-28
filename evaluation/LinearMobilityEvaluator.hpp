@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_MOBILITYEVALUATOR_HPP
-#define SIMPLECHESS_MOBILITYEVALUATOR_HPP
+#ifndef SIMPLECHESS_LINEARMOBILITYEVALUATOR_HPP
+#define SIMPLECHESS_LINEARMOBILITYEVALUATOR_HPP
 
 #include "Evaluator.hpp"
 
@@ -28,7 +28,7 @@ namespace simplechess
 
 /** Evaluator that considers the possible moves of the pieces on the board.
  */
-class MobilityEvaluator: public Evaluator
+class LinearMobilityEvaluator: public Evaluator
 {
   public:
     /** \brief Evaluates the current situation on the board.
@@ -44,8 +44,8 @@ class MobilityEvaluator: public Evaluator
     /** \brief Number of centipawns that are added per legal move.
      */
     const static int centipawnsPerMove;
-}; //class
+}; // class
 
-} //namespace
+} // namespace
 
-#endif // SIMPLECHESS_MOBILITYEVALUATOR_HPP
+#endif // SIMPLECHESS_LINEARMOBILITYEVALUATOR_HPP

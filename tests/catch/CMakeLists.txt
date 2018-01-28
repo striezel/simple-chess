@@ -1,4 +1,4 @@
-# We might support earlier versions, too, but it's only tested with 2.8.9.
+# We might support earlier versions, too, but that has not been tested yet.
 cmake_minimum_required (VERSION 2.8)
 
 project(simple_chess_tests_catch)
@@ -14,9 +14,10 @@ set(simple_chess_tests_catch_sources
     ../../data/Result.cpp
     ../../evaluation/CheckEvaluator.cpp
     ../../evaluation/CompoundEvaluator.cpp
+    ../../evaluation/LinearMobilityEvaluator.cpp
     ../../evaluation/MaterialEvaluator.cpp
-    ../../evaluation/MobilityEvaluator.cpp
     ../../evaluation/PromotionEvaluator.cpp
+    ../../evaluation/RootMobilityEvaluator.cpp
     ../../pgn/Parser.cpp
     ../../pgn/ParserException.cpp
     ../../pgn/Token.cpp
@@ -36,9 +37,10 @@ set(simple_chess_tests_catch_sources
     evaluation/ConstantEvaluator.cpp
     evaluation/testsCheckEvaluator.cpp
     evaluation/testsCompoundEvaluator.cpp
+    evaluation/testsLinearMobilityEvaluator.cpp
     evaluation/testsMaterialEvaluator.cpp
-    evaluation/testsMobilityEvaluator.cpp
     evaluation/testsPromotionEvaluator.cpp
+    evaluation/testsRootMobilityEvaluator.cpp
     rules/testsCheck.cpp
     rules/testsMoves.cpp
     search/testsSearch.cpp

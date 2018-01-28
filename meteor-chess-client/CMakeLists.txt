@@ -16,8 +16,8 @@ set(meteor-chess-client_sources
     ../db/mongo/libmongoclient/Server.cpp
     ../evaluation/CheckEvaluator.cpp
     ../evaluation/CompoundEvaluator.cpp
+    ../evaluation/LinearMobilityEvaluator.cpp
     ../evaluation/MaterialEvaluator.cpp
-    ../evaluation/MobilityEvaluator.cpp
     ../evaluation/PromotionEvaluator.cpp
     ../rules/check.cpp
     ../rules/Moves.cpp

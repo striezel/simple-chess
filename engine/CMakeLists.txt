@@ -15,8 +15,8 @@ set(simple_chess_engine_sources
     ../data/Result.cpp
     ../evaluation/CheckEvaluator.cpp
     ../evaluation/CompoundEvaluator.cpp
+    ../evaluation/LinearMobilityEvaluator.cpp
     ../evaluation/MaterialEvaluator.cpp
-    ../evaluation/MobilityEvaluator.cpp
     ../evaluation/PromotionEvaluator.cpp
     ../rules/Moves.cpp
     ../rules/check.cpp

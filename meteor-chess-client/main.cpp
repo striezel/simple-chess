@@ -23,7 +23,7 @@
 #include "../evaluation/CheckEvaluator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
 #include "../evaluation/MaterialEvaluator.hpp"
-#include "../evaluation/MobilityEvaluator.hpp"
+#include "../evaluation/LinearMobilityEvaluator.hpp"
 #include "../evaluation/PromotionEvaluator.hpp"
 #include "../search/Search.hpp"
 #include "../util/GitInfos.hpp"
@@ -103,7 +103,7 @@ int main(int argc, char** argv)
     simplechess::CompoundEvaluator evaluator;
     // Add the four evaluators we have so far.
     evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MaterialEvaluator()));
-    evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MobilityEvaluator()));
+    evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::LinearMobilityEvaluator()));
     evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::PromotionEvaluator()));
     evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::CheckEvaluator()));
     // Search for best move, only two plies.

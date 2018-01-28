@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,37 +20,38 @@
 
 
 #include <catch.hpp>
-#include "../../../evaluation/MobilityEvaluator.hpp"
+#include "../../../evaluation/RootMobilityEvaluator.hpp"
+#include "../../../evaluation/LinearMobilityEvaluator.hpp"
 
-TEST_CASE("MobilityEvaluator evaluates default start position")
+TEST_CASE("RootMobilityEvaluator evaluates default start position")
 {
   using namespace simplechess;
   Board board;
   REQUIRE(board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"));
 
-  MobilityEvaluator evaluator;
-  // Evaluation should be zero - both sides have the same material.
+  RootMobilityEvaluator evaluator;
+  // Evaluation should be zero - both sides have the same move possibilities.
   REQUIRE( evaluator.score(board) == 0 );
 }
 
-TEST_CASE("MobilityEvaluator: kings only")
+TEST_CASE("RootMobilityEvaluator: kings only")
 {
   using namespace simplechess;
   Board board;
   REQUIRE(board.fromFEN("4k3/8/8/8/8/8/8/4K3"));
 
   // Scores should be equal - both boards have the same number of moves.
-  MobilityEvaluator evaluator;
+  RootMobilityEvaluator evaluator;
   REQUIRE( evaluator.score(board) == 0 );
 }
 
-TEST_CASE("MobilityEvaluator: one missing rook for white")
+TEST_CASE("RootMobilityEvaluator: few black pieces only")
 {
   using namespace simplechess;
   Board boardOne;
   REQUIRE(boardOne.fromFEN("rn6/pp6/8/8/8/8/8/8"));
 
-  MobilityEvaluator evaluator;
+  RootMobilityEvaluator evaluator;
   // Evaluation should be less than zero - black has more moves.
   const int scoreOne = evaluator.score(boardOne);
   REQUIRE( scoreOne < 0 );
@@ -64,42 +65,61 @@ TEST_CASE("MobilityEvaluator: one missing rook for white")
 
   // Second score should be even less, because black has now even more moves.
   REQUIRE( scoreTwo < scoreOne );
-
-  REQUIRE( (scoreTwo + 5 * MobilityEvaluator::centipawnsPerMove) == scoreOne );
 }
 
-TEST_CASE("MobilityEvaluator: one king only, white edition")
+TEST_CASE("RootMobilityEvaluator: one king only, white edition")
 {
   using namespace simplechess;
   Board board;
   REQUIRE(board.fromFEN("8/8/8/8/8/8/8/4K3"));
 
-  MobilityEvaluator evaluator;
+  RootMobilityEvaluator evaluator;
   // Evaluation should be greater than zero, because black has no moves.
   REQUIRE(
       evaluator.score(board) > 0
   );
 
   // Five moves in total, score should reflect that.
+  //  Note: Square root of five is ca. 2.236.
   REQUIRE(
-      evaluator.score(board) == 5 * MobilityEvaluator::centipawnsPerMove
+      evaluator.score(board) == static_cast<int>(2.236 * RootMobilityEvaluator::centipawnsPerMove)
   );
 }
 
-TEST_CASE("MaterialEvaluator: one king only, black edition")
+TEST_CASE("RootMobilityEvaluator: one king only, black edition")
 {
   using namespace simplechess;
   Board board;
   REQUIRE(board.fromFEN("4k3/8/8/8/8/8/8/8"));
 
-  MobilityEvaluator evaluator;
+  RootMobilityEvaluator evaluator;
   // Evaluation should be less than zero, because white has no moves.
   REQUIRE(
       evaluator.score(board) < 0
   );
 
   // Five moves in total, score should reflect that.
+  //  Note: Square root of five is ca. 2.236.
   REQUIRE(
-      evaluator.score(board) == -5 * MobilityEvaluator::centipawnsPerMove
+      evaluator.score(board) == static_cast<int>(-2.236 * RootMobilityEvaluator::centipawnsPerMove)
   );
+}
+
+TEST_CASE("RootMobilityEvaluator vs. LinearMobilityEvaluator")
+{
+  using namespace simplechess;
+  Board board;
+  REQUIRE( board.fromFEN("8/8/8/8/8/8/RN6/1P6") );
+
+  RootMobilityEvaluator rootEvaluator;
+  LinearMobilityEvaluator linearEvaluator;
+  // Evaluation should be greater than zero - white has more moves.
+  const int scoreRoot = rootEvaluator.score(board);
+  REQUIRE( scoreRoot > 0 );
+  const int scoreLinear = linearEvaluator.score(board);
+  REQUIRE( scoreLinear > 0 );
+
+  // Score of root mobility evaluator should be less than the score of the
+  // linear mobility evaluator, because root increases slower than identity.
+  REQUIRE( scoreRoot < scoreLinear );
 }

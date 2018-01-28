@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #include <catch.hpp>
 #include "../../../evaluation/CompoundEvaluator.hpp"
 #include "../../../evaluation/MaterialEvaluator.hpp"
-#include "../../../evaluation/MobilityEvaluator.hpp"
+#include "../../../evaluation/LinearMobilityEvaluator.hpp"
 #include "../../../evaluation/PromotionEvaluator.hpp"
 #include "ConstantEvaluator.hpp"
 
@@ -63,7 +63,7 @@ TEST_CASE("CompoundEvaluator evaluates default start position")
   CompoundEvaluator evaluator;
   // Add the three evaluators we have so far.
   evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
-  evaluator.add(std::unique_ptr<Evaluator>(new MobilityEvaluator()));
+  evaluator.add(std::unique_ptr<Evaluator>(new LinearMobilityEvaluator()));
   evaluator.add(std::unique_ptr<Evaluator>(new PromotionEvaluator()));
 
   // Evaluation should be zero - both sides have the same chances.

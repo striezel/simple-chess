@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,8 +22,8 @@
 #include "../data/Board.hpp"
 #include "../evaluation/CheckEvaluator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
+#include "../evaluation/LinearMobilityEvaluator.hpp"
 #include "../evaluation/MaterialEvaluator.hpp"
-#include "../evaluation/MobilityEvaluator.hpp"
 #include "../evaluation/PromotionEvaluator.hpp"
 #include "../search/Search.hpp"
 #include "../ui/Console.hpp"
@@ -169,7 +169,7 @@ int main(int argc, char** argv)
       simplechess::CompoundEvaluator evaluator;
       // Add the four evaluators we have so far.
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MaterialEvaluator()));
-      evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MobilityEvaluator()));
+      evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::LinearMobilityEvaluator()));
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::PromotionEvaluator()));
       evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::CheckEvaluator()));
       // Search for best move, only two plies.

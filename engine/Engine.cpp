@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include "../evaluation/CheckEvaluator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
 #include "../evaluation/MaterialEvaluator.hpp"
-#include "../evaluation/MobilityEvaluator.hpp"
+#include "../evaluation/LinearMobilityEvaluator.hpp"
 #include "../evaluation/PromotionEvaluator.hpp"
 #include "../search/Search.hpp"
 
@@ -148,7 +148,7 @@ void Engine::move()
   CompoundEvaluator evaluator;
   // Add the four evaluators we have so far.
   evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
-  evaluator.add(std::unique_ptr<Evaluator>(new MobilityEvaluator()));
+  evaluator.add(std::unique_ptr<Evaluator>(new LinearMobilityEvaluator()));
   evaluator.add(std::unique_ptr<Evaluator>(new PromotionEvaluator()));
   evaluator.add(std::unique_ptr<Evaluator>(new CheckEvaluator()));
   // Search for best move with defined search depth.

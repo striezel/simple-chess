@@ -18,19 +18,20 @@
  -------------------------------------------------------------------------------
 */
 
-#include "MobilityEvaluator.hpp"
+#include "RootMobilityEvaluator.hpp"
+#include <cmath>
 #include "../rules/Moves.hpp"
 
 namespace simplechess
 {
 
 // score ten centipawns per move
-const int MobilityEvaluator::centipawnsPerMove = 10;
+const int RootMobilityEvaluator::centipawnsPerMove = 10;
 
-int MobilityEvaluator::score(const Board& board) const
+int RootMobilityEvaluator::score(const Board& board) const
 {
   Board moveBoard(board);
-  int result = 0;
+  int moves = 0;
   for (int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
     const Piece elem = board.element(static_cast<Field>(i));
@@ -45,14 +46,20 @@ int MobilityEvaluator::score(const Board& board) const
     {
       if (Moves::isAllowed(moveBoard, static_cast<Field>(i), static_cast<Field>(j)))
       {
+        // Count moves for white as positive moves, and moves for black as
+        // negative moves.
         if (elem.colour == Colour::white)
-          result += centipawnsPerMove;
+          ++moves;
         else
-          result -= centipawnsPerMove;
+          --moves;
       } // if move is allowed
     } // for j
   } // for i
-  return result;
+  if (moves >= 0)
+    return static_cast<int>(centipawnsPerMove * std::sqrt(moves));
+  else
+    // Square root of negative number is not defined within real numbers.
+    return - static_cast<int>(centipawnsPerMove * std::sqrt(std::abs(moves)));
 }
 
 } // namespace

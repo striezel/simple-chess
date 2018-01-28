@@ -66,10 +66,10 @@
 		<Unit filename="../evaluation/CompoundEvaluator.cpp" />
 		<Unit filename="../evaluation/CompoundEvaluator.hpp" />
 		<Unit filename="../evaluation/Evaluator.hpp" />
+		<Unit filename="../evaluation/LinearMobilityEvaluator.cpp" />
+		<Unit filename="../evaluation/LinearMobilityEvaluator.hpp" />
 		<Unit filename="../evaluation/MaterialEvaluator.cpp" />
 		<Unit filename="../evaluation/MaterialEvaluator.hpp" />
-		<Unit filename="../evaluation/MobilityEvaluator.cpp" />
-		<Unit filename="../evaluation/MobilityEvaluator.hpp" />
 		<Unit filename="../evaluation/PromotionEvaluator.cpp" />
 		<Unit filename="../evaluation/PromotionEvaluator.hpp" />
 		<Unit filename="../rules/Moves.cpp" />
