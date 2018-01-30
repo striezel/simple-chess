@@ -31,7 +31,8 @@ MeteorChessOptions::MeteorChessOptions()
   port(0),
   help(false),
   version(false),
-  json(false)
+  json(false),
+  move(false)
 {
 }
 
@@ -131,6 +132,16 @@ bool MeteorChessOptions::parse(const int argc, char** argv)
       }
       json = true;
     } // if JSON
+    // perform move, too?
+    else if ((param == "--move") || (param == "--perform"))
+    {
+      if (move)
+      {
+        std::cout << "Error: The parameter " << param << " cannot be specified more than once!\n";
+        return false;
+      }
+      move = true;
+    } // if perform move
     else
     {
       std::cout << "Error: Invalid parameter \"" << param << "\"!\n";

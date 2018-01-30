@@ -74,7 +74,9 @@ void showHelp()
             << "                     value is \"localhost\".\n"
             << "  --port N         - port number of the meteor-chess MongoDB server. The\n"
             << "                     default value is 3001.\n"
-            << "  --json           - print output in JSON format\n";
+            << "  --json           - print output in JSON format\n"
+            << "  --move           - perform move on board and write it back to MongoDB. The\n"
+            << "                     default is not to move, but just to print the move.\n";
 }
 
 int main(int argc, char** argv)
@@ -154,29 +156,32 @@ int main(int argc, char** argv)
       std::cout << "Computer moves from " << simplechess::column(from) << simplechess::row(from)
                 << " to " << simplechess::column(to) << simplechess::row(to) << ".\n";
     }
-    if (!board.move(from, to, promo))
+    if (options.move)
     {
-      if (options.json)
+      if (!board.move(from, to, promo))
       {
-        Json::Value val;
-        val["resign"] = true;
-        val["message"] = std::string("The computer move is not allowed! User wins.");
-        val["exitcode"] = rcEngineResigns;
-        Json::StyledStreamWriter writer;
-        writer.write(std::cout, val);
-        std::cout << std::endl;
-      }
-      else
+        if (options.json)
+        {
+          Json::Value val;
+          val["resign"] = true;
+          val["message"] = std::string("The computer move is not allowed! User wins.");
+          val["exitcode"] = rcEngineResigns;
+          Json::StyledStreamWriter writer;
+          writer.write(std::cout, val);
+          std::cout << std::endl;
+        }
+        else
+        {
+          std::cout << "The computer move is not allowed! User wins.\n";
+        }
+        return rcEngineResigns;
+      } // if move not possible
+      if (!server.updateBoard(options.boardId, board))
       {
-        std::cout << "The computer move is not allowed! User wins.\n";
+        std::cout << "Could not update board in MongoDB!\n";
+        return rcMongoDbError;
       }
-      return rcEngineResigns;
-    } // if move not possible
-    if (!server.updateBoard(options.boardId, board))
-    {
-      std::cout << "Could not update board in MongoDB!\n";
-      return rcMongoDbError;
-    }
+    } // if move shall be performed
     // print move in JSON
     if (options.json)
     {
@@ -191,6 +196,8 @@ int main(int argc, char** argv)
       writer.write(std::cout, val);
       std::cout << std::endl;
     }
+    // All is fine.
+    return 0;
   } // try
   catch (const std::exception& ex)
   {
@@ -208,5 +215,4 @@ int main(int argc, char** argv)
     // Other error type.
     return rcUnknown;
   } // try-catch
-  return 0;
 }

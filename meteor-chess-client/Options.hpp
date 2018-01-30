@@ -36,6 +36,7 @@ struct MeteorChessOptions
   bool help; /**< whether the program help was requested */
   bool version; /**< whether the version information was requested */
   bool json; /**< whether to produce JSON output */
+  bool move; /**< whether to perform the move on board and write it to MongoDB */
 
   /** default constructor */
   MeteorChessOptions();

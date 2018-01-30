@@ -2,6 +2,10 @@
 
 _Note: This changelog may be incomplete._
 
+## Version 0.3.3 (2018-01-31)
+- meteor-chess-client: only write move back to MongoDB when told so explicitly
+  via command line option --move
+
 ## Version 0.3.2 (2018-01-30)
 - meteor-chess-client: add possibility to enable JSON output via --json option
 
