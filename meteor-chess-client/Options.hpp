@@ -35,6 +35,7 @@ struct MeteorChessOptions
   uint16_t port; /**< port of the MongoDB server for meteor-chess */
   bool help; /**< whether the program help was requested */
   bool version; /**< whether the version information was requested */
+  bool json; /**< whether to produce JSON output */
 
   /** default constructor */
   MeteorChessOptions();

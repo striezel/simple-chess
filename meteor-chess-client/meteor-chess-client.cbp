@@ -39,6 +39,7 @@
 		</Compiler>
 		<Linker>
 			<Add library="mongo-client" />
+			<Add library="jsoncpp" />
 		</Linker>
 		<Unit filename="../data/Board.cpp" />
 		<Unit filename="../data/Board.hpp" />

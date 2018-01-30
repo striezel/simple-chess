@@ -19,6 +19,7 @@
 */
 
 #include <iostream>
+#include <jsoncpp/json/writer.h>
 #include "../db/mongo/libmongoclient/Server.hpp"
 #include "../evaluation/CheckEvaluator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
@@ -35,13 +36,29 @@ const int rcEngineResigns = 2;
 const int rcMongoDbError = 7;
 const int rcUnknown = 8;
 
-void showVersion()
+void showVersion(const bool json = false)
 {
   simplechess::GitInfos info;
-  std::cout << "meteor-chess-client, " << simplechess::version << "\n"
-            << "\n"
-            << "Version control commit: " << info.commit() << "\n"
-            << "Version control date:   " << info.date() << std::endl;
+  if (!json)
+  {
+    std::cout << "meteor-chess-client, " << simplechess::version << "\n"
+              << "\n"
+              << "Version control commit: " << info.commit() << "\n"
+              << "Version control date:   " << info.date() << std::endl;
+  }
+  else
+  {
+    Json::Value val;
+    val["version"]["major"] = Json::Value(simplechess::versionMajor);
+    val["version"]["minor"] = Json::Value(simplechess::versionMinor);
+    val["version"]["patch"] = Json::Value(simplechess::versionPatch);
+    val["version"]["fullText"] = Json::Value(simplechess::version);
+    val["commit"] = info.commit();
+    val["date"] = info.date();
+    Json::StyledStreamWriter writer;
+    writer.write(std::cout, val);
+    std::cout << std::endl;
+  }
 }
 
 void showHelp()
@@ -56,7 +73,8 @@ void showHelp()
             << "  --host hostname  - host name of the meteor-chess MongoDB server. The default\n"
             << "                     value is \"localhost\".\n"
             << "  --port N         - port number of the meteor-chess MongoDB server. The\n"
-            << "                     default value is 3001.\n";
+            << "                     default value is 3001.\n"
+            << "  --json           - print output in JSON format\n";
 }
 
 int main(int argc, char** argv)
@@ -77,7 +95,7 @@ int main(int argc, char** argv)
   // Version information requested?
   if (options.version)
   {
-    showVersion();
+    showVersion(options.json);
     return 0;
   }
   // Is there a board id?
@@ -111,24 +129,67 @@ int main(int argc, char** argv)
     // Did the search find any moves?
     if (!s.hasMove())
     {
-      std::cout << "simplechess AI could not find a valid move. User wins!\n";
+      if (options.json)
+      {
+        Json::Value val;
+        val["resign"] = true;
+        val["message"] = std::string("simplechess AI could not find a valid move. User wins!");
+        val["exitcode"] = rcEngineResigns;
+        Json::StyledStreamWriter writer;
+        writer.write(std::cout, val);
+        std::cout << std::endl;
+      }
+      else
+      {
+        std::cout << "simplechess AI could not find a valid move. User wins!\n";
+      }
       return rcEngineResigns;
-    }
+    } // if there is no move left
     const auto bestMove = s.bestMove();
     const simplechess::Field from = std::get<0>(bestMove);
     const simplechess::Field to = std::get<1>(bestMove);
     const simplechess::PieceType promo = std::get<2>(bestMove);
-    std::cout << "Computer moves from " << simplechess::column(from) << simplechess::row(from)
-              << " to " << simplechess::column(to) << simplechess::row(to) << ".\n";
+    if (!options.json)
+    {
+      std::cout << "Computer moves from " << simplechess::column(from) << simplechess::row(from)
+                << " to " << simplechess::column(to) << simplechess::row(to) << ".\n";
+    }
     if (!board.move(from, to, promo))
     {
-      std::cout << "The computer move is not allowed! User wins.\n";
+      if (options.json)
+      {
+        Json::Value val;
+        val["resign"] = true;
+        val["message"] = std::string("The computer move is not allowed! User wins.");
+        val["exitcode"] = rcEngineResigns;
+        Json::StyledStreamWriter writer;
+        writer.write(std::cout, val);
+        std::cout << std::endl;
+      }
+      else
+      {
+        std::cout << "The computer move is not allowed! User wins.\n";
+      }
       return rcEngineResigns;
-    }
+    } // if move not possible
     if (!server.updateBoard(options.boardId, board))
     {
       std::cout << "Could not update board in MongoDB!\n";
       return rcMongoDbError;
+    }
+    // print move in JSON
+    if (options.json)
+    {
+      Json::Value val;
+      val["resign"] = false;
+      val["from"]["column"] = std::string(1, simplechess::column(from));
+      val["from"]["row"] = simplechess::row(from);
+      val["to"]["column"] = std::string(1, simplechess::column(to));
+      val["to"]["row"] = simplechess::row(to);
+      val["exitcode"] = 0;
+      Json::StyledStreamWriter writer;
+      writer.write(std::cout, val);
+      std::cout << std::endl;
     }
   } // try
   catch (const std::exception& ex)

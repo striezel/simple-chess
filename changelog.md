@@ -2,6 +2,9 @@
 
 _Note: This changelog may be incomplete._
 
+## Version 0.3.2 (2018-01-30)
+- meteor-chess-client: add possibility to enable JSON output via --json option
+
 ## Version 0.3.1 (2018-01-27)
 - improve method to determine whether a move is legal, avoiding some false
   positives

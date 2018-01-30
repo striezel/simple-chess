@@ -30,7 +30,8 @@ MeteorChessOptions::MeteorChessOptions()
   hostname(""),
   port(0),
   help(false),
-  version(false)
+  version(false),
+  json(false)
 {
 }
 
@@ -120,6 +121,16 @@ bool MeteorChessOptions::parse(const int argc, char** argv)
         return false;
       }
     } // if port number
+    // enable JSON output
+    else if (param == "--json")
+    {
+      if (json)
+      {
+        std::cout << "Error: The parameter " << param << " cannot be specified more than once!\n";
+        return false;
+      }
+      json = true;
+    } // if JSON
     else
     {
       std::cout << "Error: Invalid parameter \"" << param << "\"!\n";
