@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -53,10 +53,29 @@ class CompoundEvaluator: public Evaluator
      * \param eval  the evaluator to add
      */
     void add(std::unique_ptr<Evaluator>&& eval);
+
+
+    /** \brief Gets the size of the compound, i.e. the number of evaluators in it.
+     *
+     * \return compound size
+     */
+    std::size_t size() const noexcept;
+
+
+    /** \brief Removes all previously added evaluators from the compound.
+     */
+    void clear() noexcept;
+
+
+    /** \brief Checks whether the compound is empty.
+     *
+     * \return true if the compound is empty, false otherwise
+     */
+    bool empty() const noexcept;
   private:
     std::vector<std::unique_ptr<Evaluator>> evaluators; /**< vector of evaluators to sum up */
-}; //class
+}; // class
 
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_COMPOUNDEVALUATOR_HPP

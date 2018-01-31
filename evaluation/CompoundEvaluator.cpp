@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,4 +43,19 @@ int CompoundEvaluator::score(const Board& board) const
   return sum;
 }
 
-} //namespace
+std::size_t CompoundEvaluator::size() const noexcept
+{
+  return evaluators.size();
+}
+
+void CompoundEvaluator::clear() noexcept
+{
+  evaluators.clear();
+}
+
+bool CompoundEvaluator::empty() const noexcept
+{
+  return evaluators.empty();
+}
+
+} // namespace

@@ -69,3 +69,27 @@ TEST_CASE("CompoundEvaluator evaluates default start position")
   // Evaluation should be zero - both sides have the same chances.
   REQUIRE( evaluator.score(board) == 0 );
 }
+
+TEST_CASE("CompoundEvaluator: empty, clear and size")
+{
+  using namespace simplechess;
+  CompoundEvaluator evaluator;
+  // Compound evaluator starts empty.
+  REQUIRE( evaluator.size() == 0 );
+  REQUIRE( evaluator.empty() );
+
+  // Not empty after first added evaluator.
+  evaluator.add(std::unique_ptr<Evaluator>(new ConstantEvaluator(300)));
+  REQUIRE( evaluator.size() == 1 );
+  REQUIRE_FALSE( evaluator.empty() );
+
+  // Not empty after next added evaluator, and size changes.
+  evaluator.add(std::unique_ptr<Evaluator>(new ConstantEvaluator(200)));
+  REQUIRE( evaluator.size() == 2 );
+  REQUIRE_FALSE( evaluator.empty() );
+
+  // Clear resets compound to size zero and it is empty again.
+  evaluator.clear();
+  REQUIRE( evaluator.empty() );
+  REQUIRE( evaluator.size() == 0 );
+}
