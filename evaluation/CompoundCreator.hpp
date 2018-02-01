@@ -43,6 +43,13 @@ class CompoundCreator
     static bool create(const std::string& evaluators, CompoundEvaluator& compound);
 
 
+    /** \brief Creates the default compound evaluator used in simple-chess.
+     *
+     * \param compound  CompoundEvaluator that will be used to store evaluators
+     */
+    static void getDefault(CompoundEvaluator& compound);
+
+
     static const std::string IdCheck; /**< id for CheckEvaluator */
     static const std::string IdLinearMobility; /**< id for LinearMobilityEvaluator */
     static const std::string IdMaterial; /**< id for MaterialEvaluator */

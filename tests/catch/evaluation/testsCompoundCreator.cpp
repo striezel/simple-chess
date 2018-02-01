@@ -104,3 +104,20 @@ TEST_CASE("CompoundEvaluator: id sanity checks")
 
   REQUIRE_FALSE( CompoundCreator::IdPromotion == CompoundCreator::IdRootMobility );
 }
+
+TEST_CASE("CompoundCreator: default compound evaluator")
+{
+  using namespace simplechess;
+
+  CompoundEvaluator compound;
+  CompoundCreator::getDefault(compound);
+
+  // Compound evaluator shall not be empty.
+  REQUIRE_FALSE( compound.empty() );
+  // Number of evaluators should be four.
+  const auto size = compound.size();
+  REQUIRE( size == 4 );
+  // Getting default compound again should not change size.
+  CompoundCreator::getDefault(compound);
+  REQUIRE( size == compound.size() );
+}

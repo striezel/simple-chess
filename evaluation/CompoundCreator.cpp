@@ -90,4 +90,14 @@ bool CompoundCreator::create(const std::string& evaluators, CompoundEvaluator& c
   return !compound.empty();
 }
 
+void CompoundCreator::getDefault(CompoundEvaluator& compound)
+{
+  compound.clear();
+  // Add the four evaluators we use by default.
+  compound.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
+  compound.add(std::unique_ptr<Evaluator>(new LinearMobilityEvaluator()));
+  compound.add(std::unique_ptr<Evaluator>(new PromotionEvaluator()));
+  compound.add(std::unique_ptr<Evaluator>(new CheckEvaluator()));
+}
+
 } // namespace
