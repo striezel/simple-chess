@@ -82,7 +82,7 @@ bool CompoundCreator::create(const std::string& evaluators, CompoundEvaluator& c
       compound.add(std::unique_ptr<Evaluator>(new RootMobilityEvaluator()));
     else
     {
-      std::cout << "Error: Id " << id << " does not identify a known evaluator type!\n";
+      std::cout << "Error: Id \"" << id << "\" does not identify a known evaluator type!\n";
       return false;
     }
   } // for

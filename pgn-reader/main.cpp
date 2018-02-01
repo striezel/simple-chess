@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,21 +36,11 @@
 #include "../pgn/UnconsumedTokensException.hpp"
 #include "../pgn/ParserException.hpp"
 #include "../ui/Console.hpp"
-
-//return codes in case of failure
-const int rcInvalidParameter = 1;
-const int rcTokenizationError = 2;
-const int rcParserError = 3;
-const int rcDataImplausible = 4;
-const int rcBoardInitializationFailure = 5;
-const int rcMoveNotPossible = 6;
-#ifndef NO_METEOR_CHESS
-const int rcMongoDbError = 7;
-#endif // NO_METEOR_CHESS
+#include "../util/ReturnCodes.hpp"
 
 void showVersion()
 {
-  std::cout << "pgn-reader, version 0.9, 2017-12-01" << std::endl;
+  std::cout << "pgn-reader, version 0.9.1, 2018-02-01" << std::endl;
   #ifndef NO_METEOR_CHESS
   std::cout << "This version has support for meteor-chess.\n";
   #endif // NO_METEOR_CHESS
@@ -83,7 +73,7 @@ int main(int argc, char** argv)
   {
     std::cout << "Invalid parameters encountered, program will exit.\n"
               << "Use --help to show recognized parameters.\n";
-    return rcInvalidParameter;
+    return simplechess::rcInvalidParameter;
   }
   if (options.help)
   {
@@ -98,7 +88,7 @@ int main(int argc, char** argv)
   if (options.inputFile.empty())
   {
     std::cout << "Error: No input file with portable game notation was given!\n";
-    return rcInvalidParameter;
+    return simplechess::rcInvalidParameter;
   }
 
   std::vector<simplechess::pgn::Token> tokens;
@@ -106,7 +96,7 @@ int main(int argc, char** argv)
   if (!success)
   {
     std::cout << "Could not tokenize PGN from file " + options.inputFile + "!\n";
-    return rcTokenizationError;
+    return simplechess::rcTokenizationError;
   }
   simplechess::PortableGameNotation pgn;
   try
@@ -124,12 +114,12 @@ int main(int argc, char** argv)
     {
       std::cout << "Type: " << static_cast<int>(tokens[i].type) << " text: \"" << tokens[i].text << "\"\n";
     } //for
-    return rcParserError;
+    return simplechess::rcParserError;
   }
   catch(const simplechess::pgn::ParserException& ex)
   {
     std::cout << "ParserException: " << ex.what() << "\n";
-    return rcParserError;
+    return simplechess::rcParserError;
   }
   std::cout << "Successfully parsed input data. :)\n";
   std::cout << "\n"
@@ -141,7 +131,7 @@ int main(int argc, char** argv)
   if (!simplechess::algorithm::checkPortableGameNotation(pgn))
   {
     std::cout << "Error: Portable game notation data is implausible!\n";
-    return rcDataImplausible;
+    return simplechess::rcDataImplausible;
   }
 
   #ifndef NO_METEOR_CHESS
@@ -164,7 +154,7 @@ int main(int argc, char** argv)
   if (!board.fromFEN(fen))
   {
     std::cout << "Could not initialize chess board with the given initial position!\n";
-    return rcBoardInitializationFailure;
+    return simplechess::rcBoardInitializationFailure;
   }
 
   #ifndef NO_METEOR_CHESS
@@ -180,7 +170,7 @@ int main(int argc, char** argv)
     {
       std::cerr << "Error: Could not establish connection to MongoDB on "
                 << options.hostname << ":" << options.port << "!\n";
-      return rcMongoDbError;
+      return simplechess::rcMongoDbError;
     }
   } //if
 
@@ -202,14 +192,14 @@ int main(int argc, char** argv)
       std::cerr << "Error: Could not insert board into MongoDB on "
                 << options.hostname << ":" << options.port << "!\n";
       mongo = nullptr;
-      return rcMongoDbError;
+      return simplechess::rcMongoDbError;
     }
     if (boardId.empty())
     {
       std::cerr << "Error: Could not insert board into MongoDB on "
                 << options.hostname << ":" << options.port << ", empty ID!\n";
       mongo = nullptr;
-      return rcMongoDbError;
+      return simplechess::rcMongoDbError;
     }
     std::cout << "Inserted board ID is " << boardId << ".\n";
   } //if
@@ -224,7 +214,7 @@ int main(int argc, char** argv)
     {
       std::cout << "Error: Could not perform move " << i << " of white player!\n"
                 << "Move would have been " << moves.first.toPGN() << ".\n";
-      return rcMoveNotPossible;
+      return simplechess::rcMoveNotPossible;
     }
     std::cout << "\nAfter move " << i << " of white player:\n";
     simplechess::ui::Console::showBoard(board);
@@ -238,7 +228,7 @@ int main(int argc, char** argv)
           std::cerr << "Error: Could not update board in MongoDB on "
                     << options.hostname << ":" << options.port << "!\n";
           mongo = nullptr;
-          return rcMongoDbError;
+          return simplechess::rcMongoDbError;
         } //if
       }
       catch(...)
@@ -246,7 +236,7 @@ int main(int argc, char** argv)
         std::cerr << "Error: Failed to update board in MongoDB on "
                   << options.hostname << ":" << options.port << "!\n";
         mongo = nullptr;
-        return rcMongoDbError;
+        return simplechess::rcMongoDbError;
       }
     } //if
     #endif // NO_METEOR_CHESS
@@ -256,7 +246,7 @@ int main(int argc, char** argv)
     {
       std::cout << "Error: Could not perform move " << i << " of black player!\n"
                 << "Move would have been " << moves.second.toPGN() << ".\n";
-      return rcMoveNotPossible;
+      return simplechess::rcMoveNotPossible;
     }
     std::cout << "\nAfter move " << i << " of black player:\n";
     simplechess::ui::Console::showBoard(board);
@@ -270,7 +260,7 @@ int main(int argc, char** argv)
           std::cerr << "Error: Could not update board in MongoDB on "
                     << options.hostname << ":" << options.port << "!\n";
           mongo = nullptr;
-          return rcMongoDbError;
+          return simplechess::rcMongoDbError;
         } //if
       }
       catch(...)
@@ -278,7 +268,7 @@ int main(int argc, char** argv)
         std::cerr << "Error: Failed to update board in MongoDB on "
                   << options.hostname << ":" << options.port << "!\n";
         mongo = nullptr;
-        return rcMongoDbError;
+        return simplechess::rcMongoDbError;
       }
     } //if
     #endif // NO_METEOR_CHESS

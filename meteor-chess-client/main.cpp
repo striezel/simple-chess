@@ -21,20 +21,13 @@
 #include <iostream>
 #include <jsoncpp/json/writer.h>
 #include "../db/mongo/libmongoclient/Server.hpp"
-#include "../evaluation/CheckEvaluator.hpp"
+#include "../evaluation/CompoundCreator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
-#include "../evaluation/MaterialEvaluator.hpp"
-#include "../evaluation/LinearMobilityEvaluator.hpp"
-#include "../evaluation/PromotionEvaluator.hpp"
 #include "../search/Search.hpp"
 #include "../util/GitInfos.hpp"
+#include "../util/ReturnCodes.hpp"
 #include "../util/Version.hpp"
 #include "Options.hpp"
-
-const int rcInvalidParameter = 1;
-const int rcEngineResigns = 2;
-const int rcMongoDbError = 7;
-const int rcUnknown = 8;
 
 void showVersion(const bool json = false)
 {
@@ -76,7 +69,20 @@ void showHelp()
             << "                     default value is 3001.\n"
             << "  --json           - print output in JSON format\n"
             << "  --move           - perform move on board and write it back to MongoDB. The\n"
-            << "                     default is not to move, but just to print the move.\n";
+            << "                     default is not to move, but just to print the move.\n"
+            << "  --evaluator EVAL - sets a custom set of evaluators to use where EVAL is a\n"
+            << "                     comma-separated list of evaluator ids. Valid ids are:\n"
+            << "                       material: evaluator using material value of pieces\n"
+            << "                       check: evaluator with bonus for checking opponent\n"
+            << "                       promotion: evaluator with bonus for pawns that can be\n"
+            << "                                  promoted during the next move\n"
+            << "                       linearmobility: bonus for number of possible moves over\n"
+            << "                                       all pieces by a player\n"
+            << "                       rootmobility: like linearmobility, but with a slower\n"
+            << "                                     increase for higher move numbers\n"
+            << "                     A possible use of this option can look like this:\n"
+            << "                       --evaluator check,promotion,material\n"
+            << "                     If no evaluator option is given, the program uses a preset.\n";
 }
 
 int main(int argc, char** argv)
@@ -86,7 +92,7 @@ int main(int argc, char** argv)
   {
     std::cout << "Invalid parameters encountered, program will exit.\n"
               << "Use --help to show recognized parameters.\n";
-    return rcInvalidParameter;
+    return simplechess::rcInvalidParameter;
   }
   // Help requested?
   if (options.help)
@@ -104,8 +110,25 @@ int main(int argc, char** argv)
   if (options.boardId.empty())
   {
     std::cout << "Error: No board id was set!\n";
-    return rcInvalidParameter;
+    return simplechess::rcInvalidParameter;
   }
+
+  // Prepare evaluators.
+  simplechess::CompoundEvaluator evaluator;
+  if (options.evaluators.empty())
+  {
+    // Fall back to default evaluator set.
+    simplechess::CompoundCreator::getDefault(evaluator);
+  }
+  else
+  {
+    // Try to parse user input.
+    if (!simplechess::CompoundCreator::create(options.evaluators, evaluator))
+    {
+      std::cout << "Error: The given evaluator list is invalid!\n";
+      return simplechess::rcInvalidParameter;
+    } // if
+  } // else
 
   try
   {
@@ -115,17 +138,11 @@ int main(int argc, char** argv)
     {
       std::cerr << "Could not get board data for board " << options.boardId
                 << " from DB!" << std::endl;
-      return rcMongoDbError;
+      return simplechess::rcMongoDbError;
     }
 
     // Let's find a suitable move.
     simplechess::Search s(board);
-    simplechess::CompoundEvaluator evaluator;
-    // Add the four evaluators we have so far.
-    evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MaterialEvaluator()));
-    evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::LinearMobilityEvaluator()));
-    evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::PromotionEvaluator()));
-    evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::CheckEvaluator()));
     // Search for best move, only two plies.
     s.search(evaluator, 2);
     // Did the search find any moves?
@@ -136,7 +153,7 @@ int main(int argc, char** argv)
         Json::Value val;
         val["resign"] = true;
         val["message"] = std::string("simplechess AI could not find a valid move. User wins!");
-        val["exitcode"] = rcEngineResigns;
+        val["exitcode"] = simplechess::rcEngineResigns;
         Json::StyledStreamWriter writer;
         writer.write(std::cout, val);
         std::cout << std::endl;
@@ -145,7 +162,7 @@ int main(int argc, char** argv)
       {
         std::cout << "simplechess AI could not find a valid move. User wins!\n";
       }
-      return rcEngineResigns;
+      return simplechess::rcEngineResigns;
     } // if there is no move left
     const auto bestMove = s.bestMove();
     const simplechess::Field from = std::get<0>(bestMove);
@@ -165,7 +182,7 @@ int main(int argc, char** argv)
           Json::Value val;
           val["resign"] = true;
           val["message"] = std::string("The computer move is not allowed! User wins.");
-          val["exitcode"] = rcEngineResigns;
+          val["exitcode"] = simplechess::rcEngineResigns;
           Json::StyledStreamWriter writer;
           writer.write(std::cout, val);
           std::cout << std::endl;
@@ -174,12 +191,12 @@ int main(int argc, char** argv)
         {
           std::cout << "The computer move is not allowed! User wins.\n";
         }
-        return rcEngineResigns;
+        return simplechess::rcEngineResigns;
       } // if move not possible
       if (!server.updateBoard(options.boardId, board))
       {
         std::cout << "Could not update board in MongoDB!\n";
-        return rcMongoDbError;
+        return simplechess::rcMongoDbError;
       }
     } // if move shall be performed
     // print move in JSON
@@ -210,9 +227,9 @@ int main(int argc, char** argv)
                 << "Please check that meteor-chess is running and its MongoDB "
                 << "instance can be reached at " << options.hostname << ":" << options.port
                 << ".\n";
-      return rcMongoDbError;
+      return simplechess::rcMongoDbError;
     }
     // Other error type.
-    return rcUnknown;
+    return simplechess::rcUnknown;
   } // try-catch
 }

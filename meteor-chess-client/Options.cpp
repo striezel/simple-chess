@@ -32,7 +32,8 @@ MeteorChessOptions::MeteorChessOptions()
   help(false),
   version(false),
   json(false),
-  move(false)
+  move(false),
+  evaluators("")
 {
 }
 
@@ -142,6 +143,26 @@ bool MeteorChessOptions::parse(const int argc, char** argv)
       }
       move = true;
     } // if perform move
+    // custom list of evaluators
+    else if ((param == "--evaluators") || (param == "--evaluator") || (param == "-e"))
+    {
+      if (!evaluators.empty())
+      {
+        std::cout << "Error: The parameter " << param << " cannot be specified more than once!\n";
+        return false;
+      }
+      if (argc > i + 1)
+      {
+        evaluators = std::string(argv[i+1]);
+        // Skip next argument, because that was already processed.
+        ++i;
+      }
+      else
+      {
+        std::cout << "There must be a list of evaluators after " << param << "!\n";
+        return false;
+      }
+    } // if list of evaluators was given
     else
     {
       std::cout << "Error: Invalid parameter \"" << param << "\"!\n";

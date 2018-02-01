@@ -154,6 +154,7 @@
 		<Unit filename="../rules/check.hpp" />
 		<Unit filename="../ui/Console.cpp" />
 		<Unit filename="../ui/Console.hpp" />
+		<Unit filename="../util/ReturnCodes.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
 		<Unit filename="Options.cpp" />

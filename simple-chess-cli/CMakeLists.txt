@@ -10,10 +10,12 @@ set(simple_chess_cli_sources
     ../data/ForsythEdwardsNotation.cpp
     ../data/Piece.cpp
     ../evaluation/CheckEvaluator.cpp
+    ../evaluation/CompoundCreator.cpp
     ../evaluation/CompoundEvaluator.cpp
-    ../evaluation/MaterialEvaluator.cpp
     ../evaluation/LinearMobilityEvaluator.cpp
+    ../evaluation/MaterialEvaluator.cpp
     ../evaluation/PromotionEvaluator.cpp
+    ../evaluation/RootMobilityEvaluator.cpp
     ../rules/check.cpp
     ../rules/Moves.cpp
     ../search/Node.cpp

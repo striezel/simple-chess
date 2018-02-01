@@ -20,14 +20,12 @@
 
 #include <iostream>
 #include "../data/Board.hpp"
-#include "../evaluation/CheckEvaluator.hpp"
+#include "../evaluation/CompoundCreator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
-#include "../evaluation/LinearMobilityEvaluator.hpp"
-#include "../evaluation/MaterialEvaluator.hpp"
-#include "../evaluation/PromotionEvaluator.hpp"
 #include "../search/Search.hpp"
 #include "../ui/Console.hpp"
 #include "../util/GitInfos.hpp"
+#include "../util/ReturnCodes.hpp"
 #include "../util/Version.hpp"
 
 
@@ -52,7 +50,23 @@ void showHelp()
             << "                    (The default is to play none, i.e. both sides are human.)\n"
             << " FEN              - a valid Forsyth-Edwards notation that indicates the\n"
             << "                    initial position for the chess game. Default is the normal\n"
-            << "                    chess start position.\n";
+            << "                    chess start position.\n"
+            << "  -e EVAL         - sets a custom set of evaluators to use where EVAL is a\n"
+            << "                    comma-separated list of evaluator ids. Valid ids are:\n"
+            << "                      material: evaluator using material value of pieces\n"
+            << "                      check: evaluator with bonus for checking opponent\n"
+            << "                      promotion: evaluator with bonus for pawns that can be\n"
+            << "                                 promoted during the next move\n"
+            << "                      linearmobility: bonus for number of possible moves over\n"
+            << "                                      all pieces by a player\n"
+            << "                      rootmobility: like linearmobility, but with a slower\n"
+            << "                                    increase for higher move numbers\n"
+            << "                    A possible use of this option can look like this:\n"
+            << "                      --evaluator check,promotion,material\n"
+            << "                    If no evaluator option is given, the program uses a preset.\n"
+            << "                    Evaluators are used by computer players only, so this\n"
+            << "                    has no effect when two humans play against each other.\n";
+;
 }
 
 /** \brief Prints a board to the standard output.
@@ -91,6 +105,7 @@ int main(int argc, char** argv)
   simplechess::Board board;
   simplechess::Colour computerPlayer = simplechess::Colour::none;
   bool doneFEN = false;
+  std::string evaluators = "";
 
   // Use default start position.
   if (!board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
@@ -130,6 +145,26 @@ int main(int argc, char** argv)
         computerPlayer = simplechess::Colour::black;
         std::cout << "Engine will play as black.\n";
       }
+      // custom list of evaluators
+      else if ((param == "--evaluators") || (param == "--evaluator") || (param == "-e"))
+      {
+        if (!evaluators.empty())
+        {
+          std::cout << "Error: The parameter " << param << " cannot be specified more than once!\n";
+          return false;
+        }
+        if (argc > i + 1)
+        {
+          evaluators = std::string(argv[i+1]);
+          // Skip next argument, because that was already processed.
+          ++i;
+        }
+        else
+        {
+          std::cout << "Error: There must be a list of evaluators after " << param << "!\n";
+          return simplechess::rcInvalidParameter;
+        }
+      } // if list of evaluators was given
       else if (!doneFEN && board.fromFEN(param))
       {
         std::cout << "Initialized board from FEN string \"" << param << "\".\n";
@@ -140,10 +175,26 @@ int main(int argc, char** argv)
       {
         std::cerr << "Error: Unknown parameter " << param << "!\n"
                   << "Use --help to show available parameters." << std::endl;
-        return 1;
+        return simplechess::rcInvalidParameter;
       }
     } // for i
   } // if arguments are there
+
+  simplechess::CompoundEvaluator evaluator;
+  if (evaluators.empty())
+  {
+    // Fall back to default evaluator set.
+    simplechess::CompoundCreator::getDefault(evaluator);
+  }
+  else
+  {
+    // Try to parse user input.
+    if (!simplechess::CompoundCreator::create(evaluators, evaluator))
+    {
+      std::cout << "Error: The given evaluator list is invalid!\n";
+      return simplechess::rcInvalidParameter;
+    } // if
+  } // else
 
   // potentially endless game loop
   while (true)
@@ -166,12 +217,6 @@ int main(int argc, char** argv)
     {
       // Let's find a suitable move.
       simplechess::Search s(board);
-      simplechess::CompoundEvaluator evaluator;
-      // Add the four evaluators we have so far.
-      evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::MaterialEvaluator()));
-      evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::LinearMobilityEvaluator()));
-      evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::PromotionEvaluator()));
-      evaluator.add(std::unique_ptr<simplechess::Evaluator>(new simplechess::CheckEvaluator()));
       // Search for best move, only two plies.
       s.search(evaluator, 2);
       // Did the search find any moves?

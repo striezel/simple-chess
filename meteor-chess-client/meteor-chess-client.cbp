@@ -87,6 +87,7 @@
 		<Unit filename="../search/Search.hpp" />
 		<Unit filename="../util/GitInfos.cpp" />
 		<Unit filename="../util/GitInfos.hpp" />
+		<Unit filename="../util/ReturnCodes.hpp" />
 		<Unit filename="../util/Version.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />

@@ -2,6 +2,10 @@
 
 _Note: This changelog may be incomplete._
 
+## Version next (yet to be realeased, 2018-??-??)
+- meteor-chess-client and simple-chess-cli: new option to set custom evaluators
+  to use for finding the best possible move
+
 ## Version 0.3.3 (2018-01-31)
 - meteor-chess-client: only write move back to MongoDB when told so explicitly
   via command line option --move
