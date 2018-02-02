@@ -2,7 +2,7 @@
 
 _Note: This changelog may be incomplete._
 
-## Version next (yet to be realeased, 2018-??-??)
+## Version 0.4.0 (2018-02-02)
 - simple-chess-engine: improved help message text
 - engine, meteor-chess-client and simple-chess-cli: new option to set custom
   evaluators to use for finding the best possible move
