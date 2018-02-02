@@ -38,9 +38,15 @@ void showHelp()
 {
   std::cout << "simplechess-engine [OPTIONS]\n"
             << "\n"
-            << "options:\n"
+            << "Supported program options:\n"
             << "  -? | --help     - shows this help message and exits\n"
-            << "  -v | --version  - shows version information and exits\n";
+            << "  -v | --version  - shows version information and exits\n"
+            << "\n"
+            << "simplechess-engine is an XBoard-compatible chess engine that supports most of\n"
+            << "the XBoard commands from protocol version 2. The program expects commands from\n"
+            << "XBoard on its standard input and prints responses to the standard output.\n"
+            << "For the XBoard protocol see\n"
+            << "  <https://www.gnu.org/software/xboard/engine-intf.html>\n";
 }
 
 int main(int argc, char** argv)
