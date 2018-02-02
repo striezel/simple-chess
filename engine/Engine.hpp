@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include <memory>
 
 #include "../data/Board.hpp"
+#include "../evaluation/CompoundEvaluator.hpp"
 #include "time/Timing.hpp"
 #include "xboard/Command.hpp"
 
@@ -100,6 +101,21 @@ class Engine
     void setPlayer(const Colour enginePlayer);
 
 
+    /** \brief Gets the current evaluator for the engine (usually compound).
+     *
+     * \return current evaluator
+     */
+    const Evaluator& evaluator() const noexcept;
+
+
+    /** \brief Sets the current evaluator for the engine.
+     *
+     * \param eval  the new evaluator for the engine
+     * \return true, if evaluator was accepted; false otherwise
+     */
+    bool setEvaluator(CompoundEvaluator&& eval);
+
+
     /** \brief Gets the current search depth of the engine.
      *
      * \return Returns the search depth in plys / half moves.
@@ -168,6 +184,7 @@ class Engine
     unsigned int mProtocolVersion; /**< xboard protocol version */
     Colour mEnginePlayer; /**< colour that is controlled by the engine */
     Board mBoard; /**< current chess board */
+    CompoundEvaluator evaluators; /**< evaluators that are used by the engine */
     unsigned int mSearchDepth; /**< search depth of the engine in plys */
     bool mForceMode; /**< whether the engine is in force mode */
     Timing mTiming; /**< time controls */

@@ -21,11 +21,8 @@
 #include "Engine.hpp"
 #include <sstream>
 #include "io-utils.hpp"
-#include "../evaluation/CheckEvaluator.hpp"
+#include "../evaluation/CompoundCreator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
-#include "../evaluation/MaterialEvaluator.hpp"
-#include "../evaluation/LinearMobilityEvaluator.hpp"
-#include "../evaluation/PromotionEvaluator.hpp"
 #include "../search/Search.hpp"
 
 namespace simplechess
@@ -42,11 +39,13 @@ Engine::Engine()
   mProtocolVersion(1), // assume version 1 until we get more information
   mEnginePlayer(Colour::none), // engine plays no side be default
   mBoard(Board()),
+  evaluators(CompoundEvaluator()),
   mSearchDepth(2), // default search depth: two ply search
   mForceMode(false),
   mTiming(Timing()),
   mQueue(std::deque<std::unique_ptr<Command> >()) // empty queue
 {
+  CompoundCreator::getDefault(evaluators);
 }
 
 bool Engine::quitRequested() const
@@ -86,6 +85,21 @@ Colour Engine::player() const
 void Engine::setPlayer(const Colour enginePlayer)
 {
   mEnginePlayer = enginePlayer;
+}
+
+const Evaluator& Engine::evaluator() const noexcept
+{
+  return evaluators;
+}
+
+bool Engine::setEvaluator(CompoundEvaluator&& eval)
+{
+  // Reject empty compounds.
+  if (eval.empty())
+    return false;
+  // Set new compound evaluator.
+  evaluators = std::move(eval);
+  return false;
 }
 
 unsigned int Engine::searchDepth() const
@@ -145,14 +159,8 @@ void Engine::move()
 
   // Let's find a suitable move.
   Search s(board());
-  CompoundEvaluator evaluator;
-  // Add the four evaluators we have so far.
-  evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
-  evaluator.add(std::unique_ptr<Evaluator>(new LinearMobilityEvaluator()));
-  evaluator.add(std::unique_ptr<Evaluator>(new PromotionEvaluator()));
-  evaluator.add(std::unique_ptr<Evaluator>(new CheckEvaluator()));
   // Search for best move with defined search depth.
-  s.search(evaluator, mSearchDepth);
+  s.search(evaluators, mSearchDepth);
   // Did the search find any moves?
   if (!s.hasMove())
   {

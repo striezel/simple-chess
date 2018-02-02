@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,13 +22,15 @@
 #include "io-utils.hpp"
 #include "CommandParser.hpp"
 #include "Engine.hpp"
+#include "../evaluation/CompoundCreator.hpp"
 #include "../util/GitInfos.hpp"
+#include "../util/ReturnCodes.hpp"
 #include "../util/Version.hpp"
 
 void showVersion()
 {
   simplechess::GitInfos info;
-  std::cout << "simplechess-engine, " << simplechess::version << "\n"
+  std::cout << "simple-chess-engine, " << simplechess::version << "\n"
             << "\n"
             << "Version control commit: " << info.commit() << "\n"
             << "Version control date:   " << info.date() << std::endl;
@@ -36,11 +38,24 @@ void showVersion()
 
 void showHelp()
 {
-  std::cout << "simplechess-engine [OPTIONS]\n"
+  std::cout << "simple-chess-engine [OPTIONS]\n"
             << "\n"
             << "Supported program options:\n"
             << "  -? | --help     - shows this help message and exits\n"
             << "  -v | --version  - shows version information and exits\n"
+            << "  --evaluator EVAL - sets a custom set of evaluators to use where EVAL is a\n"
+            << "                     comma-separated list of evaluator ids. Valid ids are:\n"
+            << "                       material: evaluator using material value of pieces\n"
+            << "                       check: evaluator with bonus for checking opponent\n"
+            << "                       promotion: evaluator with bonus for pawns that can be\n"
+            << "                                  promoted during the next move\n"
+            << "                       linearmobility: bonus for number of possible moves over\n"
+            << "                                       all pieces by a player\n"
+            << "                       rootmobility: like linearmobility, but with a slower\n"
+            << "                                     increase for higher move numbers\n"
+            << "                     A possible use of this option can look like this:\n"
+            << "                       --evaluator check,promotion,material\n"
+            << "                     If no evaluator option is given, the program uses a preset.\n"
             << "\n"
             << "simplechess-engine is an XBoard-compatible chess engine that supports most of\n"
             << "the XBoard commands from protocol version 2. The program expects commands from\n"
@@ -53,6 +68,8 @@ int main(int argc, char** argv)
 {
   using namespace simplechess;
 
+  std::string evaluators;
+
   if ((argc > 1) && (argv != nullptr))
   {
     for (int i = 1; i < argc; ++i)
@@ -60,7 +77,7 @@ int main(int argc, char** argv)
       if (argv[i] == nullptr)
       {
         std::cerr << "Error: Parameter at index " << i << " is null pointer!\n";
-        return 1;
+        return rcInvalidParameter;
       }
       const std::string param(argv[i]);
       if ((param == "-v") || (param == "--version"))
@@ -73,14 +90,47 @@ int main(int argc, char** argv)
         showHelp();
         return 0;
       } // if help
+      // custom list of evaluators
+      else if ((param == "--evaluators") || (param == "--evaluator") || (param == "-e"))
+      {
+        if (!evaluators.empty())
+        {
+          std::cout << "Error: The parameter " << param << " cannot be specified more than once!\n";
+          return false;
+        }
+        if (argc > i + 1)
+        {
+          evaluators = std::string(argv[i+1]);
+          // Skip next argument, because that was already processed.
+          ++i;
+        }
+        else
+        {
+          std::cout << "There must be a list of evaluators after " << param << "!\n";
+          return false;
+        }
+      } // if list of evaluators was given
       else
       {
         std::cerr << "Error: Unknown parameter " << param << "!\n"
                   << "Use --help to show available parameters." << std::endl;
-        return 1;
+        return rcInvalidParameter;
       }
     } // for i
   } // if arguments are there
+
+  if (!evaluators.empty())
+  {
+    CompoundEvaluator evaluator;
+    // Try to parse user input.
+    if (!CompoundCreator::create(evaluators, evaluator))
+    {
+      std::cout << "Error: The given evaluator list is invalid!\n";
+      return rcInvalidParameter;
+    } // if
+    // Set custom evaluators.
+    Engine::get().setEvaluator(std::move(evaluator));
+  }
 
   // No output buffering.
   disableStdoutBuffering();

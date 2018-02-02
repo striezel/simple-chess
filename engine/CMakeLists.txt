@@ -14,10 +14,12 @@ set(simple_chess_engine_sources
     ../data/Piece.cpp
     ../data/Result.cpp
     ../evaluation/CheckEvaluator.cpp
+    ../evaluation/CompoundCreator.cpp
     ../evaluation/CompoundEvaluator.cpp
     ../evaluation/LinearMobilityEvaluator.cpp
     ../evaluation/MaterialEvaluator.cpp
     ../evaluation/PromotionEvaluator.cpp
+    ../evaluation/RootMobilityEvaluator.cpp
     ../rules/Moves.cpp
     ../rules/check.cpp
     ../search/Node.cpp
