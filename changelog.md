@@ -2,6 +2,9 @@
 
 _Note: This changelog may be incomplete._
 
+## Version 0.4.1 (2018-02-09)
+- meteor-chess-client: give information about pawn promotion, too
+
 ## Version 0.4.0 (2018-02-02)
 - simple-chess-engine: improved help message text
 - engine, meteor-chess-client and simple-chess-cli: new option to set custom

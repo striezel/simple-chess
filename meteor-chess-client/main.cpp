@@ -19,11 +19,13 @@
 */
 
 #include <iostream>
+#include <sstream>
 #include <jsoncpp/json/writer.h>
 #include "../db/mongo/libmongoclient/Server.hpp"
 #include "../evaluation/CompoundCreator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
 #include "../search/Search.hpp"
+#include "../rules/Moves.hpp"
 #include "../util/GitInfos.hpp"
 #include "../util/ReturnCodes.hpp"
 #include "../util/Version.hpp"
@@ -208,6 +210,18 @@ int main(int argc, char** argv)
       val["from"]["row"] = simplechess::row(from);
       val["to"]["column"] = std::string(1, simplechess::column(to));
       val["to"]["row"] = simplechess::row(to);
+      const bool isPromotion = simplechess::Moves::isPromotion(board, from, to);
+      val["promotion"] = isPromotion;
+      if (!isPromotion)
+      {
+        val["promoteTo"] = nullptr;
+      }
+      else
+      {
+        std::ostringstream stream;
+        stream << promo;
+        val["promoteTo"] = stream.str();
+      }
       val["exitcode"] = 0;
       Json::StyledStreamWriter writer;
       writer.write(std::cout, val);
