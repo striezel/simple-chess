@@ -214,7 +214,7 @@ int main(int argc, char** argv)
       val["promotion"] = isPromotion;
       if (!isPromotion)
       {
-        val["promoteTo"] = nullptr;
+        val["promoteTo"] = Json::Value();
       }
       else
       {
