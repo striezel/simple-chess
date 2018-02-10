@@ -49,6 +49,7 @@ Board::Board()
   mToMove(Colour::white),
   mEnPassant(Field::none),
   mCastling(Castling()),
+  mHalfmoves50(0),
   mBlackInCheck(false),
   mWhiteInCheck(false)
 {
@@ -79,6 +80,11 @@ const Field& Board::enPassant() const
 const Castling& Board::castling() const
 {
   return mCastling;
+}
+
+unsigned int Board::halfmovesFifty() const
+{
+  return mHalfmoves50;
 }
 
 bool Board::setElement(const Field field, const Piece& piece)
@@ -114,6 +120,11 @@ bool Board::setEnPassant(const Field ep)
 void Board::setCastling(const Castling& castlingInfo)
 {
   mCastling = castlingInfo;
+}
+
+void Board::setHalfmovesFifty(const unsigned int halfmoves50)
+{
+  mHalfmoves50 = halfmoves50;
 }
 
 bool Board::isInCheck(const Colour colour) const
@@ -260,6 +271,18 @@ bool Board::fromFEN(const std::string& FEN)
   else
     mEnPassant = Field::none;
 
+  // Half moves since last capture or pawn move.
+  if (parts.size() > 4)
+  {
+    int val = -1;
+    if (!util::stringToInt(parts[4], val) || (val < 0))
+      return false;
+    mHalfmoves50 = val;
+  }
+  else
+    // No information, so let's start with zero here.
+    mHalfmoves50 = 0;
+
   // update info who is in check
   updateCheckCache();
 
@@ -289,6 +312,18 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
     return false;
   // save for possible later use
   const Piece dest = element(to);
+
+  // Handle counter for fifty move rule.
+  if ((start.piece == PieceType::pawn) || (dest.piece != PieceType::none))
+  {
+    // Pawn has been moved or piece will be captured: reset counter.
+    mHalfmoves50 = 0;
+  }
+  else
+  {
+    // No pawn move or capture, increase counter.
+    ++mHalfmoves50;
+  }
 
   // Move is allowed.
   // -- "copy" piece to destination field

@@ -67,6 +67,17 @@ class Board
     const Castling& castling() const;
 
 
+    /** \brief Gets the number of halfmoves since the last pawn move or capture.
+     *
+     * \remarks This counts the number of halfmoves made under the 50 move rule.
+     * Once this value is larger than 100, (at least) 50 moves have been made
+     * without capturing a piece or moving a pawn. According to the 50 move rule
+     * any player can claim a draw in this situation.
+     * \return number of halfmoves since last pawn move or capture
+     */
+    unsigned int halfmovesFifty() const;
+
+
     /** \brief Sets a piece on a field on the board.
      *
      * \param field  the field that shall be set
@@ -102,6 +113,14 @@ class Board
      * \param castlingInfo  the new castling information
      */
     void setCastling(const Castling& castlingInfo);
+
+
+    /** \brief Sets the number of halfmoves since the last pawn move or capture.
+     *
+     * \remarks This counts the number of halfmoves made under the 50 move rule.
+     * \param halfmoves50 number of halfmoves since last pawn move or capture
+     */
+    void setHalfmovesFifty(const unsigned int halfmoves50);
 
 
     /** \brief Determines whether one side is currently in check.
@@ -157,6 +176,7 @@ class Board
     Colour mToMove; /**< player/colour that is to move next */
     Field  mEnPassant; /**< en passant field, if any */
     Castling mCastling; /**< castling information (i.e. where is castling still allowed) */
+    unsigned int mHalfmoves50; /**< number of half moves under the 50 move rule */
     bool mBlackInCheck; /**< whether black player is in check */
     bool mWhiteInCheck; /**< whether white player is in check */
 }; // class
