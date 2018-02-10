@@ -21,6 +21,7 @@
 
 #include <catch.hpp>
 #include "../../../data/Board.hpp"
+#include "../../../data/ForsythEdwardsNotation.hpp"
 
 TEST_CASE("Board::fromFEN() with default start position")
 {
@@ -262,12 +263,16 @@ TEST_CASE("Board::move()")
   SECTION("simple pawn move")
   {
     REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR") );
-    //move shall be performable
+    // Set halfmoves for 50 move rule to any number larger than zero.
+    board.setHalfmovesFifty(12);
+    // move shall be performable
     REQUIRE( board.move(Field::e2, Field::e4, PieceType::queen) );
-    //e2 shall be empty
+    // e2 shall be empty
     REQUIRE( board.element(Field::e2) == Piece() );
-    //e4 shall be white pawn
+    // e4 shall be white pawn
     REQUIRE( board.element(Field::e4) == Piece(Colour::white, PieceType::pawn) );
+    // Halfmoves under 50 move rule shall be reset to zero, because pawn moved.
+    REQUIRE( board.halfmovesFifty() == 0 );
   }
 
   SECTION("white pawn promotion")
@@ -276,34 +281,47 @@ TEST_CASE("Board::move()")
 
     SECTION("promote to queen")
     {
-      //move shall be performable
+      // Set halfmoves for 50 move rule to any number larger than zero.
+      board.setHalfmovesFifty(12);
+      // move shall be performable
       REQUIRE( board.move(Field::a7, Field::a8, PieceType::queen) );
-      //a7 shall be empty
+      // a7 shall be empty
       REQUIRE( board.element(Field::a7) == Piece() );
-      //a8 shall be white queen
+      // a8 shall be white queen
       REQUIRE( board.element(Field::a8) == Piece(Colour::white, PieceType::queen) );
+      // Halfmoves under 50 move rule shall be reset to zero, because pawn moved.
+      REQUIRE( board.halfmovesFifty() == 0 );
     }
 
     SECTION("promote to knight")
     {
-      //move shall be performable
+      // Set halfmoves for 50 move rule to any number larger than zero.
+      board.setHalfmovesFifty(12);
+      // move shall be performable
       REQUIRE( board.move(Field::a7, Field::a8, PieceType::knight) );
-      //a7 shall be empty
+      // a7 shall be empty
       REQUIRE( board.element(Field::a7) == Piece() );
-      //a8 shall be white knight
+      // a8 shall be white knight
       REQUIRE( board.element(Field::a8) == Piece(Colour::white, PieceType::knight) );
+      // Halfmoves under 50 move rule shall be reset to zero, because pawn moved.
+      REQUIRE( board.halfmovesFifty() == 0 );
     }
   }
 
   SECTION("en passant capture of white pawn")
   {
     REQUIRE( board.fromFEN("k6K/8/8/8/4Pp2/8/8/8 b - e3") );
-    //e4 shall be white pawn
+
+    // Set halfmoves for 50 move rule to any number larger than zero.
+    board.setHalfmovesFifty(12);
+    // e4 shall be white pawn
     REQUIRE( board.element(Field::e4) == Piece(Colour::white, PieceType::pawn) );
-    //move black pawn from f4 to e3 - should be performed
+    // move black pawn from f4 to e3 - should be performed
     REQUIRE( board.move(Field::f4, Field::e3, PieceType::queen) );
-    //e4 should not contain white pawn anymore
+    // e4 should not contain white pawn anymore
     REQUIRE( board.element(Field::e4) == Piece(Colour::none, PieceType::none) );
+    // Halfmoves under 50 move rule shall be reset to zero, because pawn moved.
+    REQUIRE( board.halfmovesFifty() == 0 );
   }
 
   SECTION("black pawn promotion")
@@ -312,34 +330,40 @@ TEST_CASE("Board::move()")
 
     SECTION("promote to queen")
     {
-      //move shall be performable
+      // move shall be performable
       REQUIRE( board.move(Field::a2, Field::a1, PieceType::queen) );
-      //a2 shall be empty
+      // a2 shall be empty
       REQUIRE( board.element(Field::a2) == Piece() );
-      //a1 shall be black queen
+      // a1 shall be black queen
       REQUIRE( board.element(Field::a1) == Piece(Colour::black, PieceType::queen) );
+      // Halfmoves under 50 move rule shall be reset to zero, because pawn moved.
+      REQUIRE( board.halfmovesFifty() == 0 );
     }
 
     SECTION("promote to knight")
     {
-      //move shall be performable
+      // move shall be performable
       REQUIRE( board.move(Field::a2, Field::a1, PieceType::knight) );
-      //a2 shall be empty
+      // a2 shall be empty
       REQUIRE( board.element(Field::a2) == Piece() );
-      //a1 shall be black knight
+      // a1 shall be black knight
       REQUIRE( board.element(Field::a1) == Piece(Colour::black, PieceType::knight) );
+      // Halfmoves under 50 move rule shall be reset to zero, because pawn moved.
+      REQUIRE( board.halfmovesFifty() == 0 );
     }
   }
 
   SECTION("en passant capture of black pawn")
   {
     REQUIRE( board.fromFEN("k6K/8/8/4pP2/8/8/8/8 w - e6") );
-    //e5 shall be black pawn
+    // e5 shall be black pawn
     REQUIRE( board.element(Field::e5) == Piece(Colour::black, PieceType::pawn) );
-    //move black pawn from f5 to e6 - should be performed
+    // move black pawn from f5 to e6 - should be performed
     REQUIRE( board.move(Field::f5, Field::e6, PieceType::queen) );
-    //e5 should not contain black pawn anymore
+    // e5 should not contain black pawn anymore
     REQUIRE( board.element(Field::e5) == Piece(Colour::none, PieceType::none) );
+    // Halfmoves under 50 move rule shall be reset to zero, because pawn was captured.
+    REQUIRE( board.halfmovesFifty() == 0 );
   }
 
   SECTION("white kingside castling")
@@ -425,4 +449,60 @@ TEST_CASE("Board::move()")
     REQUIRE_FALSE( board.castling().black_kingside );
     REQUIRE_FALSE( board.castling().black_queenside );
   }
+}
+
+TEST_CASE("Board::halfmovesFifty()")
+{
+  using namespace simplechess;
+  Board board;
+
+  // Initialize board.
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0") );
+  // Halfmoves shall be zero.
+  REQUIRE( board.halfmovesFifty() == 0 );
+  // Move white knight.
+  REQUIRE( board.move(Field::b1, Field::a3, PieceType::queen) );
+  // Halfmoves shall be one, because there was no capture or pawn move.
+  REQUIRE( board.halfmovesFifty() == 1 );
+  // Move black knight.
+  REQUIRE( board.move(Field::b8, Field::a6, PieceType::queen) );
+  // Halfmoves shall be two, because there was no capture or pawn move.
+  REQUIRE( board.halfmovesFifty() == 2 );
+  // Move white knight.
+  REQUIRE( board.move(Field::g1, Field::h3, PieceType::queen) );
+  // Halfmoves shall be three, because there was no capture or pawn move.
+  REQUIRE( board.halfmovesFifty() == 3 );
+  // Move black knight.
+  REQUIRE( board.move(Field::g8, Field::h6, PieceType::queen) );
+  // Halfmoves shall be four, because there was no capture or pawn move.
+  REQUIRE( board.halfmovesFifty() == 4 );
+  // Number of halfmoves should be reflected in FEN.
+  REQUIRE( ForsythEdwardsNotation::fromBoard(board) ==
+    "r1bqkb1r/pppppppp/n6n/8/8/N6N/PPPPPPPP/R1BQKB1R w KQkq - 4"
+  );
+  // Move white pawn.
+  REQUIRE( board.move(Field::e2, Field::e4, PieceType::queen) );
+  // Halfmoves shall be back to zero, because that was a pawn move.
+  REQUIRE( board.halfmovesFifty() == 0 );
+  // Move black pawn.
+  REQUIRE( board.move(Field::d7, Field::d5, PieceType::queen) );
+  // Halfmoves shall be back to zero, because that was a pawn move.
+  REQUIRE( board.halfmovesFifty() == 0 );
+  REQUIRE( ForsythEdwardsNotation::fromBoard(board) ==
+    "r1bqkb1r/ppp1pppp/n6n/3p4/4P3/N6N/PPPP1PPP/R1BQKB1R w KQkq d6 0"
+  );
+  // Move white queen.
+  REQUIRE( board.move(Field::d1, Field::g4, PieceType::queen) );
+  // Halfmoves shall be one, because there was no capture or pawn move.
+  REQUIRE( board.halfmovesFifty() == 1 );
+  REQUIRE( ForsythEdwardsNotation::fromBoard(board) ==
+    "r1bqkb1r/ppp1pppp/n6n/3p4/4P1Q1/N6N/PPPP1PPP/R1B1KB1R b KQkq - 1"
+  );
+  // Move black bishop to capture queen.
+  REQUIRE( board.move(Field::c8, Field::g4, PieceType::queen) );
+  // Halfmoves shall be back to zero, because that was a capture.
+  REQUIRE( board.halfmovesFifty() == 0 );
+  REQUIRE( ForsythEdwardsNotation::fromBoard(board) ==
+    "r2qkb1r/ppp1pppp/n6n/3p4/4P1b1/N6N/PPPP1PPP/R1B1KB1R w KQkq - 0"
+  );
 }

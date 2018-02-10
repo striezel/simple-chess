@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,14 +18,15 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_CHESS_FEN_HPP
-#define SIMPLE_CHESS_FEN_HPP
+#ifndef SIMPLECHESS_FEN_HPP
+#define SIMPLECHESS_FEN_HPP
 
 #include "Board.hpp"
 
 namespace simplechess
 {
 
+/** \brief Class to create Forsyth-Edwards Notation (FEN) of a board. */
 class ForsythEdwardsNotation
 {
   public:
@@ -41,11 +42,11 @@ class ForsythEdwardsNotation
     /** \brief Forsyth-Edwards notation for the initial position in chess
      */
     static const std::string defaultInitialPosition;
-}; //class
+}; // class
 
-//type alias
+// type alias
 typedef ForsythEdwardsNotation FEN;
 
-} //namespace
+} // namespace
 
-#endif // SIMPLE_CHESS_FEN_HPP
+#endif // SIMPLECHESS_FEN_HPP

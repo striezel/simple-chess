@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 namespace simplechess
 {
 
-const std::string ForsythEdwardsNotation::defaultInitialPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
+const std::string ForsythEdwardsNotation::defaultInitialPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0";
 
 std::string ForsythEdwardsNotation::fromBoard(const Board & board)
 {
@@ -39,13 +39,13 @@ std::string ForsythEdwardsNotation::fromBoard(const Board & board)
         ++emptyCount;
       else
       {
-        //First, add empty count, if any.
+        // First, add empty count, if any.
         if (emptyCount > 0)
         {
           fenString = fenString + util::intToString(emptyCount);
           emptyCount = 0;
         }
-        //now add the real thing
+        // now add the real thing
         switch(piece.colour)
         {
           case Colour::white:
@@ -70,9 +70,9 @@ std::string ForsythEdwardsNotation::fromBoard(const Board & board)
                       fenString = fenString + 'P';
                       break;
                  default:
-                      //invalid piece
+                      // invalid piece
                       return std::string();
-               } //switch piece
+               } // switch piece
                break;
           case Colour::black:
                switch(piece.piece)
@@ -96,27 +96,27 @@ std::string ForsythEdwardsNotation::fromBoard(const Board & board)
                       fenString = fenString + 'p';
                       break;
                  default:
-                      //invalid piece
+                      // invalid piece
                       return std::string();
-               } //switch piece
+               } // switch piece
                break;
           case Colour::none:
-               //should never happen, invalid colour
+               // should never happen, invalid colour
                return std::string();
-        } //switch colour
-      } //else
-    } //for columns
-    //First, add empty count, if any.
+        } // switch colour
+      } // else
+    } // for columns
+    // First, add empty count, if any.
     if (emptyCount > 0)
     {
       fenString = fenString + util::intToString(emptyCount);
       emptyCount = 0;
     }
-    //add slash - except after last row
+    // add slash - except after last row
     if (r > 1)
       fenString = fenString + "/";
-  } //for rows
-  //Who is to move?
+  } // for rows
+  // Who is to move?
   switch(board.toMove())
   {
     case Colour::white:
@@ -126,18 +126,20 @@ std::string ForsythEdwardsNotation::fromBoard(const Board & board)
          fenString = fenString + " b";
          break;
     default:
-         //Something is wrong here, return without extra data.
+         // Something is wrong here, return without extra data.
          return fenString;
-  } //switch
-  //castling information
+  } // switch
+  // castling information
   fenString += " " + board.castling().toFEN();
-  //en passant
+  // en passant
   const Field & ep = board.enPassant();
   if (ep == Field::none)
     fenString = fenString + " -";
   else
     fenString = fenString + " " + column(ep) + util::intToString(row(ep));
-  //return here, because other data is not implemented yet
+  // number of half moves under 50 move rule
+  fenString += (" " + util::intToString(board.halfmovesFifty()));
+  // Return here, because other data is not implemented yet.
   return fenString;
 }
 

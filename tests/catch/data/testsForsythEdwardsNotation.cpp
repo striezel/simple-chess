@@ -38,7 +38,7 @@ TEST_CASE("ForsythEdwardsNotation::fromBoard()")
 
   SECTION("non-standard position")
   {
-    //white pieces
+    // white pieces
     board.setElement(Field::a2, Piece(Colour::white, PieceType::pawn));
     board.setElement(Field::b2, Piece(Colour::white, PieceType::pawn));
     board.setElement(Field::c2, Piece(Colour::white, PieceType::pawn));
@@ -47,7 +47,7 @@ TEST_CASE("ForsythEdwardsNotation::fromBoard()")
     board.setElement(Field::h1, Piece(Colour::white, PieceType::king));
     board.setElement(Field::g8, Piece(Colour::white, PieceType::rook));
     board.setElement(Field::h7, Piece(Colour::white, PieceType::queen));
-    //black pieces
+    // black pieces
     board.setElement(Field::a7, Piece(Colour::black, PieceType::pawn));
     board.setElement(Field::b6, Piece(Colour::black, PieceType::pawn));
     board.setElement(Field::c7, Piece(Colour::black, PieceType::pawn));
@@ -57,14 +57,16 @@ TEST_CASE("ForsythEdwardsNotation::fromBoard()")
     board.setElement(Field::c8, Piece(Colour::black, PieceType::bishop));
     board.setElement(Field::f7, Piece(Colour::black, PieceType::king));
     board.setElement(Field::g6, Piece(Colour::black, PieceType::knight));
-    //update who is to move
+    // update who is to move
     board.setToMove(Colour::black);
-    //update castling info
+    // update castling info
     Castling c;
     c.fromFEN("-");
     board.setCastling(c);
+    // update number of half moves for 50 move rule
+    board.setHalfmovesFifty(34);
 
-    const std::string expectedFEN = "r1b3R1/p1pp1k1Q/1p4n1/8/5p2/3P4/PPP3P1/7K b - -";
+    const std::string expectedFEN = "r1b3R1/p1pp1k1Q/1p4n1/8/5p2/3P4/PPP3P1/7K b - - 34";
     const std::string actualFEN = ForsythEdwardsNotation::fromBoard(board);
     REQUIRE(expectedFEN == actualFEN);
   }
