@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -40,10 +40,10 @@ TEST_CASE("Castling::fromFEN()")
   SECTION("-")
   {
     c.fromFEN("-");
-    REQUIRE( !c.black_kingside );
-    REQUIRE( !c.black_queenside );
-    REQUIRE( !c.white_kingside );
-    REQUIRE( !c.white_queenside );
+    REQUIRE_FALSE( c.black_kingside );
+    REQUIRE_FALSE( c.black_queenside );
+    REQUIRE_FALSE( c.white_kingside );
+    REQUIRE_FALSE( c.white_queenside );
   }
 
   SECTION("KQkq")
@@ -58,18 +58,18 @@ TEST_CASE("Castling::fromFEN()")
   SECTION("Kq")
   {
     c.fromFEN("Kq");
-    REQUIRE( !c.black_kingside );
+    REQUIRE_FALSE( c.black_kingside );
     REQUIRE( c.black_queenside );
     REQUIRE( c.white_kingside );
-    REQUIRE( !c.white_queenside );
+    REQUIRE_FALSE( c.white_queenside );
   }
 
   SECTION("Qk")
   {
     c.fromFEN("Qk");
     REQUIRE( c.black_kingside );
-    REQUIRE( !c.black_queenside );
-    REQUIRE( !c.white_kingside );
+    REQUIRE_FALSE( c.black_queenside );
+    REQUIRE_FALSE( c.white_kingside );
     REQUIRE( c.white_queenside );
   }
 }

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,11 +43,11 @@ TEST_CASE("HalfMove::fromPGN()")
     REQUIRE( hm.piece() == PieceType::pawn );
     REQUIRE( hm.origin() == Field::none );
     REQUIRE( hm.destination() == Field::e4 );
-    REQUIRE( !hm.capture() );
-    REQUIRE( !hm.check() );
-    REQUIRE( !hm.checkmate() );
-    REQUIRE( !hm.kingsideCastling() );
-    REQUIRE( !hm.queensideCastling() );
+    REQUIRE_FALSE( hm.capture() );
+    REQUIRE_FALSE( hm.check() );
+    REQUIRE_FALSE( hm.checkmate() );
+    REQUIRE_FALSE( hm.kingsideCastling() );
+    REQUIRE_FALSE( hm.queensideCastling() );
   }
 
   SECTION("Bd3xe4+")

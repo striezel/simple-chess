@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -47,14 +47,14 @@ TEST_CASE("defaultPgnExample")
   using namespace simplechess;
   std::vector<pgn::Token> tokens;
   bool success = pgn::Tokenizer::fromString(pgnExample, tokens);
-  //tokenization should be successful
+  // tokenization should be successful
   REQUIRE(success);
 
   SECTION("Tokenizer")
   {
-    //first token is left square bracket
+    // first token is left square bracket
     REQUIRE( pgn::TokenType::LeftBracket == tokens.front().type );
-    //last token is game end
+    // last token is game end
     REQUIRE( pgn::TokenType::GameEnd == tokens.back().type );
     REQUIRE( std::string("1/2-1/2") == tokens.back().text );
   }
@@ -63,7 +63,7 @@ TEST_CASE("defaultPgnExample")
   {
     simplechess::PortableGameNotation pgn;
     success = simplechess::pgn::Parser::parse(tokens, pgn);
-    //parsing should be successful
+    // parsing should be successful
     REQUIRE( success );
 
 
@@ -89,9 +89,9 @@ TEST_CASE("defaultPgnExample")
         REQUIRE( pgn.hasMove(i) );
       }
       //No move zero.
-      REQUIRE( !pgn.hasMove(0) );
+      REQUIRE_FALSE( pgn.hasMove(0) );
       //No move 44.
-      REQUIRE( !pgn.hasMove(44) );
+      REQUIRE_FALSE( pgn.hasMove(44) );
     }
 
     SECTION("first move")

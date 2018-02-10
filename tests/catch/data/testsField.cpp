@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -126,13 +126,13 @@ TEST_CASE("Field: sameFile()")
   REQUIRE( sameFile(Field::a1, Field::a7) );
   REQUIRE( sameFile(Field::a1, Field::a8) );
 
-  REQUIRE( !sameFile(Field::a1, Field::b1) );
-  REQUIRE( !sameFile(Field::a1, Field::c1) );
-  REQUIRE( !sameFile(Field::a1, Field::d1) );
-  REQUIRE( !sameFile(Field::a1, Field::e1) );
-  REQUIRE( !sameFile(Field::a1, Field::f1) );
-  REQUIRE( !sameFile(Field::a1, Field::g1) );
-  REQUIRE( !sameFile(Field::a1, Field::h1) );
+  REQUIRE_FALSE( sameFile(Field::a1, Field::b1) );
+  REQUIRE_FALSE( sameFile(Field::a1, Field::c1) );
+  REQUIRE_FALSE( sameFile(Field::a1, Field::d1) );
+  REQUIRE_FALSE( sameFile(Field::a1, Field::e1) );
+  REQUIRE_FALSE( sameFile(Field::a1, Field::f1) );
+  REQUIRE_FALSE( sameFile(Field::a1, Field::g1) );
+  REQUIRE_FALSE( sameFile(Field::a1, Field::h1) );
 
   REQUIRE( sameFile(Field::b1, Field::b2) );
   REQUIRE( sameFile(Field::c1, Field::c3) );
@@ -142,9 +142,9 @@ TEST_CASE("Field: sameFile()")
   REQUIRE( sameFile(Field::g1, Field::g7) );
   REQUIRE( sameFile(Field::h1, Field::h8) );
 
-  REQUIRE( !sameFile(Field::a1, Field::none) );
-  REQUIRE( !sameFile(Field::none, Field::a1) );
-  REQUIRE( !sameFile(Field::none, Field::none) );
+  REQUIRE_FALSE( sameFile(Field::a1, Field::none) );
+  REQUIRE_FALSE( sameFile(Field::none, Field::a1) );
+  REQUIRE_FALSE( sameFile(Field::none, Field::none) );
 }
 
 TEST_CASE("Field: sameRank()")
@@ -160,13 +160,13 @@ TEST_CASE("Field: sameRank()")
   REQUIRE( sameRank(Field::a1, Field::g1) );
   REQUIRE( sameRank(Field::a1, Field::h1) );
 
-  REQUIRE( !sameRank(Field::a1, Field::a2) );
-  REQUIRE( !sameRank(Field::a1, Field::a3) );
-  REQUIRE( !sameRank(Field::a1, Field::a4) );
-  REQUIRE( !sameRank(Field::a1, Field::a5) );
-  REQUIRE( !sameRank(Field::a1, Field::a6) );
-  REQUIRE( !sameRank(Field::a1, Field::a7) );
-  REQUIRE( !sameRank(Field::a1, Field::a8) );
+  REQUIRE_FALSE( sameRank(Field::a1, Field::a2) );
+  REQUIRE_FALSE( sameRank(Field::a1, Field::a3) );
+  REQUIRE_FALSE( sameRank(Field::a1, Field::a4) );
+  REQUIRE_FALSE( sameRank(Field::a1, Field::a5) );
+  REQUIRE_FALSE( sameRank(Field::a1, Field::a6) );
+  REQUIRE_FALSE( sameRank(Field::a1, Field::a7) );
+  REQUIRE_FALSE( sameRank(Field::a1, Field::a8) );
 
   REQUIRE( sameRank(Field::b2, Field::c2) );
   REQUIRE( sameRank(Field::c3, Field::d3) );
@@ -176,9 +176,9 @@ TEST_CASE("Field: sameRank()")
   REQUIRE( sameRank(Field::g7, Field::h7) );
   REQUIRE( sameRank(Field::h8, Field::a8) );
 
-  REQUIRE( !sameRank(Field::a1, Field::none) );
-  REQUIRE( !sameRank(Field::none, Field::a1) );
-  REQUIRE( !sameRank(Field::none, Field::none) );
+  REQUIRE_FALSE( sameRank(Field::a1, Field::none) );
+  REQUIRE_FALSE( sameRank(Field::none, Field::a1) );
+  REQUIRE_FALSE( sameRank(Field::none, Field::none) );
 }
 
 TEST_CASE("Field: leftField()")

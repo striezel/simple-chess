@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -88,10 +88,10 @@ TEST_CASE("stringToInt()")
   REQUIRE( stringToInt("-17348", out) );
   REQUIRE( out == -17348 );
 
-  REQUIRE( !stringToInt("hey1", out) );
-  REQUIRE( !stringToInt("1.2", out) );
-  REQUIRE( !stringToInt("not an integer!", out) );
-  REQUIRE( !stringToInt("123 and still not an integer!", out) );
+  REQUIRE_FALSE( stringToInt("hey1", out) );
+  REQUIRE_FALSE( stringToInt("1.2", out) );
+  REQUIRE_FALSE( stringToInt("not an integer!", out) );
+  REQUIRE_FALSE( stringToInt("123 and still not an integer!", out) );
 }
 
 TEST_CASE("trimLeft()")

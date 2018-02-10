@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -99,6 +99,18 @@ TEST_CASE("Board::fromFEN() with default start position")
   REQUIRE(
       Piece(Colour::black, PieceType::rook) == board.element(Field::h8)
   );
+  // White shall be the player to move next.
+  REQUIRE( board.toMove() == Colour::white );
+  // Check castling info: everything is possible.
+  const Castling& c = board.castling();
+  REQUIRE( c.black_kingside );
+  REQUIRE( c.black_queenside );
+  REQUIRE( c.white_kingside );
+  REQUIRE( c.white_queenside );
+  // No en passant field.
+  REQUIRE( board.enPassant() == Field::none );
+  // Fifty move rule: zero moves.
+  REQUIRE( board.halfmovesFifty() == 0 );
 }
 
 TEST_CASE("Board::fromFEN() with custom position")
@@ -141,16 +153,18 @@ TEST_CASE("Board::fromFEN() with custom position")
     }
   } while ((currentField != Field::none) && (currentField != Field::h8));
   REQUIRE( emptyFields == 47 );
-  //check who is to move
+  // check who is to move
   REQUIRE( board.toMove() == Colour::black );
-  //check e.p. info
+  // check e.p. info
   REQUIRE( board.enPassant() == Field::none );
-  //check castling info
+  // check castling info
   const Castling& c = board.castling();
-  REQUIRE( !c.black_kingside );
-  REQUIRE( !c.black_queenside );
-  REQUIRE( !c.white_kingside );
-  REQUIRE( !c.white_queenside );
+  REQUIRE_FALSE( c.black_kingside );
+  REQUIRE_FALSE( c.black_queenside );
+  REQUIRE_FALSE( c.white_kingside );
+  REQUIRE_FALSE( c.white_queenside );
+  // Fifty move rule: zero moves.
+  REQUIRE( board.halfmovesFifty() == 0 );
 }
 
 TEST_CASE("Board::findNext()")
@@ -279,8 +293,8 @@ TEST_CASE("Board::move()")
     //f1 shall be white rook
     REQUIRE( board.element(Field::f1) == Piece(Colour::white, PieceType::rook) );
     //castling for white player is not allowed anymore
-    REQUIRE( !board.castling().white_kingside );
-    REQUIRE( !board.castling().white_queenside );
+    REQUIRE_FALSE( board.castling().white_kingside );
+    REQUIRE_FALSE( board.castling().white_queenside );
   }
 
   SECTION("white queenside castling")
@@ -300,8 +314,8 @@ TEST_CASE("Board::move()")
     //d1 shall be white rook
     REQUIRE( board.element(Field::d1) == Piece(Colour::white, PieceType::rook) );
     //castling for white player is not allowed anymore
-    REQUIRE( !board.castling().white_kingside );
-    REQUIRE( !board.castling().white_queenside );
+    REQUIRE_FALSE( board.castling().white_kingside );
+    REQUIRE_FALSE( board.castling().white_queenside );
   }
 
   SECTION("black kingside castling")
@@ -321,8 +335,8 @@ TEST_CASE("Board::move()")
     //f8 shall be white rook
     REQUIRE( board.element(Field::f8) == Piece(Colour::black, PieceType::rook) );
     //castling for black player is not allowed anymore
-    REQUIRE( !board.castling().black_kingside );
-    REQUIRE( !board.castling().black_queenside );
+    REQUIRE_FALSE( board.castling().black_kingside );
+    REQUIRE_FALSE( board.castling().black_queenside );
   }
 
   SECTION("black queenside castling")
@@ -342,7 +356,7 @@ TEST_CASE("Board::move()")
     //d8 shall be black rook
     REQUIRE( board.element(Field::d8) == Piece(Colour::black, PieceType::rook) );
     //castling for black player is not allowed anymore
-    REQUIRE( !board.castling().black_kingside );
-    REQUIRE( !board.castling().black_queenside );
+    REQUIRE_FALSE( board.castling().black_kingside );
+    REQUIRE_FALSE( board.castling().black_queenside );
   }
 }

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -58,16 +58,16 @@ TEST_CASE("Piece::acceptable()")
 
   //negative examples
   p = Piece(Colour::black, PieceType::none);
-  REQUIRE( !p.acceptable() );
+  REQUIRE_FALSE( p.acceptable() );
 
   p = Piece(Colour::white, PieceType::none);
-  REQUIRE( !p.acceptable() );
+  REQUIRE_FALSE( p.acceptable() );
 
   p = Piece(Colour::none, PieceType::pawn);
-  REQUIRE( !p.acceptable() );
+  REQUIRE_FALSE( p.acceptable() );
 
   p = Piece(Colour::none, PieceType::rook);
-  REQUIRE( !p.acceptable() );
+  REQUIRE_FALSE( p.acceptable() );
 }
 
 TEST_CASE("Piece: equality operator")
@@ -89,15 +89,15 @@ TEST_CASE("Piece: equality operator")
   //negative examples
   p1 = Piece(Colour::black, PieceType::none);
   p2 = Piece(Colour::black, PieceType::knight);
-  REQUIRE( !(p1 == p2) );
+  REQUIRE_FALSE( p1 == p2 );
 
   p1 = Piece(Colour::white, PieceType::bishop);
   p2 = Piece(Colour::black, PieceType::bishop);
-  REQUIRE( !(p1 == p2) );
+  REQUIRE_FALSE( p1 == p2 );
 
   p1 = Piece(Colour::none, PieceType::pawn);
   p2 = Piece(Colour::white, PieceType::pawn);
-  REQUIRE( !(p1 == p2) );
+  REQUIRE_FALSE( p1 == p2 );
 }
 
 TEST_CASE("Piece: inequality operator")
@@ -106,15 +106,15 @@ TEST_CASE("Piece: inequality operator")
 
   Piece p1;
   Piece p2;
-  REQUIRE( !(p1 != p2) );
+  REQUIRE_FALSE( p1 != p2 );
 
   p1 = Piece(Colour::white, PieceType::king);
   p2 = Piece(Colour::white, PieceType::king);
-  REQUIRE( !(p1 != p2) );
+  REQUIRE_FALSE( p1 != p2 );
 
   p1 = Piece(Colour::black, PieceType::queen);
   p2 = Piece(Colour::black, PieceType::queen);
-  REQUIRE( !(p1 != p2) );
+  REQUIRE_FALSE( p1 != p2 );
 
   p1 = Piece(Colour::black, PieceType::none);
   p2 = Piece(Colour::black, PieceType::knight);
