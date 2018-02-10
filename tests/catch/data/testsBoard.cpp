@@ -167,6 +167,72 @@ TEST_CASE("Board::fromFEN() with custom position")
   REQUIRE( board.halfmovesFifty() == 0 );
 }
 
+TEST_CASE("Board::fromFEN() with en passant fields")
+{
+  using namespace simplechess;
+  Board board;
+  // none
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - -") );
+  REQUIRE( board.enPassant() == Field::none );
+  // a3
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - a3") );
+  REQUIRE( board.enPassant() == Field::a3 );
+  // b3
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - b3") );
+  REQUIRE( board.enPassant() == Field::b3 );
+  // c3
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - c3") );
+  REQUIRE( board.enPassant() == Field::c3 );
+  // d3
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - d3") );
+  REQUIRE( board.enPassant() == Field::d3 );
+  // e3
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - e3") );
+  REQUIRE( board.enPassant() == Field::e3 );
+  // f3
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - f3") );
+  REQUIRE( board.enPassant() == Field::f3 );
+  // g3
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - g3") );
+  REQUIRE( board.enPassant() == Field::g3 );
+  // h3
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - h3") );
+  REQUIRE( board.enPassant() == Field::h3 );
+
+  // a6
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - a6") );
+  REQUIRE( board.enPassant() == Field::a6 );
+  // b6
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - b6") );
+  REQUIRE( board.enPassant() == Field::b6 );
+  // c6
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - c6") );
+  REQUIRE( board.enPassant() == Field::c6 );
+  // d6
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - d6") );
+  REQUIRE( board.enPassant() == Field::d6 );
+  // e6
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - e6") );
+  REQUIRE( board.enPassant() == Field::e6 );
+  // f6
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - f6") );
+  REQUIRE( board.enPassant() == Field::f6 );
+  // g6
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - g6") );
+  REQUIRE( board.enPassant() == Field::g6 );
+  // h6
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - h6") );
+  REQUIRE( board.enPassant() == Field::h6 );
+
+  // no valid FEN, because e. p. field has wrong rank
+  REQUIRE_FALSE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - a1") );
+  REQUIRE_FALSE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - a2") );
+  REQUIRE_FALSE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - a4") );
+  REQUIRE_FALSE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - a5") );
+  REQUIRE_FALSE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - a7") );
+  REQUIRE_FALSE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b - a9") );
+}
+
 TEST_CASE("Board::findNext()")
 {
   using namespace simplechess;
