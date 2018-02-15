@@ -2,7 +2,7 @@
 
 _Note: This changelog may be incomplete._
 
-## Next version (2018-??-??)
+## Version 0.5.0 (2018-02-15)
 - meteor-chess-client: add output field to indicate when engine offers or claims
   a draw (JSON output mode only), and show intention to claim (text output mode
   only), respectively
