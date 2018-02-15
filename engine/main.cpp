@@ -57,7 +57,7 @@ void showHelp()
             << "                       --evaluator check,promotion,material\n"
             << "                     If no evaluator option is given, the program uses a preset.\n"
             << "\n"
-            << "simplechess-engine is an XBoard-compatible chess engine that supports most of\n"
+            << "simple-chess-engine is an XBoard-compatible chess engine that supports most of\n"
             << "the XBoard commands from protocol version 2. The program expects commands from\n"
             << "XBoard on its standard input and prints responses to the standard output.\n"
             << "For the XBoard protocol see\n"
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
         if (!evaluators.empty())
         {
           std::cout << "Error: The parameter " << param << " cannot be specified more than once!\n";
-          return false;
+          return rcInvalidParameter;
         }
         if (argc > i + 1)
         {
@@ -107,7 +107,7 @@ int main(int argc, char** argv)
         else
         {
           std::cout << "There must be a list of evaluators after " << param << "!\n";
-          return false;
+          return rcInvalidParameter;
         }
       } // if list of evaluators was given
       else
