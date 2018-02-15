@@ -111,6 +111,8 @@
 		<Unit filename="xboard/Quit.hpp" />
 		<Unit filename="xboard/ResultCmd.cpp" />
 		<Unit filename="xboard/ResultCmd.hpp" />
+		<Unit filename="xboard/SetBoard.cpp" />
+		<Unit filename="xboard/SetBoard.hpp" />
 		<Unit filename="xboard/SetTime.cpp" />
 		<Unit filename="xboard/SetTime.hpp" />
 		<Unit filename="xboard/Usermove.cpp" />

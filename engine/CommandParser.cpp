@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2018  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
 #include "xboard/ProtocolVersion.hpp"
 #include "xboard/Quit.hpp"
 #include "xboard/ResultCmd.hpp"
+#include "xboard/SetBoard.hpp"
 #include "xboard/SetTime.hpp"
 #include "xboard/Usermove.hpp"
 #include "xboard/Xboard.hpp"
@@ -210,6 +211,10 @@ void CommandParser::parse(const std::string& commandString)
       } //for
     }
     Engine::get().addCommand(std::unique_ptr<Command>(new ResultCmd(res, comment)));
+  }
+  else if ((commandString.substr(0, 9) == "setboard ") && (commandString.size() > 9))
+  {
+    Engine::get().addCommand(std::unique_ptr<Command>(new SetBoard(commandString.substr(9))));
   }
   else
   {

@@ -2,6 +2,9 @@
 
 _Note: This changelog may be incomplete._
 
+## Next version (2018-??-??)
+- simple-chess-engine: implement support for setboard command
+
 ## Version 0.4.1 (2018-02-09)
 - meteor-chess-client: give information about pawn promotion, too
 
