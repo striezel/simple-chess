@@ -28,6 +28,7 @@ set(simple_chess_engine_sources
     ../util/strings.cpp
     time/Clock.cpp
     time/Timing.cpp
+    xboard/Draw.cpp
     xboard/Error.cpp
     xboard/ExactTime.cpp
     xboard/Force.cpp

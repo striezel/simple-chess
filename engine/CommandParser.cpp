@@ -22,6 +22,7 @@
 #include <regex>
 #include "Engine.hpp"
 #include "xboard/Command.hpp"
+#include "xboard/Draw.hpp"
 #include "xboard/ExactTime.hpp"
 #include "xboard/Error.hpp"
 #include "xboard/Force.hpp"
@@ -192,6 +193,10 @@ void CommandParser::parse(const std::string& commandString)
   else if (commandString.substr(0, 5) == "ping ")
   {
     Engine::get().addCommand(std::unique_ptr<Command>(new Ping(commandString.substr(5))));
+  }
+  else if (commandString == "draw")
+  {
+    Engine::get().addCommand(std::unique_ptr<Command>(new Draw()));
   }
   else if (commandString.substr(0, 7) == "result ")
   {

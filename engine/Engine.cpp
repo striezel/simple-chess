@@ -157,6 +157,13 @@ void Engine::move()
   if (board().toMove() != player())
     return;
 
+  // Check for draw by 50 move rule.
+  if (board().halfmovesFifty() >= 100)
+  {
+    sendCommand("1/2-1/2 {Draw by 50 move rule}");
+    return;
+  }
+
   // Let's find a suitable move.
   Search s(board());
   // Search for best move with defined search depth.

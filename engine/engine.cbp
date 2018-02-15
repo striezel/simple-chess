@@ -89,6 +89,8 @@
 		<Unit filename="time/Timing.cpp" />
 		<Unit filename="time/Timing.hpp" />
 		<Unit filename="xboard/Command.hpp" />
+		<Unit filename="xboard/Draw.cpp" />
+		<Unit filename="xboard/Draw.hpp" />
 		<Unit filename="xboard/Error.cpp" />
 		<Unit filename="xboard/Error.hpp" />
 		<Unit filename="xboard/ExactTime.cpp" />
