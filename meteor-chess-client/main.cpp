@@ -154,6 +154,7 @@ int main(int argc, char** argv)
       {
         Json::Value val;
         val["resign"] = true;
+        val["draw"] = false;
         val["message"] = std::string("simplechess AI could not find a valid move. User wins!");
         val["exitcode"] = simplechess::rcEngineResigns;
         Json::StyledStreamWriter writer;
@@ -172,6 +173,10 @@ int main(int argc, char** argv)
     const simplechess::PieceType promo = std::get<2>(bestMove);
     if (!options.json)
     {
+      if (board.halfmovesFifty() >= 100)
+      {
+        std::cout << "Computer claims draw by 50 move rule!\n";
+      }
       std::cout << "Computer moves from " << simplechess::column(from) << simplechess::row(from)
                 << " to " << simplechess::column(to) << simplechess::row(to) << ".\n";
     }
@@ -183,6 +188,7 @@ int main(int argc, char** argv)
         {
           Json::Value val;
           val["resign"] = true;
+          val["draw"] = false;
           val["message"] = std::string("The computer move is not allowed! User wins.");
           val["exitcode"] = simplechess::rcEngineResigns;
           Json::StyledStreamWriter writer;
@@ -206,6 +212,7 @@ int main(int argc, char** argv)
     {
       Json::Value val;
       val["resign"] = false;
+      val["draw"] = (board.halfmovesFifty() >= 100);
       val["from"]["column"] = std::string(1, simplechess::column(from));
       val["from"]["row"] = simplechess::row(from);
       val["to"]["column"] = std::string(1, simplechess::column(to));

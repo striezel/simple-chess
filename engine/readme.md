@@ -7,7 +7,7 @@ XBoard on its standard input and prints responses to the standard output.
 For the XBoard protocol see
   <https://www.gnu.org/software/xboard/engine-intf.html>.
 
-# Invocation
+## Invocation
 
     simple-chess-engine [OPTIONS]
 
@@ -29,7 +29,7 @@ Supported program options:
                          --evaluator check,promotion,material
                        If no evaluator option is given, the program uses a preset.
 
-# Exit status
+## Exit status
 
 * **0** - successful program execution
 * **1** - invalid command line parameters have been specified
