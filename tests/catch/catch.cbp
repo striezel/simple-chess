@@ -41,6 +41,8 @@
 		<Unit filename="../../data/Result.cpp" />
 		<Unit filename="../../data/Result.hpp" />
 		<Unit filename="../../data/Ternary.hpp" />
+		<Unit filename="../../evaluation/CastlingEvaluator.cpp" />
+		<Unit filename="../../evaluation/CastlingEvaluator.hpp" />
 		<Unit filename="../../evaluation/CheckEvaluator.cpp" />
 		<Unit filename="../../evaluation/CheckEvaluator.hpp" />
 		<Unit filename="../../evaluation/CompoundCreator.cpp" />
@@ -85,6 +87,7 @@
 		<Unit filename="data/testsPiece.cpp" />
 		<Unit filename="evaluation/ConstantEvaluator.cpp" />
 		<Unit filename="evaluation/ConstantEvaluator.hpp" />
+		<Unit filename="evaluation/testsCastlingEvaluator.cpp" />
 		<Unit filename="evaluation/testsCheckEvaluator.cpp" />
 		<Unit filename="evaluation/testsCompoundCreator.cpp" />
 		<Unit filename="evaluation/testsCompoundEvaluator.cpp" />

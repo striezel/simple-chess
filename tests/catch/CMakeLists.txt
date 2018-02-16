@@ -12,6 +12,7 @@ set(simple_chess_tests_catch_sources
     ../../data/Piece.cpp
     ../../data/PortableGameNotation.cpp
     ../../data/Result.cpp
+    ../../evaluation/CastlingEvaluator.cpp
     ../../evaluation/CheckEvaluator.cpp
     ../../evaluation/CompoundCreator.cpp
     ../../evaluation/CompoundEvaluator.cpp
@@ -36,6 +37,7 @@ set(simple_chess_tests_catch_sources
     data/testsHalfMove.cpp
     data/testsPiece.cpp
     evaluation/ConstantEvaluator.cpp
+    evaluation/testsCastlingEvaluator.cpp
     evaluation/testsCheckEvaluator.cpp
     evaluation/testsCompoundCreator.cpp
     evaluation/testsCompoundEvaluator.cpp
