@@ -235,6 +235,7 @@ bool Board::fromFEN(const std::string& FEN)
       mCastling.white_kingside = false;
       mCastling.white_queenside = false;
     }
+    mCastling.white_castled = (mCastling.white_kingside || mCastling.white_queenside) ? Ternary::false_value : Ternary::maybe_value;
     if (element(Field::e8) == Piece(Colour::black, PieceType::king))
     {
       mCastling.black_kingside = element(Field::h8) == Piece(Colour::black, PieceType::rook);
@@ -245,6 +246,7 @@ bool Board::fromFEN(const std::string& FEN)
       mCastling.black_kingside = false;
       mCastling.black_queenside = false;
     }
+    mCastling.black_castled = (mCastling.black_kingside || mCastling.black_queenside) ? Ternary::false_value : Ternary::maybe_value;
   } // castling
 
   // Parse info about en passant move.
@@ -381,6 +383,7 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
         // King was already moved, we just have to move the rook here.
         mFields[Field::a1] = Piece(Colour::none, PieceType::none);
         mFields[Field::d1] = Piece(Colour::white, PieceType::rook);
+        mCastling.white_castled = Ternary::true_value;
       }
       if ((to == Field::g1) && (dest.piece == PieceType::none))
       {
@@ -388,8 +391,9 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
         // King was already moved, we just have to move the rook here.
         mFields[Field::h1] = Piece(Colour::none, PieceType::none);
         mFields[Field::f1] = Piece(Colour::white, PieceType::rook);
+        mCastling.white_castled = Ternary::true_value;
       }
-    }// if white king at initial position
+    } // if white king at initial position
     else if ((start.colour == Colour::black) && (from == Field::e8))
     {
       if ((to == Field::c8) && (dest.piece == PieceType::none))
@@ -398,6 +402,7 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
         // King was already moved, we just have to move the rook here.
         mFields[Field::a8] = Piece(Colour::none, PieceType::none);
         mFields[Field::d8] = Piece(Colour::black, PieceType::rook);
+        mCastling.black_castled = Ternary::true_value;
       }
       if ((to == Field::g8) && (dest.piece == PieceType::none))
       {
@@ -405,6 +410,7 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
         // King was already moved, we just have to move the rook here.
         mFields[Field::h8] = Piece(Colour::none, PieceType::none);
         mFields[Field::f8] = Piece(Colour::black, PieceType::rook);
+        mCastling.black_castled = Ternary::true_value;
       }
     }// if black king at initial position
   } // if king may be castling

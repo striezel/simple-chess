@@ -106,8 +106,10 @@ TEST_CASE("Board::fromFEN() with default start position")
   const Castling& c = board.castling();
   REQUIRE( c.black_kingside );
   REQUIRE( c.black_queenside );
+  REQUIRE( c.black_castled == Ternary::false_value );
   REQUIRE( c.white_kingside );
   REQUIRE( c.white_queenside );
+  REQUIRE( c.white_castled == Ternary::false_value );
   // No en passant field.
   REQUIRE( board.enPassant() == Field::none );
   // Fifty move rule: zero moves.
@@ -162,8 +164,10 @@ TEST_CASE("Board::fromFEN() with custom position")
   const Castling& c = board.castling();
   REQUIRE_FALSE( c.black_kingside );
   REQUIRE_FALSE( c.black_queenside );
+  REQUIRE( c.black_castled == Ternary::maybe_value );
   REQUIRE_FALSE( c.white_kingside );
   REQUIRE_FALSE( c.white_queenside );
+  REQUIRE( c.white_castled == Ternary::maybe_value );
   // Fifty move rule: zero moves.
   REQUIRE( board.halfmovesFifty() == 0 );
 }
@@ -369,85 +373,93 @@ TEST_CASE("Board::move()")
   SECTION("white kingside castling")
   {
     REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R") );
-    //castling must be allowed
+    // Castling must be allowed.
     REQUIRE( board.castling().white_kingside );
     REQUIRE( board.castling().white_queenside );
-    //move shall be performable
+    // move shall be performable
     REQUIRE( board.move(Field::e1, Field::g1, PieceType::queen) );
-    //e1 shall be empty
+    // e1 shall be empty
     REQUIRE( board.element(Field::e1) == Piece() );
-    //g1 shall be white king
+    // g1 shall be white king
     REQUIRE( board.element(Field::g1) == Piece(Colour::white, PieceType::king) );
-    //h1 shall be empty
+    // h1 shall be empty
     REQUIRE( board.element(Field::h1) == Piece() );
-    //f1 shall be white rook
+    // f1 shall be white rook
     REQUIRE( board.element(Field::f1) == Piece(Colour::white, PieceType::rook) );
-    //castling for white player is not allowed anymore
+    // Castling for white player is not allowed anymore.
     REQUIRE_FALSE( board.castling().white_kingside );
     REQUIRE_FALSE( board.castling().white_queenside );
+    // White player has castled.
+    REQUIRE( board.castling().white_castled == Ternary::true_value );
   }
 
   SECTION("white queenside castling")
   {
     REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/R3KBNR") );
-    //castling must be allowed
+    // Castling must be allowed.
     REQUIRE( board.castling().white_kingside );
     REQUIRE( board.castling().white_queenside );
-    //move shall be performable
+    // move shall be performable
     REQUIRE( board.move(Field::e1, Field::c1, PieceType::queen) );
-    //e1 shall be empty
+    // e1 shall be empty
     REQUIRE( board.element(Field::e1) == Piece() );
-    //c1 shall be white king
+    // c1 shall be white king
     REQUIRE( board.element(Field::c1) == Piece(Colour::white, PieceType::king) );
-    //a1 shall be empty
+    // a1 shall be empty
     REQUIRE( board.element(Field::a1) == Piece() );
-    //d1 shall be white rook
+    // d1 shall be white rook
     REQUIRE( board.element(Field::d1) == Piece(Colour::white, PieceType::rook) );
-    //castling for white player is not allowed anymore
+    // Castling for white player is not allowed anymore.
     REQUIRE_FALSE( board.castling().white_kingside );
     REQUIRE_FALSE( board.castling().white_queenside );
+    // White player has castled.
+    REQUIRE( board.castling().white_castled == Ternary::true_value );
   }
 
   SECTION("black kingside castling")
   {
     REQUIRE( board.fromFEN("rnbqk2r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b") );
-    //castling must be allowed
+    // Castling must be allowed.
     REQUIRE( board.castling().black_kingside );
     REQUIRE( board.castling().black_queenside );
-    //move shall be performable
+    // move shall be performable
     REQUIRE( board.move(Field::e8, Field::g8, PieceType::queen) );
-    //e8 shall be empty
+    // e8 shall be empty
     REQUIRE( board.element(Field::e8) == Piece() );
-    //g8 shall be white king
+    // g8 shall be white king
     REQUIRE( board.element(Field::g8) == Piece(Colour::black, PieceType::king) );
-    //h8 shall be empty
+    // h8 shall be empty
     REQUIRE( board.element(Field::h8) == Piece() );
-    //f8 shall be white rook
+    // f8 shall be white rook
     REQUIRE( board.element(Field::f8) == Piece(Colour::black, PieceType::rook) );
-    //castling for black player is not allowed anymore
+    // Castling for black player is not allowed anymore.
     REQUIRE_FALSE( board.castling().black_kingside );
     REQUIRE_FALSE( board.castling().black_queenside );
+    // Black player has castled.
+    REQUIRE( board.castling().black_castled == Ternary::true_value );
   }
 
   SECTION("black queenside castling")
   {
     REQUIRE( board.fromFEN("r3kbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b") );
-    //castling must be allowed
+    // Castling must be allowed.
     REQUIRE( board.castling().black_kingside );
     REQUIRE( board.castling().black_queenside );
-    //move shall be performable
+    // move shall be performable
     REQUIRE( board.move(Field::e8, Field::c8, PieceType::queen) );
-    //e8 shall be empty
+    // e8 shall be empty
     REQUIRE( board.element(Field::e8) == Piece() );
-    //c8 shall be black king
+    // c8 shall be black king
     REQUIRE( board.element(Field::c8) == Piece(Colour::black, PieceType::king) );
-    //a8 shall be empty
+    // a8 shall be empty
     REQUIRE( board.element(Field::a8) == Piece() );
-    //d8 shall be black rook
+    // d8 shall be black rook
     REQUIRE( board.element(Field::d8) == Piece(Colour::black, PieceType::rook) );
-    //castling for black player is not allowed anymore
+    // Castling for black player is not allowed anymore.
     REQUIRE_FALSE( board.castling().black_kingside );
     REQUIRE_FALSE( board.castling().black_queenside );
+    // Black player has castled.
+    REQUIRE( board.castling().black_castled == Ternary::true_value );
   }
 }
 

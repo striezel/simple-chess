@@ -22,6 +22,7 @@
 #define SIMPLE_CHESS_CASTLING_HPP
 
 #include <string>
+#include "Ternary.hpp"
 
 namespace simplechess
 {
@@ -33,8 +34,10 @@ struct Castling
 {
   bool white_kingside; /**< whether kingside castling for white is still possible */
   bool white_queenside; /**< whether queenside castling for white is still possible */
+  Ternary white_castled; /**< whether the white player has performed castling */
   bool black_kingside; /**< whether kingside castling for black is still possible */
   bool black_queenside; /**< whether queenside castling for black is still possible */
+  Ternary black_castled; /**< whether the black player has performed castling */
 
   /** \brief Default constructor. */
   Castling();

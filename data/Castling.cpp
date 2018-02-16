@@ -26,8 +26,10 @@ namespace simplechess
 Castling::Castling()
 : white_kingside(true),
   white_queenside(true),
+  white_castled(Ternary::false_value),
   black_kingside(true),
-  black_queenside(true)
+  black_queenside(true),
+  black_castled(Ternary::false_value)
 {
 }
 
@@ -51,8 +53,10 @@ void Castling::fromFEN(const std::string& FEN)
 {
   white_kingside = (FEN.find('K') != std::string::npos);
   white_queenside = (FEN.find('Q') != std::string::npos);
+  white_castled = (white_kingside || white_queenside) ? Ternary::false_value : Ternary::maybe_value;
   black_kingside = (FEN.find('k') != std::string::npos);
   black_queenside = (FEN.find('q') != std::string::npos);
+  black_castled = (black_kingside || black_queenside) ? Ternary::false_value : Ternary::maybe_value;
 }
 
 } // namespace

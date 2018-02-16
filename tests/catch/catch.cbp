@@ -40,6 +40,7 @@
 		<Unit filename="../../data/PortableGameNotation.hpp" />
 		<Unit filename="../../data/Result.cpp" />
 		<Unit filename="../../data/Result.hpp" />
+		<Unit filename="../../data/Ternary.hpp" />
 		<Unit filename="../../evaluation/CheckEvaluator.cpp" />
 		<Unit filename="../../evaluation/CheckEvaluator.hpp" />
 		<Unit filename="../../evaluation/CompoundCreator.cpp" />

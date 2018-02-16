@@ -25,11 +25,14 @@ TEST_CASE("Castling:init")
 {
   using namespace simplechess;
   Castling c;
-  //all should be allowed by default
+  // all should be allowed by default
   REQUIRE( c.black_kingside );
   REQUIRE( c.black_queenside );
   REQUIRE( c.white_kingside );
   REQUIRE( c.white_queenside );
+  // That also means that no side has castled yet.
+  REQUIRE( c.white_castled == Ternary::false_value );
+  REQUIRE( c.black_castled == Ternary::false_value );
 }
 
 TEST_CASE("Castling::fromFEN()")
@@ -44,6 +47,9 @@ TEST_CASE("Castling::fromFEN()")
     REQUIRE_FALSE( c.black_queenside );
     REQUIRE_FALSE( c.white_kingside );
     REQUIRE_FALSE( c.white_queenside );
+    // Whether any side has castled is unknown.
+    REQUIRE( c.white_castled == Ternary::maybe_value );
+    REQUIRE( c.black_castled == Ternary::maybe_value );
   }
 
   SECTION("KQkq")
@@ -53,6 +59,9 @@ TEST_CASE("Castling::fromFEN()")
     REQUIRE( c.black_queenside );
     REQUIRE( c.white_kingside );
     REQUIRE( c.white_queenside );
+    // That implies that no side has castled yet.
+    REQUIRE( c.white_castled == Ternary::false_value );
+    REQUIRE( c.black_castled == Ternary::false_value );
   }
 
   SECTION("Kq")
@@ -62,6 +71,9 @@ TEST_CASE("Castling::fromFEN()")
     REQUIRE( c.black_queenside );
     REQUIRE( c.white_kingside );
     REQUIRE_FALSE( c.white_queenside );
+    // That implies that no side has castled yet.
+    REQUIRE( c.white_castled == Ternary::false_value );
+    REQUIRE( c.black_castled == Ternary::false_value );
   }
 
   SECTION("Qk")
@@ -71,6 +83,9 @@ TEST_CASE("Castling::fromFEN()")
     REQUIRE_FALSE( c.black_queenside );
     REQUIRE_FALSE( c.white_kingside );
     REQUIRE( c.white_queenside );
+    // That implies that no side has castled yet.
+    REQUIRE( c.white_castled == Ternary::false_value );
+    REQUIRE( c.black_castled == Ternary::false_value );
   }
 }
 
