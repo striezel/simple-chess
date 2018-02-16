@@ -33,68 +33,68 @@ namespace simplechess
       f1, f2, f3, f4, f5, f6, f7, f8,
       g1, g2, g3, g4, g5, g6, g7, g8,
       h1, h2, h3, h4, h5, h6, h7, h8
-   };
+  };
 
 
-   /** \brief Gets the column/file of a given field.
-    *
-    * \param  f a field, must not be none
-    * \return Returns the column/file of the given field.
-    */
-   char column(const Field f);
+  /** \brief Gets the column/file of a given field.
+   *
+   * \param  f a field, must not be none
+   * \return Returns the column/file of the given field.
+   */
+  char column(const Field f);
 
 
-   /** \brief Gets the row/rank of a given field.
-    *
-    * \param  f a field, must not be none
-    * \return Returns the row/rank of the given field.
-    */
-   int row(const Field f);
+  /** \brief Gets the row/rank of a given field.
+   *
+   * \param  f a field, must not be none
+   * \return Returns the row/rank of the given field.
+   */
+  int row(const Field f);
 
 
-   /** \brief Converts a (column;row) pair to Field.
-    *
-    * \param column column (file) of the field
-    * \param row    row (rank) of the field
-    * \return Returns the converted field.
-    */
-   Field toField(const char column, const int row);
+  /** \brief Converts a (column;row) pair to Field.
+   *
+   * \param column column (file) of the field
+   * \param row    row (rank) of the field
+   * \return Returns the converted field.
+   */
+  Field toField(const char column, const int row);
 
 
-   /** \brief Determines whether both fields have the same file.
-    *
-    * \param f1  first field
-    * \param f2  second field
-    * \return Returns true, if both fields have the same file.
-    *         Returns false otherwise, or if one of the fields is none.
-    */
-   bool sameFile(const Field f1, const Field f2);
+  /** \brief Determines whether both fields have the same file.
+   *
+   * \param f1  first field
+   * \param f2  second field
+   * \return Returns true, if both fields have the same file.
+   *         Returns false otherwise, or if one of the fields is none.
+   */
+  bool sameFile(const Field f1, const Field f2);
 
 
-   /** \brief Determines whether both fields have the same rank.
-    *
-    * \param f1  first field
-    * \param f2  second field
-    * \return Returns true, if both fields have the same rank.
-    *         Returns false otherwise, or if one of the fields is none.
-    */
-   bool sameRank(const Field f1, const Field f2);
+  /** \brief Determines whether both fields have the same rank.
+   *
+   * \param f1  first field
+   * \param f2  second field
+   * \return Returns true, if both fields have the same rank.
+   *         Returns false otherwise, or if one of the fields is none.
+   */
+  bool sameRank(const Field f1, const Field f2);
 
-   /** \brief Gets the field left of the given field, as seen from the white player's perspective.
-    *
-    * \param f the field
-    * \return Returns the field to the left of the given field, i.e. a1 for b1.
-    * Returns Field::none, if there is no left field.
-    */
-   Field leftField(const Field f);
+  /** \brief Gets the field left of the given field, as seen from the white player's perspective.
+   *
+   * \param f the field
+   * \return Returns the field to the left of the given field, i.e. a1 for b1.
+   * Returns Field::none, if there is no left field.
+   */
+  Field leftField(const Field f);
 
-   /** \brief Gets the field right of the given field, as seen from the white player's perspective.
-    *
-    * \param f the field
-    * \return Returns the field to the right of the given field, i.e. a1 for b1.
-    * Returns Field::none, if there is no right field.
-    */
-   Field rightField(const Field f);
+  /** \brief Gets the field right of the given field, as seen from the white player's perspective.
+   *
+   * \param f the field
+   * \return Returns the field to the right of the given field, i.e. a1 for b1.
+   * Returns Field::none, if there is no right field.
+   */
+  Field rightField(const Field f);
 } // namespace
 
 #endif // SIMPLE_CHESS_FIELD_HPP
