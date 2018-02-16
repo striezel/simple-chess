@@ -43,6 +43,8 @@
 		<Unit filename="../data/ForsythEdwardsNotation.hpp" />
 		<Unit filename="../data/Piece.cpp" />
 		<Unit filename="../data/Piece.hpp" />
+		<Unit filename="../evaluation/CastlingEvaluator.cpp" />
+		<Unit filename="../evaluation/CastlingEvaluator.hpp" />
 		<Unit filename="../evaluation/CheckEvaluator.cpp" />
 		<Unit filename="../evaluation/CheckEvaluator.hpp" />
 		<Unit filename="../evaluation/CompoundCreator.cpp" />

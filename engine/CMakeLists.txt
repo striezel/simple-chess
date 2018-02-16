@@ -13,6 +13,7 @@ set(simple_chess_engine_sources
     ../data/ForsythEdwardsNotation.cpp
     ../data/Piece.cpp
     ../data/Result.cpp
+    ../evaluation/CastlingEvaluator.cpp
     ../evaluation/CheckEvaluator.cpp
     ../evaluation/CompoundCreator.cpp
     ../evaluation/CompoundEvaluator.cpp

@@ -62,6 +62,8 @@
 		<Unit filename="../db/mongo/libmongoclient/QueryCursor.hpp" />
 		<Unit filename="../db/mongo/libmongoclient/Server.cpp" />
 		<Unit filename="../db/mongo/libmongoclient/Server.hpp" />
+		<Unit filename="../evaluation/CastlingEvaluator.cpp" />
+		<Unit filename="../evaluation/CastlingEvaluator.hpp" />
 		<Unit filename="../evaluation/CheckEvaluator.cpp" />
 		<Unit filename="../evaluation/CheckEvaluator.hpp" />
 		<Unit filename="../evaluation/CompoundCreator.cpp" />

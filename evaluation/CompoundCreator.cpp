@@ -20,6 +20,7 @@
 
 #include "CompoundCreator.hpp"
 #include <set>
+#include "CastlingEvaluator.hpp"
 #include "CheckEvaluator.hpp"
 #include "LinearMobilityEvaluator.hpp"
 #include "MaterialEvaluator.hpp"
@@ -30,6 +31,7 @@
 namespace simplechess
 {
 
+const std::string CompoundCreator::IdCastling = "castling";
 const std::string CompoundCreator::IdCheck = "check";
 const std::string CompoundCreator::IdLinearMobility = "linearmobility";
 const std::string CompoundCreator::IdMaterial = "material";
@@ -70,7 +72,9 @@ bool CompoundCreator::create(const std::string& evaluators, CompoundEvaluator& c
   // Add new evaluators by id.
   for (const std::string& id : ids)
   {
-    if (id == IdCheck)
+    if (id == IdCastling)
+      compound.add(std::unique_ptr<Evaluator>(new CastlingEvaluator()));
+    else if (id == IdCheck)
       compound.add(std::unique_ptr<Evaluator>(new CheckEvaluator()));
     else if (id == IdLinearMobility)
       compound.add(std::unique_ptr<Evaluator>(new LinearMobilityEvaluator()));
@@ -93,11 +97,12 @@ bool CompoundCreator::create(const std::string& evaluators, CompoundEvaluator& c
 void CompoundCreator::getDefault(CompoundEvaluator& compound)
 {
   compound.clear();
-  // Add the four evaluators we use by default.
+  // Add the five evaluators we use by default.
   compound.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
   compound.add(std::unique_ptr<Evaluator>(new LinearMobilityEvaluator()));
   compound.add(std::unique_ptr<Evaluator>(new PromotionEvaluator()));
   compound.add(std::unique_ptr<Evaluator>(new CheckEvaluator()));
+  compound.add(std::unique_ptr<Evaluator>(new CastlingEvaluator()));
 }
 
 } // namespace

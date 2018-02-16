@@ -14,6 +14,7 @@ set(meteor-chess-client_sources
     ../db/mongo/libmongoclient/Connection.cpp
     ../db/mongo/libmongoclient/QueryCursor.cpp
     ../db/mongo/libmongoclient/Server.cpp
+    ../evaluation/CastlingEvaluator.cpp
     ../evaluation/CheckEvaluator.cpp
     ../evaluation/CompoundCreator.cpp
     ../evaluation/CompoundEvaluator.cpp

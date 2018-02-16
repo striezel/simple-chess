@@ -19,6 +19,8 @@ Supported program options:
                        comma-separated list of evaluator ids. Valid ids are:
                          material: evaluator using material value of pieces
                          check: evaluator with bonus for checking opponent
+                         castling: evaluator with malus for not castling before
+                                   the possibility for castling is lost
                          promotion: evaluator with bonus for pawns that can be
                                     promoted during the next move
                          linearmobility: bonus for number of possible moves over

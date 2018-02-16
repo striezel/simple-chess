@@ -2,6 +2,12 @@
 
 _Note: This changelog may be incomplete._
 
+## Version 0.5.1 (2018-02-16)
+- add castling evaluator that gives a malus for not castling before losing the
+  possibility to castle
+- simple-chess-cli, simple-chess-engine, meteor-chess-client: use castling
+  evaluator as part of the default evaluator compound
+
 ## Version 0.5.0 (2018-02-15)
 - meteor-chess-client: add output field to indicate when engine offers or claims
   a draw (JSON output mode only), and show intention to claim (text output mode

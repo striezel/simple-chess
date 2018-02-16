@@ -47,6 +47,8 @@ void showHelp()
             << "                     comma-separated list of evaluator ids. Valid ids are:\n"
             << "                       material: evaluator using material value of pieces\n"
             << "                       check: evaluator with bonus for checking opponent\n"
+            << "                       castling: evaluator with malus for not castling before\n"
+            << "                                 the possibility for castling is lost\n"
             << "                       promotion: evaluator with bonus for pawns that can be\n"
             << "                                  promoted during the next move\n"
             << "                       linearmobility: bonus for number of possible moves over\n"

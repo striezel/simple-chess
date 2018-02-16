@@ -50,6 +50,7 @@ class CompoundCreator
     static void getDefault(CompoundEvaluator& compound);
 
 
+    static const std::string IdCastling; /**< id for CastlingEvaluator */
     static const std::string IdCheck; /**< id for CheckEvaluator */
     static const std::string IdLinearMobility; /**< id for LinearMobilityEvaluator */
     static const std::string IdMaterial; /**< id for MaterialEvaluator */

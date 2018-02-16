@@ -9,6 +9,7 @@ set(simple_chess_cli_sources
     ../data/Field.cpp
     ../data/ForsythEdwardsNotation.cpp
     ../data/Piece.cpp
+    ../evaluation/CastlingEvaluator.cpp
     ../evaluation/CheckEvaluator.cpp
     ../evaluation/CompoundCreator.cpp
     ../evaluation/CompoundEvaluator.cpp

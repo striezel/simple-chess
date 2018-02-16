@@ -48,13 +48,15 @@ void showHelp()
             << "  w | white       - let the engine be the white player\n"
             << "  b | black       - let the engine be the black player\n"
             << "                    (The default is to play none, i.e. both sides are human.)\n"
-            << " FEN              - a valid Forsyth-Edwards notation that indicates the\n"
+            << "  FEN             - a valid Forsyth-Edwards notation that indicates the\n"
             << "                    initial position for the chess game. Default is the normal\n"
             << "                    chess start position.\n"
             << "  -e EVAL         - sets a custom set of evaluators to use where EVAL is a\n"
             << "                    comma-separated list of evaluator ids. Valid ids are:\n"
             << "                      material: evaluator using material value of pieces\n"
             << "                      check: evaluator with bonus for checking opponent\n"
+            << "                       castling: evaluator with malus for not castling before\n"
+            << "                                 the possibility for castling is lost\n"
             << "                      promotion: evaluator with bonus for pawns that can be\n"
             << "                                 promoted during the next move\n"
             << "                      linearmobility: bonus for number of possible moves over\n"
@@ -66,7 +68,6 @@ void showHelp()
             << "                    If no evaluator option is given, the program uses a preset.\n"
             << "                    Evaluators are used by computer players only, so this\n"
             << "                    has no effect when two humans play against each other.\n";
-;
 }
 
 /** \brief Prints a board to the standard output.
