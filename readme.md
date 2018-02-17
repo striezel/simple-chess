@@ -40,13 +40,13 @@ Starting in the root directory of the source, you can do the following steps:
     mkdir build
     cd build
     cmake ../
-    make pmdb -j4
+    make -j4
 
 Now the binaries are built and ready for use.
 
 ## Copyright and Licensing
 
-Copyright 2016-2017 Dirk Stolle
+Copyright 2016, 2017, 2018  Dirk Stolle
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
