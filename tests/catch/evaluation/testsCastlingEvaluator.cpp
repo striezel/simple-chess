@@ -163,9 +163,10 @@ TEST_CASE("CastlingEvaluator: white castles")
     REQUIRE_FALSE( board.castling().white_kingside );
     REQUIRE_FALSE( board.castling().white_queenside );
     REQUIRE( board.castling().white_castled == Ternary::true_value );
-    // Score should be zero, because no malus occurs.
+    // Score should be above zero, because bonus for castling occurs.
     const int newScore = evaluator.score(board);
-    REQUIRE( newScore == 0 );
+    REQUIRE( newScore > 0 );
+    REQUIRE( newScore == CastlingEvaluator::defaultCastlingValue );
   }
 
   SECTION( "queenside" )
@@ -174,9 +175,10 @@ TEST_CASE("CastlingEvaluator: white castles")
     REQUIRE_FALSE( board.castling().white_kingside );
     REQUIRE_FALSE( board.castling().white_queenside );
     REQUIRE( board.castling().white_castled == Ternary::true_value );
-    // Score should be zero, because no malus occurs.
+    // Score should be above zero, because bonus for castling occurs.
     const int newScore = evaluator.score(board);
-    REQUIRE( newScore == 0 );
+    REQUIRE( newScore > 0 );
+    REQUIRE( newScore == CastlingEvaluator::defaultCastlingValue );
   }
 }
 
@@ -198,9 +200,10 @@ TEST_CASE("CastlingEvaluator: black castles")
     REQUIRE_FALSE( board.castling().black_kingside );
     REQUIRE_FALSE( board.castling().black_queenside );
     REQUIRE( board.castling().black_castled == Ternary::true_value );
-    // Score should be zero, because no malus occurs.
+    // Score should be below zero, because bonus for castling occurs.
     const int newScore = evaluator.score(board);
-    REQUIRE( newScore == 0 );
+    REQUIRE( newScore < 0 );
+    REQUIRE( newScore == -CastlingEvaluator::defaultCastlingValue );
   }
 
   SECTION( "queenside" )
@@ -209,8 +212,9 @@ TEST_CASE("CastlingEvaluator: black castles")
     REQUIRE_FALSE( board.castling().black_kingside );
     REQUIRE_FALSE( board.castling().black_queenside );
     REQUIRE( board.castling().black_castled == Ternary::true_value );
-    // Score should be zero, because no malus occurs.
+    // Score should be below zero, because bonus for castling occurs.
     const int newScore = evaluator.score(board);
-    REQUIRE( newScore == 0 );
+    REQUIRE( newScore < 0 );
+    REQUIRE( newScore == -CastlingEvaluator::defaultCastlingValue );
   }
 }

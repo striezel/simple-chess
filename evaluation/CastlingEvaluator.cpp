@@ -37,9 +37,15 @@ int CastlingEvaluator::score(const Board& board) const
   // Check whether white player forfeited the castling opportunity.
   if (!c.white_kingside && !c.white_queenside && (c.white_castled == Ternary::false_value))
     total -= mCastlingValue;
+  // Check whether white player has castled.
+  else if (c.white_castled == Ternary::true_value)
+    total += mCastlingValue;
   // Check whether white player forfeited the castling opportunity.
   if (!c.black_kingside && !c.black_queenside && (c.black_castled == Ternary::false_value))
     total += mCastlingValue;
+  // Check whether black player has castled.
+  else if (c.black_castled == Ternary::true_value)
+    total -= mCastlingValue;
   return total;
 }
 
