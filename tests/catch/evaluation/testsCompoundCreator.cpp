@@ -79,10 +79,35 @@ TEST_CASE("CompoundCreator: create with duplicate known IDs fails")
   REQUIRE_FALSE( CompoundCreator::create(evaluators, compound) );
 }
 
+TEST_CASE("CompoundCreator: support for all known evaluator IDs")
+{
+  using namespace simplechess;
+
+  CompoundEvaluator compound;
+  const auto ids = {
+      CompoundCreator::IdCastling,
+      CompoundCreator::IdCheck,
+      CompoundCreator::IdLinearMobility,
+      CompoundCreator::IdMaterial,
+      CompoundCreator::IdPromotion,
+      CompoundCreator::IdRootMobility
+  };
+
+  for (const std::string& id : ids)
+  {
+    compound.clear();
+    REQUIRE( CompoundCreator::create(CompoundCreator::IdCastling, compound) );
+    REQUIRE_FALSE( compound.empty() );
+    REQUIRE( compound.size() == 1 );
+  } // for
+}
+
+
 TEST_CASE("CompoundEvaluator: id sanity checks")
 {
   using namespace simplechess;
 
+  REQUIRE_FALSE( CompoundCreator::IdCastling.empty() );
   REQUIRE_FALSE( CompoundCreator::IdCheck.empty() );
   REQUIRE_FALSE( CompoundCreator::IdLinearMobility.empty() );
   REQUIRE_FALSE( CompoundCreator::IdMaterial.empty() );
@@ -90,6 +115,12 @@ TEST_CASE("CompoundEvaluator: id sanity checks")
   REQUIRE_FALSE( CompoundCreator::IdRootMobility.empty() );
 
   // All ids shall be different from each other, i.e. ids are unique.
+  REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdCheck );
+  REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdLinearMobility );
+  REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdMaterial );
+  REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdPromotion );
+  REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdRootMobility );
+
   REQUIRE_FALSE( CompoundCreator::IdCheck == CompoundCreator::IdLinearMobility );
   REQUIRE_FALSE( CompoundCreator::IdCheck == CompoundCreator::IdMaterial );
   REQUIRE_FALSE( CompoundCreator::IdCheck == CompoundCreator::IdPromotion );
@@ -114,9 +145,9 @@ TEST_CASE("CompoundCreator: default compound evaluator")
 
   // Compound evaluator shall not be empty.
   REQUIRE_FALSE( compound.empty() );
-  // Number of evaluators should be four.
+  // Number of evaluators should be five.
   const auto size = compound.size();
-  REQUIRE( size == 4 );
+  REQUIRE( size == 5 );
   // Getting default compound again should not change size.
   CompoundCreator::getDefault(compound);
   REQUIRE( size == compound.size() );
