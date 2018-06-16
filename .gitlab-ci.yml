@@ -1,0 +1,16 @@
+# Use the official gcc image, based on debian.
+# It can use version tags as well, like gcc:5.2.
+# See https://hub.docker.com/_/gcc/ for more info.
+image: gcc
+
+build:
+  stage: build
+  before_script: 
+    - apt-get update && apt-get -y install cmake catch libglib2.0-dev libjsoncpp-dev libmongo-client-dev
+  script: 
+    - ./ci/cpplint.sh
+    - mkdir ./build
+    - cd ./build
+    - cmake ../
+    - make -j4
+    - ctest -V
