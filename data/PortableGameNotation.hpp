@@ -87,7 +87,7 @@ class PortableGameNotation
      *
      * \return result of the game
      */
-    const Result result() const;
+    const Result& result() const;
 
 
     /** \brief Gets the content of a tag.

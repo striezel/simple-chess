@@ -93,7 +93,7 @@ const std::string& PortableGameNotation::black() const
   return mBlack;
 }
 
-const Result PortableGameNotation::result() const
+const Result& PortableGameNotation::result() const
 {
   return mResult;
 }
