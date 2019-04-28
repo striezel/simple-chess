@@ -2,21 +2,15 @@ language: cpp
 compiler:
   - gcc
 sudo: false
-dist: trusty
+dist: xenial
 addons:
   apt:
-    sources:
-    - ubuntu-toolchain-r-test
     packages:
-    - g++-4.9
-    - gcc-4.9
     - cmake
     - catch
     - libglib2.0-dev
     - libjsoncpp-dev
     - libmongo-client-dev
-before_install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
 script:
   - ./ci/cpplint.sh
   - mkdir ./build
