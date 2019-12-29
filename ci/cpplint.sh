@@ -37,7 +37,7 @@ else
 fi
 
 # find all .sh files and run them through Bash's syntax check
-find ./ \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) -print0 | xargs -0 -i $CXX $CFLAGS -fsyntax-only -Wall -std=c++0x {}
+find ./ \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) -print0 | xargs -0 -i $CXX $CFLAGS -fsyntax-only -Wall -std=c++14 {}
 if [[ $? -ne 0 ]]
 then
   echo "Some source code files contain syntax errors!"

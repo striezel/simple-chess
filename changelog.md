@@ -2,6 +2,10 @@
 
 _Note: This changelog may be incomplete._
 
+## Version 0.5.2 (2019-12-29)
+The C++ standard used during compilation has been raised from C++11 to C++14.
+Most compilers should support that by now.
+
 ## Version 0.5.1 (2018-02-16)
 - add castling evaluator that gives a malus for not castling before losing the
   possibility to castle

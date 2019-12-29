@@ -31,9 +31,9 @@ set(meteor-chess-client_sources
     Options.cpp
     main.cpp)
 
-add_definitions(-std=c++0x)
+add_definitions(-std=c++14)
 if (CMAKE_COMPILER_IS_GNUCC)
-    add_definitions(-Wall -O3 -fexceptions -std=c++11)
+    add_definitions(-Wall -O3 -fexceptions -std=c++14)
 endif (CMAKE_COMPILER_IS_GNUCC)
 
 set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
