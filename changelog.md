@@ -2,6 +2,10 @@
 
 _Note: This changelog may be incomplete._
 
+## Version 0.5.3 (2019-12-30)
+- meteor-chess-client: properly get and set fifty move rule counter when using
+  MongoDB data
+
 ## Version 0.5.2 (2019-12-29)
 The C++ standard used during compilation has been raised from C++11 to C++14.
 Most compilers should support that by now.

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2019  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -239,6 +239,13 @@ bool Server::getBasicBoardData(const BSON& elem, Board& board)
     return false;
   }
   board.setCastling(c);
+  int32_t halfmovesFifty = -1;
+  if (!elem.getInt32("halfmovesFifty", halfmovesFifty))
+  {
+    std::cerr << "Error: Could not get information about moves under 50 move rule from DB!" << std::endl;
+    return false;
+  }
+  board.setHalfmovesFifty(std::max(0, halfmovesFifty));
   return true;
 }
 
@@ -347,20 +354,20 @@ std::string Server::insertBasicBoardData(const Board& board)
   if (!boardList(idList))
   {
     std::cerr << "Error: Could not get existing IDs in lmc::Server::insertBasicBoardData!"
-             << std::endl;
+              << std::endl;
     return std::string();
   }
   const std::string id = IdGenerator::generate(idList);
   if (!document.append("_id", id))
   {
     std::cerr << "Error: Could not append ID to BSON object in lmc::Server::insertBasicBoardData!"
-             << std::endl;
+              << std::endl;
     return std::string();
   }
   if (!document.append("toMove", Convert::colourToMongoDbString(board.toMove())))
   {
     std::cerr << "Error: Could not append toMove to BSON object in lmc::Server::insertBasicBoardData!"
-             << std::endl;
+              << std::endl;
     return std::string();
   }
   // Get milliseconds since epoch.
@@ -368,7 +375,13 @@ std::string Server::insertBasicBoardData(const Board& board)
   if (!document.append("created", msse))
   {
     std::cerr << "Error: Could not append created to BSON object in lmc::Server::insertBasicBoardData!"
-             << std::endl;
+              << std::endl;
+    return std::string();
+  }
+  if (!document.append("halfmovesFifty", static_cast<int32_t>(board.halfmovesFifty())))
+  {
+    std::cerr << "Error: Could not append halfmovesFifty to BSON object in lmc::Server::insertBasicBoardData!"
+              << std::endl;
     return std::string();
   }
   // build castling object
@@ -726,6 +739,12 @@ bool Server::updateBasicBoardData(const std::string& id, const Board& board)
   if (!subUpdate.append("toMove", Convert::colourToMongoDbString(board.toMove())))
   {
     std::cerr << "Error: Could not append toMove to BSON object in lmc::Server::setBasicBoardData!"
+             << std::endl;
+    return false;
+  }
+  if (!subUpdate.append("halfmovesFifty", static_cast<int32_t>(board.halfmovesFifty())))
+  {
+    std::cerr << "Error: Could not append halfmovesFifty to BSON object in lmc::Server::setBasicBoardData!"
              << std::endl;
     return false;
   }

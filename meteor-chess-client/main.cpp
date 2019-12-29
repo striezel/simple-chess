@@ -169,16 +169,34 @@ int main(int argc, char** argv)
       }
       return simplechess::rcEngineResigns;
     } // if there is no move left
+
+    // Claim draw under the 50 move rule?
+    if (board.halfmovesFifty() >= 100)
+    {
+      if (options.json)
+      {
+        Json::Value val;
+        val["resign"] = false;
+        val["draw"] = true;
+        val["message"] = std::string("Computer claims draw by 50 move rule.");
+        val["exitcode"] = simplechess::rcEngineClaimsDraw;
+        Json::StyledStreamWriter writer;
+        writer.write(std::cout, val);
+        std::cout << std::endl;
+      }
+      else
+      {
+        std::cout << "Computer claims draw by 50 move rule!\n";
+      }
+      return simplechess::rcEngineClaimsDraw;
+    }
+
     const auto bestMove = s.bestMove();
     const simplechess::Field from = std::get<0>(bestMove);
     const simplechess::Field to = std::get<1>(bestMove);
     const simplechess::PieceType promo = std::get<2>(bestMove);
     if (!options.json)
     {
-      if (board.halfmovesFifty() >= 100)
-      {
-        std::cout << "Computer claims draw by 50 move rule!\n";
-      }
       std::cout << "Computer moves from " << simplechess::column(from) << simplechess::row(from)
                 << " to " << simplechess::column(to) << simplechess::row(to) << ".\n";
     }

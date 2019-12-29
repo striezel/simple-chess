@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2019  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,7 +36,8 @@ const int rcMoveNotPossible = 6;
 const int rcMongoDbError = 7;
 #endif // NO_METEOR_CHESS
 const int rcEngineResigns = 8;
-const int rcUnknown = 9;
+const int rcEngineClaimsDraw = 9; // ... under 50 move rule
+const int rcUnknown = 10;
 
 } // namespace
 

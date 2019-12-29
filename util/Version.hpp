@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2019  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ namespace simplechess
 {
 
 /** \brief version information */
-const std::string version = "version 0.5.2, 2019-12-29";
+const std::string version = "version 0.5.3, 2019-12-30";
 
 /** \brief major version number */
 const unsigned int versionMajor = 0;
@@ -36,7 +36,7 @@ const unsigned int versionMajor = 0;
 const unsigned int versionMinor = 5;
 
 /** \brief patch version number */
-const unsigned int versionPatch = 2;
+const unsigned int versionPatch = 3;
 
 } // namespace
 
