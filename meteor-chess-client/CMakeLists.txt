@@ -50,16 +50,6 @@ else ()
   message ( FATAL_ERROR "libmongo-client was not found!" )
 endif (LibMongoClient_FOUND)
 
-# find jsoncpp library
-set(LibJsonCpp_DIR "../cmake/" )
-find_package (LibJsonCpp)
-if (LIBJSONCPP_FOUND)
-  include_directories(${LIBJSONCPP_INCLUDE_DIRS})
-  target_link_libraries (meteor-chess-client ${LIBJSONCPP_LIBRARIES})
-else ()
-  message ( FATAL_ERROR "libjsoncpp was not found!" )
-endif (LIBJSONCPP_FOUND)
-
 # create git-related constants
 # -- get the current commit hash
 execute_process(

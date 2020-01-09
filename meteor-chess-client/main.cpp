@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2019, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,9 +18,10 @@
  -------------------------------------------------------------------------------
 */
 
+#include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <jsoncpp/json/writer.h>
+#include "../third-party/nlohmann/json.hpp"
 #include "../db/mongo/libmongoclient/Server.hpp"
 #include "../evaluation/CompoundCreator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
@@ -43,16 +44,14 @@ void showVersion(const bool json = false)
   }
   else
   {
-    Json::Value val;
-    val["version"]["major"] = Json::Value(simplechess::versionMajor);
-    val["version"]["minor"] = Json::Value(simplechess::versionMinor);
-    val["version"]["patch"] = Json::Value(simplechess::versionPatch);
-    val["version"]["fullText"] = Json::Value(simplechess::version);
+    nlohmann::json val;
+    val["version"]["major"] = simplechess::versionMajor;
+    val["version"]["minor"] = simplechess::versionMinor;
+    val["version"]["patch"] = simplechess::versionPatch;
+    val["version"]["fullText"] = simplechess::version;
     val["commit"] = info.commit();
     val["date"] = info.date();
-    Json::StyledStreamWriter writer;
-    writer.write(std::cout, val);
-    std::cout << std::endl;
+    std::cout << std::setw(4) << val << std::endl;
   }
 }
 
@@ -154,14 +153,12 @@ int main(int argc, char** argv)
     {
       if (options.json)
       {
-        Json::Value val;
+        nlohmann::json val;
         val["resign"] = true;
         val["draw"] = false;
         val["message"] = std::string("simplechess AI could not find a valid move. User wins!");
         val["exitcode"] = simplechess::rcEngineResigns;
-        Json::StyledStreamWriter writer;
-        writer.write(std::cout, val);
-        std::cout << std::endl;
+        std::cout << std::setw(4) << val << std::endl;
       }
       else
       {
@@ -175,14 +172,12 @@ int main(int argc, char** argv)
     {
       if (options.json)
       {
-        Json::Value val;
+        nlohmann::json val;
         val["resign"] = false;
         val["draw"] = true;
         val["message"] = std::string("Computer claims draw by 50 move rule.");
         val["exitcode"] = simplechess::rcEngineClaimsDraw;
-        Json::StyledStreamWriter writer;
-        writer.write(std::cout, val);
-        std::cout << std::endl;
+        std::cout << std::setw(4) << val << std::endl;
       }
       else
       {
@@ -206,14 +201,12 @@ int main(int argc, char** argv)
       {
         if (options.json)
         {
-          Json::Value val;
+          nlohmann::json val;
           val["resign"] = true;
           val["draw"] = false;
           val["message"] = std::string("The computer move is not allowed! User wins.");
           val["exitcode"] = simplechess::rcEngineResigns;
-          Json::StyledStreamWriter writer;
-          writer.write(std::cout, val);
-          std::cout << std::endl;
+          std::cout << std::setw(4) << val << std::endl;
         }
         else
         {
@@ -230,7 +223,7 @@ int main(int argc, char** argv)
     // print move in JSON
     if (options.json)
     {
-      Json::Value val;
+      nlohmann::json val;
       val["resign"] = false;
       val["draw"] = (board.halfmovesFifty() >= 100);
       val["from"]["column"] = std::string(1, simplechess::column(from));
@@ -241,7 +234,7 @@ int main(int argc, char** argv)
       val["promotion"] = isPromotion;
       if (!isPromotion)
       {
-        val["promoteTo"] = Json::Value();
+        val["promoteTo"] = nullptr;
       }
       else
       {
@@ -250,9 +243,7 @@ int main(int argc, char** argv)
         val["promoteTo"] = stream.str();
       }
       val["exitcode"] = 0;
-      Json::StyledStreamWriter writer;
-      writer.write(std::cout, val);
-      std::cout << std::endl;
+      std::cout << std::setw(4) << val << std::endl;
     }
     // All is fine.
     return 0;
