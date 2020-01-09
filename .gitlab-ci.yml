@@ -6,7 +6,7 @@ image: gcc
 build:
   stage: build
   before_script:
-    - apt-get update && apt-get -y install cmake catch libglib2.0-dev libjsoncpp-dev libmongo-client-dev
+    - apt-get update && apt-get -y install cmake catch libglib2.0-dev libmongo-client-dev
   script:
     - ./ci/cpplint.sh
     - mkdir ./build
