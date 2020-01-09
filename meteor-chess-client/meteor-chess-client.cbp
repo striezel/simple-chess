@@ -39,7 +39,6 @@
 		</Compiler>
 		<Linker>
 			<Add library="mongo-client" />
-			<Add library="jsoncpp" />
 		</Linker>
 		<Unit filename="../data/Board.cpp" />
 		<Unit filename="../data/Board.hpp" />
@@ -87,6 +86,7 @@
 		<Unit filename="../search/Node.hpp" />
 		<Unit filename="../search/Search.cpp" />
 		<Unit filename="../search/Search.hpp" />
+		<Unit filename="../third-party/nlohmann/json.hpp" />
 		<Unit filename="../util/GitInfos.cpp" />
 		<Unit filename="../util/GitInfos.hpp" />
 		<Unit filename="../util/ReturnCodes.hpp" />

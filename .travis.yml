@@ -9,7 +9,6 @@ addons:
     - cmake
     - catch
     - libglib2.0-dev
-    - libjsoncpp-dev
     - libmongo-client-dev
 script:
   - ./ci/cpplint.sh

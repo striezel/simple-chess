@@ -2,6 +2,10 @@
 
 _Note: This changelog may be incomplete._
 
+## Version NEXT (2020-01-??)
+
+- meteor-chess-client: use more modern JSON library
+
 ## Version 0.5.3 (2019-12-30)
 - meteor-chess-client: properly get and set fifty move rule counter when using
   MongoDB data
