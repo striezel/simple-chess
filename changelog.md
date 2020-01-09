@@ -2,7 +2,7 @@
 
 _Note: This changelog may be incomplete._
 
-## Version NEXT (2020-01-??)
+## Version 0.5.4 (2020-01-09)
 
 - meteor-chess-client: use more modern JSON library
 
