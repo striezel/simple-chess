@@ -64,8 +64,8 @@ bool stringToInt(const std::string& str, int& value)
     return false;
   value = 0;
   unsigned int i;
-  const int cTenthLimit = std::numeric_limits<int>::max() / 10;
-  const int cRealLimit = std::numeric_limits<int>::max();
+  constexpr int cTenthLimit = std::numeric_limits<int>::max() / 10;
+  constexpr int cRealLimit = std::numeric_limits<int>::max();
   bool negative;
   if (str.at(0) == '-')
   {
