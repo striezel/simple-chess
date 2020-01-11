@@ -79,3 +79,18 @@ message("GIT_TIME is ${GIT_TIME}.")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../util/GitInfos.template.cpp
                ${CMAKE_CURRENT_SOURCE_DIR}/../util/GitInfos.cpp
                ESCAPE_QUOTES)
+
+
+### tests for simple-chess-engine ###
+
+# different invocations for help
+add_test(NAME simple-chess-engine-help-default
+         COMMAND $<TARGET_FILE:simple-chess-engine> --help)
+add_test(NAME simple-chess-engine-help-question-mark
+         COMMAND $<TARGET_FILE:simple-chess-engine> -?)
+add_test(NAME simple-chess-engine-help-windows-style
+         COMMAND $<TARGET_FILE:simple-chess-engine> /?)
+
+# version information
+add_test(NAME simple-chess-engine-version
+         COMMAND $<TARGET_FILE:simple-chess-engine> --version)
