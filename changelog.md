@@ -2,6 +2,11 @@
 
 _Note: This changelog may be incomplete._
 
+## Version NEXT (2020-01-??)
+
+- competing-evaluators: initial version of program to let different board
+  evaluators compete against each other
+
 ## Version 0.5.4 (2020-01-09)
 
 - meteor-chess-client: use more modern JSON library

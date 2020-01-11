@@ -47,8 +47,8 @@ class MaterialEvaluator: public Evaluator
      * \return Returns the value of a piece in centipawns.
      */
     static int pieceValue(const PieceType& pt);
-}; //class
+}; // class
 
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_MATERIALEVALUATOR_HPP

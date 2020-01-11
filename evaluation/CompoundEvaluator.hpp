@@ -33,7 +33,7 @@ namespace simplechess
 class CompoundEvaluator: public Evaluator
 {
   public:
-    /** \brief Default constructor.
+    /** \brief Default constructor. Creates an empty CompoundEvaluator.
      */
     CompoundEvaluator();
 

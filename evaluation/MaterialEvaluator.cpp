@@ -60,8 +60,8 @@ int MaterialEvaluator::score(const Board& board) const
       result += value;
     else
       result -= value;
-  } //for
+  } // for
   return result;
 }
 
-} //namespace
+} // namespace
