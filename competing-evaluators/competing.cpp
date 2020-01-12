@@ -20,6 +20,7 @@
 
 #include "competing.hpp"
 #include <iostream>
+#include <thread>
 #include "../data/ForsythEdwardsNotation.hpp"
 #include "../evaluation/CompoundCreator.hpp"
 #include "../search/Search.hpp"
@@ -64,20 +65,50 @@ std::vector<std::unique_ptr<Evaluator>> Competition::createEvaluators(const std:
   return result;
 }
 
-void Competition::compete(const std::vector<std::string>& allowedEvaluators)
+void Competition::sanitizeThreadCount(unsigned int& threads)
 {
-  if (allowedEvaluators.empty())
+  if (threads == 0)
+    threads = 1;
+  const unsigned int hw_threads = std::thread::hardware_concurrency();
+  if ((hw_threads != 0) && (threads > hw_threads))
   {
-    std::cerr << "No evaluators given!" << std::endl;
-    return;
+    threads = hw_threads;
+    std::cout << "Info: Hardware indicates that it only supports " << hw_threads
+              << " concurrent threads. Number of threads has been reduded to "
+              << hw_threads << "." << std::endl;
   }
-  if (allowedEvaluators.size() > 10)
+}
+
+void Competition::showResults(const std::vector<std::unique_ptr<Evaluator>>& evaluators,
+                              const std::map<unsigned int, unsigned int>& wins,
+                              const std::map<unsigned int, unsigned int>& defeats,
+                              const std::map<unsigned int, unsigned int>& draws)
+{
+  // TODO: Show actual combinations of evaluators and not just their index.
+  std::cout << "Win counts:" << std::endl;
+  for (const auto& elem : wins)
   {
-    std::cerr << "Error: There are more than ten evaluators, this will take an absurd amount of time!" << std::endl;
-    return;
+    std::cout << "Evaluator #" << elem.first << ": " << elem.second << std::endl;
   }
 
-  const auto evaluators = createEvaluators(allowedEvaluators);
+  std::cout << "Defeat counts:" << std::endl;
+  for (const auto& elem : defeats)
+  {
+    std::cout << "Evaluator #" << elem.first << ": " << elem.second << std::endl;
+  }
+
+  std::cout << "Draw counts:" << std::endl;
+  for (const auto& elem : draws)
+  {
+    std::cout << "Evaluator #" << elem.first << ": " << elem.second << std::endl;
+  }
+}
+
+void Competition::single_threaded_compete(const std::vector<std::unique_ptr<Evaluator>>& evaluators,
+                                          std::map<unsigned int, unsigned int>& wins,
+                                          std::map<unsigned int, unsigned int>& defeats,
+                                          std::map<unsigned int, unsigned int>& draws)
+{
   const unsigned int totalEvaluators = evaluators.size();
   const unsigned int comboCount = totalEvaluators * (totalEvaluators - 1);
 
@@ -85,9 +116,9 @@ void Competition::compete(const std::vector<std::string>& allowedEvaluators)
             << std::endl << "This means there will be " << comboCount
             << " different evaluator matches." << std::endl;
 
-  std::map<unsigned int, unsigned int> wins;
-  std::map<unsigned int, unsigned int> defeats;
-  std::map<unsigned int, unsigned int> draws;
+  wins.clear();
+  defeats.clear();
+  draws.clear();
 
   unsigned int finished = 0;
 
@@ -124,25 +155,31 @@ void Competition::compete(const std::vector<std::string>& allowedEvaluators)
       std::cout << "Progress: " << finished << " of " << comboCount << std::endl;
     } // for idxBlack
   } // for idxWhite
+}
 
-  // TODO: Show actual combinations of evaluators and not just their index.
-  std::cout << "Win counts:" << std::endl;
-  for (const auto& elem : wins)
+void Competition::compete(const std::vector<std::string>& allowedEvaluators, unsigned int threads)
+{
+  if (allowedEvaluators.empty())
   {
-    std::cout << "Evaluator #" << elem.first << ": " << elem.second << std::endl;
+    std::cerr << "No evaluators given!" << std::endl;
+    return;
+  }
+  if (allowedEvaluators.size() > 10)
+  {
+    std::cerr << "Error: There are more than ten evaluators, this will take an absurd amount of time!" << std::endl;
+    return;
   }
 
-  std::cout << "Defeat counts:" << std::endl;
-  for (const auto& elem : defeats)
-  {
-    std::cout << "Evaluator #" << elem.first << ": " << elem.second << std::endl;
-  }
+  sanitizeThreadCount(threads);
+  const auto evaluators = createEvaluators(allowedEvaluators);
 
-  std::cout << "Draw counts:" << std::endl;
-  for (const auto& elem : draws)
-  {
-    std::cout << "Evaluator #" << elem.first << ": " << elem.second << std::endl;
-  }
+  std::map<unsigned int, unsigned int> wins;
+  std::map<unsigned int, unsigned int> defeats;
+  std::map<unsigned int, unsigned int> draws;
+
+  single_threaded_compete(evaluators, wins, defeats, draws);
+
+  showResults(evaluators, wins, defeats, draws);
 }
 
 Result Competition::compete(const Evaluator& white, const Evaluator& black)
