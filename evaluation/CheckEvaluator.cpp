@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -49,4 +49,10 @@ int CheckEvaluator::score(const Board& board) const
   return result;
 }
 
-} //namespace
+std::string CheckEvaluator::name() const noexcept
+{
+  return "CheckEvaluator(" + std::to_string(mCheckValue) + ","
+    + std::to_string(mCheckmateValue) + ")";
+}
+
+} // namespace

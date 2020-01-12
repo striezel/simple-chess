@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -62,6 +62,11 @@ int MaterialEvaluator::score(const Board& board) const
       result -= value;
   } // for
   return result;
+}
+
+std::string MaterialEvaluator::name() const noexcept
+{
+  return "MaterialEvaluator";
 }
 
 } // namespace

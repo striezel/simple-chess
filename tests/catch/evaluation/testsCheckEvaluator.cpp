@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
  -------------------------------------------------------------------------------
 */
 
-
 #include <catch.hpp>
 #include "../../../evaluation/CheckEvaluator.hpp"
 
@@ -26,7 +25,7 @@ TEST_CASE("CheckEvaluator evaluates default start position")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"));
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR") );
 
   CheckEvaluator evaluator;
   // Evaluation should be zero - nobody is in check.
@@ -39,7 +38,7 @@ TEST_CASE("CheckEvaluator: black is in check")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("4k3/8/8/8/8/8/4Q3/4K3"));
+  REQUIRE( board.fromFEN("4k3/8/8/8/8/8/4Q3/4K3") );
 
   // Evaluation should be greater than zero - white has an advantage.
   CheckEvaluator evaluator;
@@ -62,7 +61,7 @@ TEST_CASE("CheckEvaluator: black is not in check")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("4k3/pppppppp/8/8/8/8/4Q3/4K3"));
+  REQUIRE( board.fromFEN("4k3/pppppppp/8/8/8/8/4Q3/4K3") );
 
   // Evaluation should be zero - no player is in check.
   CheckEvaluator evaluator;
@@ -83,7 +82,7 @@ TEST_CASE("CheckEvaluator: white is in check")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("4k3/4q3/8/8/8/8/8/4K3"));
+  REQUIRE( board.fromFEN("4k3/4q3/8/8/8/8/8/4K3") );
 
   // Evaluation should be less than zero - black has an advantage.
   CheckEvaluator evaluator;
@@ -106,7 +105,7 @@ TEST_CASE("CheckEvaluator: white is not in check")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("4k3/4q3/8/8/8/8/PPPPPPPP/4K3"));
+  REQUIRE( board.fromFEN("4k3/4q3/8/8/8/8/PPPPPPPP/4K3") );
 
   // Evaluation should be zero - no player is in check.
   CheckEvaluator evaluator;
@@ -127,7 +126,7 @@ TEST_CASE( "CheckEvaluator: white is checkmate" )
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("8/8/8/8/8/4r3/4q3/4K3"));
+  REQUIRE( board.fromFEN("8/8/8/8/8/4r3/4q3/4K3") );
 
   // Evaluation should be less than zero - black has an advantage.
   CheckEvaluator evaluator;
@@ -149,7 +148,7 @@ TEST_CASE( "CheckEvaluator: black is checkmate" )
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("8/8/8/8/8/4K3/4Q3/4k3 b"));
+  REQUIRE( board.fromFEN("8/8/8/8/8/4K3/4Q3/4k3 b") );
 
   // Evaluation should be greater than zero - white has an advantage.
   CheckEvaluator evaluator;
@@ -164,5 +163,26 @@ TEST_CASE( "CheckEvaluator: black is checkmate" )
     CheckEvaluator evaluator(customValue, customMateValue);
     const int score = evaluator.score(board);
     REQUIRE( score == (customValue + customMateValue) );
+  }
+}
+
+TEST_CASE("CheckEvaluator: name")
+{
+  using namespace simplechess;
+
+  SECTION( "CheckEvaluator with default values" )
+  {
+    CheckEvaluator evaluator;
+    REQUIRE(
+        evaluator.name() == "CheckEvaluator(50,2000000)"
+    );
+  }
+
+  SECTION( "CheckEvaluator with custom values" )
+  {
+    CheckEvaluator evaluator(12, 3456);
+    REQUIRE(
+        evaluator.name() == "CheckEvaluator(12,3456)"
+    );
   }
 }

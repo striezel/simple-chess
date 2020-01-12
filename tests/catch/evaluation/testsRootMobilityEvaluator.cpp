@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2018  Dirk Stolle
+    Copyright (C) 2018, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ TEST_CASE("RootMobilityEvaluator evaluates default start position")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"));
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR") );
 
   RootMobilityEvaluator evaluator;
   // Evaluation should be zero - both sides have the same move possibilities.
@@ -38,7 +38,7 @@ TEST_CASE("RootMobilityEvaluator: kings only")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("4k3/8/8/8/8/8/8/4K3"));
+  REQUIRE( board.fromFEN("4k3/8/8/8/8/8/8/4K3") );
 
   // Scores should be equal - both boards have the same number of moves.
   RootMobilityEvaluator evaluator;
@@ -49,7 +49,7 @@ TEST_CASE("RootMobilityEvaluator: few black pieces only")
 {
   using namespace simplechess;
   Board boardOne;
-  REQUIRE(boardOne.fromFEN("rn6/pp6/8/8/8/8/8/8"));
+  REQUIRE( boardOne.fromFEN("rn6/pp6/8/8/8/8/8/8") );
 
   RootMobilityEvaluator evaluator;
   // Evaluation should be less than zero - black has more moves.
@@ -57,7 +57,7 @@ TEST_CASE("RootMobilityEvaluator: few black pieces only")
   REQUIRE( scoreOne < 0 );
 
   Board boardTwo;
-  REQUIRE(boardTwo.fromFEN("rn6/1p6/8/8/8/8/8/8"));
+  REQUIRE( boardTwo.fromFEN("rn6/1p6/8/8/8/8/8/8") );
 
   // Evaluation should be less than zero - black has more moves.
   const int scoreTwo = evaluator.score(boardTwo);
@@ -71,7 +71,7 @@ TEST_CASE("RootMobilityEvaluator: one king only, white edition")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("8/8/8/8/8/8/8/4K3"));
+  REQUIRE( board.fromFEN("8/8/8/8/8/8/8/4K3") );
 
   RootMobilityEvaluator evaluator;
   // Evaluation should be greater than zero, because black has no moves.
@@ -90,7 +90,7 @@ TEST_CASE("RootMobilityEvaluator: one king only, black edition")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("4k3/8/8/8/8/8/8/8"));
+  REQUIRE( board.fromFEN("4k3/8/8/8/8/8/8/8") );
 
   RootMobilityEvaluator evaluator;
   // Evaluation should be less than zero, because white has no moves.
@@ -122,4 +122,14 @@ TEST_CASE("RootMobilityEvaluator vs. LinearMobilityEvaluator")
   // Score of root mobility evaluator should be less than the score of the
   // linear mobility evaluator, because root increases slower than identity.
   REQUIRE( scoreRoot < scoreLinear );
+}
+
+TEST_CASE("RootMobilityEvaluator: name")
+{
+  using namespace simplechess;
+
+  RootMobilityEvaluator evaluator;
+  REQUIRE(
+      evaluator.name() == "RootMobilityEvaluator(10)"
+  );
 }

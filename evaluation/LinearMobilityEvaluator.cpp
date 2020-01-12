@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -53,6 +53,11 @@ int LinearMobilityEvaluator::score(const Board& board) const
     } // for j
   } // for i
   return result;
+}
+
+std::string LinearMobilityEvaluator::name() const noexcept
+{
+  return "LinearMobilityEvaluator(" + std::to_string(centipawnsPerMove) + ")";
 }
 
 } // namespace

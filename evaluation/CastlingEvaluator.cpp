@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2018  Dirk Stolle
+    Copyright (C) 2018, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -47,6 +47,11 @@ int CastlingEvaluator::score(const Board& board) const
   else if (c.black_castled == Ternary::true_value)
     total -= mCastlingValue;
   return total;
+}
+
+std::string CastlingEvaluator::name() const noexcept
+{
+  return "CastlingEvaluator(" + std::to_string(mCastlingValue) + ")";
 }
 
 } // namespace

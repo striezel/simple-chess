@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2018  Dirk Stolle
+    Copyright (C) 2018, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  -------------------------------------------------------------------------------
 */
-
 
 #include <catch.hpp>
 #include "../../../evaluation/CastlingEvaluator.hpp"
@@ -216,5 +215,28 @@ TEST_CASE("CastlingEvaluator: black castles")
     const int newScore = evaluator.score(board);
     REQUIRE( newScore < 0 );
     REQUIRE( newScore == -CastlingEvaluator::defaultCastlingValue );
+  }
+}
+
+TEST_CASE("CastlingEvaluator: name")
+{
+  using namespace simplechess;
+
+  SECTION( "name with default castling value" )
+  {
+    CastlingEvaluator evaluator;
+
+    REQUIRE(
+        evaluator.name() == "CastlingEvaluator(100)"
+    );
+  }
+
+  SECTION( "name with custom castling value" )
+  {
+    CastlingEvaluator evaluator(42);
+
+    REQUIRE(
+        evaluator.name() == "CastlingEvaluator(42)"
+    );
   }
 }

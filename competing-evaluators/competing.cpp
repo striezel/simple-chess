@@ -84,23 +84,22 @@ void Competition::showResults(const std::vector<std::unique_ptr<Evaluator>>& eva
                               const std::map<unsigned int, unsigned int>& defeats,
                               const std::map<unsigned int, unsigned int>& draws)
 {
-  // TODO: Show actual combinations of evaluators and not just their index.
   std::cout << "Win counts:" << std::endl;
   for (const auto& elem : wins)
   {
-    std::cout << "Evaluator #" << elem.first << ": " << elem.second << std::endl;
+    std::cout << "Evaluator #" << elem.first << " (" + evaluators[elem.first]->name() + "): " << elem.second << std::endl;
   }
 
   std::cout << "Defeat counts:" << std::endl;
   for (const auto& elem : defeats)
   {
-    std::cout << "Evaluator #" << elem.first << ": " << elem.second << std::endl;
+    std::cout << "Evaluator #" << elem.first << " (" + evaluators[elem.first]->name() + "): " << elem.second << std::endl;
   }
 
   std::cout << "Draw counts:" << std::endl;
   for (const auto& elem : draws)
   {
-    std::cout << "Evaluator #" << elem.first << ": " << elem.second << std::endl;
+    std::cout << "Evaluator #" << elem.first << " (" + evaluators[elem.first]->name() + "): " << elem.second << std::endl;
   }
 }
 

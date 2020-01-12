@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
  -------------------------------------------------------------------------------
 */
 
-
 #include <catch.hpp>
 #include "../../../evaluation/CompoundEvaluator.hpp"
 #include "../../../evaluation/MaterialEvaluator.hpp"
@@ -30,7 +29,7 @@ TEST_CASE("CompoundEvaluator: empty compound evaluates to zero")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("4k3/8/Q7/8/8/8/8/4K3"));
+  REQUIRE( board.fromFEN("4k3/8/Q7/8/8/8/8/4K3") );
 
   // Scores should be equal - both boards have the same number of moves.
   CompoundEvaluator evaluator;
@@ -41,7 +40,7 @@ TEST_CASE("CompoundEvaluator: two evaluators")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("rn6/pK6/8/8/8/8/k7/8"));
+  REQUIRE( board.fromFEN("rn6/pK6/8/8/8/8/k7/8") );
 
   CompoundEvaluator evaluator;
   const int first = 300;
@@ -58,7 +57,7 @@ TEST_CASE("CompoundEvaluator evaluates default start position")
 {
   using namespace simplechess;
   Board board;
-  REQUIRE(board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"));
+  REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR") );
 
   CompoundEvaluator evaluator;
   // Add the three evaluators we have so far.
@@ -92,4 +91,27 @@ TEST_CASE("CompoundEvaluator: empty, clear and size")
   evaluator.clear();
   REQUIRE( evaluator.empty() );
   REQUIRE( evaluator.size() == 0 );
+}
+
+TEST_CASE("CompoundEvaluator: name")
+{
+  using namespace simplechess;
+
+  CompoundEvaluator evaluator;
+
+  SECTION( "CompoundEvaluator: name with empty compound" )
+  {
+    REQUIRE(
+        evaluator.name() == "CompoundEvaluator(<empty>)"
+    );
+  }
+
+  SECTION( "CompoundEvaluator with custom values" )
+  {
+    evaluator.add(std::unique_ptr<Evaluator>(new MaterialEvaluator()));
+    evaluator.add(std::unique_ptr<Evaluator>(new PromotionEvaluator()));
+    REQUIRE(
+        evaluator.name() == "CompoundEvaluator(MaterialEvaluator,PromotionEvaluator)"
+    );
+  }
 }

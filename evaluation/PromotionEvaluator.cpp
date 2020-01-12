@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -82,6 +82,11 @@ int PromotionEvaluator::score(const Board& board) const
   } //for
 
   return result;
+}
+
+std::string PromotionEvaluator::name() const noexcept
+{
+  return "PromotionEvaluator";
 }
 
 } //namespace

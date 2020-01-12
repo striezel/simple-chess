@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -60,6 +60,11 @@ int RootMobilityEvaluator::score(const Board& board) const
   else
     // Square root of negative number is not defined within real numbers.
     return - static_cast<int>(centipawnsPerMove * std::sqrt(std::abs(moves)));
+}
+
+std::string RootMobilityEvaluator::name() const noexcept
+{
+  return "RootMobilityEvaluator(" + std::to_string(centipawnsPerMove) + ")";
 }
 
 } // namespace

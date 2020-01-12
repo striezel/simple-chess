@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -56,6 +56,20 @@ void CompoundEvaluator::clear() noexcept
 bool CompoundEvaluator::empty() const noexcept
 {
   return evaluators.empty();
+}
+
+std::string CompoundEvaluator::name() const noexcept
+{
+  if (empty())
+    return "CompoundEvaluator(<empty>)";
+
+  std::string elements;
+  for (const auto& elem: evaluators)
+  {
+    elements.append("," + elem->name());
+  }
+  elements.erase(0, 1);
+  return "CompoundEvaluator(" + elements + ")";
 }
 
 } // namespace
