@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,9 @@
 #include "io-utils.hpp"
 #include <cerrno>
 #include <iostream>
+#if defined(__linux__) || defined(linux)
 #include <unistd.h>
+#endif
 
 namespace simplechess
 {
@@ -42,9 +44,18 @@ void sendCommand(const std::string& cmd)
 {
   if (cmd.empty())
     return;
+#if defined(_WIN32)
+  // Since there is no <unistd.h> with write() on Windows, use streams instead.
+  // However, this may be slow with the explicit flush.
+  std::cout << cmd << "\n";
+  std::cout.flush();
+#elif defined(__linux__) || defined(linux)
   // Send via unbuffered system call.
   write(1, cmd.c_str(), cmd.size());
   write(1, "\n", 1);
+#else
+  #error Unknown operating system!
+#endif
 }
 
 } // namespace
