@@ -74,7 +74,7 @@ void Competition::sanitizeThreadCount(unsigned int& threads)
   {
     threads = hw_threads;
     std::cout << "Info: Hardware indicates that it only supports " << hw_threads
-              << " concurrent threads. Number of threads has been reduded to "
+              << " concurrent threads. Number of threads has been reduced to "
               << hw_threads << "." << std::endl;
   }
 }
