@@ -19,6 +19,7 @@
 */
 
 #include "CastlingEvaluator.hpp"
+#include <string>
 
 namespace simplechess
 {
