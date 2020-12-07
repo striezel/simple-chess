@@ -1,9 +1,17 @@
 # simple-chess
 
-[![Build Status](https://travis-ci.org/striezel/simple-chess.svg)](https://travis-ci.org/striezel/simple-chess)
-
 simple-chess is (or better: will be) a small command-line tool that can be used
 to perform some chess-related tasks. More information will follow soon.
+
+## Build status
+
+* GitHub Actions:
+  * [![GitHub CI Clang status](https://github.com/striezel/simple-chess/workflows/GitHub%20CI%20with%20Clang%208,%209,%2010/badge.svg)](https://github.com/striezel/simple-chess/actions)
+  * [![GitHub CI GCC status](https://github.com/striezel/simple-chess/workflows/GitHub%20CI%20with%20GCC%208,%209,%2010/badge.svg)](https://github.com/striezel/simple-chess/actions)
+* GitLab CI:
+[![GitLab pipeline status](https://gitlab.com/striezel/simple-chess/badges/master/pipeline.svg)](https://gitlab.com/striezel/simple-chess/-/pipelines)
+* Travis CI:
+[![Build Status](https://travis-ci.org/striezel/simple-chess.svg)](https://travis-ci.org/striezel/simple-chess)
 
 ## Building from source
 
