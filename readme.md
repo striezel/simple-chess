@@ -11,7 +11,7 @@ to perform some chess-related tasks. More information will follow soon.
 * GitLab CI:
 [![GitLab pipeline status](https://gitlab.com/striezel/simple-chess/badges/master/pipeline.svg)](https://gitlab.com/striezel/simple-chess/-/pipelines)
 * Travis CI:
-[![Build Status](https://travis-ci.org/striezel/simple-chess.svg)](https://travis-ci.org/striezel/simple-chess)
+[![Build Status](https://travis-ci.org/striezel/simple-chess.svg?branch=master)](https://travis-ci.org/striezel/simple-chess)
 
 ## Building from source
 
