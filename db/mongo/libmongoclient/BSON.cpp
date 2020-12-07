@@ -213,7 +213,7 @@ bool BSON::getInt32(const std::string& key, int32_t& valueOut) const
   }
   else
   {
-    double dbl = 0.0d;
+    double dbl = 0.0;
     if (bson_cursor_get_double(bc, &dbl))
     {
       const int32_t temp = static_cast<int32_t>(dbl);

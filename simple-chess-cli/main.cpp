@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2020  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -122,7 +122,7 @@ int main(int argc, char** argv)
       if (argv[i] == nullptr)
       {
         std::cerr << "Error: Parameter at index " << i << " is null pointer!\n";
-        return 1;
+        return simplechess::rcInvalidParameter;
       }
       const std::string param(argv[i]);
       if ((param == "-v") || (param == "--version"))
@@ -152,7 +152,7 @@ int main(int argc, char** argv)
         if (!evaluators.empty())
         {
           std::cout << "Error: The parameter " << param << " cannot be specified more than once!\n";
-          return false;
+          return simplechess::rcInvalidParameter;
         }
         if (argc > i + 1)
         {
