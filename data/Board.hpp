@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #ifndef SIMPLE_CHESS_BOARD_HPP
 #define SIMPLE_CHESS_BOARD_HPP
 
-#include <map>
+#include <array>
 #include "Castling.hpp"
 #include "Field.hpp"
 #include "Piece.hpp"
@@ -172,7 +172,7 @@ class Board
      */
     Field findNext(const Piece& piece, Field start) const;
   private:
-    std::map<Field, Piece> mFields; /**< pieces on fields of the board */
+    std::array<Piece, static_cast<int>(Field::none)> mFields; /**< pieces on fields of the board */
     Colour mToMove; /**< player/colour that is to move next */
     Field  mEnPassant; /**< en passant field, if any */
     Castling mCastling; /**< castling information (i.e. where is castling still allowed) */

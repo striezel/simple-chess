@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2020  Dirk Stolle
+    Copyright (C) 2020, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #define SIMPLE_CHESS_COMPETING_HPP
 
 #include <string>
+#include <map>
 #include <memory>
 #include <vector>
 #include "../data/Result.hpp"

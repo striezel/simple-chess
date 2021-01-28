@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 #include "Board.hpp"
 #include <cmath>
+#include <unordered_map>
 #include "../rules/check.hpp"
 #include "../rules/Moves.hpp"
 #include "../util/strings.hpp"
@@ -45,7 +46,7 @@ char nextColumn(const char column)
 
 
 Board::Board()
-: mFields(std::map<Field, Piece>()),
+: mFields(std::array<Piece, 64>()),
   mToMove(Colour::white),
   mEnPassant(Field::none),
   mCastling(Castling()),
@@ -55,16 +56,19 @@ Board::Board()
 {
   for(int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
-    mFields[static_cast<Field>(i)] = Piece();
+    mFields[i] = Piece();
   }
 }
 
 const Piece& Board::element(const Field f) const
 {
-  const std::map<Field, Piece>::const_iterator cIter = mFields.find(f);
-  if (cIter != mFields.end())
-    return cIter->second;
-  throw std::runtime_error("Field does not exist on board!");
+  switch (f)
+  {
+    case Field::none:
+         throw std::runtime_error("Field does not exist on board!");
+    default:
+         return mFields[static_cast<int>(f)];
+  }
 }
 
 const Colour& Board::toMove() const
@@ -92,7 +96,7 @@ bool Board::setElement(const Field field, const Piece& piece)
   if ((field == Field::none) || !piece.acceptable())
     return false;
   // set element
-  mFields[field] = piece;
+  mFields[static_cast<int>(field)] = piece;
   return true;
 }
 
@@ -155,7 +159,7 @@ bool Board::fromFEN(const std::string& FEN)
   if (parts.empty())
     return false;
   // first part: pieces on board
-  const std::map<char, Piece> fenmap = {
+  const std::unordered_map<char, Piece> fenmap = {
     { 'r', Piece(Colour::black, PieceType::rook)},
     { 'n', Piece(Colour::black, PieceType::knight)},
     { 'b', Piece(Colour::black, PieceType::bishop)},
@@ -183,7 +187,7 @@ bool Board::fromFEN(const std::string& FEN)
       const auto iter = fenmap.find(singleRow[j]);
       if (iter != fenmap.end())
       {
-        mFields[toField(boardColumn, boardRow)] = iter->second;
+        mFields[static_cast<int>(toField(boardColumn, boardRow))] = iter->second;
         boardColumn = nextColumn(boardColumn);
       } // if
       else if ((singleRow[j] >= '1') && (singleRow[j] <= '8'))
@@ -191,7 +195,7 @@ bool Board::fromFEN(const std::string& FEN)
         const auto count = singleRow[j] - '1' + 1;
         for (int k = 1; k <= count; ++k)
         {
-          mFields[toField(boardColumn, boardRow)] = Piece(Colour::none, PieceType::none);
+          mFields[static_cast<int>(toField(boardColumn, boardRow))] = Piece(Colour::none, PieceType::none);
           boardColumn = nextColumn(boardColumn);
         }
       } // else if '1'..'8'
@@ -329,9 +333,9 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
 
   // Move is allowed.
   // -- "copy" piece to destination field
-  mFields[to] = start;
+  mFields[static_cast<int>(to)] = start;
   // -- remove piece in start field
-  mFields[from] = Piece(Colour::none, PieceType::none);
+  mFields[static_cast<int>(from)] = Piece(Colour::none, PieceType::none);
   // holds en passant data for next move
   Field enPassantData = Field::none;
   // -- check for special moves of pawn pieces
@@ -343,12 +347,12 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
     // -- check for promotion of white pawn
     if ((start.colour == Colour::white) && (row(to) == 8))
     {
-      mFields[to].piece = promoteTo;
+      mFields[static_cast<int>(to)].piece = promoteTo;
     }
     // -- check for promotion of black pawn
     else if ((start.colour == Colour::black) && (row(to) == 1))
     {
-       mFields[to].piece = promoteTo;
+       mFields[static_cast<int>(to)].piece = promoteTo;
     }
     // check for en passant capture
     else if (to == enPassant())
@@ -363,7 +367,7 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
           removeRow = 4;
         else
           removeRow = 5;
-        mFields[toField(column(to), removeRow)] = Piece(Colour::none, PieceType::none);
+        mFields[static_cast<int>(toField(column(to), removeRow))] = Piece(Colour::none, PieceType::none);
       } // if
     } // if en passant field is destination
     // check whether en passant capture is possible in next move
@@ -381,16 +385,16 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
       {
         // white queenside castling
         // King was already moved, we just have to move the rook here.
-        mFields[Field::a1] = Piece(Colour::none, PieceType::none);
-        mFields[Field::d1] = Piece(Colour::white, PieceType::rook);
+        mFields[static_cast<int>(Field::a1)] = Piece(Colour::none, PieceType::none);
+        mFields[static_cast<int>(Field::d1)] = Piece(Colour::white, PieceType::rook);
         mCastling.white_castled = Ternary::true_value;
       }
       if ((to == Field::g1) && (dest.piece == PieceType::none))
       {
         // white kingside castling
         // King was already moved, we just have to move the rook here.
-        mFields[Field::h1] = Piece(Colour::none, PieceType::none);
-        mFields[Field::f1] = Piece(Colour::white, PieceType::rook);
+        mFields[static_cast<int>(Field::h1)] = Piece(Colour::none, PieceType::none);
+        mFields[static_cast<int>(Field::f1)] = Piece(Colour::white, PieceType::rook);
         mCastling.white_castled = Ternary::true_value;
       }
     } // if white king at initial position
@@ -400,16 +404,16 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
       {
         // black queenside castling
         // King was already moved, we just have to move the rook here.
-        mFields[Field::a8] = Piece(Colour::none, PieceType::none);
-        mFields[Field::d8] = Piece(Colour::black, PieceType::rook);
+        mFields[static_cast<int>(Field::a8)] = Piece(Colour::none, PieceType::none);
+        mFields[static_cast<int>(Field::d8)] = Piece(Colour::black, PieceType::rook);
         mCastling.black_castled = Ternary::true_value;
       }
       if ((to == Field::g8) && (dest.piece == PieceType::none))
       {
         // black kingside castling
         // King was already moved, we just have to move the rook here.
-        mFields[Field::h8] = Piece(Colour::none, PieceType::none);
-        mFields[Field::f8] = Piece(Colour::black, PieceType::rook);
+        mFields[static_cast<int>(Field::h8)] = Piece(Colour::none, PieceType::none);
+        mFields[static_cast<int>(Field::f8)] = Piece(Colour::black, PieceType::rook);
         mCastling.black_castled = Ternary::true_value;
       }
     }// if black king at initial position
