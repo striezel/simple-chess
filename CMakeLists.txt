@@ -21,5 +21,8 @@ add_subdirectory (meteor-chess-client)
 # Recurse into subdirectory for competing-evaluators.
 add_subdirectory (competing-evaluators)
 
+# Recurse into subdirectory for speedbench.
+add_subdirectory (speedbench)
+
 # Recurse into subdirectory for tests.
 add_subdirectory (tests)
