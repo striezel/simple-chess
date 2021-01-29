@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016  Dirk Stolle
+    Copyright (C) 2016, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -38,13 +38,13 @@ void Console::showBoard(const Board & board)
     {
       const Piece & piece = board.element(toField(c, r));
       char output = '?';
-      switch (piece.colour)
+      switch (piece.colour())
       {
         case Colour::none:
              output = ' ';
              break;
         case Colour::white:
-             switch(piece.piece)
+             switch(piece.piece())
              {
                case PieceType::pawn:
                     output = 'P';
@@ -70,7 +70,7 @@ void Console::showBoard(const Board & board)
              } //inner switch
              break;
         case Colour::black:
-             switch(piece.piece)
+             switch(piece.piece())
              {
                case PieceType::pawn:
                     output = 'p';
@@ -95,13 +95,13 @@ void Console::showBoard(const Board & board)
                     break;
              } //inner switch
              break;
-      } //colour
+      } // colour
       std::cout << output << " | ";
-    } //for c
+    } // for c
     std::cout << "\n" << rowSeparator << "\n";
-  } //for r
+  } // for r
 }
 
-} //namespace
+} // namespace
 
-} //namespace
+} // namespace

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ std::string ForsythEdwardsNotation::fromBoard(const Board & board)
     for (char c = 'a'; c <= 'h'; ++c)
     {
       const Piece & piece = board.element(toField(c, r));
-      if (piece.piece == PieceType::none)
+      if (piece.piece() == PieceType::none)
         ++emptyCount;
       else
       {
@@ -46,10 +46,10 @@ std::string ForsythEdwardsNotation::fromBoard(const Board & board)
           emptyCount = 0;
         }
         // now add the real thing
-        switch(piece.colour)
+        switch(piece.colour())
         {
           case Colour::white:
-               switch(piece.piece)
+               switch(piece.piece())
                {
                  case PieceType::rook:
                       fenString = fenString + 'R';
@@ -75,7 +75,7 @@ std::string ForsythEdwardsNotation::fromBoard(const Board & board)
                } // switch piece
                break;
           case Colour::black:
-               switch(piece.piece)
+               switch(piece.piece())
                {
                  case PieceType::rook:
                       fenString = fenString + 'r';

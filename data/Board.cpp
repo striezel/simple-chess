@@ -303,7 +303,7 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
 
   const Piece start = element(from);
   // Is the correct player moving?
-  if (toMove() != start.colour)
+  if (toMove() != start.colour())
   {
     return false;
   }
@@ -320,7 +320,7 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
   const Piece dest = element(to);
 
   // Handle counter for fifty move rule.
-  if ((start.piece == PieceType::pawn) || (dest.piece != PieceType::none))
+  if ((start.piece() == PieceType::pawn) || (dest.piece() != PieceType::none))
   {
     // Pawn has been moved or piece will be captured: reset counter.
     mHalfmoves50 = 0;
@@ -339,20 +339,20 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
   // holds en passant data for next move
   Field enPassantData = Field::none;
   // -- check for special moves of pawn pieces
-  if (start.piece == PieceType::pawn)
+  if (start.piece() == PieceType::pawn)
   {
     // check for promotion
     // -- sanitize promotion piece
     Moves::sanitizePromotion(promoteTo);
     // -- check for promotion of white pawn
-    if ((start.colour == Colour::white) && (row(to) == 8))
+    if ((start.colour() == Colour::white) && (row(to) == 8))
     {
-      mFields[static_cast<int>(to)].piece = promoteTo;
+      mFields[static_cast<int>(to)] = Piece(Colour::white, promoteTo);
     }
     // -- check for promotion of black pawn
-    else if ((start.colour == Colour::black) && (row(to) == 1))
+    else if ((start.colour() == Colour::black) && (row(to) == 1))
     {
-       mFields[static_cast<int>(to)].piece = promoteTo;
+       mFields[static_cast<int>(to)] = Piece(Colour::black, promoteTo);
     }
     // check for en passant capture
     else if (to == enPassant())
@@ -371,17 +371,17 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
       } // if
     } // if en passant field is destination
     // check whether en passant capture is possible in next move
-    if ((start.colour == Colour::white) && (row(from) == 2) && (row(to) == 4))
+    if ((start.colour() == Colour::white) && (row(from) == 2) && (row(to) == 4))
       enPassantData = toField(column(from), 3);
-    else if ((start.colour == Colour::black) && (row(from) == 7) && (row(to) == 5))
+    else if ((start.colour() == Colour::black) && (row(from) == 7) && (row(to) == 5))
       enPassantData = toField(column(from), 6);
   }// if pawn
   // -- check for castling move
-  if (start.piece == PieceType::king)
+  if (start.piece() == PieceType::king)
   {
-    if ((start.colour == Colour::white) && (from == Field::e1))
+    if ((start.colour() == Colour::white) && (from == Field::e1))
     {
-      if ((to == Field::c1) && (dest.piece == PieceType::none))
+      if ((to == Field::c1) && (dest.piece() == PieceType::none))
       {
         // white queenside castling
         // King was already moved, we just have to move the rook here.
@@ -389,7 +389,7 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
         mFields[static_cast<int>(Field::d1)] = Piece(Colour::white, PieceType::rook);
         mCastling.white_castled = Ternary::true_value;
       }
-      if ((to == Field::g1) && (dest.piece == PieceType::none))
+      if ((to == Field::g1) && (dest.piece() == PieceType::none))
       {
         // white kingside castling
         // King was already moved, we just have to move the rook here.
@@ -398,9 +398,9 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
         mCastling.white_castled = Ternary::true_value;
       }
     } // if white king at initial position
-    else if ((start.colour == Colour::black) && (from == Field::e8))
+    else if ((start.colour() == Colour::black) && (from == Field::e8))
     {
-      if ((to == Field::c8) && (dest.piece == PieceType::none))
+      if ((to == Field::c8) && (dest.piece() == PieceType::none))
       {
         // black queenside castling
         // King was already moved, we just have to move the rook here.
@@ -408,7 +408,7 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
         mFields[static_cast<int>(Field::d8)] = Piece(Colour::black, PieceType::rook);
         mCastling.black_castled = Ternary::true_value;
       }
-      if ((to == Field::g8) && (dest.piece == PieceType::none))
+      if ((to == Field::g8) && (dest.piece() == PieceType::none))
       {
         // black kingside castling
         // King was already moved, we just have to move the rook here.
@@ -419,9 +419,9 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
     }// if black king at initial position
   } // if king may be castling
   // -- castling update
-  if (start.piece == PieceType::king)
+  if (start.piece() == PieceType::king)
   {
-    if (start.colour == Colour::black)
+    if (start.colour() == Colour::black)
     {
       mCastling.black_kingside = false;
       mCastling.black_queenside = false;
@@ -432,16 +432,16 @@ bool Board::move(const Field from, const Field to, PieceType promoteTo, const bo
       mCastling.white_queenside = false;
     }
   } // if king
-  else if (start.piece == PieceType::rook)
+  else if (start.piece() == PieceType::rook)
   {
-    if (start.colour == Colour::black)
+    if (start.colour() == Colour::black)
     {
       if (from == Field::a8)
         mCastling.black_queenside = false;
       else if (from == Field::h8)
         mCastling.black_kingside = false;
     } // if black rook moved
-    else if (start.colour == Colour::white)
+    else if (start.colour() == Colour::white)
     {
       if (from == Field::a1)
         mCastling.white_queenside = false;

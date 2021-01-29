@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,32 +24,40 @@ namespace simplechess
 {
 
 Piece::Piece()
-: colour(Colour::none),
-  piece(PieceType::none)
+: data((static_cast<int>(Colour::none) << 4) + static_cast<int>(PieceType::none))
 {
 }
 
-Piece::Piece(Colour c, PieceType pt)
-: colour(c),
-  piece(pt)
+Piece::Piece(const Colour c, const PieceType pt)
+: data((static_cast<int>(c) << 4) + static_cast<int>(pt))
 {
 }
+
+/*Colour Piece::colour() const
+{
+  return static_cast<Colour>(data >> 4);
+}
+
+PieceType Piece::piece() const
+{
+  return static_cast<PieceType>(data & 0x0f);
+}*/
 
 bool Piece::acceptable() const
 {
   //Acceptable pieces are the ones where either both colour and piece type are
   // none, or where both colour and piece type are not none.
-  return ((colour == Colour::none) == (piece == PieceType::none));
+  return ((colour() == Colour::none) == (piece() == PieceType::none));
 }
 
 bool Piece::operator==(const Piece& other) const
 {
-  return ((colour == other.colour) && (piece == other.piece));
+  return (data == other.data);
 }
 
 bool Piece::operator!=(const Piece& other) const
 {
-  return ((colour != other.colour) || (piece != other.piece));
+  return (data != other.data);
 }
 
 } //namespace
@@ -103,7 +111,7 @@ std::ostream& operator<<(std::ostream& str, const simplechess::PieceType& pt)
 
 std::ostream& operator<<(std::ostream& str, const simplechess::Piece& p)
 {
-  str << "Piece(" << p.colour << " " << p.piece << ")";
+  str << "Piece(" << p.colour() << " " << p.piece() << ")";
   return str;
 }
 

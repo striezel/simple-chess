@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2020  Dirk Stolle
+    Copyright (C) 2017, 2018, 2020, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,12 +35,12 @@ int RootMobilityEvaluator::score(const Board& board) const
   for (int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
     const Piece elem = board.element(static_cast<Field>(i));
-    if ((elem.colour == Colour::none) || (elem.piece == PieceType::none))
+    if ((elem.colour() == Colour::none) || (elem.piece() == PieceType::none))
       continue;
 
     // Set current colour as the player who is to move. Otherwise moves will
     // not be allowed.
-    moveBoard.setToMove(elem.colour);
+    moveBoard.setToMove(elem.colour());
 
     for (int j = static_cast<int>(Field::a1); j <= static_cast<int>(Field::h8); ++j)
     {
@@ -48,7 +48,7 @@ int RootMobilityEvaluator::score(const Board& board) const
       {
         // Count moves for white as positive moves, and moves for black as
         // negative moves.
-        if (elem.colour == Colour::white)
+        if (elem.colour() == Colour::white)
           ++moves;
         else
           --moves;

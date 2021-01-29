@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2020  Dirk Stolle
+    Copyright (C) 2017, 2020, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -52,11 +52,11 @@ int MaterialEvaluator::score(const Board& board) const
   for (int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
     const Piece elem = board.element(static_cast<Field>(i));
-    if ((elem.colour == Colour::none) || (elem.piece == PieceType::none))
+    if ((elem.colour() == Colour::none) || (elem.piece() == PieceType::none))
       continue;
 
-    const int value(pieceValue(elem.piece));
-    if (elem.colour == Colour::white)
+    const int value(pieceValue(elem.piece()));
+    if (elem.colour() == Colour::white)
       result += value;
     else
       result -= value;

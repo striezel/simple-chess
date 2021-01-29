@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ bool isEmptyStraightOrDiagonal(const Board& board, const Field from, const Field
   while ((curRow != row(to)) || (curCol != column(to)))
   {
     //check if field at current "coordinates" is empty - if not, return
-    if (board.element(toField(curCol, curRow)).piece != PieceType::none)
+    if (board.element(toField(curCol, curRow)).piece() != PieceType::none)
       return false;
     //move to next field
     curRow = curRow + signum(rowDiff);
@@ -53,40 +53,40 @@ bool isCastlingAttemptAllowed(const Board& board, const Field from, const Field 
 {
   const Piece & start = board.element(from);
   const Piece & dest = board.element(to);
-  if ((start.colour == Colour::white) && (from == Field::e1))
+  if ((start.colour() == Colour::white) && (from == Field::e1))
   {
-    if ((to == Field::c1) && (dest.piece == PieceType::none))
+    if ((to == Field::c1) && (dest.piece() == PieceType::none))
     {
       //fields b1, c1 and d1 must be empty
-      bool empty = (board.element(Field::b1).piece == PieceType::none)
-        && (board.element(Field::c1).piece == PieceType::none)
-        && (board.element(Field::d1).piece == PieceType::none);
+      bool empty = (board.element(Field::b1).piece() == PieceType::none)
+        && (board.element(Field::c1).piece() == PieceType::none)
+        && (board.element(Field::d1).piece() == PieceType::none);
       return (empty && board.castling().white_queenside);
     }
-    if ((to == Field::g1) && (dest.piece == PieceType::none))
+    if ((to == Field::g1) && (dest.piece() == PieceType::none))
     {
       //fields f1 and g1 must be empty
-      return ((board.element(Field::f1).piece == PieceType::none)
-        && (board.element(Field::g1).piece == PieceType::none)
+      return ((board.element(Field::f1).piece() == PieceType::none)
+        && (board.element(Field::g1).piece() == PieceType::none)
       //... and castling still must be possible
         && board.castling().white_kingside);
     }
   } //if white king at initial position
-  else if ((start.colour == Colour::black) && (from == Field::e8))
+  else if ((start.colour() == Colour::black) && (from == Field::e8))
   {
-    if ((to == Field::c8) && (dest.piece == PieceType::none))
+    if ((to == Field::c8) && (dest.piece() == PieceType::none))
     {
       //fields b8, c8 and d8 must be empty
-      bool empty = (board.element(Field::b8).piece == PieceType::none)
-        && (board.element(Field::c8).piece == PieceType::none)
-        && (board.element(Field::d8).piece == PieceType::none);
+      bool empty = (board.element(Field::b8).piece() == PieceType::none)
+        && (board.element(Field::c8).piece() == PieceType::none)
+        && (board.element(Field::d8).piece() == PieceType::none);
       return (empty && board.castling().black_queenside);
     }
-    if ((to == Field::g8) && (dest.piece == PieceType::none))
+    if ((to == Field::g8) && (dest.piece() == PieceType::none))
     {
       //fields f8 and g8 must be empty
-      return ((board.element(Field::f8).piece == PieceType::none)
-        && (board.element(Field::g8).piece == PieceType::none)
+      return ((board.element(Field::f8).piece() == PieceType::none)
+        && (board.element(Field::g8).piece() == PieceType::none)
       // ... and castling still must be possible
         && board.castling().black_kingside);
     }
@@ -100,15 +100,15 @@ bool allowedPatternPawnBlack(const Board& board, const Field from, const Field t
   const int colDiff = std::abs(column(from) - column(to));
   //If dest. is empty, move may only be one step ahead; or two if in initial position.
   const Piece & destination = board.element(to);
-  if (destination.colour == Colour::none)
+  if (destination.colour() == Colour::none)
   {
     const auto & field3 = board.element(toField(column(from), 6));
-    if ((colDiff == 0) && ((rowDiff == 1) || ((rowDiff == 2) && (row(from) == 7) && (field3.piece == PieceType::none))))
+    if ((colDiff == 0) && ((rowDiff == 1) || ((rowDiff == 2) && (row(from) == 7) && (field3.piece() == PieceType::none))))
       return true;
     // It may also be an en passant move.
     return ((colDiff == 1) && (rowDiff == 1) && (board.enPassant() == to));
   }
-  if (destination.colour == Colour::white)
+  if (destination.colour() == Colour::white)
   {
     return ((colDiff == 1) && (rowDiff == 1));
   }
@@ -122,15 +122,15 @@ bool allowedPatternPawnWhite(const Board& board, const Field from, const Field t
   const int colDiff = std::abs(column(from) - column(to));
   //If dest. is empty, move may only be one step ahead; or two if in initial position.
   const Piece & destination = board.element(to);
-  if (destination.colour == Colour::none)
+  if (destination.colour() == Colour::none)
   {
     const auto & field3 = board.element(toField(column(from), 3));
-    if ((colDiff == 0) && ((rowDiff == 1) || ((rowDiff == 2) && (row(from) == 2) && (field3.colour == Colour::none))))
+    if ((colDiff == 0) && ((rowDiff == 1) || ((rowDiff == 2) && (row(from) == 2) && (field3.colour() == Colour::none))))
       return true;
     // It may also be an en passant move.
     return ((colDiff == 1) && (rowDiff == 1) && (to == board.enPassant()));
   }
-  if (destination.colour == Colour::black)
+  if (destination.colour() == Colour::black)
   {
     return ((colDiff == 1) && (rowDiff == 1));
   }
@@ -226,18 +226,18 @@ bool Moves::isAllowedPattern(const Board& board, const Field from, const Field t
     return false;
   const Piece & start = board.element(from);
   // If the field is empty, it is no valid start point.
-  if (start.piece == PieceType::none)
+  if (start.piece() == PieceType::none)
     return false;
   const Piece & destination = board.element(to);
   // If there is a piece of the same colour on the destination field, then the
   // move is not allowed.
-  if (start.colour == destination.colour)
+  if (start.colour() == destination.colour())
     return false;
 
-  switch(start.piece)
+  switch(start.piece())
   {
     case PieceType::pawn:
-         if (start.colour == Colour::white)
+         if (start.colour() == Colour::white)
            return allowedPatternPawnWhite(board, from, to);
          //Must be a black pawn then.
          else

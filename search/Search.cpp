@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -192,7 +192,7 @@ void Search::expandNode(Node& node, const Evaluator& eval, const unsigned int de
   for (int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
     const Piece elem = node.board.element(static_cast<Field>(i));
-    if ((elem.colour != node.board.toMove()) || (elem.piece == PieceType::none))
+    if ((elem.colour() != node.board.toMove()) || (elem.piece() == PieceType::none))
       continue;
     // check possible moves
     for (int j = static_cast<int>(Field::a1); j <= static_cast<int>(Field::h8); ++j)

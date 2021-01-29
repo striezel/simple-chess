@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@ TEST_CASE("Piece default constructor")
   using namespace simplechess;
 
   Piece p;
-  REQUIRE( p.colour == Colour::none );
-  REQUIRE( p.piece == PieceType::none );
+  REQUIRE( p.colour() == Colour::none );
+  REQUIRE( p.piece() == PieceType::none );
 }
 
 TEST_CASE("Piece constructor with parameters")
@@ -35,12 +35,12 @@ TEST_CASE("Piece constructor with parameters")
   using namespace simplechess;
 
   Piece p(Colour::white, PieceType::king);
-  REQUIRE( p.colour == Colour::white );
-  REQUIRE( p.piece == PieceType::king );
+  REQUIRE( p.colour() == Colour::white );
+  REQUIRE( p.piece() == PieceType::king );
 
   p = Piece(Colour::black, PieceType::queen);
-  REQUIRE( p.colour == Colour::black );
-  REQUIRE( p.piece == PieceType::queen );
+  REQUIRE( p.colour() == Colour::black );
+  REQUIRE( p.piece() == PieceType::queen );
 }
 
 TEST_CASE("Piece::acceptable()")

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2019  Dirk Stolle
+    Copyright (C) 2017, 2019, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ Server::Server(const std::string& hostname, const uint16_t port, const bool slav
 
 Server::~Server()
 {
-  //Nothing to do here, connection object takes care of itself in destructor.
+  // Nothing to do here, connection object takes care of itself in destructor.
 }
 
 bool Server::boardList(std::vector<std::string>& boardIds)
@@ -545,13 +545,13 @@ std::string Server::insertBoard(const Board& board)
         return "";
       }
       const auto& elem = board.element(toField(col, r));
-      if (!document.append("piece", Convert::pieceToString(elem.piece)))
+      if (!document.append("piece", Convert::pieceToString(elem.piece())))
       {
         std::cerr << "Error: Could not append piece to BSON object in lmc::Server::insertBoard!"
                   << std::endl;
         return "";
       }
-      if (!document.append("colour", Convert::colourToMongoDbString(elem.colour)))
+      if (!document.append("colour", Convert::colourToMongoDbString(elem.colour())))
       {
         std::cerr << "Error: Could not append colour to BSON object in lmc::Server::insertBoard!"
                   << std::endl;
@@ -666,13 +666,13 @@ bool Server::updateFieldOnBoard(const std::string& id, const Board& board, const
 
   const auto & elem = board.element(f);
   BSON subUpdate;
-  if (!subUpdate.append("piece", Convert::pieceToString(elem.piece)))
+  if (!subUpdate.append("piece", Convert::pieceToString(elem.piece())))
   {
     std::cerr << "Error: Could not append piece to BSON object in lmc::Server::updateFieldOnBoard!"
               << std::endl;
     return false;
   }
-  if (!subUpdate.append("colour", Convert::colourToMongoDbString(elem.colour)))
+  if (!subUpdate.append("colour", Convert::colourToMongoDbString(elem.colour())))
   {
     std::cerr << "Error: Could not append colour to BSON object in lmc::Server::updateFieldOnBoard!"
               << std::endl;

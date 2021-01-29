@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2018  Dirk Stolle
+    Copyright (C) 2016, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ bool isUnderAttack(const Board& board, const Colour by, const Field field)
   for(int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
     const Piece& piece = board.element(static_cast<Field>(i));
-    if (piece.colour == by)
+    if (piece.colour() == by)
     {
       if (Moves::isAllowedPattern(boardCopy, static_cast<Field>(i), field))
         return true;
@@ -45,7 +45,7 @@ bool isInCheck(const Board& board, const Colour colour)
   for(int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
     const Piece& piece = board.element(static_cast<Field>(i));
-    if ((piece.piece == PieceType::king) && (piece.colour == colour))
+    if ((piece.piece() == PieceType::king) && (piece.colour() == colour))
     {
       Colour opponent = Colour::none;
       switch(colour)
@@ -83,7 +83,7 @@ bool isCheckMate(const Board& board, const Colour colour)
   for(int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
     const Piece& piece = board.element(static_cast<Field>(i));
-    if (piece.colour == colour)
+    if (piece.colour() == colour)
     {
       for(int j = static_cast<int>(Field::a1); j <= static_cast<int>(Field::h8); ++j)
       {

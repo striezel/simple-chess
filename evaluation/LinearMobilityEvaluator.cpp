@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2020  Dirk Stolle
+    Copyright (C) 2017, 2018, 2020, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -34,18 +34,18 @@ int LinearMobilityEvaluator::score(const Board& board) const
   for (int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
   {
     const Piece elem = board.element(static_cast<Field>(i));
-    if ((elem.colour == Colour::none) || (elem.piece == PieceType::none))
+    if ((elem.colour() == Colour::none) || (elem.piece() == PieceType::none))
       continue;
 
     // Set current colour as the player who is to move. Otherwise moves will
     // not be allowed.
-    moveBoard.setToMove(elem.colour);
+    moveBoard.setToMove(elem.colour());
 
     for (int j = static_cast<int>(Field::a1); j <= static_cast<int>(Field::h8); ++j)
     {
       if (Moves::isAllowed(moveBoard, static_cast<Field>(i), static_cast<Field>(j)))
       {
-        if (elem.colour == Colour::white)
+        if (elem.colour() == Colour::white)
           result += centipawnsPerMove;
         else
           result -= centipawnsPerMove;

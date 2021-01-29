@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,32 +21,42 @@
 #ifndef SIMPLE_CHESS_PIECE_HPP
 #define SIMPLE_CHESS_PIECE_HPP
 
+#include <cstdint>
 #include <iostream>
 
 namespace simplechess
 {
    /** enumeration type for players / colours */
-   enum class Colour { none, white, black };
+   enum class Colour : std::uint8_t { none, white, black };
 
    /** enumeration type for types of pieces */
-   enum class PieceType { none, king, queen, bishop, knight, rook, pawn};
+   enum class PieceType : std::uint8_t { king, queen, bishop, knight, rook, pawn, none };
 
 
    /** struct that represents a player piece */
    struct Piece
    {
-     Colour colour; /**< colour of the piece */
-     PieceType piece; /**< type of the piece */
+     /**< colour of the piece */
+     inline Colour colour() const
+     {
+      return static_cast<Colour>(data >> 4);
+     }
+
+     /**< type of the piece */
+     inline PieceType piece() const
+     {
+       return static_cast<PieceType>(data & 0x0f);
+     }
 
      /** \brief default constructor */
      Piece();
 
-     /** \brief parametrized constructor
+     /** \brief parameterized constructor
       *
       * \param c colour of the piece
       * \param pt type of the piece
       */
-     Piece(Colour c, PieceType pt);
+     Piece(const Colour c, const PieceType pt);
 
 
      /** \brief Checks whether the struct's content is a sensible, acceptable piece.
@@ -73,6 +83,8 @@ namespace simplechess
       *         Returns false otherwise.
       */
      bool operator!=(const Piece& other) const;
+   private:
+     std::uint8_t data;
    }; //struct
 } //namespace
 
