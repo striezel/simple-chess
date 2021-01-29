@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2018  Dirk Stolle
+    Copyright (C) 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,11 +21,13 @@
 #ifndef SIMPLECHESS_TERNARY_HPP
 #define SIMPLECHESS_TERNARY_HPP
 
+#include <cstdint>
+
 namespace simplechess
 {
 
   /** Enumeration for a ternary truth value (three-valued logic). */
-  enum class Ternary { false_value = -1, maybe_value = 0, true_value = 1 };
+  enum class Ternary: int_fast8_t { false_value = -1, maybe_value = 0, true_value = 1 };
 
 } // namespace
 

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2018  Dirk Stolle
+    Copyright (C) 2016, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,9 +26,9 @@ namespace simplechess
 Castling::Castling()
 : white_kingside(true),
   white_queenside(true),
-  white_castled(Ternary::false_value),
   black_kingside(true),
   black_queenside(true),
+  white_castled(Ternary::false_value),
   black_castled(Ternary::false_value)
 {
 }

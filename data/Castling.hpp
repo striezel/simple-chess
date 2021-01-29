@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -34,9 +34,9 @@ struct Castling
 {
   bool white_kingside; /**< whether kingside castling for white is still possible */
   bool white_queenside; /**< whether queenside castling for white is still possible */
-  Ternary white_castled; /**< whether the white player has performed castling */
   bool black_kingside; /**< whether kingside castling for black is still possible */
   bool black_queenside; /**< whether queenside castling for black is still possible */
+  Ternary white_castled; /**< whether the white player has performed castling */
   Ternary black_castled; /**< whether the black player has performed castling */
 
   /** \brief Default constructor. */
