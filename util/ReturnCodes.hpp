@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2019  Dirk Stolle
+    Copyright (C) 2017, 2018, 2019, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,18 +26,28 @@ namespace simplechess
 
 // Common return codes / exit codes that are used by simple-chess programs.
 
+// -- invalid/malformed parameter value
 const int rcInvalidParameter = 1;
+
 const int rcTokenizationError = 2;
 const int rcParserError = 3;
 const int rcDataImplausible = 4;
 const int rcBoardInitializationFailure = 5;
 const int rcMoveNotPossible = 6;
 #ifndef NO_METEOR_CHESS
+// -- a MongoDB query failed or connection could not be established
 const int rcMongoDbError = 7;
 #endif // NO_METEOR_CHESS
 const int rcEngineResigns = 8;
 const int rcEngineClaimsDraw = 9; // ... under 50 move rule
-const int rcUnknown = 10;
+
+// -- an error related to the signal handler occurred
+const int rcSignalHandlerError = 10;
+
+// -- program was terminated by an intercepted signal
+const int rcProgramTerminationBySignal = 11;
+
+const int rcUnknown = 12;
 
 } // namespace
 
