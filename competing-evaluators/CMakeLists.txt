@@ -37,6 +37,8 @@ set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
 
 add_executable(competing-evaluators ${competing_evaluators_sources})
 
+target_link_libraries (competing-evaluators "pthread")
+
 # create git-related constants
 # -- get the current commit hash
 execute_process(

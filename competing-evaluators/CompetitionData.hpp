@@ -49,6 +49,20 @@ class CompetitionData
      */
     bool compete(unsigned int threads = 1);
 
+    /** \brief Requests to stop an ongoing competition.
+     *
+     * \remarks This may not stop the compete() immediately, it may still go on
+     *          for several seconds, but it does stop as soon as possible
+     *          without leaking resources.
+     */
+    void requestStop();
+
+    /** \brief Waits for the stop request to take effect.
+     *
+     * \remarks If there has been no stop request, it returns immediately.
+     */
+    void waitForStop();
+
 
     /** \brief Shows the competition results on standard output. */
     void show() const;
@@ -72,6 +86,14 @@ class CompetitionData
      */
     void single_threaded_compete();
 
+    /** \brief Performs all games for the competition in a multi-threaded way.
+     *
+     * \param threads   number of threads
+     */
+    void multi_threaded_compete(unsigned int threads);
+
+    volatile bool stopRequested;
+    volatile bool isCompeting;
     std::vector<std::unique_ptr<Evaluator>> evaluators;
     std::map<unsigned int, unsigned int> wins;
     std::map<unsigned int, unsigned int> defeats;

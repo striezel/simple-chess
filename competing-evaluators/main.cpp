@@ -27,6 +27,7 @@
 #endif
 #include "../util/GitInfos.hpp"
 #include "../util/ReturnCodes.hpp"
+#include "../util/strings.hpp"
 #include "../util/Version.hpp"
 #include "competing.hpp"
 #include "CompetitionData.hpp"
@@ -80,6 +81,10 @@ void linux_signal_handler(int sig)
         break;
   } //switch
   std::clog << "!" << std::endl;
+  // stop ongoing stuff
+  compData.requestStop();
+  std::clog << "Waiting for all threads to stop ..." << std::endl;
+  compData.waitForStop();
   // Show the summary, i.e. competition results we have so far.
   compData.show();
   std::clog << "Terminating program early due to caught signal." << std::endl;
@@ -101,6 +106,10 @@ BOOL windows_signal_handler(DWORD ctrlSignal)
   {
     case CTRL_C_EVENT:
          std::clog << "INFO: Received Ctrl+C!";
+         // stop ongoing stuff
+         compData.requestStop();
+         std::clog << "Waiting for all threads to stop ..." << std::endl;
+         compData.waitForStop();
          // Show the summary, i.e. competition results we have so far.
          compData.show();
          std::clog << "Terminating program early due to caught signal." << std::endl;
@@ -114,6 +123,8 @@ BOOL windows_signal_handler(DWORD ctrlSignal)
 
 int main(int argc, char** argv)
 {
+  unsigned int threads = 0;
+
   if ((argc > 1) && (argv != nullptr))
   {
     for (int i = 1; i < argc; ++i)
@@ -134,6 +145,39 @@ int main(int argc, char** argv)
         showHelp();
         return 0;
       } // if help
+      else if ((param == "-t") || (param == "--threads"))
+      {
+        if (threads > 0)
+        {
+          std::cout << "Error: Number of threads has been specified multiple times." << std::endl;
+          return simplechess::rcInvalidParameter;
+        }
+        //enough parameters?
+        if ((i+1 < argc) && (argv[i+1] != nullptr))
+        {
+          const std::string integer = std::string(argv[i+1]);
+          int thread_num = 0;
+          if (!simplechess::util::stringToInt(integer, thread_num))
+          {
+            std::cout << "Error: \"" << integer << "\" is not an unsigned integer!" << std::endl;
+            return simplechess::rcInvalidParameter;
+          }
+          if (thread_num <= 0)
+          {
+            std::cout << "Error: Number of threads has to be greater than zero." << std::endl;
+            return simplechess::rcInvalidParameter;
+          }
+          // Assign the parameter value.
+          threads = thread_num;
+          ++i; // Skip next parameter, because it's used as thread number already.
+        }
+        else
+        {
+          std::cout << "Error: You have to enter an integer value after \""
+                    << param <<"\"." << std::endl;
+          return simplechess::rcInvalidParameter;
+        }
+      }
       // Should never happen.
       else
       {
@@ -190,9 +234,15 @@ int main(int argc, char** argv)
     #error Unknown operating system! No known signal handling facility.
   #endif // defined
 
+  // Use single-threaded approach, when no thread number is given explicitly.
+  if (threads == 0)
+  {
+    threads = 1;
+  }
+
   std::cout << "Pairing all evaluator combinations, this will take quite some time..."
             << std::endl;
-  if (compData.compete())
+  if (compData.compete(threads))
   {
     compData.show();
   }

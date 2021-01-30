@@ -35,6 +35,9 @@
 			<Add option="-std=c++14" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Linker>
+			<Add library="pthread" />
+		</Linker>
 		<Unit filename="../data/Board.cpp" />
 		<Unit filename="../data/Board.hpp" />
 		<Unit filename="../data/Castling.cpp" />

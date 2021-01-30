@@ -19,7 +19,9 @@
 */
 
 #include "CompetitionData.hpp"
+#include <atomic>
 #include <iostream>
+#include <mutex>
 #include <thread>
 #include "../data/ForsythEdwardsNotation.hpp"
 #include "../evaluation/CompoundCreator.hpp"
@@ -30,7 +32,9 @@ namespace simplechess
 {
 
 CompetitionData::CompetitionData(const std::vector<std::string>& allowedEvaluators)
-: evaluators(createEvaluators(allowedEvaluators)),
+: stopRequested(false),
+  isCompeting(false),
+  evaluators(createEvaluators(allowedEvaluators)),
   wins(),
   defeats(),
   draws()
@@ -119,9 +123,12 @@ void CompetitionData::single_threaded_compete()
   {
     for (unsigned int idxBlack = 0; idxBlack < totalEvaluators; ++idxBlack)
     {
+      if (stopRequested)
+      {
+        return;
+      }
       if (idxWhite == idxBlack)
         continue;
-
       const Result r = Competition::compete(*evaluators[idxWhite], *evaluators[idxBlack]);
 
       switch (r)
@@ -150,6 +157,94 @@ void CompetitionData::single_threaded_compete()
   } // for idxWhite
 }
 
+void CompetitionData::multi_threaded_compete(unsigned int threads)
+{
+  const unsigned int totalEvaluators = evaluators.size();
+  const unsigned int comboCount = totalEvaluators * (totalEvaluators - 1);
+
+  std::cout << "Info: There are " << totalEvaluators << " different evaluators."
+            << std::endl << "This means there will be " << comboCount
+            << " different evaluator matches." << std::endl;
+
+  wins.clear();
+  defeats.clear();
+  draws.clear();
+
+  std::atomic<unsigned int> finished(0);
+  std::mutex mutuallyExclusive;
+
+  if (threads > totalEvaluators)
+  {
+    threads = totalEvaluators;
+  }
+
+  const auto perThread = totalEvaluators / threads;
+
+  for (unsigned int idxWhite = 0; idxWhite < totalEvaluators; ++idxWhite)
+  {
+    if (stopRequested)
+    {
+      return;
+    }
+
+    const auto lambda = [&] (const unsigned int startIdx, const unsigned int endIdx)
+    {
+      for (unsigned int idxBlack = startIdx; idxBlack < endIdx; ++idxBlack)
+      {
+        if (stopRequested)
+        {
+          std::clog << "Exiting thread due to stop request." << std::endl;
+          return;
+        }
+        if (idxWhite == idxBlack)
+          continue;
+        const Result r = Competition::compete(*evaluators[idxWhite], *evaluators[idxBlack]);
+
+        {
+          std::lock_guard<std::mutex> guard(mutuallyExclusive);
+          switch (r)
+          {
+            case Result::WhiteWins:
+                 ++wins[idxWhite];
+                 ++defeats[idxBlack];
+                 break;
+            case Result::BlackWins:
+                 ++wins[idxBlack];
+                 ++defeats[idxWhite];
+                 break;
+            case Result::Draw:
+                 ++draws[idxWhite];
+                 ++draws[idxBlack];
+                 break;
+            case Result::Unknown:
+                // do nothing
+                 break;
+          } // switch
+
+          ++finished;
+
+          std::cout << "Progress: " << finished << " of " << comboCount << std::endl;
+        } // scope for lock guard
+      } // for idxBlack
+    };
+
+    // create threads
+    std::vector<std::thread> actualThreads;
+    for (unsigned int i = 0; i < threads - 1; ++i)
+    {
+      actualThreads.push_back(std::thread(lambda, i * perThread, (i+1) * perThread));
+    }
+    // Last thread does a bit more, if number of threads is not a factor of totalEvaluators.
+    actualThreads.push_back(std::thread(lambda, (threads-1) * perThread, totalEvaluators));
+
+    // Join all threads.
+    for (auto& t : actualThreads)
+    {
+      t.join();
+    }
+  } // for idxWhite
+}
+
 bool CompetitionData::compete(unsigned int threads)
 {
   if (evaluators.empty())
@@ -163,10 +258,41 @@ bool CompetitionData::compete(unsigned int threads)
     return false;
   }
 
+  isCompeting = true;
   sanitizeThreadCount(threads);
-  single_threaded_compete();
+  if (threads == 1)
+  {
+    std::cout << "Starting single-threaded run." << std::endl;
+    single_threaded_compete();
+  }
+  else
+  {
+    std::cout << "Starting multi-threaded run with " << threads << " threads." << std::endl;
+    multi_threaded_compete(threads);
+  }
+  isCompeting = false;
 
   return true;
+}
+
+void CompetitionData::requestStop()
+{
+  stopRequested = true;
+}
+
+void CompetitionData::waitForStop()
+{
+  if (!stopRequested || !isCompeting)
+    return;
+
+  unsigned int waits = 0;
+  // Note: This does not quite work as expected (yet).
+  while (isCompeting && waits < 60)
+  {
+    std::this_thread::yield();
+    std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    ++waits;
+  }
 }
 
 } // namespace
