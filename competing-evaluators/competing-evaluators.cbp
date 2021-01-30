@@ -78,13 +78,11 @@
 		<Unit filename="../util/Version.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
+		<Unit filename="CompetitionData.cpp" />
+		<Unit filename="CompetitionData.hpp" />
 		<Unit filename="competing.cpp" />
 		<Unit filename="competing.hpp" />
 		<Unit filename="main.cpp" />
-		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

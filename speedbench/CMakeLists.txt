@@ -27,7 +27,7 @@ set(speedbench_sources
     ../util/strings.cpp
     main.cpp)
 
-add_definitions(-std=c++14 -O3)
+add_definitions(-std=c++14 -O3 -DSIMPLECHESS_NO_COMPETITION_DATA)
 if (CMAKE_COMPILER_IS_GNUCC)
     add_definitions(-Wall -O3 -fexceptions -std=c++14)
 endif (CMAKE_COMPILER_IS_GNUCC)

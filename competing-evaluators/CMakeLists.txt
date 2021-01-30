@@ -24,6 +24,7 @@ set(competing_evaluators_sources
     ../search/Search.cpp
     ../util/GitInfos.cpp
     ../util/strings.cpp
+    CompetitionData.cpp
     competing.cpp
     main.cpp)
 

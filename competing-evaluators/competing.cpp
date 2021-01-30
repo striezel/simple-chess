@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2020  Dirk Stolle
+    Copyright (C) 2020, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,6 +24,9 @@
 #include "../data/ForsythEdwardsNotation.hpp"
 #include "../evaluation/CompoundCreator.hpp"
 #include "../search/Search.hpp"
+#ifndef SIMPLECHESS_NO_COMPETITION_DATA
+#include "CompetitionData.hpp"
+#endif
 
 namespace simplechess
 {
@@ -37,125 +40,7 @@ const std::vector<std::string> Competition::allEvaluators = {
     CompoundCreator::IdRootMobility
 };
 
-std::vector<std::unique_ptr<Evaluator>> Competition::createEvaluators(const std::vector<std::string>& allowedEvaluators)
-{
-  const unsigned int distinctCount = allowedEvaluators.size();
-  const unsigned int totalCombinations = 1 << allowedEvaluators.size();
-  std::vector<std::unique_ptr<Evaluator>> result;
-  result.reserve(totalCombinations - 1);
-  for (unsigned int i = 1; i < totalCombinations; ++i)
-  {
-    std::string evals;
-    for (unsigned int j = 0; j < distinctCount; ++j)
-    {
-      if ((i & (1 << j)) != 0)
-      {
-        evals += "," + allowedEvaluators[j];
-      }
-    } // for j
-    evals = evals.substr(1);
-    auto ce_ptr = std::unique_ptr<Evaluator>(new CompoundEvaluator());
-    if (!CompoundCreator::create(evals, static_cast<CompoundEvaluator&>(*ce_ptr)))
-    {
-      return {};
-    }
-    result.push_back(std::move(ce_ptr));
-  } // for i
-
-  return result;
-}
-
-void Competition::sanitizeThreadCount(unsigned int& threads)
-{
-  if (threads == 0)
-    threads = 1;
-  const unsigned int hw_threads = std::thread::hardware_concurrency();
-  if ((hw_threads != 0) && (threads > hw_threads))
-  {
-    threads = hw_threads;
-    std::cout << "Info: Hardware indicates that it only supports " << hw_threads
-              << " concurrent threads. Number of threads has been reduced to "
-              << hw_threads << "." << std::endl;
-  }
-}
-
-void Competition::showResults(const std::vector<std::unique_ptr<Evaluator>>& evaluators,
-                              const std::map<unsigned int, unsigned int>& wins,
-                              const std::map<unsigned int, unsigned int>& defeats,
-                              const std::map<unsigned int, unsigned int>& draws)
-{
-  std::cout << "Win counts:" << std::endl;
-  for (const auto& elem : wins)
-  {
-    std::cout << "Evaluator #" << elem.first << " (" + evaluators[elem.first]->name() + "): " << elem.second << std::endl;
-  }
-
-  std::cout << "Defeat counts:" << std::endl;
-  for (const auto& elem : defeats)
-  {
-    std::cout << "Evaluator #" << elem.first << " (" + evaluators[elem.first]->name() + "): " << elem.second << std::endl;
-  }
-
-  std::cout << "Draw counts:" << std::endl;
-  for (const auto& elem : draws)
-  {
-    std::cout << "Evaluator #" << elem.first << " (" + evaluators[elem.first]->name() + "): " << elem.second << std::endl;
-  }
-}
-
-void Competition::single_threaded_compete(const std::vector<std::unique_ptr<Evaluator>>& evaluators,
-                                          std::map<unsigned int, unsigned int>& wins,
-                                          std::map<unsigned int, unsigned int>& defeats,
-                                          std::map<unsigned int, unsigned int>& draws)
-{
-  const unsigned int totalEvaluators = evaluators.size();
-  const unsigned int comboCount = totalEvaluators * (totalEvaluators - 1);
-
-  std::cout << "Info: There are " << totalEvaluators << " different evaluators."
-            << std::endl << "This means there will be " << comboCount
-            << " different evaluator matches." << std::endl;
-
-  wins.clear();
-  defeats.clear();
-  draws.clear();
-
-  unsigned int finished = 0;
-
-  for (unsigned int idxWhite = 0; idxWhite < totalEvaluators; ++idxWhite)
-  {
-    for (unsigned int idxBlack = 0; idxBlack < totalEvaluators; ++idxBlack)
-    {
-      if (idxWhite == idxBlack)
-        continue;
-
-      const Result r = compete(*evaluators[idxWhite], *evaluators[idxBlack]);
-
-      switch (r)
-      {
-        case Result::WhiteWins:
-             ++wins[idxWhite];
-             ++defeats[idxBlack];
-             break;
-        case Result::BlackWins:
-             ++wins[idxBlack];
-             ++defeats[idxWhite];
-             break;
-        case Result::Draw:
-             ++draws[idxWhite];
-             ++draws[idxBlack];
-             break;
-        case Result::Unknown:
-             // do nothing
-             break;
-      } // switch
-
-      ++finished;
-
-      std::cout << "Progress: " << finished << " of " << comboCount << std::endl;
-    } // for idxBlack
-  } // for idxWhite
-}
-
+#ifndef SIMPLECHESS_NO_COMPETITION_DATA
 void Competition::compete(const std::vector<std::string>& allowedEvaluators, unsigned int threads)
 {
   if (allowedEvaluators.empty())
@@ -169,17 +54,17 @@ void Competition::compete(const std::vector<std::string>& allowedEvaluators, uns
     return;
   }
 
-  sanitizeThreadCount(threads);
-  const auto evaluators = createEvaluators(allowedEvaluators);
-
-  std::map<unsigned int, unsigned int> wins;
-  std::map<unsigned int, unsigned int> defeats;
-  std::map<unsigned int, unsigned int> draws;
-
-  single_threaded_compete(evaluators, wins, defeats, draws);
-
-  showResults(evaluators, wins, defeats, draws);
+  CompetitionData data(allowedEvaluators);
+  if (data.compete())
+  {
+    data.show();
+  }
+  else
+  {
+    std::cerr << "Could not start evaluator competition!" << std::endl;
+  }
 }
+#endif
 
 Result Competition::compete(const Evaluator& white, const Evaluator& black)
 {
