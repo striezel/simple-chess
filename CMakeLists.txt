@@ -9,14 +9,18 @@ add_subdirectory (simple-chess-cli)
 # Recurse into subdirectory for pgn-reader.
 add_subdirectory (pgn-reader)
 
-# Recurse into subdirectory for pgn-reader with meteor-chess support.
-add_subdirectory (pgn-reader-with-meteor-chess)
+if (NOT WIN32)
+  # Recurse into subdirectory for pgn-reader with meteor-chess support.
+  add_subdirectory (pgn-reader-with-meteor-chess)
+endif (NOT WIN32)
 
 # Recurse into subdirectory for engine.
 add_subdirectory (engine)
 
-# Recurse into subdirectory for meteor-chess-client.
-add_subdirectory (meteor-chess-client)
+if (NOT WIN32)
+  # Recurse into subdirectory for meteor-chess-client.
+  add_subdirectory (meteor-chess-client)
+endif (NOT WIN32)
 
 # Recurse into subdirectory for competing-evaluators.
 add_subdirectory (competing-evaluators)
