@@ -1,5 +1,5 @@
-# We might support earlier versions, too, but those have not been tested.
-cmake_minimum_required (VERSION 2.8)
+# We might support earlier versions, too, but try to use a more recent one.
+cmake_minimum_required (VERSION 3.8)
 
 project(competing-evaluators)
 
@@ -28,10 +28,11 @@ set(competing_evaluators_sources
     competing.cpp
     main.cpp)
 
-add_definitions(-std=c++14 -O3)
-if (CMAKE_COMPILER_IS_GNUCC)
-    add_definitions(-Wall -O3 -fexceptions -std=c++14)
-endif (CMAKE_COMPILER_IS_GNUCC)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    add_definitions(-Wall -O3 -fexceptions)
+endif ()
 
 set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
 

@@ -4,6 +4,8 @@ _Note: This changelog may be incomplete._
 
 ## Version NEXT (2020-01-??)
 
+- The minimum required CMake version to compile the source code is raised from
+  version 3.0 to 3.8.
 - competing-evaluators: initial version of program to let different board
   evaluators compete against each other
 
