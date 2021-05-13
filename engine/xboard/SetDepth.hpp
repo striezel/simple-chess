@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2021  Dirk Stolle
+    Copyright (C) 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,24 +18,36 @@
  -------------------------------------------------------------------------------
 */
 
-#include "Go.hpp"
-#include "../Engine.hpp"
-#include "../io-utils.hpp"
+#ifndef SIMPLECHESS_XBOARD_SETDEPTH_HPP
+#define SIMPLECHESS_XBOARD_SETDEPTH_HPP
+
+#include "Command.hpp"
 
 namespace simplechess
 {
 
-bool Go::process()
+/** \brief Class that handles the sd command.
+ */
+class SetDepth : public Command
 {
-  // TODO: Check whether this implementation does what the protocol
-  // specification expects the engine to do.
-  auto& eng = Engine::get();
-  eng.setForceMode(false);
-  eng.timing().opponent().stop();
-  eng.timing().self().start();
-  eng.move();
-  eng.timing().self().stop();
-  return true;
-}
+  public:
+    /** \brief Constructor.
+     *
+     * \param depth  the new search depth to set
+     */
+    SetDepth(const unsigned int depth);
+
+
+    /** \brief Processes the command, i.e. performs required actions.
+     *
+     * \return True if command was processed successfully.
+     */
+    virtual bool process() override;
+  private:
+    unsigned int mDepth; /**< amount of plys */
+}; // class
 
 } // namespace
+
+
+#endif // SIMPLECHESS_XBOARD_SETDEPTH_HPP

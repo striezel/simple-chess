@@ -42,6 +42,7 @@ set(simple_chess_engine_sources
     xboard/Quit.cpp
     xboard/ResultCmd.cpp
     xboard/SetBoard.cpp
+    xboard/SetDepth.cpp
     xboard/SetTime.cpp
     xboard/Usermove.cpp
     main.cpp)

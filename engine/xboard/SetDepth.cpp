@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2021  Dirk Stolle
+    Copyright (C) 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,23 +18,27 @@
  -------------------------------------------------------------------------------
 */
 
-#include "Go.hpp"
+#include "SetDepth.hpp"
 #include "../Engine.hpp"
+#ifdef DEBUG
 #include "../io-utils.hpp"
+#include "../../util/strings.hpp"
+#endif // DEBUG
 
 namespace simplechess
 {
 
-bool Go::process()
+SetDepth::SetDepth(const unsigned int depth)
+: mDepth(depth)
 {
-  // TODO: Check whether this implementation does what the protocol
-  // specification expects the engine to do.
-  auto& eng = Engine::get();
-  eng.setForceMode(false);
-  eng.timing().opponent().stop();
-  eng.timing().self().start();
-  eng.move();
-  eng.timing().self().stop();
+}
+
+bool SetDepth::process()
+{
+  #ifdef DEBUG
+  sendCommand("# depth was " + util::intToString(Engine::get().searchDepth()) + " and got set to " + util::intToString(mDepth) + ".");
+  #endif // DEBUG
+  Engine::get().setSearchDepth(mDepth);
   return true;
 }
 

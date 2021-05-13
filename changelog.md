@@ -8,6 +8,7 @@ _Note: This changelog may be incomplete._
   version 3.0 to 3.8.
 - competing-evaluators: initial version of program to let different board
   evaluators compete against each other
+- engine: Implement xboard's sd command.
 
 ## Version 0.5.4 (2020-01-09)
 

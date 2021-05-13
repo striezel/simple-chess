@@ -118,15 +118,14 @@
 		<Unit filename="xboard/ResultCmd.hpp" />
 		<Unit filename="xboard/SetBoard.cpp" />
 		<Unit filename="xboard/SetBoard.hpp" />
+		<Unit filename="xboard/SetDepth.cpp" />
+		<Unit filename="xboard/SetDepth.hpp" />
 		<Unit filename="xboard/SetTime.cpp" />
 		<Unit filename="xboard/SetTime.hpp" />
 		<Unit filename="xboard/Usermove.cpp" />
 		<Unit filename="xboard/Usermove.hpp" />
 		<Unit filename="xboard/Xboard.hpp" />
 		<Extensions>
-			<envvars />
-			<code_completion />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>

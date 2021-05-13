@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@
 #include "xboard/ProtocolVersion.hpp"
 #include "xboard/Quit.hpp"
 #include "xboard/ResultCmd.hpp"
+#include "xboard/SetDepth.hpp"
 #include "xboard/SetBoard.hpp"
 #include "xboard/SetTime.hpp"
 #include "xboard/Usermove.hpp"
@@ -162,6 +163,21 @@ void CommandParser::parse(const std::string& commandString)
       return;
     }
     Engine::get().addCommand(std::unique_ptr<Command>(new ExactTime(std::chrono::seconds(seconds))));
+  }
+  else if (commandString.substr(0, 3) == "sd ")
+  {
+    int depth = -1;
+    if (!util::stringToInt(commandString.substr(3), depth))
+    {
+      Engine::get().addCommand(std::unique_ptr<Command>(new Error("depth parameter must be an integer", commandString)));
+      return;
+    }
+    if (depth < 1 || depth > 100)
+    {
+      Engine::get().addCommand(std::unique_ptr<Command>(new Error("depth parameter must be in range [0;100]", commandString)));
+      return;
+    }
+    Engine::get().addCommand(std::unique_ptr<Command>(new SetDepth(depth)));
   }
   else if (commandString == "force")
   {
