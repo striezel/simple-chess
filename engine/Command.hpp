@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2021  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,25 +18,30 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
-#define SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#ifndef SIMPLECHESS_GENERIC_COMMAND_HPP
+#define SIMPLECHESS_GENERIC_COMMAND_HPP
 
-#include <string>
-
-namespace simplechess::xboard
+namespace simplechess
 {
 
-/** Class that can parse xboard commands received from standard input. */
-class CommandParser
+/** Base class for all classes that handle XBoard or UCI protocol commands. */
+class Command
 {
   public:
-    /** \brief Parses the given command.
+    /** \brief Processes the command, i.e. performs required actions.
      *
-     * \param commandString  the string received via standard input (one line only)
+     * \return True if command was processed successfully.
+     * \remarks This method is pure virtual, i.e. each derived class has to
+     *          override it and implement its own version of the method.
      */
-    static void parse(const std::string& commandString);
+    virtual bool process() = 0;
+
+
+    /** \brief Virtual destructor (for derived classes).
+     */
+    virtual ~Command() = default;
 }; // class
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#endif // SIMPLECHESS_GENERIC_COMMAND_HPP

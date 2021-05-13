@@ -18,25 +18,23 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
-#define SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#include "Uci.hpp"
+#include <iostream>
+#include "../io-utils.hpp"
+#include "../Engine.hpp"
+#include "../../util/Version.hpp"
 
-#include <string>
-
-namespace simplechess::xboard
+namespace simplechess::uci
 {
 
-/** Class that can parse xboard commands received from standard input. */
-class CommandParser
+bool Uci::process()
 {
-  public:
-    /** \brief Parses the given command.
-     *
-     * \param commandString  the string received via standard input (one line only)
-     */
-    static void parse(const std::string& commandString);
-}; // class
+  Engine::get().setProtocol(Protocol::UCI);
+  sendCommand("id name simple-chess " + version);
+  sendCommand("id author Dirk Stolle");
+  sendCommand("uciok");
+  std::cout.flush();
+  return true;
+}
 
 } // namespace
-
-#endif // SIMPLECHESS_XBOARD_COMMANDPARSER_HPP

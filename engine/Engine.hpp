@@ -28,7 +28,8 @@
 #include "../data/Board.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
 #include "time/Timing.hpp"
-#include "xboard/Command.hpp"
+#include "Command.hpp"
+#include "Protocol.hpp"
 
 namespace simplechess
 {
@@ -64,6 +65,20 @@ class Engine
      * \remarks Only call this method if you want to shutdown the engine.
      */
     void terminate();
+
+
+    /** \brief Gets the engine protocol.
+     *
+     * \return Returns the engine protocol.
+     */
+    Protocol protocol() const;
+
+
+    /** \brief Sets the engine protocol.
+     *
+     * \param newProto  the new protocol to set
+     */
+    void setProtocol(const Protocol newProto);
 
 
     /** \brief Gets the xboard protocol version.
@@ -158,14 +173,14 @@ class Engine
      *
      * \param com  the command that shall be added
      */
-    void addCommand(std::unique_ptr<xboard::Command>&& com);
+    void addCommand(std::unique_ptr<Command>&& com);
 
 
     /** \brief Gets a constant reference to the current command queue.
      *
      * \return Returns a constant reference to command queue.
      */
-    const std::deque<std::unique_ptr<xboard::Command> >& queue() const;
+    const std::deque<std::unique_ptr<Command> >& queue() const;
 
 
     /** \brief Processes all remaining commands in the queue.
@@ -181,6 +196,7 @@ class Engine
     void move();
   private:
     std::atomic<bool> mQuit; /**< quit flag - it true, termination has been requested */
+    Protocol mProtocol; /**< the chess protocol (UCI or XBoard) */
     unsigned int mProtocolVersion; /**< xboard protocol version */
     Colour mEnginePlayer; /**< colour that is controlled by the engine */
     Board mBoard; /**< current chess board */
@@ -188,7 +204,7 @@ class Engine
     unsigned int mSearchDepth; /**< search depth of the engine in plys */
     bool mForceMode; /**< whether the engine is in force mode */
     Timing mTiming; /**< time controls */
-    std::deque<std::unique_ptr<xboard::Command> > mQueue; /**< command queue */
+    std::deque<std::unique_ptr<Command> > mQueue; /**< command queue */
 
 
     /** Default constructor - private due to singleton. */

@@ -20,7 +20,6 @@
 
 #include "CommandParser.hpp"
 #include <regex>
-#include "Command.hpp"
 #include "Draw.hpp"
 #include "ExactTime.hpp"
 #include "Error.hpp"
@@ -37,6 +36,7 @@
 #include "SetTime.hpp"
 #include "Usermove.hpp"
 #include "Xboard.hpp"
+#include "../Command.hpp"
 #include "../Engine.hpp"
 #include "../../data/Result.hpp"
 #include "../../util/strings.hpp"

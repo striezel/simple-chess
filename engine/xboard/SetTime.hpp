@@ -21,7 +21,7 @@
 #ifndef SIMPLECHESS_XBOARD_SETTIME_HPP
 #define SIMPLECHESS_XBOARD_SETTIME_HPP
 
-#include "Command.hpp"
+#include "../Command.hpp"
 
 namespace simplechess::xboard
 {

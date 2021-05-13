@@ -21,7 +21,7 @@
 #ifndef SIMPLECHESS_XBOARD_SETBOARD_HPP
 #define SIMPLECHESS_XBOARD_SETBOARD_HPP
 
-#include "Command.hpp"
+#include "../Command.hpp"
 #include <string>
 
 namespace simplechess::xboard

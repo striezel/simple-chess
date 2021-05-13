@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2021  Dirk Stolle
+    Copyright (C) 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,25 +18,29 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
-#define SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
-
+#include "Protocol.hpp"
+#include <iostream>
+#include <stdexcept>
 #include <string>
 
-namespace simplechess::xboard
+namespace simplechess
 {
 
-/** Class that can parse xboard commands received from standard input. */
-class CommandParser
+Protocol detectProtocolFromStdIn()
 {
-  public:
-    /** \brief Parses the given command.
-     *
-     * \param commandString  the string received via standard input (one line only)
-     */
-    static void parse(const std::string& commandString);
-}; // class
+  std::string initialLine;
+  while (initialLine.empty())
+  {
+    std::getline(std::cin, initialLine, '\n');
+  }
+
+  if (initialLine == "uci")
+    return Protocol::UCI;
+
+  if (initialLine == "xboard")
+    return Protocol::XBoard;
+
+  throw std::invalid_argument(initialLine);
+}
 
 } // namespace
-
-#endif // SIMPLECHESS_XBOARD_COMMANDPARSER_HPP

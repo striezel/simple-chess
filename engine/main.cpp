@@ -20,8 +20,10 @@
 
 #include <iostream>
 #include "io-utils.hpp"
+#include "uci/CommandParser.hpp"
 #include "xboard/CommandParser.hpp"
 #include "Engine.hpp"
+#include "ParseLoop.hpp"
 #include "../evaluation/CompoundCreator.hpp"
 #include "../util/GitInfos.hpp"
 #include "../util/ReturnCodes.hpp"
@@ -63,7 +65,13 @@ void showHelp()
             << "the XBoard commands from protocol version 2. The program expects commands from\n"
             << "XBoard on its standard input and prints responses to the standard output.\n"
             << "For the XBoard protocol see\n"
-            << "  <https://www.gnu.org/software/xboard/engine-intf.html>\n";
+            << "  <https://www.gnu.org/software/xboard/engine-intf.html>.\n"
+            << "\n"
+            << "simple-chess-engine also has incomplete UCI protocol support. The program\n"
+            << "expects commands from the UCI-compatible GUI on its standard input and prints\n"
+            << "responses to the standard output.\n"
+            << "For the UCI protocol specification see\n"
+            << "  <http://wbec-ridderkerk.nl/html/UCIProtocol.html>.\n";
 }
 
 int main(int argc, char** argv)
@@ -139,14 +147,33 @@ int main(int argc, char** argv)
   // No input buffering.
   disableStdinBuffering();
 
-  while (!Engine::get().quitRequested())
+  Protocol protocol = Protocol::XBoard;
+  try
   {
-    std::string command;
-    std::getline(std::cin, command, '\n');
-    xboard::CommandParser::parse(command);
-    // TODO: separate thread for command processing by engine
-    Engine::get().processQueue();
-  } // while
+    protocol = detectProtocolFromStdIn();
+  }
+  catch(const std::invalid_argument& ex)
+  {
+    std::cerr << "Error: Invalid first command: '" << ex.what() << "'" << std::endl;
+    std::cerr << "The first command should be the protocol's initialization "
+              << "command, i. e. 'uci' or 'xboard'." << std::endl;
+    return rcEngineProtocolNotSupported;
+  }
+  switch (protocol)
+  {
+    case Protocol::UCI:
+         uci::CommandParser::parse("uci");
+         ParseLoop<uci::CommandParser>();
+         break;
+    case Protocol::XBoard:
+         xboard::CommandParser::parse("xboard");
+         ParseLoop<xboard::CommandParser>();
+         break;
+    default:
+         std::cerr << "Error: Unsupported chess protocol detected!" << std::endl
+                   << "Hint: Only xboard and UCI protocol are supported." << std::endl;
+         return rcEngineProtocolNotSupported;
+  }
 
   return 0;
 }

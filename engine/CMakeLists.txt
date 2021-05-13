@@ -6,6 +6,7 @@ project(simple-chess-engine)
 set(simple_chess_engine_sources
     Engine.cpp
     io-utils.cpp
+    Protocol.cpp
     ../data/Board.cpp
     ../data/Castling.cpp
     ../data/Field.cpp
@@ -28,6 +29,11 @@ set(simple_chess_engine_sources
     ../util/strings.cpp
     time/Clock.cpp
     time/Timing.cpp
+    uci/CommandParser.cpp
+    uci/IsReady.cpp
+    uci/NewGame.cpp
+    uci/Position.cpp
+    uci/Uci.cpp
     xboard/CommandParser.cpp
     xboard/Draw.cpp
     xboard/Error.cpp
@@ -45,6 +51,7 @@ set(simple_chess_engine_sources
     xboard/SetDepth.cpp
     xboard/SetTime.cpp
     xboard/Usermove.cpp
+    xboard/Xboard.cpp
     main.cpp)
 
 set(CMAKE_CXX_STANDARD 17)

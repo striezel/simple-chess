@@ -79,8 +79,12 @@
 		<Unit filename="../util/Version.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
+		<Unit filename="Command.hpp" />
 		<Unit filename="Engine.cpp" />
 		<Unit filename="Engine.hpp" />
+		<Unit filename="ParseLoop.hpp" />
+		<Unit filename="Protocol.cpp" />
+		<Unit filename="Protocol.hpp" />
 		<Unit filename="io-utils.cpp" />
 		<Unit filename="io-utils.hpp" />
 		<Unit filename="main.cpp" />
@@ -89,7 +93,17 @@
 		<Unit filename="time/TimeControlMode.hpp" />
 		<Unit filename="time/Timing.cpp" />
 		<Unit filename="time/Timing.hpp" />
-		<Unit filename="xboard/Command.hpp" />
+		<Unit filename="uci/CommandParser.cpp" />
+		<Unit filename="uci/CommandParser.hpp" />
+		<Unit filename="uci/IsReady.cpp" />
+		<Unit filename="uci/IsReady.hpp" />
+		<Unit filename="uci/NewGame.cpp" />
+		<Unit filename="uci/NewGame.hpp" />
+		<Unit filename="uci/Position.cpp" />
+		<Unit filename="uci/Position.hpp" />
+		<Unit filename="uci/Quit.hpp" />
+		<Unit filename="uci/Uci.cpp" />
+		<Unit filename="uci/Uci.hpp" />
 		<Unit filename="xboard/CommandParser.cpp" />
 		<Unit filename="xboard/CommandParser.hpp" />
 		<Unit filename="xboard/Draw.cpp" />
@@ -124,6 +138,7 @@
 		<Unit filename="xboard/SetTime.hpp" />
 		<Unit filename="xboard/Usermove.cpp" />
 		<Unit filename="xboard/Usermove.hpp" />
+		<Unit filename="xboard/Xboard.cpp" />
 		<Unit filename="xboard/Xboard.hpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

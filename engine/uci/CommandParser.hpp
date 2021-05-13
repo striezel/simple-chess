@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2021  Dirk Stolle
+    Copyright (C) 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,15 +18,15 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
-#define SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#ifndef SIMPLECHESS_UCI_COMMANDPARSER_HPP
+#define SIMPLECHESS_UCI_COMMANDPARSER_HPP
 
 #include <string>
 
-namespace simplechess::xboard
+namespace simplechess::uci
 {
 
-/** Class that can parse xboard commands received from standard input. */
+/** Class that can parse UCI commands received from standard input. */
 class CommandParser
 {
   public:
@@ -39,4 +39,4 @@ class CommandParser
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#endif // SIMPLECHESS_UCI_COMMANDPARSER_HPP

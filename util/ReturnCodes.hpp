@@ -40,14 +40,15 @@ const int rcMongoDbError = 7;
 #endif // NO_METEOR_CHESS
 const int rcEngineResigns = 8;
 const int rcEngineClaimsDraw = 9; // ... under 50 move rule
+const int rcEngineProtocolNotSupported = 10;
 
 // -- an error related to the signal handler occurred
-const int rcSignalHandlerError = 10;
+const int rcSignalHandlerError = 11;
 
 // -- program was terminated by an intercepted signal
-const int rcProgramTerminationBySignal = 11;
+const int rcProgramTerminationBySignal = 12;
 
-const int rcUnknown = 12;
+const int rcUnknown = 13;
 
 } // namespace
 

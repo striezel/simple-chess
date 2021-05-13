@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2021  Dirk Stolle
+    Copyright (C) 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,25 +18,29 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
-#define SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#ifndef SIMPLECHESS_PARSELOOP_HPP
+#define SIMPLECHESS_PARSELOOP_HPP
 
-#include <string>
+#include <iostream>
+#include "Engine.hpp"
+#include "Protocol.hpp"
 
-namespace simplechess::xboard
+namespace simplechess
 {
 
-/** Class that can parse xboard commands received from standard input. */
-class CommandParser
+template<typename Parser>
+void ParseLoop()
 {
-  public:
-    /** \brief Parses the given command.
-     *
-     * \param commandString  the string received via standard input (one line only)
-     */
-    static void parse(const std::string& commandString);
-}; // class
+  while (!Engine::get().quitRequested())
+  {
+    std::string command;
+    std::getline(std::cin, command, '\n');
+    Parser::parse(command);
+    // TODO: separate thread for command processing by engine
+    Engine::get().processQueue();
+  } // while
+}
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#endif // SIMPLECHESS_PARSELOOP_HPP

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2021  Dirk Stolle
+    Copyright (C) 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,30 +18,29 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_COMMAND_HPP
-#define SIMPLECHESS_XBOARD_COMMAND_HPP
+#ifndef SIMPLECHESS_PROTOCOL_HPP
+#define SIMPLECHESS_PROTOCOL_HPP
 
-namespace simplechess::xboard
+namespace simplechess
 {
 
-/** Base class for all classes that handle XBoard protocol commands. */
-class Command
+enum class Protocol
 {
-  public:
-    /** \brief Processes the command, i.e. performs required actions.
-     *
-     * \return True if command was processed successfully.
-     * \remarks This method is pure virtual, i.e. each derived class has to
-     *          override it and implement its own version of the method.
-     */
-    virtual bool process() = 0;
+  /// UCI (universal chess interface)
+  UCI,
+
+  /// XBoard protocol
+  XBoard
+};
 
 
-    /** \brief Virtual destructor (for derived classes).
-     */
-    virtual ~Command() = default;
-}; // class
+/** \brief Tries to detect the used protocol by looking at the standard input.
+ *
+ * \return Returns the detected protocol, if successful.
+ *         Throws if no protocol could be detected.
+ */
+Protocol detectProtocolFromStdIn();
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_COMMAND_HPP
+#endif // SIMPLECHESS_PROTOCOL_HPP

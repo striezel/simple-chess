@@ -21,7 +21,7 @@
 #ifndef SIMPLECHESS_XBOARD_RESULTCMD_HPP
 #define SIMPLECHESS_XBOARD_RESULTCMD_HPP
 
-#include "Command.hpp"
+#include "../Command.hpp"
 #include <string>
 #include "../../data/Result.hpp"
 

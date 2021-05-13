@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2021  Dirk Stolle
+    Copyright (C) 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,25 +18,35 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
-#define SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#ifndef SIMPLECHESS_UCI_POSITION_HPP
+#define SIMPLECHESS_UCI_POSITION_HPP
 
+#include "../Command.hpp"
 #include <string>
 
-namespace simplechess::xboard
+namespace simplechess::uci
 {
 
-/** Class that can parse xboard commands received from standard input. */
-class CommandParser
+/** Command for initializing a new position via "position fen ...". */
+class Position: public Command
 {
   public:
-    /** \brief Parses the given command.
+    /** \brief Initializes a new position with given FEN.
      *
-     * \param commandString  the string received via standard input (one line only)
+     * \param fen   the Forsyth-Edwards Notation of the position
      */
-    static void parse(const std::string& commandString);
+    Position(const std::string& fen);
+
+
+    /** \brief Processes the command, i.e. performs required actions.
+     *
+     * \return True if command was processed successfully.
+     */
+    bool process() final;
+  private:
+    std::string fen; /**< the FEN for the new position */
 }; // class
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#endif // SIMPLECHESS_UCI_POSITION_HPP

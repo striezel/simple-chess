@@ -21,7 +21,7 @@
 #ifndef SIMPLECHESS_XBOARD_EXACTTIME_HPP
 #define SIMPLECHESS_XBOARD_EXACTTIME_HPP
 
-#include "Command.hpp"
+#include "../Command.hpp"
 #include <chrono>
 
 namespace simplechess::xboard

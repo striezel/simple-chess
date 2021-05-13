@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2021  Dirk Stolle
+    Copyright (C) 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,25 +18,30 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
-#define SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#ifndef SIMPLECHESS_UCI_UCI_HPP
+#define SIMPLECHESS_UCI_UCI_HPP
 
-#include <string>
+#include "../Command.hpp"
 
-namespace simplechess::xboard
+namespace simplechess::uci
 {
 
-/** Class that can parse xboard commands received from standard input. */
-class CommandParser
+/** \brief Class for that handles the uci command from UCI protocol.
+ */
+class Uci: public Command
 {
   public:
-    /** \brief Parses the given command.
-     *
-     * \param commandString  the string received via standard input (one line only)
+    /** \brief Constructor.
      */
-    static void parse(const std::string& commandString);
+    Uci() = default;
+
+    /** \brief Processes the command, i.e. performs required actions.
+     *
+     * \return True if command was processed successfully.
+     */
+    bool process() final;
 }; // class
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#endif // SIMPLECHESS_UCI_UCI_HPP

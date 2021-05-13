@@ -21,7 +21,7 @@
 #ifndef SIMPLECHESS_XBOARD_QUIT_HPP
 #define SIMPLECHESS_XBOARD_QUIT_HPP
 
-#include "Command.hpp"
+#include "../Command.hpp"
 
 namespace simplechess::xboard
 {

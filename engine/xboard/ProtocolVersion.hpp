@@ -21,7 +21,7 @@
 #ifndef SIMPLECHESS_XBOARD_PROTOCOLVERSION_HPP
 #define SIMPLECHESS_XBOARD_PROTOCOLVERSION_HPP
 
-#include "Command.hpp"
+#include "../Command.hpp"
 
 namespace simplechess::xboard
 {

@@ -36,6 +36,7 @@ Engine& Engine::get()
 
 Engine::Engine()
 : mQuit(false),
+  mProtocol(Protocol::XBoard), // assume XBoard until we get other information
   mProtocolVersion(1), // assume version 1 until we get more information
   mEnginePlayer(Colour::none), // engine plays no side be default
   mBoard(Board()),
@@ -43,7 +44,7 @@ Engine::Engine()
   mSearchDepth(2), // default search depth: two ply search
   mForceMode(false),
   mTiming(Timing()),
-  mQueue(std::deque<std::unique_ptr<xboard::Command> >()) // empty queue
+  mQueue(std::deque<std::unique_ptr<Command> >()) // empty queue
 {
   CompoundCreator::getDefault(evaluators);
 }
@@ -56,6 +57,16 @@ bool Engine::quitRequested() const
 void Engine::terminate()
 {
   mQuit.store(true);
+}
+
+Protocol Engine::protocol() const
+{
+  return mProtocol;
+}
+
+void Engine::setProtocol(const Protocol newProto)
+{
+  mProtocol = newProto;
 }
 
 unsigned int Engine::protocolVersion() const
@@ -127,13 +138,13 @@ Timing& Engine::timing()
   return mTiming;
 }
 
-void Engine::addCommand(std::unique_ptr<xboard::Command>&& com)
+void Engine::addCommand(std::unique_ptr<Command>&& com)
 {
   if (com != nullptr)
     mQueue.push_back(std::move(com));
 }
 
-const std::deque<std::unique_ptr<xboard::Command> >& Engine::queue() const
+const std::deque<std::unique_ptr<Command> >& Engine::queue() const
 {
   return mQueue;
 }

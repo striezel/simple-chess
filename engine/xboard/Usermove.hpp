@@ -21,7 +21,7 @@
 #ifndef SIMPLECHESS_XBOARD_USERMOVE_HPP
 #define SIMPLECHESS_XBOARD_USERMOVE_HPP
 
-#include "Command.hpp"
+#include "../Command.hpp"
 #include "../../data/Field.hpp"
 #include "../../data/Piece.hpp"
 

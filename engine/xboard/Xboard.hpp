@@ -21,16 +21,26 @@
 #ifndef SIMPLECHESS_XBOARD_XBOARD_HPP
 #define SIMPLECHESS_XBOARD_XBOARD_HPP
 
-#include "NoOperation.hpp"
+#include "../Command.hpp"
 
 namespace simplechess::xboard
 {
 
 /** \brief Class for xboard command.
  */
-class Xboard : public NoOperation
+class Xboard : public Command
 {
-  // empty
+  public:
+    /** \brief Constructor.
+     */
+    Xboard() = default;
+
+
+    /** \brief Processes the command, i.e. performs required actions.
+     *
+     * \return True if command was processed successfully.
+     */
+    bool process() final;
 }; // class
 
 } // namesace
