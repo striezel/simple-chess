@@ -41,7 +41,7 @@
 #include "../data/Result.hpp"
 #include "../util/strings.hpp"
 
-namespace simplechess
+namespace simplechess::xboard
 {
 
 const std::regex regExMove = std::regex("^(usermove )?([a-h][1-8])([a-h][1-8])([qbnr])?$");

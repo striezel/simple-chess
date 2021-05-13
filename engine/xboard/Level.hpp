@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include "Command.hpp"
 #include <chrono>
 
-namespace simplechess
+namespace simplechess::xboard
 {
 
 /** Command for setting conventional or incremental timing mode. */
@@ -44,7 +44,7 @@ class Level: public Command
      *
      * \return True if command was processed successfully.
      */
-    virtual bool process() override;
+    bool process() final;
   private:
     int moves; /**< number of moves (conventional mode) */
     std::chrono::seconds base; /**< base time (conventional or incremental mode) */

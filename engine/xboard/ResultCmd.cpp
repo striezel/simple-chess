@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #include "ResultCmd.hpp"
 #include "../Engine.hpp"
 
-namespace simplechess
+namespace simplechess::xboard
 {
 
 ResultCmd::ResultCmd(const Result res, const std::string& comment)
@@ -36,14 +36,15 @@ bool ResultCmd::process()
      further analysis, but that requires that the moves are recorded by the
      engine in the first place. They are not (yet). */
 
+  Engine& eng = Engine::get();
   // stop clocks
-  Engine::get().timing().self().stop();
-  Engine::get().timing().opponent().stop();
+  eng.timing().self().stop();
+  eng.timing().opponent().stop();
 
   // Reset board and the one side that is played by the engine.
-  Engine::get().board() = Board();
-  Engine::get().setPlayer(Colour::none);
-  Engine::get().setForceMode(false);
+  eng.board() = Board();
+  eng.setPlayer(Colour::none);
+  eng.setForceMode(false);
   return true;
 }
 

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -158,14 +158,14 @@ class Engine
      *
      * \param com  the command that shall be added
      */
-    void addCommand(std::unique_ptr<Command>&& com);
+    void addCommand(std::unique_ptr<xboard::Command>&& com);
 
 
     /** \brief Gets a constant reference to the current command queue.
      *
      * \return Returns a constant reference to command queue.
      */
-    const std::deque<std::unique_ptr<Command> >& queue() const;
+    const std::deque<std::unique_ptr<xboard::Command> >& queue() const;
 
 
     /** \brief Processes all remaining commands in the queue.
@@ -188,7 +188,7 @@ class Engine
     unsigned int mSearchDepth; /**< search depth of the engine in plys */
     bool mForceMode; /**< whether the engine is in force mode */
     Timing mTiming; /**< time controls */
-    std::deque<std::unique_ptr<Command> > mQueue; /**< command queue */
+    std::deque<std::unique_ptr<xboard::Command> > mQueue; /**< command queue */
 
 
     /** Default constructor - private due to singleton. */

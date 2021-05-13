@@ -22,7 +22,7 @@
 #include "../Engine.hpp"
 #include "../io-utils.hpp"
 
-namespace simplechess
+namespace simplechess::xboard
 {
 
 bool Go::process()

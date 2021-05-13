@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #ifndef SIMPLECHESS_XBOARD_COMMAND_HPP
 #define SIMPLECHESS_XBOARD_COMMAND_HPP
 
-namespace simplechess
+namespace simplechess::xboard
 {
 
 /** Base class for all classes that handle XBoard protocol commands. */

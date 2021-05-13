@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #include "../../data/Field.hpp"
 #include "../../data/Piece.hpp"
 
-namespace simplechess
+namespace simplechess::xboard
 {
 
 /** Command for a move made by the user or opposing engine. */
@@ -45,7 +45,7 @@ class Usermove: public Command
      *
      * \return True if command was processed successfully.
      */
-    virtual bool process() override;
+    bool process() final;
   private:
     Field origin; /**< field of origin for the move */
     Field destination; /**< field of destination for the move */

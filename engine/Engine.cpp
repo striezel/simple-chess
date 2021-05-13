@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ Engine::Engine()
   mSearchDepth(2), // default search depth: two ply search
   mForceMode(false),
   mTiming(Timing()),
-  mQueue(std::deque<std::unique_ptr<Command> >()) // empty queue
+  mQueue(std::deque<std::unique_ptr<xboard::Command> >()) // empty queue
 {
   CompoundCreator::getDefault(evaluators);
 }
@@ -127,13 +127,13 @@ Timing& Engine::timing()
   return mTiming;
 }
 
-void Engine::addCommand(std::unique_ptr<Command>&& com)
+void Engine::addCommand(std::unique_ptr<xboard::Command>&& com)
 {
   if (com != nullptr)
     mQueue.push_back(std::move(com));
 }
 
-const std::deque<std::unique_ptr<Command> >& Engine::queue() const
+const std::deque<std::unique_ptr<xboard::Command> >& Engine::queue() const
 {
   return mQueue;
 }

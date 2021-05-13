@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2018  Dirk Stolle
+    Copyright (C) 2018, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #include "../Engine.hpp"
 #include "../io-utils.hpp"
 
-namespace simplechess
+namespace simplechess::xboard
 {
 
 Draw::Draw()
@@ -42,8 +42,8 @@ bool Draw::process()
   // engine.
   Engine& eng = Engine::get();
   const int score = eng.evaluator().score(eng.board());
-  if (((Engine::get().player() == Colour::white) && (score < -10))
-    || ((Engine::get().player() == Colour::black) && (score > 10)))
+  if (((eng.player() == Colour::white) && (score < -10))
+    || ((eng.player() == Colour::black) && (score > 10)))
   {
     // Accept draw.
     sendCommand("offer draw");

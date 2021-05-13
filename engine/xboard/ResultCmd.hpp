@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #include <string>
 #include "../../data/Result.hpp"
 
-namespace simplechess
+namespace simplechess::xboard
 {
 
 /** \brief Class for that handles the result command.
@@ -45,7 +45,7 @@ class ResultCmd : public Command
      *
      * \return True if command was processed successfully.
      */
-    virtual bool process() override;
+    bool process() final;
   private:
     Result result; /**< result of the game */
     std::string comment; /**< the comment, if any */

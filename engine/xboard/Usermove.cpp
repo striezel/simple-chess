@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include "../Engine.hpp"
 #include "../../rules/Moves.hpp"
 
-namespace simplechess
+namespace simplechess::xboard
 {
 
 Usermove::Usermove(const Field ori, const Field dest, const PieceType promo)
@@ -36,7 +36,8 @@ Usermove::Usermove(const Field ori, const Field dest, const PieceType promo)
 
 bool Usermove::process()
 {
-  Board& b = Engine::get().board();
+  Engine& engine = Engine::get();
+  Board& b = engine.board();
   // perform move
   if (!b.move(origin, destination, promoteTo))
   {
@@ -64,19 +65,19 @@ bool Usermove::process()
     return true;
   }
   // Stop opponent's clock.
-  Engine::get().timing().opponent().stop();
+  engine.timing().opponent().stop();
 
   // Make own move, but only if not in force mode and it is engine's turn.
-  if (!Engine::get().forceMode() && (Engine::get().player() == b.toMove()))
+  if (!engine.forceMode() && (engine.player() == b.toMove()))
   {
     // start clock
-    Engine::get().timing().self().start();
+    engine.timing().self().start();
     // start making own move
-    Engine::get().move();
+    engine.move();
     // stop own clock ...
-    Engine::get().timing().self().stop();
+    engine.timing().self().stop();
     // ... and start clock of opponent
-    Engine::get().timing().opponent().start();
+    engine.timing().opponent().start();
   }
   return true;
 }

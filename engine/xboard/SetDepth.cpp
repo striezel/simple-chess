@@ -25,7 +25,7 @@
 #include "../../util/strings.hpp"
 #endif // DEBUG
 
-namespace simplechess
+namespace simplechess::xboard
 {
 
 SetDepth::SetDepth(const unsigned int depth)

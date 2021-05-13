@@ -23,7 +23,7 @@
 
 #include "Command.hpp"
 
-namespace simplechess
+namespace simplechess::xboard
 {
 
 /** \brief Class that handles the sd command.
@@ -42,7 +42,7 @@ class SetDepth : public Command
      *
      * \return True if command was processed successfully.
      */
-    virtual bool process() override;
+    bool process() final;
   private:
     unsigned int mDepth; /**< amount of plys */
 }; // class

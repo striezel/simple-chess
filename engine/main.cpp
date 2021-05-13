@@ -143,7 +143,7 @@ int main(int argc, char** argv)
   {
     std::string command;
     std::getline(std::cin, command, '\n');
-    CommandParser::parse(command);
+    xboard::CommandParser::parse(command);
     // TODO: separate thread for command processing by engine
     Engine::get().processQueue();
   } // while
