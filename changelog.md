@@ -6,6 +6,8 @@ _Note: This changelog may be incomplete._
 
 - The minimum required CMake version to compile the source code is raised from
   version 3.0 to 3.8.
+- The C++ standard used during compilation has been raised from C++14 to C++17.
+  Recent compilers should support that by now.
 - competing-evaluators: initial version of program to let different board
   evaluators compete against each other
 - engine: Implement xboard's sd command.

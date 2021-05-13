@@ -17,7 +17,7 @@ to perform some chess-related tasks. More information will follow soon.
 
 ### Prerequisites
 
-To build simple-chess from source you need a C++ compiler with C++14 support,
+To build simple-chess from source you need a C++ compiler with C++17 support,
 CMake 3.8 or later, the libmongo-client-dev library and catch for unit tests.
 It also helps to have Git, a distributed version control system, on your build
 system to get the latest source code directly from the Git repository.
