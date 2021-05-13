@@ -79,8 +79,6 @@
 		<Unit filename="../util/Version.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
-		<Unit filename="CommandParser.cpp" />
-		<Unit filename="CommandParser.hpp" />
 		<Unit filename="Engine.cpp" />
 		<Unit filename="Engine.hpp" />
 		<Unit filename="io-utils.cpp" />
@@ -92,6 +90,8 @@
 		<Unit filename="time/Timing.cpp" />
 		<Unit filename="time/Timing.hpp" />
 		<Unit filename="xboard/Command.hpp" />
+		<Unit filename="xboard/CommandParser.cpp" />
+		<Unit filename="xboard/CommandParser.hpp" />
 		<Unit filename="xboard/Draw.cpp" />
 		<Unit filename="xboard/Draw.hpp" />
 		<Unit filename="xboard/Error.cpp" />

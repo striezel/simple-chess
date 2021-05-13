@@ -4,7 +4,6 @@ cmake_minimum_required (VERSION 3.8)
 project(simple-chess-engine)
 
 set(simple_chess_engine_sources
-    CommandParser.cpp
     Engine.cpp
     io-utils.cpp
     ../data/Board.cpp
@@ -29,6 +28,7 @@ set(simple_chess_engine_sources
     ../util/strings.cpp
     time/Clock.cpp
     time/Timing.cpp
+    xboard/CommandParser.cpp
     xboard/Draw.cpp
     xboard/Error.cpp
     xboard/ExactTime.cpp
