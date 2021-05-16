@@ -97,6 +97,8 @@
 		<Unit filename="uci/CommandParser.hpp" />
 		<Unit filename="uci/IsReady.cpp" />
 		<Unit filename="uci/IsReady.hpp" />
+		<Unit filename="uci/Move.cpp" />
+		<Unit filename="uci/Move.hpp" />
 		<Unit filename="uci/NewGame.cpp" />
 		<Unit filename="uci/NewGame.hpp" />
 		<Unit filename="uci/Position.cpp" />

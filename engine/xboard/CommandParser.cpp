@@ -51,7 +51,7 @@ void CommandParser::parse(const std::string& commandString)
   if (commandString.empty())
     return;
   std::smatch matches;
-  if(std::regex_search(commandString, matches, regExMove))
+  if (std::regex_search(commandString, matches, regExMove))
   {
     const Field origin = toField(matches.str(2).at(0), matches.str(2).at(1) - '1' + 1);
     const Field destination = toField(matches.str(3).at(0), matches.str(3).at(1) - '1' + 1);

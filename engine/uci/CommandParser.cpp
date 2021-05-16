@@ -19,7 +19,9 @@
 */
 
 #include "CommandParser.hpp"
+#include <regex>
 #include "IsReady.hpp"
+#include "Move.hpp"
 #include "NewGame.hpp"
 #include "Position.hpp"
 #include "Quit.hpp"
@@ -31,11 +33,32 @@
 namespace simplechess::uci
 {
 
+const std::regex regExMove = std::regex("^([a-h][1-8])([a-h][1-8])([qbnr])?$");
+
 void CommandParser::parse(const std::string& commandString)
 {
   if (commandString.empty())
     return;
-  if (commandString == "isready")
+  std::smatch matches;
+  if(std::regex_search(commandString, matches, regExMove))
+  {
+    const Field origin = toField(matches.str(1).at(0), matches.str(1).at(1) - '1' + 1);
+    const Field destination = toField(matches.str(2).at(0), matches.str(2).at(1) - '1' + 1);
+    PieceType promoteTo = PieceType::none;
+    if (matches[3].matched)
+    {
+      if (matches.str(3) == "b")
+        promoteTo = PieceType::bishop;
+      else if (matches.str(3) == "n")
+        promoteTo = PieceType::knight;
+      else if (matches.str(3) == "q")
+        promoteTo = PieceType::queen;
+      else if (matches.str(3) == "r")
+        promoteTo = PieceType::rook;
+    }
+    Engine::get().addCommand(std::unique_ptr<Command>(new Move(origin, destination, promoteTo)));
+  } // move command
+  else if (commandString == "isready")
   {
     Engine::get().addCommand(std::unique_ptr<Command>(new IsReady()));
   }
