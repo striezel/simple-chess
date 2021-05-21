@@ -30,6 +30,7 @@ set(simple_chess_engine_sources
     time/Clock.cpp
     time/Timing.cpp
     uci/CommandParser.cpp
+    uci/Go.cpp
     uci/IsReady.cpp
     uci/Move.cpp
     uci/NewGame.cpp

@@ -95,6 +95,8 @@
 		<Unit filename="time/Timing.hpp" />
 		<Unit filename="uci/CommandParser.cpp" />
 		<Unit filename="uci/CommandParser.hpp" />
+		<Unit filename="uci/Go.cpp" />
+		<Unit filename="uci/Go.hpp" />
 		<Unit filename="uci/IsReady.cpp" />
 		<Unit filename="uci/IsReady.hpp" />
 		<Unit filename="uci/Move.cpp" />

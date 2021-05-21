@@ -207,9 +207,18 @@ void Engine::move()
     }
     return;
   }
-  // Send move to xboard.
+  // Send move to xboard or UCI-compatible engine.
   std::ostringstream oss;
-  oss << "move " << simplechess::column(from) << simplechess::row(from)
+  switch (mProtocol)
+  {
+    case Protocol::XBoard:
+         oss << "move ";
+         break;
+    default: // UCI
+         oss << "bestmove ";
+         break;
+  }
+  oss << simplechess::column(from) << simplechess::row(from)
       << simplechess::column(to) << simplechess::row(to);
   sendCommand(oss.str());
 }

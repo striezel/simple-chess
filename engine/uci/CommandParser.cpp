@@ -20,6 +20,7 @@
 
 #include "CommandParser.hpp"
 #include <regex>
+#include "Go.hpp"
 #include "IsReady.hpp"
 #include "Move.hpp"
 #include "NewGame.hpp"
@@ -61,6 +62,10 @@ void CommandParser::parse(const std::string& commandString)
   else if (commandString == "isready")
   {
     Engine::get().addCommand(std::unique_ptr<Command>(new IsReady()));
+  }
+  else if (commandString == "go")
+  {
+    Engine::get().addCommand(std::unique_ptr<Command>(new Go()));
   }
   else if ((commandString == "ucinewgame") || (commandString == "position startpos"))
   {
