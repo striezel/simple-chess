@@ -4,7 +4,7 @@ meteor-chess-client is a utility program that is intended to be used by the
 [Meteor Chess](https://github.com/striezel/meteor-chess) game in the future.
 It provides some basic functions to support the server of Meteor Chess.
 
-## Invokation
+## Invocation
 
     meteor-chess-client [OPTIONS]
 

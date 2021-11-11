@@ -61,7 +61,7 @@ Most compilers should support that by now.
 
 ## Version 0.2.1 (2017-12-28)
 - simple-chess-cli: fix incorrect handling of Forsyth-Edwards notation command
-  line paramater
+  line parameter
 
 ## Version 0.2 (2017-12-28)
 - improved engine search: increase search depth to two plies

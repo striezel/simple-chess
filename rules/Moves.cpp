@@ -147,7 +147,7 @@ bool allowedPatternRook(const Board& board, const Field from, const Field to)
     //Move is allowed, if fields between start and end are empty.
     return isEmptyStraightOrDiagonal(board, from, to);
   }
-  //Does not match the rook move pattern, therefor not allowed.
+  // Does not match the rook move pattern, therefore not allowed.
   return false;
 }
 

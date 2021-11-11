@@ -69,7 +69,7 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
       }
       else
       {
-        std::cout << "There must be a number after " << param << " to specifiy"
+        std::cout << "There must be a number after " << param << " to specify"
                   << " the delay in milliseconds!\n";
         return false;
       }
