@@ -38,11 +38,6 @@ const std::string CompoundCreator::IdMaterial = "material";
 const std::string CompoundCreator::IdPromotion = "promotion";
 const std::string CompoundCreator::IdRootMobility = "rootmobility";
 
-CompoundCreator::CompoundCreator()
-{
-  // Nothing to do here.
-}
-
 bool CompoundCreator::create(const std::string& evaluators, CompoundEvaluator& compound)
 {
   std::set<std::string> ids;
