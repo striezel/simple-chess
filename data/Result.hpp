@@ -30,7 +30,7 @@ namespace simplechess
 enum class Result { Unknown, WhiteWins, BlackWins, Draw };
 
 
-/** \brief gets the string representation of a result
+/** \brief Gets the string representation of a result.
  *
  * \param res   the result
  * \return Returns a string indicating the result.
@@ -45,6 +45,6 @@ std::string resultToString(const Result& res);
  */
 Result stringToResult(const std::string& res);
 
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_RESULT_HPP

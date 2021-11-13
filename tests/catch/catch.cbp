@@ -85,6 +85,7 @@
 		<Unit filename="data/testsForsythEdwardsNotation.cpp" />
 		<Unit filename="data/testsHalfMove.cpp" />
 		<Unit filename="data/testsPiece.cpp" />
+		<Unit filename="data/testsResult.cpp" />
 		<Unit filename="evaluation/ConstantEvaluator.cpp" />
 		<Unit filename="evaluation/ConstantEvaluator.hpp" />
 		<Unit filename="evaluation/testsCastlingEvaluator.cpp" />
@@ -102,9 +103,6 @@
 		<Unit filename="testsPGN.cpp" />
 		<Unit filename="util/testsStrings.cpp" />
 		<Extensions>
-			<envvars />
-			<code_completion />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>

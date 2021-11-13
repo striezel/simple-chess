@@ -38,7 +38,7 @@ std::string resultToString(const Result& res)
          return "1/2-1/2";
     default:
          throw std::invalid_argument("Invalid result type in resultToString()!");
-  } //switch
+  }
 }
 
 Result stringToResult(const std::string& res)

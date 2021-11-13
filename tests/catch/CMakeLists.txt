@@ -36,6 +36,7 @@ set(simple_chess_tests_catch_sources
     data/testsForsythEdwardsNotation.cpp
     data/testsHalfMove.cpp
     data/testsPiece.cpp
+    data/testsResult.cpp
     evaluation/ConstantEvaluator.cpp
     evaluation/testsCastlingEvaluator.cpp
     evaluation/testsCheckEvaluator.cpp
