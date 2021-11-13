@@ -19,6 +19,7 @@
 */
 
 #include <catch.hpp>
+#include <sstream>
 #include "../../../data/Piece.hpp"
 
 TEST_CASE("Piece default constructor")
@@ -56,7 +57,7 @@ TEST_CASE("Piece::acceptable()")
   p = Piece(Colour::black, PieceType::queen);
   REQUIRE( p.acceptable() );
 
-  //negative examples
+  // negative examples
   p = Piece(Colour::black, PieceType::none);
   REQUIRE_FALSE( p.acceptable() );
 
@@ -86,7 +87,7 @@ TEST_CASE("Piece: equality operator")
   p2 = Piece(Colour::black, PieceType::queen);
   REQUIRE( p1 == p2 );
 
-  //negative examples
+  // negative examples
   p1 = Piece(Colour::black, PieceType::none);
   p2 = Piece(Colour::black, PieceType::knight);
   REQUIRE_FALSE( p1 == p2 );
@@ -127,4 +128,182 @@ TEST_CASE("Piece: inequality operator")
   p1 = Piece(Colour::none, PieceType::pawn);
   p2 = Piece(Colour::white, PieceType::pawn);
   REQUIRE( p1 != p2 );
+}
+
+TEST_CASE("stream operator: Colour")
+{
+  using namespace simplechess;
+
+  std::ostringstream stream;
+
+  SECTION("black")
+  {
+    stream << Colour::black;
+    REQUIRE( stream.str() == "black" );
+  }
+
+  SECTION("white")
+  {
+    stream << Colour::white;
+    REQUIRE( stream.str() == "white" );
+  }
+
+  SECTION("none")
+  {
+    stream << Colour::none;
+    REQUIRE( stream.str() == "none" );
+  }
+}
+
+TEST_CASE("stream operator: PieceType")
+{
+  using namespace simplechess;
+
+  std::ostringstream stream;
+
+  SECTION("king")
+  {
+    stream << PieceType::king;
+    REQUIRE( stream.str() == "king" );
+  }
+
+  SECTION("queen")
+  {
+    stream << PieceType::queen;
+    REQUIRE( stream.str() == "queen" );
+  }
+
+  SECTION("bishop")
+  {
+    stream << PieceType::bishop;
+    REQUIRE( stream.str() == "bishop" );
+  }
+
+  SECTION("knight")
+  {
+    stream << PieceType::knight;
+    REQUIRE( stream.str() == "knight" );
+  }
+
+  SECTION("rook")
+  {
+    stream << PieceType::rook;
+    REQUIRE( stream.str() == "rook" );
+  }
+
+  SECTION("pawn")
+  {
+    stream << PieceType::pawn;
+    REQUIRE( stream.str() == "pawn" );
+  }
+
+  SECTION("none")
+  {
+    stream << PieceType::none;
+    REQUIRE( stream.str() == "none" );
+  }
+}
+
+TEST_CASE("stream operator: Piece")
+{
+  using namespace simplechess;
+
+  std::ostringstream stream;
+
+  SECTION("w")
+  {
+    SECTION("king")
+    {
+      stream << Piece(Colour::white, PieceType::king);
+      REQUIRE( stream.str() == "Piece(white king)" );
+    }
+
+    SECTION("queen")
+    {
+      stream << Piece(Colour::white, PieceType::queen);
+      REQUIRE( stream.str() == "Piece(white queen)" );
+    }
+
+    SECTION("bishop")
+    {
+      stream << Piece(Colour::white, PieceType::bishop);
+      REQUIRE( stream.str() == "Piece(white bishop)" );
+    }
+
+    SECTION("knight")
+    {
+      stream << Piece(Colour::white, PieceType::knight);
+      REQUIRE( stream.str() == "Piece(white knight)" );
+    }
+
+    SECTION("rook")
+    {
+      stream << Piece(Colour::white, PieceType::rook);
+      REQUIRE( stream.str() == "Piece(white rook)" );
+    }
+
+    SECTION("pawn")
+    {
+      stream << Piece(Colour::white, PieceType::pawn);
+      REQUIRE( stream.str() == "Piece(white pawn)" );
+    }
+
+    SECTION("none")
+    {
+      stream << Piece(Colour::white, PieceType::none);
+      REQUIRE( stream.str() == "Piece(white none)" );
+    }
+  }
+
+  SECTION("none")
+  {
+    // Does not really happen, but let's cover this case anyway.
+    stream << Piece(Colour::none, PieceType::none);
+    REQUIRE( stream.str() == "Piece(none none)" );
+  }
+
+  SECTION("b")
+  {
+    SECTION("king")
+    {
+      stream << Piece(Colour::black, PieceType::king);
+      REQUIRE( stream.str() == "Piece(black king)" );
+    }
+
+    SECTION("queen")
+    {
+      stream << Piece(Colour::black, PieceType::queen);
+      REQUIRE( stream.str() == "Piece(black queen)" );
+    }
+
+    SECTION("bishop")
+    {
+      stream << Piece(Colour::black, PieceType::bishop);
+      REQUIRE( stream.str() == "Piece(black bishop)" );
+    }
+
+    SECTION("knight")
+    {
+      stream << Piece(Colour::black, PieceType::knight);
+      REQUIRE( stream.str() == "Piece(black knight)" );
+    }
+
+    SECTION("rook")
+    {
+      stream << Piece(Colour::black, PieceType::rook);
+      REQUIRE( stream.str() == "Piece(black rook)" );
+    }
+
+    SECTION("pawn")
+    {
+      stream << Piece(Colour::black, PieceType::pawn);
+      REQUIRE( stream.str() == "Piece(black pawn)" );
+    }
+
+    SECTION("none")
+    {
+      stream << Piece(Colour::black, PieceType::none);
+      REQUIRE( stream.str() == "Piece(black none)" );
+    }
+  }
 }
