@@ -2,6 +2,11 @@
 
 _Note: This changelog may be incomplete._
 
+## Version 0.5.6 (2021-??-??)
+
+- simple-chess-cli: The program will no longer crash, if the user enters an
+  invalid field for a move.
+
 ## Version 0.5.5 (2021-05-13)
 
 - The minimum required CMake version to compile the source code is raised from

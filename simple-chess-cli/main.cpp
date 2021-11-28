@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018, 2020  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2020, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -55,8 +55,8 @@ void showHelp()
             << "                    comma-separated list of evaluator ids. Valid ids are:\n"
             << "                      material: evaluator using material value of pieces\n"
             << "                      check: evaluator with bonus for checking opponent\n"
-            << "                       castling: evaluator with malus for not castling before\n"
-            << "                                 the possibility for castling is lost\n"
+            << "                      castling: evaluator with malus for not castling before\n"
+            << "                                the possibility for castling is lost\n"
             << "                      promotion: evaluator with bonus for pawns that can be\n"
             << "                                 promoted during the next move\n"
             << "                      linearmobility: bonus for number of possible moves over\n"
@@ -84,6 +84,12 @@ void showBoard(const simplechess::Board& board)
     std::cout << "Black is to move.\n";
 }
 
+void showInvalidFieldMessage()
+{
+  std::cerr << "This is not a valid field. Please use algebraic field notation.\n"
+                << "For example, valid fields can be e. g. a1, e2, h8 and so on.\n"
+                << "Please try again.\n";
+}
 
 /** \brief Gets a field from the standard input.
  *
@@ -91,13 +97,27 @@ void showBoard(const simplechess::Board& board)
  */
 simplechess::Field getField()
 {
-  std::string input;
-  std::cin >> input;
-  if (input.size() < 2)
-    input = "a1";
-  char c = input[0];
-  int r = input[1] - '1' + 1;
-  return simplechess::toField(c, r);
+  while (true)
+  {
+    std::string input;
+    std::cin >> input;
+    if (input.size() < 2)
+    {
+      showInvalidFieldMessage();
+      continue;
+    }
+    char c = input[0];
+    int r = input[1] - '1' + 1;
+    try
+    {
+      return simplechess::toField(c, r);
+    }
+    catch(...)
+    {
+      showInvalidFieldMessage();
+      continue;
+    }
+  }
 }
 
 
@@ -194,8 +214,8 @@ int main(int argc, char** argv)
     {
       std::cout << "Error: The given evaluator list is invalid!\n";
       return simplechess::rcInvalidParameter;
-    } // if
-  } // else
+    }
+  }
 
   // potentially endless game loop
   while (true)
@@ -223,7 +243,7 @@ int main(int argc, char** argv)
       // Did the search find any moves?
       if (!s.hasMove())
       {
-        std::cout << "simplechess AI could not find a valid move. User wins!\n";
+        std::cout << "simplechess engine could not find a valid move. User wins!\n";
         return 0;
       }
       const auto bestMove = s.bestMove();
