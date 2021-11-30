@@ -4,8 +4,12 @@ _Note: This changelog may be incomplete._
 
 ## Version 0.5.6 (2021-??-??)
 
-- simple-chess-cli: The program will no longer crash, if the user enters an
-  invalid field for a move.
+simple-chess-cli:
+
+- The program will no longer crash, if the user enters an invalid field for a
+  move.
+- The game can now be cancelled by typing "quit" instead of the fields for the
+  next move.
 
 ## Version 0.5.5 (2021-05-13)
 

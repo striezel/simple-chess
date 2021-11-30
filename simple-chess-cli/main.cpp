@@ -19,6 +19,7 @@
 */
 
 #include <iostream>
+#include <optional>
 #include "../data/Board.hpp"
 #include "../evaluation/CompoundCreator.hpp"
 #include "../evaluation/CompoundEvaluator.hpp"
@@ -87,18 +88,20 @@ void showBoard(const simplechess::Board& board)
 void showInvalidFieldMessage()
 {
   std::cerr << "This is not a valid field. Please use algebraic field notation.\n"
-                << "For example, valid fields can be e. g. a1, e2, h8 and so on.\n"
-                << "Please try again.\n";
+            << "For example, valid fields can be e. g. a1, e2, h8 and so on.\n"
+            << "Please try again, or type 'quit' to quit the game.\n";
 }
 
 /** \brief Gets a field from the standard input.
  *
+ * \param prompt the prompt to show before the user enters the field
  * \return Returns the field that was entered by the user.
  */
-simplechess::Field getField()
+std::optional<simplechess::Field> getField(const std::string_view prompt)
 {
   while (true)
   {
+    std::cout << prompt;
     std::string input;
     std::cin >> input;
     if (input.size() < 2)
@@ -106,6 +109,8 @@ simplechess::Field getField()
       showInvalidFieldMessage();
       continue;
     }
+    if (input == "quit" || input == "exit")
+      return std::nullopt;
     char c = input[0];
     int r = input[1] - '1' + 1;
     try
@@ -224,11 +229,19 @@ int main(int argc, char** argv)
     std::cout << "\n";
     if (board.toMove() != computerPlayer)
     {
-      std::cout << "Your move starts from field: ";
-      const simplechess::Field start = getField();
-      std::cout << "Your move goes to field: ";
-      const simplechess::Field destination = getField();
-      if (!board.move(start, destination, simplechess::PieceType::queen))
+      const auto start = getField("Your move starts from field: ");
+      if (!start.has_value())
+      {
+        std::cout << "Quitting game.\n";
+        return 0;
+      }
+      const auto destination = getField("Your move goes to field: ");
+      if (!destination.has_value())
+      {
+        std::cout << "Quitting game.\n";
+        return 0;
+      }
+      if (!board.move(start.value(), destination.value(), simplechess::PieceType::queen))
       {
         std::cout << "The move is not allowed!\n";
         return 2;
