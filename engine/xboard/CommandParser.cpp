@@ -38,7 +38,7 @@
 #include "Xboard.hpp"
 #include "../Command.hpp"
 #include "../Engine.hpp"
-#include "../../data/Result.hpp"
+#include "../../libsimple-chess/data/Result.hpp"
 #include "../../util/strings.hpp"
 
 namespace simplechess::xboard

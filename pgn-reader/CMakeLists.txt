@@ -4,23 +4,23 @@ cmake_minimum_required (VERSION 3.8)
 project(pgn-reader)
 
 set(pgn_reader_sources
-    ../algorithm/Apply.cpp
-    ../data/Board.cpp
-    ../data/Castling.cpp
-    ../data/Field.cpp
-    ../data/ForsythEdwardsNotation.cpp
-    ../data/HalfMove.cpp
-    ../data/Piece.cpp
-    ../data/PortableGameNotation.cpp
-    ../data/Result.cpp
-    ../pgn/Parser.cpp
-    ../pgn/ParserException.cpp
-    ../pgn/Token.cpp
-    ../pgn/Tokenizer.cpp
-    ../pgn/UnconsumedTokensException.cpp
-    ../rules/check.cpp
-    ../rules/Moves.cpp
-    ../ui/Console.cpp
+    ../libsimple-chess/algorithm/Apply.cpp
+    ../libsimple-chess/data/Board.cpp
+    ../libsimple-chess/data/Castling.cpp
+    ../libsimple-chess/data/Field.cpp
+    ../libsimple-chess/data/ForsythEdwardsNotation.cpp
+    ../libsimple-chess/data/HalfMove.cpp
+    ../libsimple-chess/data/Piece.cpp
+    ../libsimple-chess/data/PortableGameNotation.cpp
+    ../libsimple-chess/data/Result.cpp
+    ../libsimple-chess/pgn/Parser.cpp
+    ../libsimple-chess/pgn/ParserException.cpp
+    ../libsimple-chess/pgn/Token.cpp
+    ../libsimple-chess/pgn/Tokenizer.cpp
+    ../libsimple-chess/pgn/UnconsumedTokensException.cpp
+    ../libsimple-chess/rules/check.cpp
+    ../libsimple-chess/rules/Moves.cpp
+    ../libsimple-chess/ui/Console.cpp
     ../util/strings.cpp
     Options.cpp
     main.cpp)

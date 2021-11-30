@@ -20,7 +20,7 @@
 
 #include "NewGame.hpp"
 #include "../Engine.hpp"
-#include "../../data/ForsythEdwardsNotation.hpp"
+#include "../../libsimple-chess/data/ForsythEdwardsNotation.hpp"
 
 namespace simplechess::uci
 {

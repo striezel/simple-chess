@@ -19,7 +19,7 @@
 */
 
 #include <catch.hpp>
-#include "../../../evaluation/CastlingEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/CastlingEvaluator.hpp"
 
 TEST_CASE("CastlingEvaluator evaluates default start position")
 {

@@ -20,7 +20,7 @@
 
 
 #include <catch.hpp>
-#include "../../../rules/Moves.hpp"
+#include "../../../libsimple-chess/rules/Moves.hpp"
 
 TEST_CASE("Moves::sanitizePromotion() test")
 {

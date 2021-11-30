@@ -4,29 +4,29 @@ cmake_minimum_required (VERSION 3.8)
 project(pgn-reader-with-meteor-chess)
 
 set(pgn_reader_with_meteor_chess_sources
-    ../algorithm/Apply.cpp
-    ../data/Board.cpp
-    ../data/Castling.cpp
-    ../data/Field.cpp
-    ../data/ForsythEdwardsNotation.cpp
-    ../data/HalfMove.cpp
-    ../data/Piece.cpp
-    ../data/PortableGameNotation.cpp
-    ../data/Result.cpp
-    ../db/mongo/Convert.cpp
-    ../db/mongo/IdGenerator.cpp
-    ../db/mongo/libmongoclient/BSON.cpp
-    ../db/mongo/libmongoclient/Connection.cpp
-    ../db/mongo/libmongoclient/QueryCursor.cpp
-    ../db/mongo/libmongoclient/Server.cpp
-    ../pgn/Parser.cpp
-    ../pgn/ParserException.cpp
-    ../pgn/Token.cpp
-    ../pgn/Tokenizer.cpp
-    ../pgn/UnconsumedTokensException.cpp
-    ../rules/check.cpp
-    ../rules/Moves.cpp
-    ../ui/Console.cpp
+    ../libsimple-chess/algorithm/Apply.cpp
+    ../libsimple-chess/data/Board.cpp
+    ../libsimple-chess/data/Castling.cpp
+    ../libsimple-chess/data/Field.cpp
+    ../libsimple-chess/data/ForsythEdwardsNotation.cpp
+    ../libsimple-chess/data/HalfMove.cpp
+    ../libsimple-chess/data/Piece.cpp
+    ../libsimple-chess/data/PortableGameNotation.cpp
+    ../libsimple-chess/data/Result.cpp
+    ../libsimple-chess/db/mongo/Convert.cpp
+    ../libsimple-chess/db/mongo/IdGenerator.cpp
+    ../libsimple-chess/db/mongo/libmongoclient/BSON.cpp
+    ../libsimple-chess/db/mongo/libmongoclient/Connection.cpp
+    ../libsimple-chess/db/mongo/libmongoclient/QueryCursor.cpp
+    ../libsimple-chess/db/mongo/libmongoclient/Server.cpp
+    ../libsimple-chess/pgn/Parser.cpp
+    ../libsimple-chess/pgn/ParserException.cpp
+    ../libsimple-chess/pgn/Token.cpp
+    ../libsimple-chess/pgn/Tokenizer.cpp
+    ../libsimple-chess/pgn/UnconsumedTokensException.cpp
+    ../libsimple-chess/rules/check.cpp
+    ../libsimple-chess/rules/Moves.cpp
+    ../libsimple-chess/ui/Console.cpp
     ../util/strings.cpp
     ../pgn-reader/Options.cpp
     ../pgn-reader/main.cpp)

@@ -19,10 +19,10 @@
 */
 
 #include <catch.hpp>
-#include "../../../evaluation/CompoundEvaluator.hpp"
-#include "../../../evaluation/MaterialEvaluator.hpp"
-#include "../../../evaluation/LinearMobilityEvaluator.hpp"
-#include "../../../evaluation/PromotionEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/CompoundEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/MaterialEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/LinearMobilityEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/PromotionEvaluator.hpp"
 #include "ConstantEvaluator.hpp"
 
 TEST_CASE("CompoundEvaluator: empty compound evaluates to zero")

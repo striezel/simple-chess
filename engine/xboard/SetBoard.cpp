@@ -21,7 +21,7 @@
 #include "SetBoard.hpp"
 #include "../Engine.hpp"
 #include "../io-utils.hpp"
-#include "../../data/Board.hpp"
+#include "../../libsimple-chess/data/Board.hpp"
 
 namespace simplechess::xboard
 {

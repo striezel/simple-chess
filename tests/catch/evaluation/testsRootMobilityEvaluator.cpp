@@ -20,8 +20,8 @@
 
 
 #include <catch.hpp>
-#include "../../../evaluation/RootMobilityEvaluator.hpp"
-#include "../../../evaluation/LinearMobilityEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/RootMobilityEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/LinearMobilityEvaluator.hpp"
 
 TEST_CASE("RootMobilityEvaluator evaluates default start position")
 {

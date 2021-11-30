@@ -22,7 +22,7 @@
 #include <sstream>
 #include "../io-utils.hpp"
 #include "../Engine.hpp"
-#include "../../rules/Moves.hpp"
+#include "../../libsimple-chess/rules/Moves.hpp"
 
 namespace simplechess::xboard
 {

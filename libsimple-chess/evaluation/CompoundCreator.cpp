@@ -26,7 +26,7 @@
 #include "MaterialEvaluator.hpp"
 #include "PromotionEvaluator.hpp"
 #include "RootMobilityEvaluator.hpp"
-#include "../util/strings.hpp"
+#include "../../util/strings.hpp"
 
 namespace simplechess
 {

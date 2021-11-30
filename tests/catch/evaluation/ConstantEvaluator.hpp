@@ -21,7 +21,7 @@
 #ifndef SIMPLECHESS_CONSTANTEVALUATOR_HPP
 #define SIMPLECHESS_CONSTANTEVALUATOR_HPP
 
-#include "../../../evaluation/Evaluator.hpp"
+#include "../../../libsimple-chess/evaluation/Evaluator.hpp"
 
 namespace simplechess
 {

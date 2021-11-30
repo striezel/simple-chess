@@ -23,7 +23,7 @@
 #include <unordered_map>
 #include "../rules/check.hpp"
 #include "../rules/Moves.hpp"
-#include "../util/strings.hpp"
+#include "../../util/strings.hpp"
 
 namespace simplechess
 {

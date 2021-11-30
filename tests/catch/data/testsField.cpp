@@ -19,7 +19,7 @@
 */
 
 #include <catch.hpp>
-#include "../../../data/Field.hpp"
+#include "../../../libsimple-chess/data/Field.hpp"
 
 TEST_CASE("Field: column()")
 {

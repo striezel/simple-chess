@@ -25,8 +25,8 @@
 #include <deque>
 #include <memory>
 
-#include "../data/Board.hpp"
-#include "../evaluation/CompoundEvaluator.hpp"
+#include "../libsimple-chess/data/Board.hpp"
+#include "../libsimple-chess/evaluation/CompoundEvaluator.hpp"
 #include "time/Timing.hpp"
 #include "Command.hpp"
 #include "Protocol.hpp"

@@ -20,8 +20,8 @@
 
 
 #include <catch.hpp>
-#include "../../../data/Board.hpp"
-#include "../../../data/ForsythEdwardsNotation.hpp"
+#include "../../../libsimple-chess/data/Board.hpp"
+#include "../../../libsimple-chess/data/ForsythEdwardsNotation.hpp"
 
 TEST_CASE("Board::fromFEN() with default start position")
 {

@@ -23,7 +23,7 @@
 
 #include "../Command.hpp"
 #include <string>
-#include "../../data/Result.hpp"
+#include "../../libsimple-chess/data/Result.hpp"
 
 namespace simplechess::xboard
 {

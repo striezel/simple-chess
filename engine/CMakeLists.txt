@@ -7,24 +7,24 @@ set(simple_chess_engine_sources
     Engine.cpp
     io-utils.cpp
     Protocol.cpp
-    ../data/Board.cpp
-    ../data/Castling.cpp
-    ../data/Field.cpp
-    ../data/ForsythEdwardsNotation.cpp
-    ../data/Piece.cpp
-    ../data/Result.cpp
-    ../evaluation/CastlingEvaluator.cpp
-    ../evaluation/CheckEvaluator.cpp
-    ../evaluation/CompoundCreator.cpp
-    ../evaluation/CompoundEvaluator.cpp
-    ../evaluation/LinearMobilityEvaluator.cpp
-    ../evaluation/MaterialEvaluator.cpp
-    ../evaluation/PromotionEvaluator.cpp
-    ../evaluation/RootMobilityEvaluator.cpp
-    ../rules/Moves.cpp
-    ../rules/check.cpp
-    ../search/Node.cpp
-    ../search/Search.cpp
+    ../libsimple-chess/data/Board.cpp
+    ../libsimple-chess/data/Castling.cpp
+    ../libsimple-chess/data/Field.cpp
+    ../libsimple-chess/data/ForsythEdwardsNotation.cpp
+    ../libsimple-chess/data/Piece.cpp
+    ../libsimple-chess/data/Result.cpp
+    ../libsimple-chess/evaluation/CastlingEvaluator.cpp
+    ../libsimple-chess/evaluation/CheckEvaluator.cpp
+    ../libsimple-chess/evaluation/CompoundCreator.cpp
+    ../libsimple-chess/evaluation/CompoundEvaluator.cpp
+    ../libsimple-chess/evaluation/LinearMobilityEvaluator.cpp
+    ../libsimple-chess/evaluation/MaterialEvaluator.cpp
+    ../libsimple-chess/evaluation/PromotionEvaluator.cpp
+    ../libsimple-chess/evaluation/RootMobilityEvaluator.cpp
+    ../libsimple-chess/rules/Moves.cpp
+    ../libsimple-chess/rules/check.cpp
+    ../libsimple-chess/search/Node.cpp
+    ../libsimple-chess/search/Search.cpp
     ../util/GitInfos.cpp
     ../util/strings.cpp
     time/Clock.cpp

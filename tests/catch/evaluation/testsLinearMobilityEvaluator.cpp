@@ -20,7 +20,7 @@
 
 
 #include <catch.hpp>
-#include "../../../evaluation/LinearMobilityEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/LinearMobilityEvaluator.hpp"
 
 TEST_CASE("LinearMobilityEvaluator evaluates default start position")
 {

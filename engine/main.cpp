@@ -24,7 +24,7 @@
 #include "xboard/CommandParser.hpp"
 #include "Engine.hpp"
 #include "ParseLoop.hpp"
-#include "../evaluation/CompoundCreator.hpp"
+#include "../libsimple-chess/evaluation/CompoundCreator.hpp"
 #include "../util/GitInfos.hpp"
 #include "../util/ReturnCodes.hpp"
 #include "../util/Version.hpp"

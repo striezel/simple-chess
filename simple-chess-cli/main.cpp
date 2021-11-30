@@ -20,11 +20,11 @@
 
 #include <iostream>
 #include <optional>
-#include "../data/Board.hpp"
-#include "../evaluation/CompoundCreator.hpp"
-#include "../evaluation/CompoundEvaluator.hpp"
-#include "../search/Search.hpp"
-#include "../ui/Console.hpp"
+#include "../libsimple-chess/data/Board.hpp"
+#include "../libsimple-chess/evaluation/CompoundCreator.hpp"
+#include "../libsimple-chess/evaluation/CompoundEvaluator.hpp"
+#include "../libsimple-chess/search/Search.hpp"
+#include "../libsimple-chess/ui/Console.hpp"
 #include "../util/GitInfos.hpp"
 #include "../util/ReturnCodes.hpp"
 #include "../util/Version.hpp"

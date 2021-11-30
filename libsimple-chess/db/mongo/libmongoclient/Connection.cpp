@@ -21,7 +21,7 @@
 #include "Connection.hpp"
 #include <cerrno>
 #include <stdexcept>
-#include "../../../util/strings.hpp"
+#include "../../../../util/strings.hpp"
 
 namespace simplechess
 {

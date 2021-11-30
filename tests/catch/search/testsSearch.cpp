@@ -20,11 +20,11 @@
 
 
 #include <catch.hpp>
-#include "../../../evaluation/CompoundEvaluator.hpp"
-#include "../../../evaluation/MaterialEvaluator.hpp"
-#include "../../../evaluation/LinearMobilityEvaluator.hpp"
-#include "../../../rules/check.hpp"
-#include "../../../search/Search.hpp"
+#include "../../../libsimple-chess/evaluation/CompoundEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/MaterialEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/LinearMobilityEvaluator.hpp"
+#include "../../../libsimple-chess/rules/check.hpp"
+#include "../../../libsimple-chess/search/Search.hpp"
 
 TEST_CASE("Search: default start position with depth == 1")
 {

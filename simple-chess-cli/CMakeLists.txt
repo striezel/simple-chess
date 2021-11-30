@@ -4,24 +4,24 @@ cmake_minimum_required (VERSION 3.8)
 project(simple-chess-cli)
 
 set(simple_chess_cli_sources
-    ../data/Board.cpp
-    ../data/Castling.cpp
-    ../data/Field.cpp
-    ../data/ForsythEdwardsNotation.cpp
-    ../data/Piece.cpp
-    ../evaluation/CastlingEvaluator.cpp
-    ../evaluation/CheckEvaluator.cpp
-    ../evaluation/CompoundCreator.cpp
-    ../evaluation/CompoundEvaluator.cpp
-    ../evaluation/LinearMobilityEvaluator.cpp
-    ../evaluation/MaterialEvaluator.cpp
-    ../evaluation/PromotionEvaluator.cpp
-    ../evaluation/RootMobilityEvaluator.cpp
-    ../rules/check.cpp
-    ../rules/Moves.cpp
-    ../search/Node.cpp
-    ../search/Search.cpp
-    ../ui/Console.cpp
+    ../libsimple-chess/data/Board.cpp
+    ../libsimple-chess/data/Castling.cpp
+    ../libsimple-chess/data/Field.cpp
+    ../libsimple-chess/data/ForsythEdwardsNotation.cpp
+    ../libsimple-chess/data/Piece.cpp
+    ../libsimple-chess/evaluation/CastlingEvaluator.cpp
+    ../libsimple-chess/evaluation/CheckEvaluator.cpp
+    ../libsimple-chess/evaluation/CompoundCreator.cpp
+    ../libsimple-chess/evaluation/CompoundEvaluator.cpp
+    ../libsimple-chess/evaluation/LinearMobilityEvaluator.cpp
+    ../libsimple-chess/evaluation/MaterialEvaluator.cpp
+    ../libsimple-chess/evaluation/PromotionEvaluator.cpp
+    ../libsimple-chess/evaluation/RootMobilityEvaluator.cpp
+    ../libsimple-chess/rules/check.cpp
+    ../libsimple-chess/rules/Moves.cpp
+    ../libsimple-chess/search/Node.cpp
+    ../libsimple-chess/search/Search.cpp
+    ../libsimple-chess/ui/Console.cpp
     ../util/GitInfos.cpp
     ../util/strings.cpp
     main.cpp)

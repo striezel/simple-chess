@@ -22,20 +22,20 @@
 #include <string>
 #include <thread>
 #include "Options.hpp"
-#include "../algorithm/Apply.hpp"
-#include "../data/Board.hpp"
-#include "../data/ForsythEdwardsNotation.hpp"
-#include "../data/PortableGameNotation.hpp"
+#include "../libsimple-chess/algorithm/Apply.hpp"
+#include "../libsimple-chess/data/Board.hpp"
+#include "../libsimple-chess/data/ForsythEdwardsNotation.hpp"
+#include "../libsimple-chess/data/PortableGameNotation.hpp"
 #ifndef NO_METEOR_CHESS
-#include "../db/mongo/Server.hpp"
-#include "../db/mongo/libmongoclient/Server.hpp"
+#include "../libsimple-chess/db/mongo/Server.hpp"
+#include "../libsimple-chess/db/mongo/libmongoclient/Server.hpp"
 #include <memory>
 #endif // NO_METEOR_CHESS
-#include "../pgn/Parser.hpp"
-#include "../pgn/Tokenizer.hpp"
-#include "../pgn/UnconsumedTokensException.hpp"
-#include "../pgn/ParserException.hpp"
-#include "../ui/Console.hpp"
+#include "../libsimple-chess/pgn/Parser.hpp"
+#include "../libsimple-chess/pgn/Tokenizer.hpp"
+#include "../libsimple-chess/pgn/UnconsumedTokensException.hpp"
+#include "../libsimple-chess/pgn/ParserException.hpp"
+#include "../libsimple-chess/ui/Console.hpp"
 #include "../util/ReturnCodes.hpp"
 
 void showVersion()

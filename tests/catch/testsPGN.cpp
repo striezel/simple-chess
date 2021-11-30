@@ -20,10 +20,10 @@
 
 #include <catch.hpp>
 
-#include "../../data/Board.hpp"
-#include "../../data/PortableGameNotation.hpp"
-#include "../../pgn/Parser.hpp"
-#include "../../pgn/Tokenizer.hpp"
+#include "../../libsimple-chess/data/Board.hpp"
+#include "../../libsimple-chess/data/PortableGameNotation.hpp"
+#include "../../libsimple-chess/pgn/Parser.hpp"
+#include "../../libsimple-chess/pgn/Tokenizer.hpp"
 
 const std::string pgnExample =
     std::string("[Event \"F/S Return Match\"]\n")

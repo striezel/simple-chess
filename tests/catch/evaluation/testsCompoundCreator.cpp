@@ -20,10 +20,10 @@
 
 
 #include <catch.hpp>
-#include "../../../evaluation/CompoundCreator.hpp"
-#include "../../../evaluation/MaterialEvaluator.hpp"
-#include "../../../evaluation/LinearMobilityEvaluator.hpp"
-#include "../../../evaluation/PromotionEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/CompoundCreator.hpp"
+#include "../../../libsimple-chess/evaluation/MaterialEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/LinearMobilityEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/PromotionEvaluator.hpp"
 
 TEST_CASE("CompoundCreator: create with empty string shall fail")
 {

@@ -20,7 +20,7 @@
 
 #include "PortableGameNotation.hpp"
 #include <stdexcept>
-#include "../util/strings.hpp"
+#include "../../util/strings.hpp"
 
 namespace simplechess
 {

@@ -4,31 +4,31 @@ cmake_minimum_required (VERSION 3.8)
 project(simple_chess_tests_catch)
 
 set(simple_chess_tests_catch_sources
-    ../../data/Board.cpp
-    ../../data/Castling.cpp
-    ../../data/Field.cpp
-    ../../data/ForsythEdwardsNotation.cpp
-    ../../data/HalfMove.cpp
-    ../../data/Piece.cpp
-    ../../data/PortableGameNotation.cpp
-    ../../data/Result.cpp
-    ../../evaluation/CastlingEvaluator.cpp
-    ../../evaluation/CheckEvaluator.cpp
-    ../../evaluation/CompoundCreator.cpp
-    ../../evaluation/CompoundEvaluator.cpp
-    ../../evaluation/LinearMobilityEvaluator.cpp
-    ../../evaluation/MaterialEvaluator.cpp
-    ../../evaluation/PromotionEvaluator.cpp
-    ../../evaluation/RootMobilityEvaluator.cpp
-    ../../pgn/Parser.cpp
-    ../../pgn/ParserException.cpp
-    ../../pgn/Token.cpp
-    ../../pgn/Tokenizer.cpp
-    ../../pgn/UnconsumedTokensException.cpp
-    ../../rules/check.cpp
-    ../../rules/Moves.cpp
-    ../../search/Node.cpp
-    ../../search/Search.cpp
+    ../../libsimple-chess/data/Board.cpp
+    ../../libsimple-chess/data/Castling.cpp
+    ../../libsimple-chess/data/Field.cpp
+    ../../libsimple-chess/data/ForsythEdwardsNotation.cpp
+    ../../libsimple-chess/data/HalfMove.cpp
+    ../../libsimple-chess/data/Piece.cpp
+    ../../libsimple-chess/data/PortableGameNotation.cpp
+    ../../libsimple-chess/data/Result.cpp
+    ../../libsimple-chess/evaluation/CastlingEvaluator.cpp
+    ../../libsimple-chess/evaluation/CheckEvaluator.cpp
+    ../../libsimple-chess/evaluation/CompoundCreator.cpp
+    ../../libsimple-chess/evaluation/CompoundEvaluator.cpp
+    ../../libsimple-chess/evaluation/LinearMobilityEvaluator.cpp
+    ../../libsimple-chess/evaluation/MaterialEvaluator.cpp
+    ../../libsimple-chess/evaluation/PromotionEvaluator.cpp
+    ../../libsimple-chess/evaluation/RootMobilityEvaluator.cpp
+    ../../libsimple-chess/pgn/Parser.cpp
+    ../../libsimple-chess/pgn/ParserException.cpp
+    ../../libsimple-chess/pgn/Token.cpp
+    ../../libsimple-chess/pgn/Tokenizer.cpp
+    ../../libsimple-chess/pgn/UnconsumedTokensException.cpp
+    ../../libsimple-chess/rules/check.cpp
+    ../../libsimple-chess/rules/Moves.cpp
+    ../../libsimple-chess/search/Node.cpp
+    ../../libsimple-chess/search/Search.cpp
     ../../util/strings.cpp
     data/testsBoard.cpp
     data/testsCastling.cpp

@@ -19,7 +19,7 @@
 */
 
 #include <catch.hpp>
-#include "../../../data/Castling.hpp"
+#include "../../../libsimple-chess/data/Castling.hpp"
 
 TEST_CASE("Castling:init")
 {

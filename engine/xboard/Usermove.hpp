@@ -22,8 +22,8 @@
 #define SIMPLECHESS_XBOARD_USERMOVE_HPP
 
 #include "../Command.hpp"
-#include "../../data/Field.hpp"
-#include "../../data/Piece.hpp"
+#include "../../libsimple-chess/data/Field.hpp"
+#include "../../libsimple-chess/data/Piece.hpp"
 
 namespace simplechess::xboard
 {

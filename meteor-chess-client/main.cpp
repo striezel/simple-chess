@@ -22,11 +22,11 @@
 #include <iostream>
 #include <sstream>
 #include "../third-party/nlohmann/json.hpp"
-#include "../db/mongo/libmongoclient/Server.hpp"
-#include "../evaluation/CompoundCreator.hpp"
-#include "../evaluation/CompoundEvaluator.hpp"
-#include "../search/Search.hpp"
-#include "../rules/Moves.hpp"
+#include "../libsimple-chess/db/mongo/libmongoclient/Server.hpp"
+#include "../libsimple-chess/evaluation/CompoundCreator.hpp"
+#include "../libsimple-chess/evaluation/CompoundEvaluator.hpp"
+#include "../libsimple-chess/search/Search.hpp"
+#include "../libsimple-chess/rules/Moves.hpp"
 #include "../util/GitInfos.hpp"
 #include "../util/ReturnCodes.hpp"
 #include "../util/Version.hpp"

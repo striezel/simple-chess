@@ -20,7 +20,7 @@
 
 
 #include <catch.hpp>
-#include "../../../evaluation/MaterialEvaluator.hpp"
+#include "../../../libsimple-chess/evaluation/MaterialEvaluator.hpp"
 
 TEST_CASE("MaterialEvaluator evaluates default start position")
 {

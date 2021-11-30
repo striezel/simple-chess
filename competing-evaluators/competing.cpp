@@ -21,9 +21,9 @@
 #include "competing.hpp"
 #include <iostream>
 #include <thread>
-#include "../data/ForsythEdwardsNotation.hpp"
-#include "../evaluation/CompoundCreator.hpp"
-#include "../search/Search.hpp"
+#include "../libsimple-chess/data/ForsythEdwardsNotation.hpp"
+#include "../libsimple-chess/evaluation/CompoundCreator.hpp"
+#include "../libsimple-chess/search/Search.hpp"
 #ifndef SIMPLECHESS_NO_COMPETITION_DATA
 #include "CompetitionData.hpp"
 #endif

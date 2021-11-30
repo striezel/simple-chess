@@ -21,9 +21,9 @@
 #include "Engine.hpp"
 #include <sstream>
 #include "io-utils.hpp"
-#include "../evaluation/CompoundCreator.hpp"
-#include "../evaluation/CompoundEvaluator.hpp"
-#include "../search/Search.hpp"
+#include "../libsimple-chess/evaluation/CompoundCreator.hpp"
+#include "../libsimple-chess/evaluation/CompoundEvaluator.hpp"
+#include "../libsimple-chess/search/Search.hpp"
 
 namespace simplechess
 {

@@ -25,8 +25,8 @@
 #include <map>
 #include <memory>
 #include <vector>
-#include "../data/Result.hpp"
-#include "../evaluation/Evaluator.hpp"
+#include "../libsimple-chess/data/Result.hpp"
+#include "../libsimple-chess/evaluation/Evaluator.hpp"
 
 namespace simplechess
 {

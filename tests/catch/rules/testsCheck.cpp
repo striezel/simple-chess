@@ -20,8 +20,8 @@
 
 
 #include <catch.hpp>
-#include "../../../rules/check.hpp"
-#include "../../../rules/Moves.hpp"
+#include "../../../libsimple-chess/rules/check.hpp"
+#include "../../../libsimple-chess/rules/Moves.hpp"
 
 TEST_CASE("isUnderAttack() test")
 {

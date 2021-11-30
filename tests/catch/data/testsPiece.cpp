@@ -20,7 +20,7 @@
 
 #include <catch.hpp>
 #include <sstream>
-#include "../../../data/Piece.hpp"
+#include "../../../libsimple-chess/data/Piece.hpp"
 
 TEST_CASE("Piece default constructor")
 {
