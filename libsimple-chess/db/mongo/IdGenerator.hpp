@@ -24,13 +24,7 @@
 #include <string>
 #include <vector>
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
+namespace simplechess::db::mongo
 {
 
 /** Class to generate a random string ID. */
@@ -51,10 +45,6 @@ class IdGenerator
      */
     static std::string generate(const std::vector<std::string>& existingIds);
 }; // class
-
-} // namespace
-
-} // namespace
 
 } // namespace
 

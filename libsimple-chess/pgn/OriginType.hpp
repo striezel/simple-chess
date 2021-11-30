@@ -21,10 +21,7 @@
 #ifndef SIMPLECHESS_PGN_ORIGINTYPE_HPP
 #define SIMPLECHESS_PGN_ORIGINTYPE_HPP
 
-namespace simplechess
-{
-
-namespace pgn
+namespace simplechess::pgn
 {
 
 /** \brief enumeration type to determine the status of the origin field in PGN move
@@ -40,8 +37,6 @@ enum class OriginType
   full /**< complete field is given */
 };
 
-}
-
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_PGN_ORIGINTYPE_HPP

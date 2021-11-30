@@ -28,16 +28,7 @@
 #include "../Convert.hpp"
 #include "../IdGenerator.hpp"
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
-{
-
-namespace libmongoclient
+namespace simplechess::db::mongo::libmongoclient
 {
 
 Server::Server(const std::string& hostname, const uint16_t port, const bool slaveAcceptable)
@@ -917,11 +908,5 @@ bool Server::updateBoardFields(const std::string& id, const Board& board)
   } // for column
   return true;
 }
-
-} // namespace
-
-} // namespace
-
-} // namespace
 
 } // namespace

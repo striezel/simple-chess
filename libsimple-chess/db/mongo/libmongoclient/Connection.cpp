@@ -23,13 +23,7 @@
 #include <stdexcept>
 #include "../../../../util/strings.hpp"
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
+namespace simplechess::db::mongo
 {
 
 Connection::Connection(const std::string& hostname, const uint16_t port, const bool slaveAcceptable)
@@ -81,8 +75,4 @@ bool Connection::update(const std::string& ns, const BSON& selector, const BSON&
   return mongo_sync_cmd_update(conn, ns.c_str(), 0, selector.raw(), update.raw());
 }
 
-} //namespace
-
-} //namespace
-
-} //namespace
+} // namespace

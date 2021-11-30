@@ -26,13 +26,7 @@
 #include <vector>
 #include "../../data/Board.hpp"
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
+namespace simplechess::db::mongo
 {
 
 /** Abstract base class for connecting to a MongoDB server. */
@@ -96,10 +90,6 @@ class Server
      */
     virtual bool updateFieldOnBoard(const std::string& id, const Board& board, const Field f) = 0;
 }; // class
-
-} // namespace
-
-} // namespace
 
 } // namespace
 

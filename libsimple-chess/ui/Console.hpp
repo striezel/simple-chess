@@ -23,25 +23,20 @@
 
 #include "../data/Board.hpp"
 
-namespace simplechess
-{
-
-namespace ui
+namespace simplechess::ui
 {
 
 /** class to show a chess board on the console */
 class Console
 {
   public:
-    /** \brief prints the board to standard output
+    /** \brief Prints the board to standard output.
      *
      * \param board   the current chess board
      */
     static void showBoard(const Board& board);
 };
 
-} //namespace
-
-} //namespace
+} // namespace
 
 #endif // SIMPLE_CHESS_CONSOLE_HPP

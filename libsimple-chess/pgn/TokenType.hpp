@@ -21,10 +21,7 @@
 #ifndef SIMPLECHESS_PGN_TOKENTYPE_HPP
 #define SIMPLECHESS_PGN_TOKENTYPE_HPP
 
-namespace simplechess
-{
-
-namespace pgn
+namespace simplechess::pgn
 {
 
 enum class TokenType
@@ -48,8 +45,6 @@ enum class TokenType
   GameEnd /**< game end / result */
 };
 
-} //namespace
-
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_PGN_TOKENTYPE_HPP

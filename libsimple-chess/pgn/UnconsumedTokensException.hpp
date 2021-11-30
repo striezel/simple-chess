@@ -25,10 +25,7 @@
 #include "ParserException.hpp"
 #include "Token.hpp"
 
-namespace simplechess
-{
-
-namespace pgn
+namespace simplechess::pgn
 {
 
 /** Specialized exception class of PGN parser for situations where some tokens
@@ -69,8 +66,6 @@ class UnconsumedTokensException: public ParserException
     unsigned int totalSize; /**< total size of tokens */
     std::vector<Token> remainingTokens; /**< vector of unprocessed tokens */
 };
-
-} // namespace
 
 } // namespace
 

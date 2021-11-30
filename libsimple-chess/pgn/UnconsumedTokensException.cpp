@@ -21,10 +21,7 @@
 #include "UnconsumedTokensException.hpp"
 #include "../../util/strings.hpp"
 
-namespace simplechess
-{
-
-namespace pgn
+namespace simplechess::pgn
 {
 
 UnconsumedTokensException::UnconsumedTokensException(const unsigned int _nextIdx, const unsigned int tokenSize, const std::vector<Token>& leftOverTokens)
@@ -51,7 +48,5 @@ const std::vector<Token>& UnconsumedTokensException::unprocessedTokens() const
 {
   return remainingTokens;
 }
-
-} // namespace
 
 } // namespace

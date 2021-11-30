@@ -20,10 +20,7 @@
 
 #include "ParserException.hpp"
 
-namespace simplechess
-{
-
-namespace pgn
+namespace simplechess::pgn
 {
 
 ParserException::ParserException(const std::string& message)
@@ -36,6 +33,4 @@ const char* ParserException::what() const noexcept
   return exceptMessage.c_str();
 }
 
-} //namespace
-
-} //namespace
+} // namespace

@@ -26,13 +26,10 @@
 #include "../data/HalfMove.hpp"
 #include "../data/PortableGameNotation.hpp"
 
-namespace simplechess
+namespace simplechess::algorithm
 {
 
-namespace algorithm
-{
-
-/** \brief applies a half move to a given board
+/** \brief Applies a half move to a given board.
  *
  * \param board the board where the move shall be applied
  * \param hMove half move that shall be applied
@@ -43,7 +40,7 @@ namespace algorithm
 bool applyMove(Board& board, const HalfMove& hMove, const Colour toMove);
 
 
-/** \brief finds the origin field for a half move
+/** \brief Finds the origin field for a half move.
  *
  * \param board the board on which the half move will be performed
  * \param hMove next half move
@@ -53,7 +50,7 @@ bool applyMove(Board& board, const HalfMove& hMove, const Colour toMove);
 Field findOriginField(const Board& board, const HalfMove& hMove);
 
 
-/** \brief finds all fields where a certain piece is located
+/** \brief Finds all fields where a certain piece is located.
  *
  * \param board  the board on which the search takes place
  * \param piece piece for which to search
@@ -64,7 +61,7 @@ Field findOriginField(const Board& board, const HalfMove& hMove);
 std::vector<Field> findPieces(const Board& board, const Piece& piece);
 
 
-/** \brief checks the plausibility of a Portable Game Notation
+/** \brief Checks the plausibility of a Portable Game Notation.
  *
  * \param pgn  the Portable Game Notation instance
  * \return Returns true, if the content seems plausible.
@@ -72,8 +69,6 @@ std::vector<Field> findPieces(const Board& board, const Piece& piece);
  */
 bool checkPortableGameNotation(const PortableGameNotation& pgn);
 
-} //namespace
-
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_ALGORITHM_APPLY_HPP

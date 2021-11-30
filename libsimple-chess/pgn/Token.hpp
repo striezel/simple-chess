@@ -24,10 +24,7 @@
 #include<string>
 #include "TokenType.hpp"
 
-namespace simplechess
-{
-
-namespace pgn
+namespace simplechess::pgn
 {
 
 /** \brief represents a single token in Portable Game Notation
@@ -49,8 +46,6 @@ struct Token
   std::string text; /**< content of the token (if not already defined by type) */
 };
 
-} //namespace
-
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_PGN_TOKEN_HPP

@@ -25,17 +25,14 @@
 #include <vector>
 #include "Token.hpp"
 
-namespace simplechess
-{
-
-namespace pgn
+namespace simplechess::pgn
 {
 
 /** class that generates a vector of tokens from an input file etc. */
 class Tokenizer
 {
   public:
-      /** \brief gets tokens from a string
+      /** \brief Gets tokens from a string.
        *
        * \param tokenString  the string
        * * \param tokens    the tokens in the string
@@ -44,7 +41,7 @@ class Tokenizer
     static bool fromString(const std::string& tokenString, std::vector<Token>& tokens);
 
 
-    /** \brief gets tokens from a file
+    /** \brief Gets tokens from a file.
      *
      * \param fileName  name of the file
      * \param tokens    the tokens in the file
@@ -52,10 +49,8 @@ class Tokenizer
      * Returns false, if an error occurred.
      */
     static bool fromFile(const std::string& fileName, std::vector<Token>& tokens);
-}; //class
+}; // class
 
-} //namespace
-
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_PGN_TOKENIZER_HPP

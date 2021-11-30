@@ -25,18 +25,15 @@
 #include "Token.hpp"
 #include "../data/PortableGameNotation.hpp"
 
-namespace simplechess
+namespace simplechess::pgn
 {
 
-namespace pgn
-{
-
-/** \brief parses Portable Game Notation
+/** \brief Parses Portable Game Notation (PGN).
  */
 class Parser
 {
   public:
-    /** \brief parses a portable game notation from a list of tokens
+    /** \brief Parses a portable game notation from a list of tokens.
      *
      * \param tokens   vector of tokens
      * \param result   resulting PGN
@@ -45,10 +42,8 @@ class Parser
      * The method throws ParserException, if something went wrong.
      */
     static bool parse(const std::vector<Token>& tokens, PortableGameNotation& result);
-}; //class
+}; // class
 
-} //namespace
-
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_PGN_PARSER_HPP

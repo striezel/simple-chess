@@ -25,13 +25,7 @@
 #include <mongo-client/mongo-sync-cursor.h>
 #include "BSON.hpp"
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
+namespace simplechess::db::mongo
 {
 
 class QueryCursor
@@ -59,7 +53,7 @@ class QueryCursor
     QueryCursor(QueryCursor&& other);
 
 
-    /** \brief moves the cursor to the next element
+    /** \brief Moves the cursor to the next element.
      *
      * \return Returns true, if the cursor was moved.
      *         Returns false, if the cursor was not moved or an error occurred.
@@ -67,7 +61,7 @@ class QueryCursor
     bool next();
 
 
-    /** \brief gets the data at the current cursor position
+    /** \brief Gets the data at the current cursor position.
      *
      * \return a BSON object that contains the data
      */
@@ -75,13 +69,8 @@ class QueryCursor
   private:
     mongo_sync_cursor * mCursor; /**< low level cursor handle */
     mongo_packet * mPacket; /**< low level packet related to cursor */
-}; //class
+}; // class
 
-
-} //namespace
-
-} //namespace
-
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_DB_MONGO_LMC_QUERYCURSOR_HPP

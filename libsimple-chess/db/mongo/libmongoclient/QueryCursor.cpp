@@ -21,13 +21,7 @@
 #include "QueryCursor.hpp"
 #include <stdexcept>
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
+namespace simplechess::db::mongo
 {
 
 QueryCursor::QueryCursor(mongo_sync_cursor * cur, mongo_packet* packet)
@@ -67,8 +61,4 @@ BSON QueryCursor::data() const
   return std::move(BSON(b));
 }
 
-} //namespace
-
-} //namespace
-
-} //namespace
+} // namespace

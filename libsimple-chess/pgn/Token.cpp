@@ -20,10 +20,7 @@
 
 #include "Token.hpp"
 
-namespace simplechess
-{
-
-namespace pgn
+namespace simplechess::pgn
 {
 
 Token::Token()
@@ -39,6 +36,4 @@ Token::Token(TokenType _type, const std::string& content)
 {
 }
 
-} //namespace
-
-} //namespace
+} // namespace

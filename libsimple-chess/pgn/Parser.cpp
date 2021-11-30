@@ -23,17 +23,14 @@
 #include "UnconsumedTokensException.hpp"
 #include "../../util/strings.hpp"
 
-namespace simplechess
+namespace simplechess::pgn
 {
 
-namespace pgn
-{
-
-//parses a tag pair
+// parses a tag pair
 bool TagPair(const std::vector<Token>& tokens, unsigned int& idx, PortableGameNotation& result)
 {
   const auto length = tokens.size();
-  //tag pair consists of four tokens
+  // tag pair consists of four tokens
   if (idx + 3 >= length)
     return false;
   if ((tokens[idx].type == TokenType::LeftBracket)
@@ -52,7 +49,7 @@ bool TagPair(const std::vector<Token>& tokens, unsigned int& idx, PortableGameNo
 bool FullMove(const std::vector<Token>& tokens, unsigned int& idx, PortableGameNotation& result)
 {
   const auto length = tokens.size();
-  //full move consists of three tokens
+  // full move consists of three tokens
   if (idx + 2 >= length)
     return false;
   if ((tokens[idx].type == TokenType::MoveNumber)
@@ -65,10 +62,10 @@ bool FullMove(const std::vector<Token>& tokens, unsigned int& idx, PortableGameN
     if (result.hasMove(moveNumber))
       return false;
     HalfMove whiteMove;
-    //placeholder move
+    // placeholder move
     if ((tokens[idx+1].text == "..") || (tokens[idx+1].text == "..."))
       whiteMove = HalfMove();
-    //"normal" move
+    // "normal" move
     else if (!whiteMove.fromPGN(tokens[idx+1].text))
       return false;
     HalfMove blackMove;
@@ -85,7 +82,7 @@ bool FullMove(const std::vector<Token>& tokens, unsigned int& idx, PortableGameN
 bool FinalMove(const std::vector<Token>& tokens, unsigned int& idx, PortableGameNotation& result)
 {
   const auto length = tokens.size();
-  //full move consists of three tokens
+  // full move consists of three tokens
   if (idx + 2 >= length)
     return false;
   if ((tokens[idx].type == TokenType::MoveNumber)
@@ -98,10 +95,10 @@ bool FinalMove(const std::vector<Token>& tokens, unsigned int& idx, PortableGame
     if (result.hasMove(moveNumber))
       return false;
     HalfMove whiteMove;
-    //placeholder move
+    // placeholder move
     if ((tokens[idx+1].text == "..") || (tokens[idx+1].text == "..."))
       whiteMove = HalfMove();
-    //"normal" move
+    // "normal" move
     else if (!whiteMove.fromPGN(tokens[idx+1].text))
       return false;
     result.setMove(moveNumber, whiteMove, HalfMove());
@@ -125,13 +122,13 @@ bool Parser::parse(const std::vector<Token>& tokens, PortableGameNotation& resul
   }
   result = PortableGameNotation();
   unsigned int nextTokenIdx = 0;
-  //parse tag pairs
+  // parse tag pairs
   unsigned int parsedTagPairs = 0;
   while (TagPair(tokens, nextTokenIdx, result))
   {
     ++parsedTagPairs;
   }
-  //There should be at least one token pair (or better: 7 or more).
+  // There should be at least one token pair (or better: 7 or more).
   if (parsedTagPairs == 0)
     throw ParserException("There are no tag pairs to parse!");
 
@@ -144,17 +141,15 @@ bool Parser::parse(const std::vector<Token>& tokens, PortableGameNotation& resul
   {
     ++parsedMoves;
   }
-  //At least one move should have been parsed.
+  // At least one move should have been parsed.
   if (parsedMoves == 0)
     throw ParserException("There are no moves to parse!");
-  //There should be no more tokens.
+  // There should be no more tokens.
   if (nextTokenIdx < tokens.size())
     throw UnconsumedTokensException(nextTokenIdx, tokens.size(),
               std::vector<Token>(tokens.begin() + nextTokenIdx, tokens.end()));
-  //All tokens have been consumed.
+  // All tokens have been consumed.
   return true;
 }
 
-} //namespace
-
-} //namespace
+} // namespace

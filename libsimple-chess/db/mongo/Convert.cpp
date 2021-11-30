@@ -21,18 +21,12 @@
 #include "Convert.hpp"
 #include <stdexcept>
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
+namespace simplechess::db::mongo
 {
 
 Piece Convert::toPiece(const std::string& piece, const std::string& colour)
 {
-  //piece type
+  // piece type
   PieceType pt = PieceType::none;
   if (piece == "empty")
     pt = PieceType::none;
@@ -48,9 +42,9 @@ Piece Convert::toPiece(const std::string& piece, const std::string& colour)
     pt = PieceType::king;
   else if (piece == "queen")
     pt = PieceType::queen;
-  //not a valid string, return inacceptable piece
+  // not a valid string, return inacceptable piece
   else return Piece(Colour::white, PieceType::none);
-  //colour
+  // colour
   Colour c;
   if (colour == "empty")
     c = Colour::none;
@@ -58,7 +52,7 @@ Piece Convert::toPiece(const std::string& piece, const std::string& colour)
     c = Colour::white;
   else if (colour == "black")
     c = Colour::black;
-  //not a valid string, return inacceptable piece
+  // not a valid string, return inacceptable piece
   else return Piece(Colour::none, PieceType::king);
 
   return Piece(c, pt);
@@ -85,7 +79,7 @@ std::string Convert::colourToMongoDbString(const Colour col)
          return "black";
     default:
          throw std::runtime_error("Invalid colour value given!");
-  } //swi
+  }
 }
 
 std::string Convert::pieceToString(const PieceType pt)
@@ -108,11 +102,7 @@ std::string Convert::pieceToString(const PieceType pt)
          return "queen";
     default:
          throw std::runtime_error("Invalid piece type value given!");
-  } //swi
+  } // swi
 }
 
-} //namespace
-
-} //namespace
-
-} //namespace
+} // namespace

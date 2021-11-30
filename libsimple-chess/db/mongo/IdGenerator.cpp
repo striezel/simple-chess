@@ -22,13 +22,7 @@
 #include <algorithm>
 #include <random>
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
+namespace simplechess::db::mongo
 {
 
 std::string IdGenerator::generate()
@@ -55,9 +49,5 @@ std::string IdGenerator::generate(const std::vector<std::string>& existingIds)
   }
   return id;
 }
-
-} // namespace
-
-} // namespace
 
 } // namespace

@@ -27,13 +27,7 @@
 #include "BSON.hpp"
 #include "QueryCursor.hpp"
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
+namespace simplechess::db::mongo
 {
 
 class Connection
@@ -103,12 +97,8 @@ class Connection
     bool update(const std::string& ns, const BSON& selector, const BSON& update);
   private:
     mongo_sync_connection * conn; /**< MongoDB connection handle */
-}; //class
+}; // class
 
-} //namespace
-
-} //namespace
-
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_DB_MONGO_LMC_CONNECTION_HPP

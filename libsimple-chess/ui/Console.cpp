@@ -21,10 +21,7 @@
 #include "Console.hpp"
 #include <iostream>
 
-namespace simplechess
-{
-
-namespace ui
+namespace simplechess::ui
 {
 
 void Console::showBoard(const Board & board)
@@ -101,7 +98,5 @@ void Console::showBoard(const Board & board)
     std::cout << "\n" << rowSeparator << "\n";
   } // for r
 }
-
-} // namespace
 
 } // namespace

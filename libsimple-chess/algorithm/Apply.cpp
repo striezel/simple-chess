@@ -22,10 +22,7 @@
 #include "../data/ForsythEdwardsNotation.hpp"
 #include "../rules/Moves.hpp"
 
-namespace simplechess
-{
-
-namespace algorithm
+namespace simplechess::algorithm
 {
 
 bool applyMove(Board& board, const HalfMove& hMove, const Colour toMove)
@@ -164,7 +161,5 @@ bool checkPortableGameNotation(const PortableGameNotation& pgn)
   // All seems to be OK.
   return true;
 }
-
-} // namespace
 
 } // namespace

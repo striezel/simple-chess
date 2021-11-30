@@ -24,16 +24,7 @@
 #include "../Server.hpp"
 #include "Connection.hpp"
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
-{
-
-namespace libmongoclient
+namespace simplechess::db::mongo::libmongoclient
 {
 
 /** Class for connecting to a MongoDB server with libmongoclient. */
@@ -160,12 +151,6 @@ class Server : public simplechess::db::mongo::Server
      */
     bool updateBoardFields(const std::string& id, const Board& board);
 }; // class
-
-} // namespace
-
-} // namespace
-
-} // namespace
 
 } // namespace
 

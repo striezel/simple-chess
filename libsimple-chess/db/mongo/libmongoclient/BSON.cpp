@@ -22,13 +22,7 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
+namespace simplechess::db::mongo
 {
 
 BSON::BSON()
@@ -297,7 +291,7 @@ bool BSON::getObject(const std::string& key, BSON& valueOut) const
   }
   bson_cursor_free(bc);
   bc = nullptr;
-  object = nullptr; //Don't free object, BSON class takes care of it.
+  object = nullptr; // Don't free object, BSON class takes care of it.
   return success;
 }
 
@@ -306,8 +300,4 @@ bson* BSON::raw() const
   return mBson;
 }
 
-} //namespace
-
-} //namespace
-
-} //namespace
+} // namespace

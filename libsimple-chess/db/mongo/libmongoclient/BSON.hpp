@@ -29,16 +29,10 @@
 #include <mongo-client/bson.h>
 #include <mongo-client/mongo.h>
 
-namespace simplechess
+namespace simplechess::db::mongo
 {
 
-namespace db
-{
-
-namespace mongo
-{
-
-/** \brief represents a BSON (binary JSON) object
+/** \brief Represents a BSON (binary JSON) object.
  */
 class BSON
 {
@@ -241,12 +235,8 @@ class BSON
   private:
     bson* mBson; /**< BSON object pointer */
     bool mFinished; /**< whether the object is finished */
-}; //class
+}; // class
 
-} //namespace
-
-} //namespace
-
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_DB_MONGO_LMC_BSON_HPP

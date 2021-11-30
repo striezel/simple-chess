@@ -25,20 +25,14 @@
 #include "../../data/Field.hpp"
 #include "../../data/Piece.hpp"
 
-namespace simplechess
-{
-
-namespace db
-{
-
-namespace mongo
+namespace simplechess::db::mongo
 {
 
 /** class that handles conversion between MongoDB values and C++ values */
 class Convert
 {
   public:
-    /** \brief converts a pair of piece and colour strings from MongoDB to the corresponding piece class
+    /** \brief Converts a pair of piece and colour strings from MongoDB to the corresponding piece class.
      *
      * \param piece  the piece value from MongoDB
      * \param colour the colour value from MongoDB
@@ -49,7 +43,7 @@ class Convert
     static Piece toPiece(const std::string& piece, const std::string& colour);
 
 
-    /** \brief converts a column row pair from MongoDB to the corresponding field
+    /** \brief Converts a column row pair from MongoDB to the corresponding field.
      *
      * \param column  the column (e.g. "a", "b", "c", etc.)
      * \param row     the row number (from [1;8])
@@ -59,7 +53,7 @@ class Convert
     static Field toField(const std::string& column, const int row);
 
 
-    /** \brief converts a colour value to the corresponding string for MongoDB
+    /** \brief Converts a colour value to the corresponding string for MongoDB.
      *
      * \param col  the colour, must not be Colour::none
      * \return Returns the string representation of the colour.
@@ -67,18 +61,14 @@ class Convert
     static std::string colourToMongoDbString(const Colour col);
 
 
-    /** \brief translates a piece type to the corresponding MongoDB string
+    /** \brief Translates a piece type to the corresponding MongoDB string.
      *
      * \param pt   the piece type
      * \return Returns a string representing the piece type for MongoDB.
      */
     static std::string pieceToString(const PieceType pt);
-}; //class
+}; // class
 
-} //namespace
-
-} //namespace
-
-} //namespace
+} // namespace
 
 #endif // SIMPLECHESS_DB_MONGO_CONVERT_HPP

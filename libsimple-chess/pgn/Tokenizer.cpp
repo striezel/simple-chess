@@ -23,10 +23,7 @@
 #include <fstream>
 #include "../../util/strings.hpp"
 
-namespace simplechess
-{
-
-namespace pgn
+namespace simplechess::pgn
 {
 
 bool Tokenizer::fromString(const std::string& tokenString, std::vector<Token>& tokens)
@@ -42,19 +39,19 @@ bool Tokenizer::fromString(const std::string& tokenString, std::vector<Token>& t
     const bool nextCouldBeHalfMove = !tokens.empty()
         && ((tokens.back().type == TokenType::MoveNumber) || (tokens.back().type == TokenType::HalfMove));
 
-    //left bracket
+    // left bracket
     if (workString[0] == '[')
     {
       tokens.push_back(Token(TokenType::LeftBracket, "["));
       workString.erase(0, 1);
     }
-    //right bracket
+    // right bracket
     else if (workString[0] == ']')
     {
       tokens.push_back(Token(TokenType::RightBracket, "]"));
       workString.erase(0, 1);
     }
-    //string
+    // string
     else if (workString[0] == '"')
     {
       const auto pos = workString.find('"', 1);
@@ -66,7 +63,7 @@ bool Tokenizer::fromString(const std::string& tokenString, std::vector<Token>& t
       tokens.push_back(Token(TokenType::String, workString.substr(1, pos - 1)));
       workString.erase(0, pos + 1);
     } //else (string)
-    //commentary
+    // commentary
     else if (workString[0] == '%')
     {
       const auto pos = workString.find('\n', 1);
@@ -236,6 +233,4 @@ bool Tokenizer::fromFile(const std::string& fileName, std::vector<Token>& tokens
   return !tokens.empty();
 }
 
-} //namespace
-
-} //namespace
+} // namespace

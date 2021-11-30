@@ -24,10 +24,7 @@
 #include <exception>
 #include <string>
 
-namespace simplechess
-{
-
-namespace pgn
+namespace simplechess::pgn
 {
 
 /** Generic class for PGN parser exceptions. */
@@ -49,8 +46,6 @@ class ParserException: public std::exception
   private:
     std::string exceptMessage; /**< exception message */
 };
-
-} // namespace
 
 } // namespace
 
