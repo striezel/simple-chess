@@ -19,6 +19,7 @@
 */
 
 #include "HalfMove.hpp"
+#include <regex>
 
 namespace simplechess
 {

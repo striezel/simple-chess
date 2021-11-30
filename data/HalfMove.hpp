@@ -21,7 +21,6 @@
 #ifndef SIMPLECHESS_HALFMOVE_HPP
 #define SIMPLECHESS_HALFMOVE_HPP
 
-#include <regex>
 #include "Field.hpp"
 #include "Piece.hpp"
 #include "../pgn/OriginType.hpp"
