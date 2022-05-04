@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2018, 2020  Dirk Stolle
+    Copyright (C) 2018, 2020, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ class CastlingEvaluator: public Evaluator
      * Positive values means that white has an advantage, negative values
      * indicate that black has an advantage. Zero means both players are even.
      */
-    virtual int score(const Board& board) const;
+    int score(const Board& board) const override;
 
 
     /** \brief Gets the name of the evaluator.
@@ -57,7 +57,7 @@ class CastlingEvaluator: public Evaluator
      * \return Returns the name of the evaluator.
      * May contain additional information about the evaluator.
      */
-    virtual std::string name() const noexcept;
+    std::string name() const noexcept override;
   private:
     int mCastlingValue; /**< bonus / penalty for castling / not castling in centipawns */
 }; // class

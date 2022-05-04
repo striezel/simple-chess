@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ class Server : public simplechess::db::mongo::Server
      * \return Returns true, if retrieval was successful.
      *         Returns false otherwise.
      */
-    virtual bool boardList(std::vector<std::string>& boardIds);
+    bool boardList(std::vector<std::string>& boardIds) final;
 
 
     /** \brief Gets a single chess board from the database.
@@ -61,7 +61,7 @@ class Server : public simplechess::db::mongo::Server
      * \return Returns true, if retrieval was successful.
      *         Returns false, if an error occurred.
      */
-    virtual bool getBoard(const std::string& id, Board& board);
+    bool getBoard(const std::string& id, Board& board) final;
 
 
     /** \brief Inserts a chess board into the database.
@@ -70,7 +70,7 @@ class Server : public simplechess::db::mongo::Server
      * \return Returns the ID of the new board, if successful.
      *         Returns an empty string, if an error occurred.
      */
-    virtual std::string insertBoard(const Board& board);
+    std::string insertBoard(const Board& board) final;
 
 
     /** \brief Updates a single chess board in the database.
@@ -80,7 +80,7 @@ class Server : public simplechess::db::mongo::Server
      * \return Returns true, if database update was successful.
      *         Returns false, if an error occurred.
      */
-    virtual bool updateBoard(const std::string& id, const Board& board);
+    bool updateBoard(const std::string& id, const Board& board) final;
 
 
     /** \brief Updates a single field on a chess board in the database.
@@ -91,7 +91,7 @@ class Server : public simplechess::db::mongo::Server
      * \return Returns true, if database update was successful.
      *         Returns false, if an error occurred.
      */
-    virtual bool updateFieldOnBoard(const std::string& id, const Board& board, const Field f);
+    bool updateFieldOnBoard(const std::string& id, const Board& board, const Field f) final;
   private:
     Connection conn; /**< server connection */
 
