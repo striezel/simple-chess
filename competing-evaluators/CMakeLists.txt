@@ -37,13 +37,15 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clan
     else()
         add_definitions (-O3)
     endif()
-endif ()
 
-set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
+    set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
+endif ()
 
 add_executable(competing-evaluators ${competing_evaluators_sources})
 
-target_link_libraries (competing-evaluators "pthread")
+if (UNIX)
+  target_link_libraries (competing-evaluators "pthread")
+endif (UNIX)
 
 # create git-related constants
 # -- get the current commit hash
