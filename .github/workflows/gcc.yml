@@ -1,9 +1,9 @@
-name: GitHub CI with Clang 8, 9, 10
+name: GCC
 
 on: push
 
 jobs:
-  build_ubuntu_clang:
+  ubuntu_gcc:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -14,12 +14,12 @@ jobs:
       - name: Install Debian packages
         run: |
           sudo apt-get update
-          sudo apt-get install -y catch cmake clang-${{ matrix.version }} git libglib2.0-dev libmongo-client-dev pkg-config
-      - name: Build with Clang ${{ matrix.version }}
+          sudo apt-get install -y catch cmake g++-${{ matrix.version }} git libglib2.0-dev libmongo-client-dev pkg-config
+      - name: Build with GNU GCC ${{ matrix.version }}
         run: |
-          export CXX=clang++-${{ matrix.version }}
-          export CC=clang-${{ matrix.version }}
-          cd $GITHUB_WORKSPACE
+          export CXX=g++-${{ matrix.version }}
+          export CC=gcc-${{ matrix.version }}
+          cd $GITHUB_WORKSPACE && pwd
           mkdir build
           cd build
           cmake ../
