@@ -23,6 +23,18 @@
 #include "../../../libsimple-chess/data/Board.hpp"
 #include "../../../libsimple-chess/data/ForsythEdwardsNotation.hpp"
 
+TEST_CASE("Board constructor")
+{
+  using namespace simplechess;
+  Board board;
+
+  const Piece empty { Colour::none, PieceType::none };
+  for (int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
+  {
+    REQUIRE( board.element(static_cast<Field>(i)) == empty );
+  }
+}
+
 TEST_CASE("Board::fromFEN() with default start position")
 {
   using namespace simplechess;

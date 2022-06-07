@@ -34,7 +34,7 @@ namespace simplechess
  * \return Returns the character for the next column.
  *         If the given column is out of range, the function will return 'a'.
  */
-char nextColumn(const char column)
+constexpr char nextColumn(const char column)
 {
   char nextCol = static_cast<char>(column + 1);
   if ((nextCol > 'h') || (nextCol < 'a'))
@@ -54,10 +54,7 @@ Board::Board()
   mBlackInCheck(false),
   mWhiteInCheck(false)
 {
-  for(int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
-  {
-    mFields[i] = Piece();
-  }
+  mFields.fill(Piece());
 }
 
 const Piece& Board::element(const Field f) const
