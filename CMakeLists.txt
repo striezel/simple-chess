@@ -44,5 +44,7 @@ add_subdirectory (competing-evaluators)
 # Recurse into subdirectory for speedbench.
 add_subdirectory (speedbench)
 
-# Recurse into subdirectory for tests.
-add_subdirectory (tests)
+if (NOT MSVC)
+  # Recurse into subdirectory for tests.
+  add_subdirectory (tests)
+endif (NOT MSVC)

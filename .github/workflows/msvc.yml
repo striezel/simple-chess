@@ -1,0 +1,27 @@
+name: MSVC
+
+on: push
+
+jobs:
+  windows_msvc:
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [2019, 2022]
+    runs-on: windows-${{ matrix.version }}
+    steps:
+      # Checks-out the repository under $GITHUB_WORKSPACE.
+      - uses: actions/checkout@v3
+      - name: Build with Visual Studio ${{ matrix.version }}
+        run: |
+          cd "%GITHUB_WORKSPACE%"
+          md build
+          cd build
+          cmake ..
+          cmake --build .
+        shell: cmd
+      - name: Tests
+        run: |
+          cd "%GITHUB_WORKSPACE%\build"
+          ctest -C Debug -V
+        shell: cmd
