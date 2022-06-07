@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2021  Dirk Stolle
+    Copyright (C) 2016, 2017, 2021, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,23 +22,6 @@
 
 namespace simplechess
 {
-
-Piece::Piece()
-: data((static_cast<int>(Colour::none) << 4) + static_cast<int>(PieceType::none))
-{
-}
-
-Piece::Piece(const Colour c, const PieceType pt)
-: data((static_cast<int>(c) << 4) + static_cast<int>(pt))
-{
-}
-
-bool Piece::acceptable() const
-{
-  // Acceptable pieces are the ones where either both colour and piece type are
-  // none, or where both colour and piece type are not none.
-  return ((colour() == Colour::none) == (piece() == PieceType::none));
-}
 
 bool Piece::operator==(const Piece& other) const
 {

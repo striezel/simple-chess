@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2021  Dirk Stolle
+    Copyright (C) 2016, 2017, 2021, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,26 +37,32 @@ namespace simplechess
   struct Piece
   {
     /**< colour of the piece */
-    inline Colour colour() const
+    constexpr Colour colour() const
     {
       return static_cast<Colour>(data >> 4);
     }
 
     /**< type of the piece */
-    inline PieceType piece() const
+    constexpr PieceType piece() const
     {
       return static_cast<PieceType>(data & 0x0f);
     }
 
-    /** \brief default constructor */
-    Piece();
+    /** \brief Constructs an "empty" piece. */
+    constexpr Piece()
+    : data((static_cast<int>(Colour::none) << 4) + static_cast<int>(PieceType::none))
+    {
+    }
 
     /** \brief parameterized constructor
      *
      * \param c colour of the piece
      * \param pt type of the piece
      */
-    Piece(const Colour c, const PieceType pt);
+    constexpr Piece(const Colour c, const PieceType pt)
+    : data((static_cast<int>(c) << 4) + static_cast<int>(pt))
+    {
+    }
 
 
     /** \brief Checks whether the struct's content is a sensible, acceptable piece.
@@ -64,7 +70,12 @@ namespace simplechess
      * \return Returns true, if the content is a sensible, acceptable piece.
      *         Returns false otherwise.
      */
-    bool acceptable() const;
+    constexpr bool acceptable() const
+    {
+      // Acceptable pieces are the ones where either both colour and piece type are
+      // none, or where both colour and piece type are not none.
+      return ((colour() == Colour::none) == (piece() == PieceType::none));
+    }
 
 
     /** equality operator for Piece structures
