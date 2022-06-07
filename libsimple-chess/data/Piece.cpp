@@ -33,19 +33,9 @@ Piece::Piece(const Colour c, const PieceType pt)
 {
 }
 
-/*Colour Piece::colour() const
-{
-  return static_cast<Colour>(data >> 4);
-}
-
-PieceType Piece::piece() const
-{
-  return static_cast<PieceType>(data & 0x0f);
-}*/
-
 bool Piece::acceptable() const
 {
-  //Acceptable pieces are the ones where either both colour and piece type are
+  // Acceptable pieces are the ones where either both colour and piece type are
   // none, or where both colour and piece type are not none.
   return ((colour() == Colour::none) == (piece() == PieceType::none));
 }
@@ -60,7 +50,7 @@ bool Piece::operator!=(const Piece& other) const
   return (data != other.data);
 }
 
-} //namespace
+} // namespace
 
 
 std::ostream& operator<<(std::ostream& str, const simplechess::Colour& c)
@@ -76,7 +66,7 @@ std::ostream& operator<<(std::ostream& str, const simplechess::Colour& c)
     default:
          str << "none";
          break;
-  } //switch
+  }
   return str;
 }
 
@@ -114,4 +104,3 @@ std::ostream& operator<<(std::ostream& str, const simplechess::Piece& p)
   str << "Piece(" << p.colour() << " " << p.piece() << ")";
   return str;
 }
-

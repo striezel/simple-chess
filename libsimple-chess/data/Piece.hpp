@@ -26,67 +26,67 @@
 
 namespace simplechess
 {
-   /** enumeration type for players / colours */
-   enum class Colour : std::uint8_t { none, white, black };
+  /** enumeration type for players / colours */
+  enum class Colour : std::uint8_t { none, white, black };
 
-   /** enumeration type for types of pieces */
-   enum class PieceType : std::uint8_t { king, queen, bishop, knight, rook, pawn, none };
+  /** enumeration type for types of pieces */
+  enum class PieceType : std::uint8_t { king, queen, bishop, knight, rook, pawn, none };
 
 
-   /** struct that represents a player piece */
-   struct Piece
-   {
-     /**< colour of the piece */
-     inline Colour colour() const
-     {
+  /** struct that represents a player piece */
+  struct Piece
+  {
+    /**< colour of the piece */
+    inline Colour colour() const
+    {
       return static_cast<Colour>(data >> 4);
-     }
+    }
 
-     /**< type of the piece */
-     inline PieceType piece() const
-     {
-       return static_cast<PieceType>(data & 0x0f);
-     }
+    /**< type of the piece */
+    inline PieceType piece() const
+    {
+      return static_cast<PieceType>(data & 0x0f);
+    }
 
-     /** \brief default constructor */
-     Piece();
+    /** \brief default constructor */
+    Piece();
 
-     /** \brief parameterized constructor
-      *
-      * \param c colour of the piece
-      * \param pt type of the piece
-      */
-     Piece(const Colour c, const PieceType pt);
-
-
-     /** \brief Checks whether the struct's content is a sensible, acceptable piece.
-      *
-      * \return Returns true, if the content is a sensible, acceptable piece.
-      *         Returns false otherwise.
-      */
-     bool acceptable() const;
+    /** \brief parameterized constructor
+     *
+     * \param c colour of the piece
+     * \param pt type of the piece
+     */
+    Piece(const Colour c, const PieceType pt);
 
 
-     /** equality operator for Piece structures
-      *
-      * \param other  other piece against which this piece is compared
-      * \return Returns true, if both pieces are equal.
-      *         Returns false otherwise.
-      */
-     bool operator==(const Piece& other) const;
+    /** \brief Checks whether the struct's content is a sensible, acceptable piece.
+     *
+     * \return Returns true, if the content is a sensible, acceptable piece.
+     *         Returns false otherwise.
+     */
+    bool acceptable() const;
 
 
-     /** inequality operator for Piece structures
-      *
-      * \param other  other piece against which this piece is compared
-      * \return Returns true, if both pieces are NOT equal.
-      *         Returns false otherwise.
-      */
-     bool operator!=(const Piece& other) const;
-   private:
-     std::uint8_t data;
-   }; //struct
-} //namespace
+    /** equality operator for Piece structures
+     *
+     * \param other  other piece against which this piece is compared
+     * \return Returns true, if both pieces are equal.
+     *         Returns false otherwise.
+     */
+    bool operator==(const Piece& other) const;
+
+
+    /** inequality operator for Piece structures
+     *
+     * \param other  other piece against which this piece is compared
+     * \return Returns true, if both pieces are NOT equal.
+     *         Returns false otherwise.
+     */
+    bool operator!=(const Piece& other) const;
+  private:
+    std::uint8_t data;
+  }; // struct
+} // namespace
 
 
 
