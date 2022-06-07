@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018, 2021  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2021, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 namespace simplechess
 {
 
-int signum(const int val)
+constexpr int signum(const int val)
 {
   return (0 < val) - (val < 0);
 }
@@ -38,14 +38,14 @@ bool isEmptyStraightOrDiagonal(const Board& board, const Field from, const Field
   int curCol = column(from) + signum(colDiff);
   while ((curRow != row(to)) || (curCol != column(to)))
   {
-    //check if field at current "coordinates" is empty - if not, return
+    // check if field at current "coordinates" is empty - if not, return
     if (board.element(toField(curCol, curRow)).piece() != PieceType::none)
       return false;
-    //move to next field
+    // move to next field
     curRow = curRow + signum(rowDiff);
     curCol = curCol + signum(colDiff);
-  } //while
-  //All fields empty, all OK.
+  } // while
+  // All fields empty, all OK.
   return true;
 }
 
@@ -57,7 +57,7 @@ bool isCastlingAttemptAllowed(const Board& board, const Field from, const Field 
   {
     if ((to == Field::c1) && (dest.piece() == PieceType::none))
     {
-      //fields b1, c1 and d1 must be empty
+      // fields b1, c1 and d1 must be empty
       bool empty = (board.element(Field::b1).piece() == PieceType::none)
         && (board.element(Field::c1).piece() == PieceType::none)
         && (board.element(Field::d1).piece() == PieceType::none);
@@ -65,18 +65,18 @@ bool isCastlingAttemptAllowed(const Board& board, const Field from, const Field 
     }
     if ((to == Field::g1) && (dest.piece() == PieceType::none))
     {
-      //fields f1 and g1 must be empty
+      // fields f1 and g1 must be empty
       return ((board.element(Field::f1).piece() == PieceType::none)
         && (board.element(Field::g1).piece() == PieceType::none)
-      //... and castling still must be possible
+      // ... and castling still must be possible
         && board.castling().white_kingside);
     }
-  } //if white king at initial position
+  } // if white king at initial position
   else if ((start.colour() == Colour::black) && (from == Field::e8))
   {
     if ((to == Field::c8) && (dest.piece() == PieceType::none))
     {
-      //fields b8, c8 and d8 must be empty
+      // fields b8, c8 and d8 must be empty
       bool empty = (board.element(Field::b8).piece() == PieceType::none)
         && (board.element(Field::c8).piece() == PieceType::none)
         && (board.element(Field::d8).piece() == PieceType::none);
@@ -84,13 +84,13 @@ bool isCastlingAttemptAllowed(const Board& board, const Field from, const Field 
     }
     if ((to == Field::g8) && (dest.piece() == PieceType::none))
     {
-      //fields f8 and g8 must be empty
+      // fields f8 and g8 must be empty
       return ((board.element(Field::f8).piece() == PieceType::none)
         && (board.element(Field::g8).piece() == PieceType::none)
       // ... and castling still must be possible
         && board.castling().black_kingside);
     }
-  } //if black king at initial position
+  } // if black king at initial position
   return false;
 }
 
@@ -98,7 +98,7 @@ bool allowedPatternPawnBlack(const Board& board, const Field from, const Field t
 {
   const int rowDiff = row(from) - row(to);
   const int colDiff = std::abs(column(from) - column(to));
-  //If dest. is empty, move may only be one step ahead; or two if in initial position.
+  // If dest. is empty, move may only be one step ahead; or two if in initial position.
   const Piece & destination = board.element(to);
   if (destination.colour() == Colour::none)
   {
@@ -120,7 +120,7 @@ bool allowedPatternPawnWhite(const Board& board, const Field from, const Field t
 {
   const int rowDiff = row(to) - row(from);
   const int colDiff = std::abs(column(from) - column(to));
-  //If dest. is empty, move may only be one step ahead; or two if in initial position.
+  // If dest. is empty, move may only be one step ahead; or two if in initial position.
   const Piece & destination = board.element(to);
   if (destination.colour() == Colour::none)
   {
@@ -140,11 +140,11 @@ bool allowedPatternPawnWhite(const Board& board, const Field from, const Field t
 
 bool allowedPatternRook(const Board& board, const Field from, const Field to)
 {
-  //Rook moves horizontally or vertically only, i.e. either column or row
-  //must be identical.
+  // Rook moves horizontally or vertically only, i.e. either column or row
+  // must be identical.
   if ((column(from) == column(to)) || (row(from) == row(to)))
   {
-    //Move is allowed, if fields between start and end are empty.
+    // Move is allowed, if fields between start and end are empty.
     return isEmptyStraightOrDiagonal(board, from, to);
   }
   // Does not match the rook move pattern, therefore not allowed.
@@ -239,7 +239,7 @@ bool Moves::isAllowedPattern(const Board& board, const Field from, const Field t
     case PieceType::pawn:
          if (start.colour() == Colour::white)
            return allowedPatternPawnWhite(board, from, to);
-         //Must be a black pawn then.
+         // Must be a black pawn then.
          else
            return allowedPatternPawnBlack(board, from, to);
     case PieceType::rook:
@@ -271,10 +271,10 @@ void Moves::sanitizePromotion(PieceType& promoteTo)
     case PieceType::rook:
          return;
     default:
-         //Some other piece - change to queen.
+         // Some other piece - change to queen.
          promoteTo = PieceType::queen;
          break;
-  } // switch
+  }
 }
 
 bool Moves::isPromotion(const Board& board, const Field from, const Field to)
