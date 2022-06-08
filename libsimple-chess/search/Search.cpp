@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2021  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -105,7 +105,7 @@ std::tuple<Field, Field, PieceType> Search::bestMoveTwoPly() const
   } // for
 
   // Search for move with worst possible best reply of opponent.
-  std::map<int, int> idxWithScore;
+  std::map<std::size_t, int> idxWithScore;
   for (std::size_t i = 0; i < root.children.size(); ++i)
   {
     // Use first possible reply as initial value. (At least one reply must
@@ -135,7 +135,7 @@ std::tuple<Field, Field, PieceType> Search::bestMoveTwoPly() const
   } // for
 
   // Find best (for current player).
-  int bestIdx = 0;
+  std::size_t bestIdx = 0;
   if (root.board.toMove() == Colour::black)
   {
     for (std::size_t i = 1; i < root.children.size(); ++i)
