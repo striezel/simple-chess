@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,27 +19,26 @@
 */
 
 #include "UnconsumedTokensException.hpp"
-#include "../../util/strings.hpp"
 
 namespace simplechess::pgn
 {
 
-UnconsumedTokensException::UnconsumedTokensException(const unsigned int _nextIdx, const unsigned int tokenSize, const std::vector<Token>& leftOverTokens)
+UnconsumedTokensException::UnconsumedTokensException(const std::size_t _nextIdx, const std::size_t tokenSize, const std::vector<Token>& leftOverTokens)
 : ParserException("Not all tokens have been consumed! Next index is "
-      + util::intToString(_nextIdx) + ", but there are "
-      + util::intToString(tokenSize) + " tokens in total."),
+      + std::to_string(_nextIdx) + ", but there are "
+      + std::to_string(tokenSize) + " tokens in total."),
   nextIdx(_nextIdx),
   totalSize(tokenSize),
   remainingTokens(leftOverTokens)
 {
 }
 
-unsigned int UnconsumedTokensException::nextIndex() const
+std::size_t UnconsumedTokensException::nextIndex() const
 {
   return nextIdx;
 }
 
-unsigned int UnconsumedTokensException::totalTokenCount() const
+std::size_t UnconsumedTokensException::totalTokenCount() const
 {
   return totalSize;
 }

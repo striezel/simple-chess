@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018, 2021  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2021, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 */
 
 #include "ForsythEdwardsNotation.hpp"
-#include "../../util/strings.hpp"
 
 namespace simplechess
 {
@@ -42,7 +41,7 @@ std::string ForsythEdwardsNotation::fromBoard(const Board & board)
         // First, add empty count, if any.
         if (emptyCount > 0)
         {
-          fenString = fenString + util::intToString(emptyCount);
+          fenString = fenString + std::to_string(emptyCount);
           emptyCount = 0;
         }
         // now add the real thing
@@ -109,7 +108,7 @@ std::string ForsythEdwardsNotation::fromBoard(const Board & board)
     // First, add empty count, if any.
     if (emptyCount > 0)
     {
-      fenString = fenString + util::intToString(emptyCount);
+      fenString = fenString + std::to_string(emptyCount);
       emptyCount = 0;
     }
     // add slash - except after last row
@@ -136,9 +135,9 @@ std::string ForsythEdwardsNotation::fromBoard(const Board & board)
   if (ep == Field::none)
     fenString = fenString + " -";
   else
-    fenString = fenString + " " + column(ep) + util::intToString(row(ep));
+    fenString = fenString + " " + column(ep) + std::to_string(row(ep));
   // number of half moves under 50 move rule
-  fenString += (" " + util::intToString(board.halfmovesFifty()));
+  fenString += (" " + std::to_string(board.halfmovesFifty()));
   // Return here, because other data is not implemented yet.
   return fenString;
 }

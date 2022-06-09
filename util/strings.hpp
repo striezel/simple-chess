@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,10 +24,7 @@
 #include <string>
 #include <vector>
 
-namespace simplechess
-{
-
-namespace util
+namespace simplechess::util
 {
 
 /** \brief Splits a string into several strings, using the given separator.
@@ -37,14 +34,6 @@ namespace util
  * \return Returns a vector of strings, containing the split strings.
  */
 std::vector<std::string> split(std::string line, const char separator = ' ');
-
-
-/** \brief Gets the string representation of an integer value.
- *
- * \param value   integer value
- * \return Returns a string containing the given integer.
- */
-std::string intToString(const int value);
 
 
 /** \brief Tries to convert the string representation of an integer number into
@@ -64,8 +53,6 @@ bool stringToInt(const std::string& str, int& value);
  * \remarks The function works in place, i.e. it modifies the string directly.
  */
 void trimLeft(std::string& str1);
-
-} // namespace
 
 } // namespace
 

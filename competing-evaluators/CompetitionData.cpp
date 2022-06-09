@@ -43,16 +43,17 @@ CompetitionData::CompetitionData(const std::vector<std::string>& allowedEvaluato
 
 std::vector<std::unique_ptr<Evaluator>> CompetitionData::createEvaluators(const std::vector<std::string>& allowedEvaluators)
 {
-  const unsigned int distinctCount = allowedEvaluators.size();
-  const unsigned int totalCombinations = 1 << allowedEvaluators.size();
+  using vecsize_t = std::vector<std::string>::size_type;
+  const vecsize_t distinctCount = allowedEvaluators.size();
+  const vecsize_t totalCombinations = static_cast<vecsize_t>(1) << allowedEvaluators.size();
   std::vector<std::unique_ptr<Evaluator>> result;
   result.reserve(totalCombinations - 1);
-  for (unsigned int i = 1; i < totalCombinations; ++i)
+  for (vecsize_t i = 1; i < totalCombinations; ++i)
   {
     std::string evals;
-    for (unsigned int j = 0; j < distinctCount; ++j)
+    for (vecsize_t j = 0; j < distinctCount; ++j)
     {
-      if ((i & (1 << j)) != 0)
+      if ((i & (static_cast<std::size_t>(1) << j)) != 0)
       {
         evals += "," + allowedEvaluators[j];
       }
@@ -106,7 +107,7 @@ void CompetitionData::show() const
 
 void CompetitionData::single_threaded_compete()
 {
-  const unsigned int totalEvaluators = evaluators.size();
+  const unsigned int totalEvaluators = static_cast<unsigned int>(evaluators.size());
   const unsigned int comboCount = totalEvaluators * (totalEvaluators - 1);
 
   std::cout << "Info: There are " << totalEvaluators << " different evaluators."
@@ -159,7 +160,7 @@ void CompetitionData::single_threaded_compete()
 
 void CompetitionData::multi_threaded_compete(unsigned int threads)
 {
-  const unsigned int totalEvaluators = evaluators.size();
+  const unsigned int totalEvaluators = static_cast<unsigned int>(evaluators.size());
   const unsigned int comboCount = totalEvaluators * (totalEvaluators - 1);
 
   std::cout << "Info: There are " << totalEvaluators << " different evaluators."

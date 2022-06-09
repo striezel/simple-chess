@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -59,16 +59,6 @@ TEST_CASE("split()")
     REQUIRE( pieces.size() == 1 );
     REQUIRE( pieces.at(0) == "" );
   }
-}
-
-TEST_CASE("intToString()")
-{
-  using namespace simplechess::util;
-
-  REQUIRE( intToString(0) == "0" );
-  REQUIRE( intToString(1) == "1" );
-  REQUIRE( intToString(1234567890) == "1234567890" );
-  REQUIRE( intToString(-123456789) == "-123456789" );
 }
 
 TEST_CASE("stringToInt()")

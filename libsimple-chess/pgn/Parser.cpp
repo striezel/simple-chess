@@ -27,7 +27,7 @@ namespace simplechess::pgn
 {
 
 // parses a tag pair
-bool TagPair(const std::vector<Token>& tokens, unsigned int& idx, PortableGameNotation& result)
+bool TagPair(const std::vector<Token>& tokens, std::size_t& idx, PortableGameNotation& result)
 {
   const auto length = tokens.size();
   // tag pair consists of four tokens
@@ -46,7 +46,7 @@ bool TagPair(const std::vector<Token>& tokens, unsigned int& idx, PortableGameNo
     return false;
 }
 
-bool FullMove(const std::vector<Token>& tokens, unsigned int& idx, PortableGameNotation& result)
+bool FullMove(const std::vector<Token>& tokens, std::size_t& idx, PortableGameNotation& result)
 {
   const auto length = tokens.size();
   // full move consists of three tokens
@@ -79,7 +79,7 @@ bool FullMove(const std::vector<Token>& tokens, unsigned int& idx, PortableGameN
     return false;
 }
 
-bool FinalMove(const std::vector<Token>& tokens, unsigned int& idx, PortableGameNotation& result)
+bool FinalMove(const std::vector<Token>& tokens, std::size_t& idx, PortableGameNotation& result)
 {
   const auto length = tokens.size();
   // full move consists of three tokens
@@ -121,7 +121,7 @@ bool Parser::parse(const std::vector<Token>& tokens, PortableGameNotation& resul
     throw ParserException("Invalid token: \"" + tokens.back().text + "\"!");
   }
   result = PortableGameNotation();
-  unsigned int nextTokenIdx = 0;
+  std::size_t nextTokenIdx = 0;
   // parse tag pairs
   unsigned int parsedTagPairs = 0;
   while (TagPair(tokens, nextTokenIdx, result))

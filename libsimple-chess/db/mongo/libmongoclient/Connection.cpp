@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 #include "Connection.hpp"
 #include <cerrno>
 #include <stdexcept>
-#include "../../../../util/strings.hpp"
 
 namespace simplechess::db::mongo
 {
@@ -32,14 +31,14 @@ Connection::Connection(const std::string& hostname, const uint16_t port, const b
   if (nullptr == conn)
   {
     throw std::runtime_error(std::string("Could not establish connection to MongoDB on ")
-              + hostname + ":" + util::intToString(port) + "! Errno: "
-              + util::intToString(errno) + ".");
+              + hostname + ":" + std::to_string(port) + "! Errno: "
+              + std::to_string(errno) + ".");
   }
-  //enable automatic reconnection to MongoDB
+  // enable automatic reconnection to MongoDB
   if (!mongo_sync_conn_set_auto_reconnect(conn, TRUE))
   {
     throw std::runtime_error("Could not enable auto-reconnect in MongoDB connection to "
-              + hostname + ":" + util::intToString(port) + "!");
+              + hostname + ":" + std::to_string(port) + "!");
   }
 }
 

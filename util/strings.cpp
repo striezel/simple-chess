@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017  Dirk Stolle
+    Copyright (C) 2016, 2017, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,10 +22,7 @@
 #include <limits>
 #include <sstream>
 
-namespace simplechess
-{
-
-namespace util
+namespace simplechess::util
 {
 
 std::vector<std::string> split(std::string line, const char separator)
@@ -49,14 +46,6 @@ std::vector<std::string> split(std::string line, const char separator)
   }
   return result;
 }
-
-std::string intToString(const int value)
-{
-  std::ostringstream s;
-  s << value;
-  return s.str();
-}
-
 
 bool stringToInt(const std::string& str, int& value)
 {
@@ -105,10 +94,11 @@ bool stringToInt(const std::string& str, int& value)
 
 void trimLeft(std::string& str1)
 {
-  if (str1.empty()) return;
+  if (str1.empty())
+    return;
   // trim stuff at begin
-  int len = str1.length();
-  int pos = 0;
+  const std::string::size_type len = str1.length();
+  std::string::size_type pos = 0;
   bool goOn = true;
   while (goOn)
   {
@@ -134,7 +124,5 @@ void trimLeft(std::string& str1)
   }
   return;
 }
-
-} // namespace
 
 } // namespace

@@ -54,7 +54,7 @@ std::string PortableGameNotation::date() const
 {
   std::string temp;
   if (mDateYear != -1)
-    temp += util::intToString(mDateYear);
+    temp += std::to_string(mDateYear);
   else
     temp += "????";
   temp += ".";
@@ -62,7 +62,7 @@ std::string PortableGameNotation::date() const
   {
     if (mDateMonth < 10)
       temp += "0";
-    temp += util::intToString(mDateMonth);
+    temp += std::to_string(mDateMonth);
   }
   else
     temp += "??";
@@ -71,7 +71,7 @@ std::string PortableGameNotation::date() const
   {
     if (mDateDay < 10)
       temp += "0";
-    temp += util::intToString(mDateDay);
+    temp += std::to_string(mDateDay);
   }
   else
     temp += "??";
@@ -209,7 +209,7 @@ bool PortableGameNotation::parseDate(const std::string& dateText)
 
 bool PortableGameNotation::hasMove(const unsigned int moveNumber) const
 {
-  return (mMoves.find(moveNumber) != mMoves.end());
+  return mMoves.find(moveNumber) != mMoves.end();
 }
 
 unsigned int PortableGameNotation::firstMoveNumber() const
@@ -266,7 +266,7 @@ std::string PortableGameNotation::toString() const
   unsigned int moves = 0;
   for(const auto& mv : mMoves)
   {
-    pgn += util::intToString(mv.first) + ". " + mv.second.first.toPGN();
+    pgn += std::to_string(mv.first) + ". " + mv.second.first.toPGN();
     if (!mv.second.second.empty())
       pgn += " " + mv.second.second.toPGN();
     ++moves;

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,21 +39,21 @@ class UnconsumedTokensException: public ParserException
      * \param tokenSize  total number of tokens
      * \param leftOverTokens  tokens that have not been processed
      */
-    UnconsumedTokensException(const unsigned int _nextIdx, const unsigned int tokenSize, const std::vector<Token>& leftOverTokens);
+    UnconsumedTokensException(const std::size_t _nextIdx, const std::size_t tokenSize, const std::vector<Token>& leftOverTokens);
 
 
     /** \brief Gets the next index that would have been processed.
      *
      * \return next index
      */
-    unsigned int nextIndex() const;
+    std::size_t nextIndex() const;
 
 
     /** \brief Gets the total number of tokens in the original token vector.
      *
      * \return Returns the total number of tokens in the original token vector.
      */
-    unsigned int totalTokenCount() const;
+    std::size_t totalTokenCount() const;
 
 
     /** \brief Gets the remaining unprocessed tokens.
@@ -62,8 +62,8 @@ class UnconsumedTokensException: public ParserException
      */
     const std::vector<Token>& unprocessedTokens() const;
   private:
-    unsigned int nextIdx; /**< first unprocessed index */
-    unsigned int totalSize; /**< total size of tokens */
+    std::size_t nextIdx; /**< first unprocessed index */
+    std::size_t totalSize; /**< total size of tokens */
     std::vector<Token> remainingTokens; /**< vector of unprocessed tokens */
 };
 
