@@ -154,16 +154,18 @@
 		<Unit filename="../libsimple-chess/rules/check.hpp" />
 		<Unit filename="../libsimple-chess/ui/Console.cpp" />
 		<Unit filename="../libsimple-chess/ui/Console.hpp" />
+		<Unit filename="../libsimple-chess/ui/SymbolicBoard.cpp" />
+		<Unit filename="../libsimple-chess/ui/SymbolicBoard.hpp" />
+		<Unit filename="../libsimple-chess/ui/detect_utf8.cpp" />
+		<Unit filename="../libsimple-chess/ui/detect_utf8.hpp" />
+		<Unit filename="../libsimple-chess/ui/letters.hpp" />
+		<Unit filename="../libsimple-chess/ui/symbols.hpp" />
 		<Unit filename="../util/ReturnCodes.hpp" />
 		<Unit filename="../util/strings.cpp" />
 		<Unit filename="../util/strings.hpp" />
 		<Unit filename="Options.cpp" />
 		<Unit filename="Options.hpp" />
 		<Unit filename="main.cpp" />
-		<Extensions>
-			<envvars />
-			<code_completion />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

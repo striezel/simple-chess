@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,11 +36,13 @@
 #include "../libsimple-chess/pgn/UnconsumedTokensException.hpp"
 #include "../libsimple-chess/pgn/ParserException.hpp"
 #include "../libsimple-chess/ui/Console.hpp"
+#include "../libsimple-chess/ui/SymbolicBoard.hpp"
+#include "../libsimple-chess/ui/detect_utf8.hpp"
 #include "../util/ReturnCodes.hpp"
 
 void showVersion()
 {
-  std::cout << "pgn-reader, version 0.9.1, 2018-02-01" << std::endl;
+  std::cout << "pgn-reader, version 0.9.1-u8, 2022-07-06" << std::endl;
   #ifndef NO_METEOR_CHESS
   std::cout << "This version has support for meteor-chess.\n";
   #endif // NO_METEOR_CHESS
@@ -64,6 +66,18 @@ void showHelp()
             << "  --port N         - port number of the meteor-chess MongoDB server. The\n"
             << "                     default value is 3001.\n";
   #endif // NO_METEOR_CHESS
+}
+
+void showBoard(const simplechess::Board& board, const bool with_utf8)
+{
+  if (with_utf8)
+  {
+    simplechess::ui::SymbolicBoard::showBoard(board);
+  }
+  else
+  {
+    simplechess::ui::Console::showBoard(board);
+  }
 }
 
 int main(int argc, char** argv)
@@ -145,7 +159,7 @@ int main(int argc, char** argv)
   }
   #endif // NO_METEOR_CHESS
 
-  //start game
+  // start game
   simplechess::Board board;
   std::string fen = simplechess::FEN::defaultInitialPosition;
   if (!pgn.tag("FEN").empty())
@@ -177,8 +191,10 @@ int main(int argc, char** argv)
   std::string boardId;
   #endif // NO_METEOR_CHESS
 
+  const bool use_utf8 = simplechess::ui::may_support_utf8();
+
   std::cout << "\n\nInitial position:\n\n";
-  simplechess::ui::Console::showBoard(board);
+  showBoard(board, use_utf8);
 
   #ifndef NO_METEOR_CHESS
   if (options.meteorChess)
@@ -217,7 +233,7 @@ int main(int argc, char** argv)
       return simplechess::rcMoveNotPossible;
     }
     std::cout << "\nAfter move " << i << " of white player:\n";
-    simplechess::ui::Console::showBoard(board);
+    showBoard(board, use_utf8);
     #ifndef NO_METEOR_CHESS
     if (options.meteorChess)
     {
@@ -249,7 +265,7 @@ int main(int argc, char** argv)
       return simplechess::rcMoveNotPossible;
     }
     std::cout << "\nAfter move " << i << " of black player:\n";
-    simplechess::ui::Console::showBoard(board);
+    showBoard(board, use_utf8);
     #ifndef NO_METEOR_CHESS
     if (options.meteorChess)
     {
