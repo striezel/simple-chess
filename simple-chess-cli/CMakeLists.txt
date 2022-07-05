@@ -22,6 +22,10 @@ set(simple_chess_cli_sources
     ../libsimple-chess/search/Node.cpp
     ../libsimple-chess/search/Search.cpp
     ../libsimple-chess/ui/Console.cpp
+    ../libsimple-chess/ui/SymbolicBoard.cpp
+    ../libsimple-chess/ui/detect_utf8.cpp
+    ../libsimple-chess/ui/letters.hpp
+    ../libsimple-chess/ui/symbols.hpp
     ../util/GitInfos.cpp
     ../util/strings.cpp
     main.cpp)

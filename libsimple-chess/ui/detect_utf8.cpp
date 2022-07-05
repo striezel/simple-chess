@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2021, 2022  Dirk Stolle
+    Copyright (C) 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,27 +18,34 @@
  -------------------------------------------------------------------------------
 */
 
-#include "Console.hpp"
-#include <iostream>
-#include "letters.hpp"
+#include "detect_utf8.hpp"
+#include <algorithm>
+#include <array>
+#include <cstdlib> // for std::getenv()
+#include <string>
 
 namespace simplechess::ui
 {
 
-void Console::showBoard(const Board & board)
+std::string getEnvVar(const std::string& name)
 {
-  const std::string rowSeparator = "+---+---+---+---+---+---+---+---+";
-  std::cout << rowSeparator << "\n";
-  for (int r = 8; r >= 1; r--)
+  const char * value = std::getenv(name.c_str());
+  return value != nullptr ? std::string(value) : std::string();
+}
+
+bool may_support_utf8()
+{
+  static const std::array<std::string, 2> variables = {
+      "LANG",
+      "LC_CTYPE"
+  };
+  auto contains_utf8 = [](const std::string& name)
   {
-    std::cout << "| ";
-    for (char c = 'a'; c <= 'h'; ++c)
-    {
-      const Piece & piece = board.element(toField(c, r));
-      std::cout << letter(piece) << " | ";
-    } // for c
-    std::cout << "\n" << rowSeparator << "\n";
-  } // for r
+    const auto value = getEnvVar(name);
+    return value.find("UTF-8") != std::string::npos;
+  };
+
+  return std::any_of(variables.begin(), variables.end(), contains_utf8);
 }
 
 } // namespace

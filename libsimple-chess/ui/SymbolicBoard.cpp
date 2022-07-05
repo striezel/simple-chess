@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2021, 2022  Dirk Stolle
+    Copyright (C) 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,14 +18,14 @@
  -------------------------------------------------------------------------------
 */
 
-#include "Console.hpp"
+#include "SymbolicBoard.hpp"
 #include <iostream>
-#include "letters.hpp"
+#include "symbols.hpp"
 
 namespace simplechess::ui
 {
 
-void Console::showBoard(const Board & board)
+void SymbolicBoard::showBoard(const Board & board)
 {
   const std::string rowSeparator = "+---+---+---+---+---+---+---+---+";
   std::cout << rowSeparator << "\n";
@@ -35,7 +35,7 @@ void Console::showBoard(const Board & board)
     for (char c = 'a'; c <= 'h'; ++c)
     {
       const Piece & piece = board.element(toField(c, r));
-      std::cout << letter(piece) << " | ";
+      std::cout << symbol(piece) << " | ";
     } // for c
     std::cout << "\n" << rowSeparator << "\n";
   } // for r

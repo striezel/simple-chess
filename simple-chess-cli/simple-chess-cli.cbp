@@ -70,6 +70,12 @@
 		<Unit filename="../libsimple-chess/search/Search.hpp" />
 		<Unit filename="../libsimple-chess/ui/Console.cpp" />
 		<Unit filename="../libsimple-chess/ui/Console.hpp" />
+		<Unit filename="../libsimple-chess/ui/SymbolicBoard.cpp" />
+		<Unit filename="../libsimple-chess/ui/SymbolicBoard.hpp" />
+		<Unit filename="../libsimple-chess/ui/detect_utf8.cpp" />
+		<Unit filename="../libsimple-chess/ui/detect_utf8.hpp" />
+		<Unit filename="../libsimple-chess/ui/letters.hpp" />
+		<Unit filename="../libsimple-chess/ui/symbols.hpp" />
 		<Unit filename="../util/GitInfos.cpp" />
 		<Unit filename="../util/GitInfos.hpp" />
 		<Unit filename="../util/ReturnCodes.hpp" />
@@ -78,9 +84,6 @@
 		<Unit filename="../util/strings.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>

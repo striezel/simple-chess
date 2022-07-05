@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2021, 2022  Dirk Stolle
+    Copyright (C) 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,27 +18,19 @@
  -------------------------------------------------------------------------------
 */
 
-#include "Console.hpp"
-#include <iostream>
-#include "letters.hpp"
+#ifndef SIMPLE_CHESS_UI_DETECT_UTF8_HPP
+#define SIMPLE_CHESS_UI_DETECT_UTF8_HPP
 
 namespace simplechess::ui
 {
 
-void Console::showBoard(const Board & board)
-{
-  const std::string rowSeparator = "+---+---+---+---+---+---+---+---+";
-  std::cout << rowSeparator << "\n";
-  for (int r = 8; r >= 1; r--)
-  {
-    std::cout << "| ";
-    for (char c = 'a'; c <= 'h'; ++c)
-    {
-      const Piece & piece = board.element(toField(c, r));
-      std::cout << letter(piece) << " | ";
-    } // for c
-    std::cout << "\n" << rowSeparator << "\n";
-  } // for r
-}
+/** \brief Checks whether this system may support UTF-8 output on terminal.
+ *
+ * \remark This check is not very reliable, it only gives a rough indication.
+ * \return Returns true, if the system seems to support UTF-8.
+ */
+bool may_support_utf8();
 
 } // namespace
+
+#endif // SIMPLE_CHESS_UI_DETECT_UTF8_HPP

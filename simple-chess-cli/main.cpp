@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018, 2020, 2021  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2020, 2021, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@
 #include "../libsimple-chess/evaluation/CompoundEvaluator.hpp"
 #include "../libsimple-chess/search/Search.hpp"
 #include "../libsimple-chess/ui/Console.hpp"
+#include "../libsimple-chess/ui/detect_utf8.hpp"
+#include "../libsimple-chess/ui/SymbolicBoard.hpp"
 #include "../util/GitInfos.hpp"
 #include "../util/ReturnCodes.hpp"
 #include "../util/Version.hpp"
@@ -75,9 +77,16 @@ void showHelp()
  *
  * \param board   the chess board
  */
-void showBoard(const simplechess::Board& board)
+void showBoard(const simplechess::Board& board, const bool utf8)
 {
-  simplechess::ui::Console::showBoard(board);
+  if (utf8)
+  {
+    simplechess::ui::SymbolicBoard::showBoard(board);
+  }
+  else
+  {
+    simplechess::ui::Console::showBoard(board);
+  }
   std::cout << "\n";
   if (board.toMove() == simplechess::Colour::white)
     std::cout << "White is to move.\n";
@@ -222,10 +231,12 @@ int main(int argc, char** argv)
     }
   }
 
+  bool use_utf8 = simplechess::ui::may_support_utf8();
+
   // potentially endless game loop
   while (true)
   {
-    showBoard(board);
+    showBoard(board, use_utf8);
     std::cout << "\n";
     if (board.toMove() != computerPlayer)
     {

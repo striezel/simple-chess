@@ -2,7 +2,7 @@
 
 _Note: This changelog may be incomplete._
 
-## Version 0.5.6 (2021-??-??)
+## Version 0.5.6 (2022-??-??)
 
 simple-chess-cli:
 
@@ -10,6 +10,9 @@ simple-chess-cli:
   move.
 - The game can now be cancelled by typing "quit" instead of the fields for the
   next move.
+- The program will now try to detect whether UTF-8 can be used on the terminal,
+  and if that is the case, then it will use Unicode chess symbols to display
+  the pieces on the board instead of just letters.
 
 ## Version 0.5.5 (2021-05-13)
 
