@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_CHECKEVALUATOR_HPP
-#define SIMPLECHESS_CHECKEVALUATOR_HPP
+#ifndef SIMPLE_CHESS_CHECKEVALUATOR_HPP
+#define SIMPLE_CHESS_CHECKEVALUATOR_HPP
 
 #include "Evaluator.hpp"
 
@@ -70,4 +70,4 @@ class CheckEvaluator: public Evaluator
 
 } // namespace
 
-#endif // SIMPLECHESS_CHECKEVALUATOR_HPP
+#endif // SIMPLE_CHESS_CHECKEVALUATOR_HPP

@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_FORCE_HPP
-#define SIMPLECHESS_XBOARD_FORCE_HPP
+#ifndef SIMPLE_CHESS_XBOARD_FORCE_HPP
+#define SIMPLE_CHESS_XBOARD_FORCE_HPP
 
 #include "../Command.hpp"
 
@@ -39,4 +39,4 @@ class Force: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_FORCE_HPP
+#endif // SIMPLE_CHESS_XBOARD_FORCE_HPP

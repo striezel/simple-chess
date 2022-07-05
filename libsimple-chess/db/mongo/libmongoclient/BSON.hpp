@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_DB_MONGO_LMC_BSON_HPP
-#define SIMPLECHESS_DB_MONGO_LMC_BSON_HPP
+#ifndef SIMPLE_CHESS_DB_MONGO_LMC_BSON_HPP
+#define SIMPLE_CHESS_DB_MONGO_LMC_BSON_HPP
 
 #include <chrono>
 #include <cstdint>
@@ -239,4 +239,4 @@ class BSON
 
 } // namespace
 
-#endif // SIMPLECHESS_DB_MONGO_LMC_BSON_HPP
+#endif // SIMPLE_CHESS_DB_MONGO_LMC_BSON_HPP

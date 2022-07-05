@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_SETBOARD_HPP
-#define SIMPLECHESS_XBOARD_SETBOARD_HPP
+#ifndef SIMPLE_CHESS_XBOARD_SETBOARD_HPP
+#define SIMPLE_CHESS_XBOARD_SETBOARD_HPP
 
 #include "../Command.hpp"
 #include <string>
@@ -49,4 +49,4 @@ class SetBoard: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_SETBOARD_HPP
+#endif // SIMPLE_CHESS_XBOARD_SETBOARD_HPP

@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_VERSION_HPP
-#define SIMPLECHESS_VERSION_HPP
+#ifndef SIMPLE_CHESS_VERSION_HPP
+#define SIMPLE_CHESS_VERSION_HPP
 
 #include <string>
 
@@ -40,4 +40,4 @@ const unsigned int versionPatch = 5;
 
 } // namespace
 
-#endif // SIMPLECHESS_VERSION_HPP
+#endif // SIMPLE_CHESS_VERSION_HPP

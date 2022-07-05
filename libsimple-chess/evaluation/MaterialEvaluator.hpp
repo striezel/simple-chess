@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_MATERIALEVALUATOR_HPP
-#define SIMPLECHESS_MATERIALEVALUATOR_HPP
+#ifndef SIMPLE_CHESS_MATERIALEVALUATOR_HPP
+#define SIMPLE_CHESS_MATERIALEVALUATOR_HPP
 
 #include "Evaluator.hpp"
 
@@ -59,4 +59,4 @@ class MaterialEvaluator: public Evaluator
 
 } // namespace
 
-#endif // SIMPLECHESS_MATERIALEVALUATOR_HPP
+#endif // SIMPLE_CHESS_MATERIALEVALUATOR_HPP

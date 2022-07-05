@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_RESULT_HPP
-#define SIMPLECHESS_RESULT_HPP
+#ifndef SIMPLE_CHESS_RESULT_HPP
+#define SIMPLE_CHESS_RESULT_HPP
 
 #include <string>
 
@@ -47,4 +47,4 @@ Result stringToResult(const std::string& res);
 
 } // namespace
 
-#endif // SIMPLECHESS_RESULT_HPP
+#endif // SIMPLE_CHESS_RESULT_HPP

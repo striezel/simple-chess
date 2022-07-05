@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_COMPOUNDEVALUATOR_HPP
-#define SIMPLECHESS_COMPOUNDEVALUATOR_HPP
+#ifndef SIMPLE_CHESS_COMPOUNDEVALUATOR_HPP
+#define SIMPLE_CHESS_COMPOUNDEVALUATOR_HPP
 
 #include "Evaluator.hpp"
 #include <memory>
@@ -86,4 +86,4 @@ class CompoundEvaluator: public Evaluator
 
 } // namespace
 
-#endif // SIMPLECHESS_COMPOUNDEVALUATOR_HPP
+#endif // SIMPLE_CHESS_COMPOUNDEVALUATOR_HPP

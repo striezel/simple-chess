@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_NOOPERATION_HPP
-#define SIMPLECHESS_XBOARD_NOOPERATION_HPP
+#ifndef SIMPLE_CHESS_XBOARD_NOOPERATION_HPP
+#define SIMPLE_CHESS_XBOARD_NOOPERATION_HPP
 
 #include "../Command.hpp"
 
@@ -40,4 +40,4 @@ class NoOperation : public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_NOOPERATION_HPP
+#endif // SIMPLE_CHESS_XBOARD_NOOPERATION_HPP

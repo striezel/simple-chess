@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_RETURNCODES_HPP
-#define SIMPLECHESS_RETURNCODES_HPP
+#ifndef SIMPLE_CHESS_RETURNCODES_HPP
+#define SIMPLE_CHESS_RETURNCODES_HPP
 
 namespace simplechess
 {
@@ -52,4 +52,4 @@ const int rcUnknown = 13;
 
 } // namespace
 
-#endif // SIMPLECHESS_RETURNCODES_HPP
+#endif // SIMPLE_CHESS_RETURNCODES_HPP

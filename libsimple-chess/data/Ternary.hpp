@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_TERNARY_HPP
-#define SIMPLECHESS_TERNARY_HPP
+#ifndef SIMPLE_CHESS_TERNARY_HPP
+#define SIMPLE_CHESS_TERNARY_HPP
 
 #include <cstdint>
 
@@ -31,4 +31,4 @@ namespace simplechess
 
 } // namespace
 
-#endif // SIMPLECHESS_TERNARY_HPP
+#endif // SIMPLE_CHESS_TERNARY_HPP

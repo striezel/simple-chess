@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_GO_HPP
-#define SIMPLECHESS_XBOARD_GO_HPP
+#ifndef SIMPLE_CHESS_XBOARD_GO_HPP
+#define SIMPLE_CHESS_XBOARD_GO_HPP
 
 #include "../Command.hpp"
 
@@ -39,4 +39,4 @@ class Go: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_GO_HPP
+#endif // SIMPLE_CHESS_XBOARD_GO_HPP

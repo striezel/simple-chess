@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_EXACTTIME_HPP
-#define SIMPLECHESS_XBOARD_EXACTTIME_HPP
+#ifndef SIMPLE_CHESS_XBOARD_EXACTTIME_HPP
+#define SIMPLE_CHESS_XBOARD_EXACTTIME_HPP
 
 #include "../Command.hpp"
 #include <chrono>
@@ -49,4 +49,4 @@ class ExactTime: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_EXACTTIME_HPP
+#endif // SIMPLE_CHESS_XBOARD_EXACTTIME_HPP

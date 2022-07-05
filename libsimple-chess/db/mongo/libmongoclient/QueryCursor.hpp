@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_DB_MONGO_LMC_QUERYCURSOR_HPP
-#define SIMPLECHESS_DB_MONGO_LMC_QUERYCURSOR_HPP
+#ifndef SIMPLE_CHESS_DB_MONGO_LMC_QUERYCURSOR_HPP
+#define SIMPLE_CHESS_DB_MONGO_LMC_QUERYCURSOR_HPP
 
 #include <string>
 #include <mongo-client/mongo-sync-cursor.h>
@@ -73,4 +73,4 @@ class QueryCursor
 
 } // namespace
 
-#endif // SIMPLECHESS_DB_MONGO_LMC_QUERYCURSOR_HPP
+#endif // SIMPLE_CHESS_DB_MONGO_LMC_QUERYCURSOR_HPP

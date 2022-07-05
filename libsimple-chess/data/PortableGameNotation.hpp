@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PORTABLE_GAME_NOTATION_HPP
-#define SIMPLECHESS_PORTABLE_GAME_NOTATION_HPP
+#ifndef SIMPLE_CHESS_PORTABLE_GAME_NOTATION_HPP
+#define SIMPLE_CHESS_PORTABLE_GAME_NOTATION_HPP
 
 #include <map>
 #include <string>
@@ -193,4 +193,4 @@ class PortableGameNotation
 
 } // namespace
 
-#endif // SIMPLECHESS_PORTABLE_GAME_NOTATION_HPP
+#endif // SIMPLE_CHESS_PORTABLE_GAME_NOTATION_HPP

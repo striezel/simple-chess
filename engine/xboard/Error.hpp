@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_ERROR_HPP
-#define SIMPLECHESS_XBOARD_ERROR_HPP
+#ifndef SIMPLE_CHESS_XBOARD_ERROR_HPP
+#define SIMPLE_CHESS_XBOARD_ERROR_HPP
 
 #include "../Command.hpp"
 #include <string>
@@ -53,4 +53,4 @@ class Error : public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_ERROR_HPP
+#endif // SIMPLE_CHESS_XBOARD_ERROR_HPP

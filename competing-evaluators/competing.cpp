@@ -24,7 +24,7 @@
 #include "../libsimple-chess/data/ForsythEdwardsNotation.hpp"
 #include "../libsimple-chess/evaluation/CompoundCreator.hpp"
 #include "../libsimple-chess/search/Search.hpp"
-#ifndef SIMPLECHESS_NO_COMPETITION_DATA
+#ifndef SIMPLE_CHESS_NO_COMPETITION_DATA
 #include "CompetitionData.hpp"
 #endif
 
@@ -40,7 +40,7 @@ const std::vector<std::string> Competition::allEvaluators = {
     CompoundCreator::IdRootMobility
 };
 
-#ifndef SIMPLECHESS_NO_COMPETITION_DATA
+#ifndef SIMPLE_CHESS_NO_COMPETITION_DATA
 void Competition::compete(const std::vector<std::string>& allowedEvaluators, unsigned int threads)
 {
   if (allowedEvaluators.empty())

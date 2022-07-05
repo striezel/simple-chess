@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PGN_TOKENTYPE_HPP
-#define SIMPLECHESS_PGN_TOKENTYPE_HPP
+#ifndef SIMPLE_CHESS_PGN_TOKENTYPE_HPP
+#define SIMPLE_CHESS_PGN_TOKENTYPE_HPP
 
 namespace simplechess::pgn
 {
@@ -47,4 +47,4 @@ enum class TokenType
 
 } // namespace
 
-#endif // SIMPLECHESS_PGN_TOKENTYPE_HPP
+#endif // SIMPLE_CHESS_PGN_TOKENTYPE_HPP

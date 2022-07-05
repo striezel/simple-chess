@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
-#define SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#ifndef SIMPLE_CHESS_XBOARD_COMMANDPARSER_HPP
+#define SIMPLE_CHESS_XBOARD_COMMANDPARSER_HPP
 
 #include <string>
 
@@ -39,4 +39,4 @@ class CommandParser
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_COMMANDPARSER_HPP
+#endif // SIMPLE_CHESS_XBOARD_COMMANDPARSER_HPP

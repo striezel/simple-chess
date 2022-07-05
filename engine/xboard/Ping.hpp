@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_PING_HPP
-#define SIMPLECHESS_XBOARD_PING_HPP
+#ifndef SIMPLE_CHESS_XBOARD_PING_HPP
+#define SIMPLE_CHESS_XBOARD_PING_HPP
 
 #include "../Command.hpp"
 #include <string>
@@ -50,4 +50,4 @@ class Ping : public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_PING_HPP
+#endif // SIMPLE_CHESS_XBOARD_PING_HPP

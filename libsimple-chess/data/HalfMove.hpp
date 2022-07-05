@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_HALFMOVE_HPP
-#define SIMPLECHESS_HALFMOVE_HPP
+#ifndef SIMPLE_CHESS_HALFMOVE_HPP
+#define SIMPLE_CHESS_HALFMOVE_HPP
 
 #include "Field.hpp"
 #include "Piece.hpp"
@@ -155,4 +155,4 @@ class HalfMove
 
 } //namespace
 
-#endif // SIMPLECHESS_HALFMOVE_HPP
+#endif // SIMPLE_CHESS_HALFMOVE_HPP

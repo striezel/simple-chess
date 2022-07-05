@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_DB_MONGO_IDGENERATOR_HPP
-#define SIMPLECHESS_DB_MONGO_IDGENERATOR_HPP
+#ifndef SIMPLE_CHESS_DB_MONGO_IDGENERATOR_HPP
+#define SIMPLE_CHESS_DB_MONGO_IDGENERATOR_HPP
 
 #include <string>
 #include <vector>
@@ -48,4 +48,4 @@ class IdGenerator
 
 } // namespace
 
-#endif // SIMPLECHESS_DB_MONGO_IDGENERATOR_HPP
+#endif // SIMPLE_CHESS_DB_MONGO_IDGENERATOR_HPP

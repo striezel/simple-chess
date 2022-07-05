@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_UCI_ISREADY_HPP
-#define SIMPLECHESS_UCI_ISREADY_HPP
+#ifndef SIMPLE_CHESS_UCI_ISREADY_HPP
+#define SIMPLE_CHESS_UCI_ISREADY_HPP
 
 #include "../Command.hpp"
 #include <string>
@@ -46,4 +46,4 @@ class IsReady : public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_UCI_ISREADY_HPP
+#endif // SIMPLE_CHESS_UCI_ISREADY_HPP

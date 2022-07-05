@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_XBOARD_HPP
-#define SIMPLECHESS_XBOARD_XBOARD_HPP
+#ifndef SIMPLE_CHESS_XBOARD_XBOARD_HPP
+#define SIMPLE_CHESS_XBOARD_XBOARD_HPP
 
 #include "../Command.hpp"
 
@@ -45,4 +45,4 @@ class Xboard : public Command
 
 } // namesace
 
-#endif // SIMPLECHESS_XBOARD_XBOARD_HPP
+#endif // SIMPLE_CHESS_XBOARD_XBOARD_HPP

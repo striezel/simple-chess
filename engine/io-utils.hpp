@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_IO_UTILS_HPP
-#define SIMPLECHESS_IO_UTILS_HPP
+#ifndef SIMPLE_CHESS_IO_UTILS_HPP
+#define SIMPLE_CHESS_IO_UTILS_HPP
 
 #include <string>
 
@@ -45,4 +45,4 @@ void sendCommand(const std::string& cmd);
 
 } // namespace
 
-#endif // SIMPLECHESS_IO_UTILS_HPP
+#endif // SIMPLE_CHESS_IO_UTILS_HPP

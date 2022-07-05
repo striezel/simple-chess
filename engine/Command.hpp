@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_GENERIC_COMMAND_HPP
-#define SIMPLECHESS_GENERIC_COMMAND_HPP
+#ifndef SIMPLE_CHESS_GENERIC_COMMAND_HPP
+#define SIMPLE_CHESS_GENERIC_COMMAND_HPP
 
 namespace simplechess
 {
@@ -44,4 +44,4 @@ class Command
 
 } // namespace
 
-#endif // SIMPLECHESS_GENERIC_COMMAND_HPP
+#endif // SIMPLE_CHESS_GENERIC_COMMAND_HPP

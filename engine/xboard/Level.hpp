@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_LEVEL_HPP
-#define SIMPLECHESS_XBOARD_LEVEL_HPP
+#ifndef SIMPLE_CHESS_XBOARD_LEVEL_HPP
+#define SIMPLE_CHESS_XBOARD_LEVEL_HPP
 
 #include "../Command.hpp"
 #include <chrono>
@@ -53,4 +53,4 @@ class Level: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_LEVEL_HPP
+#endif // SIMPLE_CHESS_XBOARD_LEVEL_HPP

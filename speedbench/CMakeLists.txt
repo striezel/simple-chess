@@ -29,7 +29,7 @@ set(speedbench_sources
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-add_definitions(-DSIMPLECHESS_NO_COMPETITION_DATA)
+add_definitions(-DSIMPLE_CHESS_NO_COMPETITION_DATA)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     add_definitions(-Wall -fexceptions)
     if (CODE_COVERAGE)

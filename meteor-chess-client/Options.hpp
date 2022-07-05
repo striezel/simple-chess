@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_METEOR_CHESS_CLIENT_OPTIONS_HPP
-#define SIMPLECHESS_METEOR_CHESS_CLIENT_OPTIONS_HPP
+#ifndef SIMPLE_CHESS_METEOR_CHESS_CLIENT_OPTIONS_HPP
+#define SIMPLE_CHESS_METEOR_CHESS_CLIENT_OPTIONS_HPP
 
 #include <cstdint>
 #include <string>
@@ -55,4 +55,4 @@ struct MeteorChessOptions
 
 } // namespace
 
-#endif // SIMPLECHESS_METEOR_CHESS_CLIENT_OPTIONS_HPP
+#endif // SIMPLE_CHESS_METEOR_CHESS_CLIENT_OPTIONS_HPP

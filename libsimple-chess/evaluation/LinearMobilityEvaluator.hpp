@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_LINEARMOBILITYEVALUATOR_HPP
-#define SIMPLECHESS_LINEARMOBILITYEVALUATOR_HPP
+#ifndef SIMPLE_CHESS_LINEARMOBILITYEVALUATOR_HPP
+#define SIMPLE_CHESS_LINEARMOBILITYEVALUATOR_HPP
 
 #include "Evaluator.hpp"
 
@@ -56,4 +56,4 @@ class LinearMobilityEvaluator: public Evaluator
 
 } // namespace
 
-#endif // SIMPLECHESS_LINEARMOBILITYEVALUATOR_HPP
+#endif // SIMPLE_CHESS_LINEARMOBILITYEVALUATOR_HPP

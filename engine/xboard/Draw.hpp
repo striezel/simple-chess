@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_DRAW_HPP
-#define SIMPLECHESS_XBOARD_DRAW_HPP
+#ifndef SIMPLE_CHESS_XBOARD_DRAW_HPP
+#define SIMPLE_CHESS_XBOARD_DRAW_HPP
 
 #include "../Command.hpp"
 
@@ -44,4 +44,4 @@ class Draw: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_DRAW_HPP
+#endif // SIMPLE_CHESS_XBOARD_DRAW_HPP

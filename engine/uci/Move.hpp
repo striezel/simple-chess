@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_UCI_MOVE_HPP
-#define SIMPLECHESS_UCI_MOVE_HPP
+#ifndef SIMPLE_CHESS_UCI_MOVE_HPP
+#define SIMPLE_CHESS_UCI_MOVE_HPP
 
 #include "../Command.hpp"
 #include "../../libsimple-chess/data/Field.hpp"
@@ -54,4 +54,4 @@ class Move: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_UCI_MOVE_HPP
+#endif // SIMPLE_CHESS_UCI_MOVE_HPP

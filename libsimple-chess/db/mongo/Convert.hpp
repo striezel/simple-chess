@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_DB_MONGO_CONVERT_HPP
-#define SIMPLECHESS_DB_MONGO_CONVERT_HPP
+#ifndef SIMPLE_CHESS_DB_MONGO_CONVERT_HPP
+#define SIMPLE_CHESS_DB_MONGO_CONVERT_HPP
 
 #include <string>
 #include "../../data/Field.hpp"
@@ -71,4 +71,4 @@ class Convert
 
 } // namespace
 
-#endif // SIMPLECHESS_DB_MONGO_CONVERT_HPP
+#endif // SIMPLE_CHESS_DB_MONGO_CONVERT_HPP

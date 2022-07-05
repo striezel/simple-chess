@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_FEN_HPP
-#define SIMPLECHESS_FEN_HPP
+#ifndef SIMPLE_CHESS_FEN_HPP
+#define SIMPLE_CHESS_FEN_HPP
 
 #include "Board.hpp"
 
@@ -49,4 +49,4 @@ typedef ForsythEdwardsNotation FEN;
 
 } // namespace
 
-#endif // SIMPLECHESS_FEN_HPP
+#endif // SIMPLE_CHESS_FEN_HPP

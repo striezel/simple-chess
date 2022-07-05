@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_SEARCH_HPP
-#define SIMPLECHESS_SEARCH_HPP
+#ifndef SIMPLE_CHESS_SEARCH_HPP
+#define SIMPLE_CHESS_SEARCH_HPP
 
 #include <tuple>
 #include "../data/Board.hpp"
@@ -121,4 +121,4 @@ class Search
 
 } //namespace
 
-#endif // SIMPLECHESS_SEARCH_HPP
+#endif // SIMPLE_CHESS_SEARCH_HPP

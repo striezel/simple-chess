@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_GITINFOS_HPP
-#define SIMPLECHESS_GITINFOS_HPP
+#ifndef SIMPLE_CHESS_GITINFOS_HPP
+#define SIMPLE_CHESS_GITINFOS_HPP
 
 #include <string>
 
@@ -55,4 +55,4 @@ class GitInfos
 
 } // namespace
 
-#endif // SIMPLECHESS_GITINFOS_HPP
+#endif // SIMPLE_CHESS_GITINFOS_HPP

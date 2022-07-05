@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_TIMING_HPP
-#define SIMPLECHESS_TIMING_HPP
+#ifndef SIMPLE_CHESS_TIMING_HPP
+#define SIMPLE_CHESS_TIMING_HPP
 
 #include <chrono>
 #include <ratio>
@@ -104,4 +104,4 @@ class Timing
 
 } // namespace
 
-#endif // SIMPLECHESS_TIMING_HPP
+#endif // SIMPLE_CHESS_TIMING_HPP

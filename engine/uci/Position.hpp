@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_UCI_POSITION_HPP
-#define SIMPLECHESS_UCI_POSITION_HPP
+#ifndef SIMPLE_CHESS_UCI_POSITION_HPP
+#define SIMPLE_CHESS_UCI_POSITION_HPP
 
 #include "../Command.hpp"
 #include <string>
@@ -49,4 +49,4 @@ class Position: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_UCI_POSITION_HPP
+#endif // SIMPLE_CHESS_UCI_POSITION_HPP

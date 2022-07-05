@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_UCI_NEWGAME_HPP
-#define SIMPLECHESS_UCI_NEWGAME_HPP
+#ifndef SIMPLE_CHESS_UCI_NEWGAME_HPP
+#define SIMPLE_CHESS_UCI_NEWGAME_HPP
 
 #include "../Command.hpp"
 
@@ -42,4 +42,4 @@ class NewGame: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_UCI_NEWGAME_HPP
+#endif // SIMPLE_CHESS_UCI_NEWGAME_HPP

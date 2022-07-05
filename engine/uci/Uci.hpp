@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_UCI_UCI_HPP
-#define SIMPLECHESS_UCI_UCI_HPP
+#ifndef SIMPLE_CHESS_UCI_UCI_HPP
+#define SIMPLE_CHESS_UCI_UCI_HPP
 
 #include "../Command.hpp"
 
@@ -44,4 +44,4 @@ class Uci: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_UCI_UCI_HPP
+#endif // SIMPLE_CHESS_UCI_UCI_HPP

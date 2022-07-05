@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_CASTLINGEVALUATOR_HPP
-#define SIMPLECHESS_CASTLINGEVALUATOR_HPP
+#ifndef SIMPLE_CHESS_CASTLINGEVALUATOR_HPP
+#define SIMPLE_CHESS_CASTLINGEVALUATOR_HPP
 
 #include "Evaluator.hpp"
 
@@ -64,4 +64,4 @@ class CastlingEvaluator: public Evaluator
 
 } // namespace
 
-#endif // SIMPLECHESS_CASTLINGEVALUATOR_HPP
+#endif // SIMPLE_CHESS_CASTLINGEVALUATOR_HPP

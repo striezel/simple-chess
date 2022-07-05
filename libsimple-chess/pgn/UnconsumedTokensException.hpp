@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PGN_UNCONSUMEDTOKENSEXCEPTION_HPP
-#define SIMPLECHESS_PGN_UNCONSUMEDTOKENSEXCEPTION_HPP
+#ifndef SIMPLE_CHESS_PGN_UNCONSUMEDTOKENSEXCEPTION_HPP
+#define SIMPLE_CHESS_PGN_UNCONSUMEDTOKENSEXCEPTION_HPP
 
 #include <vector>
 #include "ParserException.hpp"
@@ -69,5 +69,5 @@ class UnconsumedTokensException: public ParserException
 
 } // namespace
 
-#endif // SIMPLECHESS_PGN_UNCONSUMEDTOKENSEXCEPTION_HPP
+#endif // SIMPLE_CHESS_PGN_UNCONSUMEDTOKENSEXCEPTION_HPP
 

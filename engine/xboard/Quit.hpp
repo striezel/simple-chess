@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_QUIT_HPP
-#define SIMPLECHESS_XBOARD_QUIT_HPP
+#ifndef SIMPLE_CHESS_XBOARD_QUIT_HPP
+#define SIMPLE_CHESS_XBOARD_QUIT_HPP
 
 #include "../Command.hpp"
 
@@ -39,4 +39,4 @@ class Quit: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_QUIT_HPP
+#endif // SIMPLE_CHESS_XBOARD_QUIT_HPP

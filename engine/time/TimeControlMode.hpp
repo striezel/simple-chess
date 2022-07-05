@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_TIMECONTROLMODE_HPP
-#define SIMPLECHESS_TIMECONTROLMODE_HPP
+#ifndef SIMPLE_CHESS_TIMECONTROLMODE_HPP
+#define SIMPLE_CHESS_TIMECONTROLMODE_HPP
 
 namespace simplechess
 {
@@ -47,4 +47,4 @@ enum class TimeControlMode {
 
 } // namespace
 
-#endif // SIMPLECHESS_TIMECONTROLMODE_HPP
+#endif // SIMPLE_CHESS_TIMECONTROLMODE_HPP

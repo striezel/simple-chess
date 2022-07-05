@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_ROOTMOBILITYEVALUATOR_HPP
-#define SIMPLECHESS_ROOTMOBILITYEVALUATOR_HPP
+#ifndef SIMPLE_CHESS_ROOTMOBILITYEVALUATOR_HPP
+#define SIMPLE_CHESS_ROOTMOBILITYEVALUATOR_HPP
 
 #include "Evaluator.hpp"
 
@@ -60,4 +60,4 @@ class RootMobilityEvaluator: public Evaluator
 
 } // namespace
 
-#endif // SIMPLECHESS_ROOTMOBILITYEVALUATOR_HPP
+#endif // SIMPLE_CHESS_ROOTMOBILITYEVALUATOR_HPP

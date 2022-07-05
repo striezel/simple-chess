@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_ALGORITHM_APPLY_HPP
-#define SIMPLECHESS_ALGORITHM_APPLY_HPP
+#ifndef SIMPLE_CHESS_ALGORITHM_APPLY_HPP
+#define SIMPLE_CHESS_ALGORITHM_APPLY_HPP
 
 #include <vector>
 #include "../data/Board.hpp"
@@ -71,4 +71,4 @@ bool checkPortableGameNotation(const PortableGameNotation& pgn);
 
 } // namespace
 
-#endif // SIMPLECHESS_ALGORITHM_APPLY_HPP
+#endif // SIMPLE_CHESS_ALGORITHM_APPLY_HPP

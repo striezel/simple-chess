@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_RESULTCMD_HPP
-#define SIMPLECHESS_XBOARD_RESULTCMD_HPP
+#ifndef SIMPLE_CHESS_XBOARD_RESULTCMD_HPP
+#define SIMPLE_CHESS_XBOARD_RESULTCMD_HPP
 
 #include "../Command.hpp"
 #include <string>
@@ -53,4 +53,4 @@ class ResultCmd : public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_RESULTCMD_HPP
+#endif // SIMPLE_CHESS_XBOARD_RESULTCMD_HPP

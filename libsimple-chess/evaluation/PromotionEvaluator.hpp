@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PROMOTIONEVALUATOR_HPP
-#define SIMPLECHESS_PROMOTIONEVALUATOR_HPP
+#ifndef SIMPLE_CHESS_PROMOTIONEVALUATOR_HPP
+#define SIMPLE_CHESS_PROMOTIONEVALUATOR_HPP
 
 #include "Evaluator.hpp"
 
@@ -52,4 +52,4 @@ class PromotionEvaluator: public Evaluator
 
 } // namespace
 
-#endif // SIMPLECHESS_PROMOTIONEVALUATOR_HPP
+#endif // SIMPLE_CHESS_PROMOTIONEVALUATOR_HPP

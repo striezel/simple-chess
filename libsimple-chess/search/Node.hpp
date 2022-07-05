@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_NODE_HPP
-#define SIMPLECHESS_NODE_HPP
+#ifndef SIMPLE_CHESS_NODE_HPP
+#define SIMPLE_CHESS_NODE_HPP
 
 #include <memory>
 #include <vector>
@@ -62,4 +62,4 @@ struct Node
 
 } //namespace
 
-#endif // SIMPLECHESS_NODE_HPP
+#endif // SIMPLE_CHESS_NODE_HPP

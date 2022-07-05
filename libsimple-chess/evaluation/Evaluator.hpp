@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_EVALUATOR_HPP
-#define SIMPLECHESS_EVALUATOR_HPP
+#ifndef SIMPLE_CHESS_EVALUATOR_HPP
+#define SIMPLE_CHESS_EVALUATOR_HPP
 
 #include "../data/Board.hpp"
 
@@ -55,4 +55,4 @@ class Evaluator
 
 } // namespace
 
-#endif // SIMPLECHESS_EVALUATOR_HPP
+#endif // SIMPLE_CHESS_EVALUATOR_HPP

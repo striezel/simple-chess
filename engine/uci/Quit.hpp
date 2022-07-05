@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_UCI_QUIT_HPP
-#define SIMPLECHESS_UCI_QUIT_HPP
+#ifndef SIMPLE_CHESS_UCI_QUIT_HPP
+#define SIMPLE_CHESS_UCI_QUIT_HPP
 
 #include "../xboard/Quit.hpp"
 
@@ -31,4 +31,4 @@ using Quit = simplechess::xboard::Quit;
 
 } // namespace
 
-#endif // SIMPLECHESS_UCI_QUIT_HPP
+#endif // SIMPLE_CHESS_UCI_QUIT_HPP

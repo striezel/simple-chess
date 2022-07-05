@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_PROTOCOLVERSION_HPP
-#define SIMPLECHESS_XBOARD_PROTOCOLVERSION_HPP
+#ifndef SIMPLE_CHESS_XBOARD_PROTOCOLVERSION_HPP
+#define SIMPLE_CHESS_XBOARD_PROTOCOLVERSION_HPP
 
 #include "../Command.hpp"
 
@@ -48,4 +48,4 @@ class ProtocolVersion: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_PROTOCOLVERSION_HPP
+#endif // SIMPLE_CHESS_XBOARD_PROTOCOLVERSION_HPP

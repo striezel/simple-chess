@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_CLOCK_HPP
-#define SIMPLECHESS_CLOCK_HPP
+#ifndef SIMPLE_CHESS_CLOCK_HPP
+#define SIMPLE_CHESS_CLOCK_HPP
 
 #include <chrono>
 
@@ -105,4 +105,4 @@ class Clock
 
 } // namespace
 
-#endif // SIMPLECHESS_CLOCK_HPP
+#endif // SIMPLE_CHESS_CLOCK_HPP

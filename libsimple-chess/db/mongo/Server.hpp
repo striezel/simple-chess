@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_DB_MONGO_SERVER_HPP
-#define SIMPLECHESS_DB_MONGO_SERVER_HPP
+#ifndef SIMPLE_CHESS_DB_MONGO_SERVER_HPP
+#define SIMPLE_CHESS_DB_MONGO_SERVER_HPP
 
 #include <cstdint>
 #include <string>
@@ -93,4 +93,4 @@ class Server
 
 } // namespace
 
-#endif // SIMPLECHESS_DB_MONGO_SERVER_HPP
+#endif // SIMPLE_CHESS_DB_MONGO_SERVER_HPP

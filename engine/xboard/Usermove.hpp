@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_USERMOVE_HPP
-#define SIMPLECHESS_XBOARD_USERMOVE_HPP
+#ifndef SIMPLE_CHESS_XBOARD_USERMOVE_HPP
+#define SIMPLE_CHESS_XBOARD_USERMOVE_HPP
 
 #include "../Command.hpp"
 #include "../../libsimple-chess/data/Field.hpp"
@@ -54,4 +54,4 @@ class Usermove: public Command
 
 } // namespace
 
-#endif // SIMPLECHESS_XBOARD_USERMOVE_HPP
+#endif // SIMPLE_CHESS_XBOARD_USERMOVE_HPP

@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PGN_PARSEREXCEPTION_HPP
-#define SIMPLECHESS_PGN_PARSEREXCEPTION_HPP
+#ifndef SIMPLE_CHESS_PGN_PARSEREXCEPTION_HPP
+#define SIMPLE_CHESS_PGN_PARSEREXCEPTION_HPP
 
 #include <exception>
 #include <string>
@@ -49,4 +49,4 @@ class ParserException: public std::exception
 
 } // namespace
 
-#endif // SIMPLECHESS_PGN_PARSEREXCEPTION_HPP
+#endif // SIMPLE_CHESS_PGN_PARSEREXCEPTION_HPP

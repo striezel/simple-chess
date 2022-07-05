@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PARSELOOP_HPP
-#define SIMPLECHESS_PARSELOOP_HPP
+#ifndef SIMPLE_CHESS_PARSELOOP_HPP
+#define SIMPLE_CHESS_PARSELOOP_HPP
 
 #include <iostream>
 #include "Engine.hpp"
@@ -43,4 +43,4 @@ void ParseLoop()
 
 } // namespace
 
-#endif // SIMPLECHESS_PARSELOOP_HPP
+#endif // SIMPLE_CHESS_PARSELOOP_HPP

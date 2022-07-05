@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_COMPOUNDCREATOR_HPP
-#define SIMPLECHESS_COMPOUNDCREATOR_HPP
+#ifndef SIMPLE_CHESS_COMPOUNDCREATOR_HPP
+#define SIMPLE_CHESS_COMPOUNDCREATOR_HPP
 
 #include <string>
 #include "CompoundEvaluator.hpp"
@@ -64,4 +64,4 @@ class CompoundCreator
 
 } // namespace
 
-#endif // SIMPLECHESS_COMPOUNDCREATOR_HPP
+#endif // SIMPLE_CHESS_COMPOUNDCREATOR_HPP

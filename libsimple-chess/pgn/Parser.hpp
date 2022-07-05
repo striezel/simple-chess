@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PGN_PARSER_HPP
-#define SIMPLECHESS_PGN_PARSER_HPP
+#ifndef SIMPLE_CHESS_PGN_PARSER_HPP
+#define SIMPLE_CHESS_PGN_PARSER_HPP
 
 #include <vector>
 #include "Token.hpp"
@@ -46,4 +46,4 @@ class Parser
 
 } // namespace
 
-#endif // SIMPLECHESS_PGN_PARSER_HPP
+#endif // SIMPLE_CHESS_PGN_PARSER_HPP

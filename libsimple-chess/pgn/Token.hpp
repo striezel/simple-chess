@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PGN_TOKEN_HPP
-#define SIMPLECHESS_PGN_TOKEN_HPP
+#ifndef SIMPLE_CHESS_PGN_TOKEN_HPP
+#define SIMPLE_CHESS_PGN_TOKEN_HPP
 
 #include<string>
 #include "TokenType.hpp"
@@ -48,4 +48,4 @@ struct Token
 
 } // namespace
 
-#endif // SIMPLECHESS_PGN_TOKEN_HPP
+#endif // SIMPLE_CHESS_PGN_TOKEN_HPP

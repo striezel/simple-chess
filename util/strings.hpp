@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_UTIL_STRINGS_HPP
-#define SIMPLECHESS_UTIL_STRINGS_HPP
+#ifndef SIMPLE_CHESS_UTIL_STRINGS_HPP
+#define SIMPLE_CHESS_UTIL_STRINGS_HPP
 
 #include <string>
 #include <vector>
@@ -56,4 +56,4 @@ void trimLeft(std::string& str1);
 
 } // namespace
 
-#endif // SIMPLECHESS_UTIL_STRINGS_HPP
+#endif // SIMPLE_CHESS_UTIL_STRINGS_HPP

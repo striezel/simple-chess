@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_CONSTANTEVALUATOR_HPP
-#define SIMPLECHESS_CONSTANTEVALUATOR_HPP
+#ifndef SIMPLE_CHESS_CONSTANTEVALUATOR_HPP
+#define SIMPLE_CHESS_CONSTANTEVALUATOR_HPP
 
 #include "../../../libsimple-chess/evaluation/Evaluator.hpp"
 
@@ -60,4 +60,4 @@ class ConstantEvaluator: public Evaluator
 
 } // namespace
 
-#endif // SIMPLECHESS_CONSTANTEVALUATOR_HPP
+#endif // SIMPLE_CHESS_CONSTANTEVALUATOR_HPP

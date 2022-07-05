@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PROTOCOL_HPP
-#define SIMPLECHESS_PROTOCOL_HPP
+#ifndef SIMPLE_CHESS_PROTOCOL_HPP
+#define SIMPLE_CHESS_PROTOCOL_HPP
 
 namespace simplechess
 {
@@ -43,4 +43,4 @@ Protocol detectProtocolFromStdIn();
 
 } // namespace
 
-#endif // SIMPLECHESS_PROTOCOL_HPP
+#endif // SIMPLE_CHESS_PROTOCOL_HPP

@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PGN_TOKENIZER_HPP
-#define SIMPLECHESS_PGN_TOKENIZER_HPP
+#ifndef SIMPLE_CHESS_PGN_TOKENIZER_HPP
+#define SIMPLE_CHESS_PGN_TOKENIZER_HPP
 
 #include <string>
 #include <vector>
@@ -53,4 +53,4 @@ class Tokenizer
 
 } // namespace
 
-#endif // SIMPLECHESS_PGN_TOKENIZER_HPP
+#endif // SIMPLE_CHESS_PGN_TOKENIZER_HPP

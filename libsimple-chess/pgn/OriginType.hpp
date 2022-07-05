@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PGN_ORIGINTYPE_HPP
-#define SIMPLECHESS_PGN_ORIGINTYPE_HPP
+#ifndef SIMPLE_CHESS_PGN_ORIGINTYPE_HPP
+#define SIMPLE_CHESS_PGN_ORIGINTYPE_HPP
 
 namespace simplechess::pgn
 {
@@ -39,4 +39,4 @@ enum class OriginType
 
 } // namespace
 
-#endif // SIMPLECHESS_PGN_ORIGINTYPE_HPP
+#endif // SIMPLE_CHESS_PGN_ORIGINTYPE_HPP

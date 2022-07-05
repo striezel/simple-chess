@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_SETDEPTH_HPP
-#define SIMPLECHESS_XBOARD_SETDEPTH_HPP
+#ifndef SIMPLE_CHESS_XBOARD_SETDEPTH_HPP
+#define SIMPLE_CHESS_XBOARD_SETDEPTH_HPP
 
 #include "../Command.hpp"
 
@@ -50,4 +50,4 @@ class SetDepth : public Command
 } // namespace
 
 
-#endif // SIMPLECHESS_XBOARD_SETDEPTH_HPP
+#endif // SIMPLE_CHESS_XBOARD_SETDEPTH_HPP

@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_XBOARD_SETTIME_HPP
-#define SIMPLECHESS_XBOARD_SETTIME_HPP
+#ifndef SIMPLE_CHESS_XBOARD_SETTIME_HPP
+#define SIMPLE_CHESS_XBOARD_SETTIME_HPP
 
 #include "../Command.hpp"
 
@@ -52,4 +52,4 @@ class SetTime : public Command
 } // namespace
 
 
-#endif // SIMPLECHESS_XBOARD_SETTIME_HPP
+#endif // SIMPLE_CHESS_XBOARD_SETTIME_HPP

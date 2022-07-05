@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_DB_MONGO_LMC_CONNECTION_HPP
-#define SIMPLECHESS_DB_MONGO_LMC_CONNECTION_HPP
+#ifndef SIMPLE_CHESS_DB_MONGO_LMC_CONNECTION_HPP
+#define SIMPLE_CHESS_DB_MONGO_LMC_CONNECTION_HPP
 
 #include <cstdint>
 #include <string>
@@ -101,4 +101,4 @@ class Connection
 
 } // namespace
 
-#endif // SIMPLECHESS_DB_MONGO_LMC_CONNECTION_HPP
+#endif // SIMPLE_CHESS_DB_MONGO_LMC_CONNECTION_HPP

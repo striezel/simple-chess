@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_ENGINE_HPP
-#define SIMPLECHESS_ENGINE_HPP
+#ifndef SIMPLE_CHESS_ENGINE_HPP
+#define SIMPLE_CHESS_ENGINE_HPP
 
 #include <atomic>
 #include <deque>
@@ -213,4 +213,4 @@ class Engine
 
 } // namespace
 
-#endif // SIMPLECHESS_ENGINE_HPP
+#endif // SIMPLE_CHESS_ENGINE_HPP

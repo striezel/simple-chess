@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLECHESS_PGNREADER_OPTIONS_HPP
-#define SIMPLECHESS_PGNREADER_OPTIONS_HPP
+#ifndef SIMPLE_CHESS_PGNREADER_OPTIONS_HPP
+#define SIMPLE_CHESS_PGNREADER_OPTIONS_HPP
 
 #include <cstdint>
 #include <string>
@@ -57,4 +57,4 @@ struct PgnReaderOptions
 
 } //namespace
 
-#endif // SIMPLECHESS_PGNREADER_OPTIONS_HPP
+#endif // SIMPLE_CHESS_PGNREADER_OPTIONS_HPP

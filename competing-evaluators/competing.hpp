@@ -41,7 +41,7 @@ class Competition
     static const std::vector<std::string> allEvaluators;
 
 
-    #ifndef SIMPLECHESS_NO_COMPETITION_DATA
+    #ifndef SIMPLE_CHESS_NO_COMPETITION_DATA
     /** \brief Performs the whole competition between evaluators.
      *
      * \param allowedEvaluators   ids of allowed evaluators
