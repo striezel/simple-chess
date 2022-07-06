@@ -29,6 +29,8 @@ set(simple_chess_tests_sources
     ../../libsimple-chess/rules/Moves.cpp
     ../../libsimple-chess/search/Node.cpp
     ../../libsimple-chess/search/Search.cpp
+    ../../libsimple-chess/ui/letters.hpp
+    ../../libsimple-chess/ui/symbols.hpp
     ../../util/strings.cpp
     data/Board.cpp
     data/Castling.cpp
@@ -49,6 +51,8 @@ set(simple_chess_tests_sources
     rules/Check.cpp
     rules/Moves.cpp
     search/Search.cpp
+    ui/letters.cpp
+    ui/symbols.cpp
     util/Strings.cpp
     PGN.cpp
     main.cpp)

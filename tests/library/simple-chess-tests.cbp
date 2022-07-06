@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="catch" />
+		<Option title="simple-chess-tests" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Release">
-				<Option output="bin/Release/catch" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/simple-chess-tests" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -77,8 +77,11 @@
 		<Unit filename="../../libsimple-chess/search/Node.hpp" />
 		<Unit filename="../../libsimple-chess/search/Search.cpp" />
 		<Unit filename="../../libsimple-chess/search/Search.hpp" />
+		<Unit filename="../../libsimple-chess/ui/letters.hpp" />
+		<Unit filename="../../libsimple-chess/ui/symbols.hpp" />
 		<Unit filename="../../util/strings.cpp" />
 		<Unit filename="../../util/strings.hpp" />
+		<Unit filename="PGN.cpp" />
 		<Unit filename="data/Board.cpp" />
 		<Unit filename="data/Castling.cpp" />
 		<Unit filename="data/Field.cpp" />
@@ -86,12 +89,12 @@
 		<Unit filename="data/HalfMove.cpp" />
 		<Unit filename="data/Piece.cpp" />
 		<Unit filename="data/Result.cpp" />
-		<Unit filename="evaluation/ConstantEvaluator.cpp" />
-		<Unit filename="evaluation/ConstantEvaluator.hpp" />
 		<Unit filename="evaluation/CastlingEvaluator.cpp" />
 		<Unit filename="evaluation/CheckEvaluator.cpp" />
 		<Unit filename="evaluation/CompoundCreator.cpp" />
 		<Unit filename="evaluation/CompoundEvaluator.cpp" />
+		<Unit filename="evaluation/ConstantEvaluator.cpp" />
+		<Unit filename="evaluation/ConstantEvaluator.hpp" />
 		<Unit filename="evaluation/LinearMobilityEvaluator.cpp" />
 		<Unit filename="evaluation/MaterialEvaluator.cpp" />
 		<Unit filename="evaluation/PromotionEvaluator.cpp" />
@@ -101,7 +104,8 @@
 		<Unit filename="rules/Check.cpp" />
 		<Unit filename="rules/Moves.cpp" />
 		<Unit filename="search/Search.cpp" />
-		<Unit filename="PGN.cpp" />
+		<Unit filename="ui/letters.cpp" />
+		<Unit filename="ui/symbols.cpp" />
 		<Unit filename="util/Strings.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
