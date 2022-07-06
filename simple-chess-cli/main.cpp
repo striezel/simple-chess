@@ -172,11 +172,23 @@ int main(int argc, char** argv)
       // Set engine's side.
       else if ((param == "white") || (param == "w"))
       {
+        if (computerPlayer != simplechess::Colour::none)
+        {
+          std::cerr << "Error: The player for the engine was already set to "
+                    << computerPlayer << "!" << std::endl;
+          return simplechess::rcInvalidParameter;
+        }
         computerPlayer = simplechess::Colour::white;
         std::cout << "Engine will play as white.\n";
       }
       else if ((param == "black") || (param == "b"))
       {
+        if (computerPlayer != simplechess::Colour::none)
+        {
+          std::cerr << "Error: The player for the engine was already set to "
+                    << computerPlayer << "!" << std::endl;
+          return simplechess::rcInvalidParameter;
+        }
         computerPlayer = simplechess::Colour::black;
         std::cout << "Engine will play as black.\n";
       }
