@@ -22,6 +22,7 @@
 #define SIMPLE_CHESS_UI_SYMBOLS_HPP
 
 #include <string_view>
+#include "../data/Piece.hpp"
 
 namespace simplechess::ui
 {

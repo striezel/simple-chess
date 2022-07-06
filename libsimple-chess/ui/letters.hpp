@@ -21,6 +21,8 @@
 #ifndef SIMPLE_CHESS_UI_LETTERS_HPP
 #define SIMPLE_CHESS_UI_LETTERS_HPP
 
+#include "../data/Piece.hpp"
+
 namespace simplechess::ui
 {
 
