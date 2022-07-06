@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include <catch.hpp>
+#include "../locate_catch.hpp"
 #include "../../../libsimple-chess/evaluation/CheckEvaluator.hpp"
 
 TEST_CASE("CheckEvaluator evaluates default start position")

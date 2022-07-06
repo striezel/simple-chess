@@ -96,6 +96,7 @@
 		<Unit filename="evaluation/testsMaterialEvaluator.cpp" />
 		<Unit filename="evaluation/testsPromotionEvaluator.cpp" />
 		<Unit filename="evaluation/testsRootMobilityEvaluator.cpp" />
+		<Unit filename="locate_catch.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="rules/testsCheck.cpp" />
 		<Unit filename="rules/testsMoves.cpp" />

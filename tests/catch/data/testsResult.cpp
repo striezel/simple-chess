@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include <catch.hpp>
+#include "../locate_catch.hpp"
 #include "../../../libsimple-chess/data/Result.hpp"
 
 TEST_CASE("Result: resultToString")

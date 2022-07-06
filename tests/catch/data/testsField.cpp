@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include <catch.hpp>
+#include "../locate_catch.hpp"
 #include "../../../libsimple-chess/data/Field.hpp"
 
 TEST_CASE("Field: column()")

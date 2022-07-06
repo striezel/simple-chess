@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include <catch.hpp>
+#include "../locate_catch.hpp"
 #include "../../../libsimple-chess/data/HalfMove.hpp"
 
 TEST_CASE("HalfMove::empty()")

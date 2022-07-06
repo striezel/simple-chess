@@ -19,7 +19,7 @@
 */
 
 
-#include <catch.hpp>
+#include "../locate_catch.hpp"
 #include "../../../libsimple-chess/evaluation/PromotionEvaluator.hpp"
 
 TEST_CASE("PromotionEvaluator evaluates default start position")

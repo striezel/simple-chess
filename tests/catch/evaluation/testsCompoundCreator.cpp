@@ -19,7 +19,7 @@
 */
 
 
-#include <catch.hpp>
+#include "../locate_catch.hpp"
 #include "../../../libsimple-chess/evaluation/CompoundCreator.hpp"
 #include "../../../libsimple-chess/evaluation/MaterialEvaluator.hpp"
 #include "../../../libsimple-chess/evaluation/LinearMobilityEvaluator.hpp"

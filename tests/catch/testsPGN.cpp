@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include <catch.hpp>
+#include "locate_catch.hpp"
 
 #include "../../libsimple-chess/data/Board.hpp"
 #include "../../libsimple-chess/data/PortableGameNotation.hpp"
@@ -80,17 +80,17 @@ TEST_CASE("defaultPgnExample")
 
     SECTION("Number of moves")
     {
-      //Minimum and maximum move number should be 1 and 43.
+      // Minimum and maximum move number should be 1 and 43.
       REQUIRE( pgn.firstMoveNumber() == 1 );
       REQUIRE( pgn.lastMoveNumber() == 43 );
-      //All moves in that interval should be present.
+      // All moves in that interval should be present.
       for (int i = 1; i <= 43; ++i)
       {
         REQUIRE( pgn.hasMove(i) );
       }
-      //No move zero.
+      // No move zero.
       REQUIRE_FALSE( pgn.hasMove(0) );
-      //No move 44.
+      // No move 44.
       REQUIRE_FALSE( pgn.hasMove(44) );
     }
 

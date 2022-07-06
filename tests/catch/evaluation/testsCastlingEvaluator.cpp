@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include <catch.hpp>
+#include "../locate_catch.hpp"
 #include "../../../libsimple-chess/evaluation/CastlingEvaluator.hpp"
 
 TEST_CASE("CastlingEvaluator evaluates default start position")
