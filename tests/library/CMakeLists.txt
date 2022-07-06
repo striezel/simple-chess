@@ -1,9 +1,9 @@
 # We might support earlier versions, too, but try to use a more recent one.
 cmake_minimum_required (VERSION 3.8)
 
-project(simple_chess_tests_catch)
+project(simple_chess_tests)
 
-set(simple_chess_tests_catch_sources
+set(simple_chess_tests_sources
     ../../libsimple-chess/data/Board.cpp
     ../../libsimple-chess/data/Castling.cpp
     ../../libsimple-chess/data/Field.cpp
@@ -30,27 +30,27 @@ set(simple_chess_tests_catch_sources
     ../../libsimple-chess/search/Node.cpp
     ../../libsimple-chess/search/Search.cpp
     ../../util/strings.cpp
-    data/testsBoard.cpp
-    data/testsCastling.cpp
-    data/testsField.cpp
-    data/testsForsythEdwardsNotation.cpp
-    data/testsHalfMove.cpp
-    data/testsPiece.cpp
-    data/testsResult.cpp
+    data/Board.cpp
+    data/Castling.cpp
+    data/Field.cpp
+    data/ForsythEdwardsNotation.cpp
+    data/HalfMove.cpp
+    data/Piece.cpp
+    data/Result.cpp
     evaluation/ConstantEvaluator.cpp
-    evaluation/testsCastlingEvaluator.cpp
-    evaluation/testsCheckEvaluator.cpp
-    evaluation/testsCompoundCreator.cpp
-    evaluation/testsCompoundEvaluator.cpp
-    evaluation/testsLinearMobilityEvaluator.cpp
-    evaluation/testsMaterialEvaluator.cpp
-    evaluation/testsPromotionEvaluator.cpp
-    evaluation/testsRootMobilityEvaluator.cpp
-    rules/testsCheck.cpp
-    rules/testsMoves.cpp
-    search/testsSearch.cpp
-    util/testsStrings.cpp
-    testsPGN.cpp
+    evaluation/CastlingEvaluator.cpp
+    evaluation/CheckEvaluator.cpp
+    evaluation/CompoundCreator.cpp
+    evaluation/CompoundEvaluator.cpp
+    evaluation/LinearMobilityEvaluator.cpp
+    evaluation/MaterialEvaluator.cpp
+    evaluation/PromotionEvaluator.cpp
+    evaluation/RootMobilityEvaluator.cpp
+    rules/Check.cpp
+    rules/Moves.cpp
+    search/Search.cpp
+    util/Strings.cpp
+    PGN.cpp
     main.cpp)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -66,8 +66,8 @@ endif ()
 
 set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
 
-add_executable(simple_chess_tests_catch ${simple_chess_tests_catch_sources})
+add_executable(simple_chess_tests ${simple_chess_tests_sources})
 
 # add test run
 add_test(NAME simple-chess-tests
-         COMMAND $<TARGET_FILE:simple_chess_tests_catch>)
+         COMMAND $<TARGET_FILE:simple_chess_tests>)
