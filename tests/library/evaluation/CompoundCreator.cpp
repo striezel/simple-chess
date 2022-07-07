@@ -96,7 +96,7 @@ TEST_CASE("CompoundCreator: support for all known evaluator IDs")
   for (const std::string& id : ids)
   {
     compound.clear();
-    REQUIRE( CompoundCreator::create(CompoundCreator::IdCastling, compound) );
+    REQUIRE( CompoundCreator::create(id, compound) );
     REQUIRE_FALSE( compound.empty() );
     REQUIRE( compound.size() == 1 );
   } // for
