@@ -33,7 +33,7 @@ set(simple_chess_cli_sources
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    add_definitions(-Wall -fexceptions)
+    add_definitions(-Wall -Wextra -pedantic -pedantic-errors -fexceptions)
     if (CODE_COVERAGE)
         add_definitions (-O0)
     else()
