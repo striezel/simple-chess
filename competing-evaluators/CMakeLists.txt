@@ -79,8 +79,10 @@ add_test(NAME competing-evaluators-help-default
          COMMAND $<TARGET_FILE:competing-evaluators> --help)
 add_test(NAME competing-evaluators-help-question-mark
          COMMAND $<TARGET_FILE:competing-evaluators> -?)
-add_test(NAME competing-evaluators-help-windows-style
-         COMMAND $<TARGET_FILE:competing-evaluators> /?)
+if (NOT DEFINED ENV{GITHUB_ACTIONS} OR NOT MINGW)
+    add_test(NAME competing-evaluators-help-windows-style
+             COMMAND $<TARGET_FILE:competing-evaluators> /?)
+endif ()
 
 # version information
 add_test(NAME competing-evaluators-version

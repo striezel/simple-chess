@@ -75,8 +75,10 @@ add_test(NAME speedbench-help-default
          COMMAND $<TARGET_FILE:speedbench> --help)
 add_test(NAME speedbench-help-question-mark
          COMMAND $<TARGET_FILE:speedbench> -?)
-add_test(NAME speedbench-help-windows-style
-         COMMAND $<TARGET_FILE:speedbench> /?)
+if (NOT DEFINED ENV{GITHUB_ACTIONS} OR NOT MINGW)
+    add_test(NAME speedbench-help-windows-style
+             COMMAND $<TARGET_FILE:speedbench> /?)
+endif ()
 
 # version information
 add_test(NAME speedbench-version

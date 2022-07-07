@@ -53,8 +53,10 @@ add_test(NAME pgn-reader-help-default
          COMMAND $<TARGET_FILE:pgn-reader> --help)
 add_test(NAME pgn-reader-help-question-mark
          COMMAND $<TARGET_FILE:pgn-reader> -?)
-add_test(NAME pgn-reader-help-windows-style
-         COMMAND $<TARGET_FILE:pgn-reader> /?)
+if (NOT DEFINED ENV{GITHUB_ACTIONS} OR NOT MINGW)
+    add_test(NAME pgn-reader-help-windows-style
+             COMMAND $<TARGET_FILE:pgn-reader> /?)
+endif ()
 
 # version information
 add_test(NAME pgn-reader-version

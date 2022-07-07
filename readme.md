@@ -9,6 +9,7 @@ to perform some chess-related tasks. More information will follow soon.
   [![GitHub CI Clang status](https://github.com/striezel/simple-chess/workflows/Clang/badge.svg)](https://github.com/striezel/simple-chess/actions)
   [![GitHub CI GCC status](https://github.com/striezel/simple-chess/workflows/GCC/badge.svg)](https://github.com/striezel/simple-chess/actions)
   [![GitHub CI MSVC status](https://github.com/striezel/simple-chess/workflows/MSVC/badge.svg)](https://github.com/striezel/simple-chess/actions)
+  [![GitHub CI MSYS2 status](https://github.com/striezel/simple-chess/workflows/MSYS2/badge.svg)](https://github.com/striezel/simple-chess/actions)
 * GitLab CI:
 [![GitLab pipeline status](https://gitlab.com/striezel/simple-chess/badges/master/pipeline.svg)](https://gitlab.com/striezel/simple-chess/-/pipelines)
 

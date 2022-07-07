@@ -104,8 +104,10 @@ add_test(NAME simple-chess-engine-help-default
          COMMAND $<TARGET_FILE:simple-chess-engine> --help)
 add_test(NAME simple-chess-engine-help-question-mark
          COMMAND $<TARGET_FILE:simple-chess-engine> -?)
-add_test(NAME simple-chess-engine-help-windows-style
-         COMMAND $<TARGET_FILE:simple-chess-engine> /?)
+if (NOT DEFINED ENV{GITHUB_ACTIONS} OR NOT MINGW)
+    add_test(NAME simple-chess-engine-help-windows-style
+             COMMAND $<TARGET_FILE:simple-chess-engine> /?)
+endif ()
 
 # version information
 add_test(NAME simple-chess-engine-version

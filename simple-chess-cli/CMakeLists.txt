@@ -77,8 +77,10 @@ add_test(NAME simple-chess-cli-help-default
          COMMAND $<TARGET_FILE:simple-chess-cli> --help)
 add_test(NAME simple-chess-cli-help-question-mark
          COMMAND $<TARGET_FILE:simple-chess-cli> -?)
-add_test(NAME simple-chess-cli-help-windows-style
-         COMMAND $<TARGET_FILE:simple-chess-cli> /?)
+if (NOT DEFINED ENV{GITHUB_ACTIONS} OR NOT MINGW)
+    add_test(NAME simple-chess-cli-help-windows-style
+             COMMAND $<TARGET_FILE:simple-chess-cli> /?)
+endif ()
 
 # version information
 add_test(NAME simple-chess-cli-version
