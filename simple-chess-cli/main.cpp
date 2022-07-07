@@ -26,7 +26,6 @@
 #include "../libsimple-chess/search/Search.hpp"
 #include "../libsimple-chess/ui/Console.hpp"
 #include "../libsimple-chess/ui/detect_utf8.hpp"
-#include "../libsimple-chess/ui/SymbolicBoard.hpp"
 #include "../util/GitInfos.hpp"
 #include "../util/ReturnCodes.hpp"
 #include "../util/Version.hpp"
@@ -81,11 +80,11 @@ void showBoard(const simplechess::Board& board, const bool utf8)
 {
   if (utf8)
   {
-    simplechess::ui::SymbolicBoard::showBoard(board);
+    simplechess::ui::Symbolic::showBoard(board);
   }
   else
   {
-    simplechess::ui::Console::showBoard(board);
+    simplechess::ui::Ascii::showBoard(board);
   }
   std::cout << "\n";
   if (board.toMove() == simplechess::Colour::white)

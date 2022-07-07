@@ -27,7 +27,6 @@ set(pgn_reader_with_meteor_chess_sources
     ../libsimple-chess/rules/check.cpp
     ../libsimple-chess/rules/Moves.cpp
     ../libsimple-chess/ui/Console.cpp
-    ../libsimple-chess/ui/SymbolicBoard.cpp
     ../libsimple-chess/ui/detect_utf8.cpp
     ../libsimple-chess/ui/letters.hpp
     ../libsimple-chess/ui/symbols.hpp

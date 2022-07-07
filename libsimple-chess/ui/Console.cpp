@@ -21,24 +21,19 @@
 #include "Console.hpp"
 #include <iostream>
 #include "letters.hpp"
+#include "symbols.hpp"
 
 namespace simplechess::ui
 {
 
-void Console::showBoard(const Board & board)
+void Ascii::showBoard(const Board & board)
 {
-  const std::string rowSeparator = "+---+---+---+---+---+---+---+---+";
-  std::cout << rowSeparator << "\n";
-  for (int r = 8; r >= 1; r--)
-  {
-    std::cout << "| ";
-    for (char c = 'a'; c <= 'h'; ++c)
-    {
-      const Piece & piece = board.element(toField(c, r));
-      std::cout << letter(piece) << " | ";
-    } // for c
-    std::cout << "\n" << rowSeparator << "\n";
-  } // for r
+  simplechess::ui::showBoard(board, letter);
+}
+
+void Symbolic::showBoard(const Board & board)
+{
+  simplechess::ui::showBoard(board, symbol);
 }
 
 } // namespace

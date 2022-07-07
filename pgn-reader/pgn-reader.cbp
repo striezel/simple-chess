@@ -154,8 +154,6 @@
 		<Unit filename="../libsimple-chess/rules/check.hpp" />
 		<Unit filename="../libsimple-chess/ui/Console.cpp" />
 		<Unit filename="../libsimple-chess/ui/Console.hpp" />
-		<Unit filename="../libsimple-chess/ui/SymbolicBoard.cpp" />
-		<Unit filename="../libsimple-chess/ui/SymbolicBoard.hpp" />
 		<Unit filename="../libsimple-chess/ui/detect_utf8.cpp" />
 		<Unit filename="../libsimple-chess/ui/detect_utf8.hpp" />
 		<Unit filename="../libsimple-chess/ui/letters.hpp" />

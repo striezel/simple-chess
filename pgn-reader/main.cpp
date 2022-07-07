@@ -36,7 +36,6 @@
 #include "../libsimple-chess/pgn/UnconsumedTokensException.hpp"
 #include "../libsimple-chess/pgn/ParserException.hpp"
 #include "../libsimple-chess/ui/Console.hpp"
-#include "../libsimple-chess/ui/SymbolicBoard.hpp"
 #include "../libsimple-chess/ui/detect_utf8.hpp"
 #include "../util/ReturnCodes.hpp"
 
@@ -72,11 +71,11 @@ void showBoard(const simplechess::Board& board, const bool with_utf8)
 {
   if (with_utf8)
   {
-    simplechess::ui::SymbolicBoard::showBoard(board);
+    simplechess::ui::Symbolic::showBoard(board);
   }
   else
   {
-    simplechess::ui::Console::showBoard(board);
+    simplechess::ui::Ascii::showBoard(board);
   }
 }
 
