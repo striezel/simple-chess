@@ -13,6 +13,9 @@ simple-chess-cli:
 - The program will now try to detect whether UTF-8 can be used on the terminal,
   and if that is the case, then it will use Unicode chess symbols to display
   the pieces on the board instead of just letters.
+- Files (a-h) and ranks (1-8) are now shown next to the board by default.
+  Those labels can be disables via the new `--hide-labels` option or they can
+  be explicitly enabled via the `--show-labels` option.
 
 ## Version 0.5.5 (2021-05-13)
 

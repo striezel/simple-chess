@@ -71,11 +71,11 @@ void showBoard(const simplechess::Board& board, const bool with_utf8)
 {
   if (with_utf8)
   {
-    simplechess::ui::Symbolic::showBoard(board);
+    simplechess::ui::Symbolic::showBoard(board, true);
   }
   else
   {
-    simplechess::ui::Ascii::showBoard(board);
+    simplechess::ui::Ascii::showBoard(board, true);
   }
 }
 

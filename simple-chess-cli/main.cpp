@@ -45,15 +45,15 @@ void showHelp()
   std::cout << "simple-chess-cli [OPTIONS]\n"
             << "\n"
             << "options:\n"
-            << "  -? | --help     - shows this help message and exits\n"
-            << "  -v | --version  - shows version information and exits\n"
-            << "  w | white       - let the engine be the white player\n"
-            << "  b | black       - let the engine be the black player\n"
+            << "  -? | --help     - Shows this help message and exits.\n"
+            << "  -v | --version  - Shows version information and exits.\n"
+            << "  w | white       - Let the engine be the white player.\n"
+            << "  b | black       - Let the engine be the black player.\n"
             << "                    (The default is to play none, i.e. both sides are human.)\n"
             << "  FEN             - a valid Forsyth-Edwards notation that indicates the\n"
             << "                    initial position for the chess game. Default is the normal\n"
             << "                    chess start position.\n"
-            << "  -e EVAL         - sets a custom set of evaluators to use where EVAL is a\n"
+            << "  -e EVAL         - Sets a custom set of evaluators to use where EVAL is a\n"
             << "                    comma-separated list of evaluator ids. Valid ids are:\n"
             << "                      material: evaluator using material value of pieces\n"
             << "                      check: evaluator with bonus for checking opponent\n"
@@ -69,22 +69,25 @@ void showHelp()
             << "                      --evaluator check,promotion,material\n"
             << "                    If no evaluator option is given, the program uses a preset.\n"
             << "                    Evaluators are used by computer players only, so this\n"
-            << "                    has no effect when two humans play against each other.\n";
+            << "                    has no effect when two humans play against each other.\n"
+            << "  --show-labels   - Show labels for fields next to the chess board.\n"
+            << "  --hide-labels   - Do not show labels for fields next to the chess board.\n";
 }
 
 /** \brief Prints a board to the standard output.
  *
  * \param board   the chess board
+ * \param showLabels  whether to show labels for fields of the board
  */
-void showBoard(const simplechess::Board& board, const bool utf8)
+void showBoard(const simplechess::Board& board, const bool utf8, const bool showLabels)
 {
   if (utf8)
   {
-    simplechess::ui::Symbolic::showBoard(board);
+    simplechess::ui::Symbolic::showBoard(board, showLabels);
   }
   else
   {
-    simplechess::ui::Ascii::showBoard(board);
+    simplechess::ui::Ascii::showBoard(board, showLabels);
   }
   std::cout << "\n";
   if (board.toMove() == simplechess::Colour::white)
@@ -140,6 +143,7 @@ int main(int argc, char** argv)
   simplechess::Colour computerPlayer = simplechess::Colour::none;
   bool doneFEN = false;
   std::string evaluators = "";
+  std::optional<bool> labels = std::nullopt;
 
   // Use default start position.
   if (!board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
@@ -190,6 +194,26 @@ int main(int argc, char** argv)
         }
         computerPlayer = simplechess::Colour::black;
         std::cout << "Engine will play as black.\n";
+      }
+      else if ((param == "--show-labels") || (param == "--labels"))
+      {
+        if (labels.has_value())
+        {
+          std::cerr << "Error: A parameter to set label visibility was already set!"
+                    << std::endl;
+          return simplechess::rcInvalidParameter;
+        }
+        labels = true;
+      }
+      else if ((param == "--hide-labels") || (param == "--no-labels"))
+      {
+        if (labels.has_value())
+        {
+          std::cerr << "Error: A parameter to set label visibility was already set!"
+                    << std::endl;
+          return simplechess::rcInvalidParameter;
+        }
+        labels = false;
       }
       // custom list of evaluators
       else if ((param == "--evaluators") || (param == "--evaluator") || (param == "-e"))
@@ -242,12 +266,17 @@ int main(int argc, char** argv)
     }
   }
 
+  if (!labels.has_value())
+  {
+    labels = true;
+  }
+
   bool use_utf8 = simplechess::ui::may_support_utf8();
 
   // potentially endless game loop
   while (true)
   {
-    showBoard(board, use_utf8);
+    showBoard(board, use_utf8, labels.value());
     std::cout << "\n";
     if (board.toMove() != computerPlayer)
     {

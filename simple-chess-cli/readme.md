@@ -10,15 +10,15 @@ other.
 
 Supported program options:
 
-    -? | --help     - shows this help message and exits
-    -v | --version  - shows version information and exits
-    w | white       - let the engine be the white player
-    b | black       - let the engine be the black player
+    -? | --help     - Shows this help message and exits.
+    -v | --version  - Shows version information and exits.
+    w | white       - Let the engine be the white player.
+    b | black       - Let the engine be the black player.
                       (The default is to play none, i.e. both sides are human.)
     FEN             - a valid Forsyth-Edwards notation that indicates the
                       initial position for the chess game. Default is the normal
                       chess start position.
-    -e EVAL         - sets a custom set of evaluators to use where EVAL is a
+    -e EVAL         - Sets a custom set of evaluators to use where EVAL is a
                       comma-separated list of evaluator ids. Valid ids are:
                         material: evaluator using material value of pieces
                         check: evaluator with bonus for checking opponent
@@ -35,3 +35,5 @@ Supported program options:
                       If no evaluator option is given, the program uses a preset.
                       Evaluators are used by computer players only, so this
                       has no effect when two humans play against each other.
+    --show-labels   - Show labels for fields next to the chess board.
+    --hide-labels   - Do not show labels for fields next to the chess board.

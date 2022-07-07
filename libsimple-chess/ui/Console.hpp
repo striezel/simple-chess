@@ -33,8 +33,9 @@ class Ascii
     /** \brief Prints the board to standard output.
      *
      * \param board   the current chess board
+     * \param showLabels  whether to show labels for fields (a-h, 1-8)
      */
-    static void showBoard(const Board& board);
+    static void showBoard(const Board& board, const bool showLabels);
 };
 
 /** Shows a chess board on the console using Unicode symbols for pieces. */
@@ -44,8 +45,9 @@ class Symbolic
     /** \brief Prints the board to standard output.
      *
      * \param board   the current chess board
+     * \param showLabels  whether to show labels for fields (a-h, 1-8)
      */
-    static void showBoard(const Board& board);
+    static void showBoard(const Board& board, const bool showLabels);
 };
 
 
@@ -53,22 +55,40 @@ class Symbolic
  *
  * \param board   the current chess board
  * \param PieceToChars   function that translates Piece to character sequence
+ * \param showLabels  whether to show labels for fields (a-h, 1-8)
  */
 template<typename Fn>
-void showBoard(const Board& board, Fn PieceToChars)
+void showBoard(const Board& board, Fn PieceToChars, const bool showLabels)
 {
   const std::string rowSeparator = "+---+---+---+---+---+---+---+---+";
+  if (showLabels)
+  {
+    std::cout << "  ";
+  }
   std::cout << rowSeparator << "\n";
   for (int r = 8; r >= 1; r--)
   {
+    if (showLabels)
+    {
+      std::cout << std::to_string(r) << ' ';
+    }
     std::cout << "| ";
     for (char c = 'a'; c <= 'h'; ++c)
     {
       const Piece & piece = board.element(toField(c, r));
       std::cout << PieceToChars(piece) << " | ";
     } // for c
-    std::cout << "\n" << rowSeparator << "\n";
+    std::cout << "\n";
+    if (showLabels)
+    {
+      std::cout << "  ";
+    }
+    std::cout << rowSeparator << "\n";
   } // for r
+  if (showLabels)
+  {
+    std::cout << "    a   b   c   d   e   f   g   h\n";
+  }
 }
 
 } // namespace

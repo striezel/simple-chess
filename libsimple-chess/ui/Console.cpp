@@ -26,14 +26,14 @@
 namespace simplechess::ui
 {
 
-void Ascii::showBoard(const Board & board)
+void Ascii::showBoard(const Board & board, const bool showLabels)
 {
-  simplechess::ui::showBoard(board, letter);
+  simplechess::ui::showBoard(board, letter, showLabels);
 }
 
-void Symbolic::showBoard(const Board & board)
+void Symbolic::showBoard(const Board & board, const bool showLabels)
 {
-  simplechess::ui::showBoard(board, symbol);
+  simplechess::ui::showBoard(board, symbol, showLabels);
 }
 
 } // namespace
