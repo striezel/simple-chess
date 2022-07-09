@@ -69,13 +69,15 @@ void showHelp()
 
 void showBoard(const simplechess::Board& board, const bool with_utf8)
 {
+  using namespace simplechess::ui;
+
   if (with_utf8)
   {
-    simplechess::ui::Symbolic::showBoard(board, true);
+    Symbolic::showBoard(std::cout, board, Labels::Show);
   }
   else
   {
-    simplechess::ui::Ascii::showBoard(board, true);
+    Ascii::showBoard(std::cout, board, Labels::Show);
   }
 }
 

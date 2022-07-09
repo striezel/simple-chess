@@ -21,73 +21,83 @@
 #ifndef SIMPLE_CHESS_CONSOLE_HPP
 #define SIMPLE_CHESS_CONSOLE_HPP
 
+#include <ostream>
 #include "../data/Board.hpp"
 
 namespace simplechess::ui
 {
 
+enum class Labels: bool
+{
+  Show = true,
+  Hide = false
+};
+
 /** Shows a chess board on the console using ASCII characters for pieces. */
 class Ascii
 {
   public:
-    /** \brief Prints the board to standard output.
+    /** \brief Prints the board to an output stream.
      *
+     * \param os      the output stream to print to
      * \param board   the current chess board
      * \param showLabels  whether to show labels for fields (a-h, 1-8)
      */
-    static void showBoard(const Board& board, const bool showLabels);
+    static void showBoard(std::ostream& os, const Board& board, const Labels showLabels);
 };
 
 /** Shows a chess board on the console using Unicode symbols for pieces. */
 class Symbolic
 {
   public:
-    /** \brief Prints the board to standard output.
+    /** \brief Prints the board to an output stream.
      *
+     * \param os      the output stream to print to
      * \param board   the current chess board
      * \param showLabels  whether to show labels for fields (a-h, 1-8)
      */
-    static void showBoard(const Board& board, const bool showLabels);
+    static void showBoard(std::ostream& os, const Board& board, const Labels showLabels);
 };
 
 
-/** \brief Prints the board to standard output.
+/** \brief Prints the board to an output stream.
  *
+ * \param os      the output stream to print to
  * \param board   the current chess board
  * \param PieceToChars   function that translates Piece to character sequence
  * \param showLabels  whether to show labels for fields (a-h, 1-8)
  */
 template<typename Fn>
-void showBoard(const Board& board, Fn PieceToChars, const bool showLabels)
+void showBoard(std::ostream& os, const Board& board, Fn PieceToChars, const Labels showLabels)
 {
   const std::string rowSeparator = "+---+---+---+---+---+---+---+---+";
-  if (showLabels)
+  if (showLabels == Labels::Show)
   {
-    std::cout << "  ";
+    os << "  ";
   }
-  std::cout << rowSeparator << "\n";
+  os << rowSeparator << "\n";
   for (int r = 8; r >= 1; r--)
   {
-    if (showLabels)
+    if (showLabels == Labels::Show)
     {
-      std::cout << std::to_string(r) << ' ';
+      os << std::to_string(r) << ' ';
     }
-    std::cout << "| ";
+    os << "| ";
     for (char c = 'a'; c <= 'h'; ++c)
     {
       const Piece & piece = board.element(toField(c, r));
-      std::cout << PieceToChars(piece) << " | ";
+      os << PieceToChars(piece) << " | ";
     } // for c
-    std::cout << "\n";
-    if (showLabels)
+    os << "\n";
+    if (showLabels == Labels::Show)
     {
-      std::cout << "  ";
+      os << "  ";
     }
-    std::cout << rowSeparator << "\n";
+    os << rowSeparator << "\n";
   } // for r
-  if (showLabels)
+  if (showLabels == Labels::Show)
   {
-    std::cout << "    a   b   c   d   e   f   g   h\n";
+    os << "    a   b   c   d   e   f   g   h\n";
   }
 }
 

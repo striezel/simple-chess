@@ -79,18 +79,21 @@ void showHelp()
  * \param board   the chess board
  * \param showLabels  whether to show labels for fields of the board
  */
-void showBoard(const simplechess::Board& board, const bool utf8, const bool showLabels)
+void showBoard(const simplechess::Board& board, const bool utf8, const simplechess::ui::Labels showLabels)
 {
+  using namespace simplechess;
+  using namespace simplechess::ui;
+
   if (utf8)
   {
-    simplechess::ui::Symbolic::showBoard(board, showLabels);
+    Symbolic::showBoard(std::cout, board, showLabels);
   }
   else
   {
-    simplechess::ui::Ascii::showBoard(board, showLabels);
+    Ascii::showBoard(std::cout, board, showLabels);
   }
   std::cout << "\n";
-  if (board.toMove() == simplechess::Colour::white)
+  if (board.toMove() == Colour::white)
     std::cout << "White is to move.\n";
   else
     std::cout << "Black is to move.\n";
@@ -139,11 +142,13 @@ std::optional<simplechess::Field> getField(const std::string_view prompt)
 
 int main(int argc, char** argv)
 {
-  simplechess::Board board;
-  simplechess::Colour computerPlayer = simplechess::Colour::none;
+  using namespace simplechess;
+
+  Board board;
+  Colour computerPlayer = Colour::none;
   bool doneFEN = false;
   std::string evaluators = "";
-  std::optional<bool> labels = std::nullopt;
+  std::optional<ui::Labels> labels = std::nullopt;
 
   // Use default start position.
   if (!board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
@@ -175,24 +180,24 @@ int main(int argc, char** argv)
       // Set engine's side.
       else if ((param == "white") || (param == "w"))
       {
-        if (computerPlayer != simplechess::Colour::none)
+        if (computerPlayer != Colour::none)
         {
           std::cerr << "Error: The player for the engine was already set to "
                     << computerPlayer << "!" << std::endl;
           return simplechess::rcInvalidParameter;
         }
-        computerPlayer = simplechess::Colour::white;
+        computerPlayer = Colour::white;
         std::cout << "Engine will play as white.\n";
       }
       else if ((param == "black") || (param == "b"))
       {
-        if (computerPlayer != simplechess::Colour::none)
+        if (computerPlayer != Colour::none)
         {
           std::cerr << "Error: The player for the engine was already set to "
                     << computerPlayer << "!" << std::endl;
           return simplechess::rcInvalidParameter;
         }
-        computerPlayer = simplechess::Colour::black;
+        computerPlayer = Colour::black;
         std::cout << "Engine will play as black.\n";
       }
       else if ((param == "--show-labels") || (param == "--labels"))
@@ -203,7 +208,7 @@ int main(int argc, char** argv)
                     << std::endl;
           return simplechess::rcInvalidParameter;
         }
-        labels = true;
+        labels = ui::Labels::Show;
       }
       else if ((param == "--hide-labels") || (param == "--no-labels"))
       {
@@ -213,7 +218,7 @@ int main(int argc, char** argv)
                     << std::endl;
           return simplechess::rcInvalidParameter;
         }
-        labels = false;
+        labels = ui::Labels::Hide;
       }
       // custom list of evaluators
       else if ((param == "--evaluators") || (param == "--evaluator") || (param == "-e"))
@@ -250,16 +255,16 @@ int main(int argc, char** argv)
     } // for i
   } // if arguments are there
 
-  simplechess::CompoundEvaluator evaluator;
+  CompoundEvaluator evaluator;
   if (evaluators.empty())
   {
     // Fall back to default evaluator set.
-    simplechess::CompoundCreator::getDefault(evaluator);
+    CompoundCreator::getDefault(evaluator);
   }
   else
   {
     // Try to parse user input.
-    if (!simplechess::CompoundCreator::create(evaluators, evaluator))
+    if (!CompoundCreator::create(evaluators, evaluator))
     {
       std::cout << "Error: The given evaluator list is invalid!\n";
       return simplechess::rcInvalidParameter;
@@ -268,10 +273,10 @@ int main(int argc, char** argv)
 
   if (!labels.has_value())
   {
-    labels = true;
+    labels = ui::Labels::Show;
   }
 
-  bool use_utf8 = simplechess::ui::may_support_utf8();
+  bool use_utf8 = ui::may_support_utf8();
 
   // potentially endless game loop
   while (true)
@@ -292,7 +297,7 @@ int main(int argc, char** argv)
         std::cout << "Quitting game.\n";
         return 0;
       }
-      if (!board.move(start.value(), destination.value(), simplechess::PieceType::queen))
+      if (!board.move(start.value(), destination.value(), PieceType::queen))
       {
         std::cout << "The move is not allowed!\n";
         return 2;
@@ -301,7 +306,7 @@ int main(int argc, char** argv)
     else
     {
       // Let's find a suitable move.
-      simplechess::Search s(board);
+      Search s(board);
       // Search for best move, only two plies.
       s.search(evaluator, 2);
       // Did the search find any moves?
@@ -311,9 +316,9 @@ int main(int argc, char** argv)
         return 0;
       }
       const auto bestMove = s.bestMove();
-      const simplechess::Field from = std::get<0>(bestMove);
-      const simplechess::Field to = std::get<1>(bestMove);
-      const simplechess::PieceType promo = std::get<2>(bestMove);
+      const Field from = std::get<0>(bestMove);
+      const Field to = std::get<1>(bestMove);
+      const PieceType promo = std::get<2>(bestMove);
       std::cout << "Computer moves from " << simplechess::column(from) << simplechess::row(from)
                 << " to " << simplechess::column(to) << simplechess::row(to) << ".\n";
       if (!board.move(from, to, promo))
