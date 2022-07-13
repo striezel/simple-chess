@@ -23,16 +23,20 @@
 #include "../../../engine/Engine.hpp"
 #include "../../../engine/xboard/CommandParser.hpp"
 #include "../../../engine/xboard/Draw.hpp"
+#include "../../../engine/xboard/ExactTime.hpp"
 #include "../../../engine/xboard/Error.hpp"
 #include "../../../engine/xboard/Force.hpp"
 #include "../../../engine/xboard/Go.hpp"
+#include "../../../engine/xboard/Level.hpp"
 #include "../../../engine/xboard/New.hpp"
 #include "../../../engine/xboard/Ping.hpp"
 #include "../../../engine/xboard/ProtocolVersion.hpp"
 #include "../../../engine/xboard/Quit.hpp"
 #include "../../../engine/xboard/ResultCmd.hpp"
+#include "../../../engine/xboard/SetBoard.hpp"
 #include "../../../engine/xboard/SetDepth.hpp"
 #include "../../../engine/xboard/SetTime.hpp"
+#include "../../../engine/xboard/Usermove.hpp"
 #include "../../../engine/xboard/Xboard.hpp"
 
 bool noErrorInQueue()
@@ -100,6 +104,13 @@ TEST_CASE("CommandParser")
     REQUIRE( lastQueueElementIs<Draw>() );
   }
 
+  SECTION("easy")
+  {
+    CommandParser::parse("easy");
+    REQUIRE( noErrorInQueue() );
+    // No-op, i. e. no command is generated.
+  }
+
   SECTION("force")
   {
     CommandParser::parse("force");
@@ -119,6 +130,57 @@ TEST_CASE("CommandParser")
     CommandParser::parse("hard");
     REQUIRE( noErrorInQueue() );
     // No-op, i. e. no command is generated.
+  }
+
+  SECTION("level")
+  {
+    SECTION("normal notation")
+    {
+      clearCommandQueue();
+      CommandParser::parse("level 40 5 0");
+      REQUIRE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<Level>() );
+    }
+
+    SECTION("minutes:seconds notation")
+    {
+      clearCommandQueue();
+      CommandParser::parse("level 40 0:30 0");
+      REQUIRE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<Level>() );
+    }
+
+    SECTION("invalid: moves is not an integer")
+    {
+      CommandParser::parse("level haha 5 0");
+      REQUIRE_FALSE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<Error>() );
+      clearCommandQueue();
+    }
+
+    SECTION("invalid: minutes are not an integer")
+    {
+      CommandParser::parse("level 40 foo:30 0");
+      REQUIRE_FALSE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<Error>() );
+      clearCommandQueue();
+    }
+
+    SECTION("invalid: seconds are not an integer")
+    {
+      CommandParser::parse("level 40 1:foo 0");
+      REQUIRE_FALSE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<Error>() );
+      clearCommandQueue();
+    }
+
+    SECTION("invalid: increment is not an integer")
+    {
+      CommandParser::parse("level 40 1:30 foo");
+      REQUIRE_FALSE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<Error>() );
+      clearCommandQueue();
+    }
   }
 
   SECTION("new")
@@ -274,6 +336,31 @@ TEST_CASE("CommandParser")
     }
   }
 
+  SECTION("setboard")
+  {
+    CommandParser::parse("setboard rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0");
+    REQUIRE( noErrorInQueue() );
+    REQUIRE( lastQueueElementIs<SetBoard>() );
+  }
+
+  SECTION("st")
+  {
+    SECTION("correct usage with argument")
+    {
+      CommandParser::parse("st 25");
+      REQUIRE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<ExactTime>() );
+    }
+
+    SECTION("wrong usage with non-integer argument")
+    {
+      CommandParser::parse("st blob");
+      REQUIRE_FALSE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<Error>() );
+      clearCommandQueue();
+    }
+  }
+
   SECTION("time")
   {
     SECTION("correct usage with argument")
@@ -289,6 +376,41 @@ TEST_CASE("CommandParser")
       REQUIRE_FALSE( noErrorInQueue() );
       REQUIRE( lastQueueElementIs<Error>() );
       clearCommandQueue();
+    }
+  }
+
+  SECTION("usermove")
+  {
+    SECTION("normal move")
+    {
+      clearCommandQueue();
+      CommandParser::parse("usermove e2e4");
+      REQUIRE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<Usermove>() );
+    }
+
+    SECTION("move with pawn promotion")
+    {
+      clearCommandQueue();
+      CommandParser::parse("usermove a7a8q");
+      REQUIRE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<Usermove>() );
+    }
+
+    SECTION("normal move without usermove prefix")
+    {
+      clearCommandQueue();
+      CommandParser::parse("e2e4");
+      REQUIRE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<Usermove>() );
+    }
+
+    SECTION("move with pawn promotion without usermove prefix")
+    {
+      clearCommandQueue();
+      CommandParser::parse("a7a8q");
+      REQUIRE( noErrorInQueue() );
+      REQUIRE( lastQueueElementIs<Usermove>() );
     }
   }
 

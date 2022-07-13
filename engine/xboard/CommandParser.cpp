@@ -112,6 +112,12 @@ void CommandParser::parse(const std::string& commandString)
     // Turn on pondering (i. e. "thinking" on the opponent's time).
     // No operation required, we currently ignore this.
   }
+  else if (commandString == "easy")
+  {
+    // Turn off pondering.
+    // No operation required, we currently do not support this.
+    // Pondering is always off.
+  }
   else if (commandString.substr(0, 6) == "level ")
   {
     const auto parts = util::split(commandString.substr(6), ' ');
