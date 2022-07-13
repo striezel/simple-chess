@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include "../locate_catch.hpp"
+#include "../../locate_catch.hpp"
 #include "../../../libsimple-chess/data/Castling.hpp"
 
 TEST_CASE("Castling:init")

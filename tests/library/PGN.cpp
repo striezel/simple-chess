@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include "locate_catch.hpp"
+#include "../locate_catch.hpp"
 
 #include "../../libsimple-chess/data/Board.hpp"
 #include "../../libsimple-chess/data/PortableGameNotation.hpp"

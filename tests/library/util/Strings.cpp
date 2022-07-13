@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include "../locate_catch.hpp"
+#include "../../locate_catch.hpp"
 #include "../../../util/strings.hpp"
 
 TEST_CASE("split()")

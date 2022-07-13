@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include "../locate_catch.hpp"
+#include "../../locate_catch.hpp"
 #include <sstream>
 #include "../../../libsimple-chess/data/Piece.hpp"
 

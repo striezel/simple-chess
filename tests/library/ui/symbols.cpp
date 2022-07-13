@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include "../locate_catch.hpp"
+#include "../../locate_catch.hpp"
 #include "../../../libsimple-chess/ui/symbols.hpp"
 
 TEST_CASE("Unicode symbols for pieces")

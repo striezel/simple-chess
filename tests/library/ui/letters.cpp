@@ -18,7 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
-#include "../locate_catch.hpp"
+#include "../../locate_catch.hpp"
 #include "../../../libsimple-chess/ui/letters.hpp"
 
 TEST_CASE("letters for pieces")

@@ -19,7 +19,7 @@
 */
 
 
-#include "../locate_catch.hpp"
+#include "../../locate_catch.hpp"
 #include "../../../libsimple-chess/evaluation/LinearMobilityEvaluator.hpp"
 
 TEST_CASE("LinearMobilityEvaluator evaluates default start position")

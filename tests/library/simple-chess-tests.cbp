@@ -81,6 +81,7 @@
 		<Unit filename="../../libsimple-chess/ui/symbols.hpp" />
 		<Unit filename="../../util/strings.cpp" />
 		<Unit filename="../../util/strings.hpp" />
+		<Unit filename="../locate_catch.hpp" />
 		<Unit filename="PGN.cpp" />
 		<Unit filename="data/Board.cpp" />
 		<Unit filename="data/Castling.cpp" />
@@ -99,7 +100,6 @@
 		<Unit filename="evaluation/MaterialEvaluator.cpp" />
 		<Unit filename="evaluation/PromotionEvaluator.cpp" />
 		<Unit filename="evaluation/RootMobilityEvaluator.cpp" />
-		<Unit filename="locate_catch.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="rules/Check.cpp" />
 		<Unit filename="rules/Moves.cpp" />
