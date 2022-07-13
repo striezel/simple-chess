@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2021  Dirk Stolle
+    Copyright (C) 2021, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 #include "../Engine.hpp"
 #ifdef DEBUG
 #include "../io-utils.hpp"
-#include "../../util/strings.hpp"
 #endif // DEBUG
 
 namespace simplechess::xboard
@@ -36,7 +35,7 @@ SetDepth::SetDepth(const unsigned int depth)
 bool SetDepth::process()
 {
   #ifdef DEBUG
-  sendCommand("# depth was " + util::intToString(Engine::get().searchDepth()) + " and got set to " + util::intToString(mDepth) + ".");
+  sendCommand("# depth was " + std::to_string(Engine::get().searchDepth()) + " and got set to " + std::to_string(mDepth) + ".");
   #endif // DEBUG
   Engine::get().setSearchDepth(mDepth);
   return true;

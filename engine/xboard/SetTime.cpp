@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2021  Dirk Stolle
+    Copyright (C) 2017, 2021, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 #include "../Engine.hpp"
 #ifdef DEBUG
 #include "../io-utils.hpp"
-#include "../../util/strings.hpp"
 #endif // DEBUG
 
 namespace simplechess::xboard
@@ -39,7 +38,7 @@ bool SetTime::process()
   Clock& cl = mOpponent ? Engine::get().timing().opponent() : Engine::get().timing().self();
   #ifdef DEBUG
   const auto origCentis = cl.remaining().count();
-  sendCommand("# clock time was " + util::intToString(origCentis) + " cs and got set to " + util::intToString(mCentiseconds) + " cs");
+  sendCommand("# clock time was " + std::to_string(origCentis) + " cs and got set to " + std::to_string(mCentiseconds) + " cs");
   #endif // DEBUG
   cl.setRemaining(centiseconds(mCentiseconds));
   return true;
