@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2021  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -181,6 +181,13 @@ class Engine
      * \return Returns a constant reference to command queue.
      */
     const std::deque<std::unique_ptr<Command> >& queue() const;
+
+
+    /** \brief Gets a mutable reference to the current command queue.
+     *
+     * \return Returns a reference to command queue.
+     */
+    std::deque<std::unique_ptr<Command> >& mutableQueue();
 
 
     /** \brief Processes all remaining commands in the queue.

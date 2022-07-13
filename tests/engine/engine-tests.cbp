@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="engine-tests" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Release">
+				<Option output="bin/Release/engine-tests" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Weffc++" />
+			<Add option="-pedantic" />
+			<Add option="-Wextra" />
+			<Add option="-Wall" />
+			<Add option="-std=c++17" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="../../engine/Engine.cpp" />
+		<Unit filename="../../engine/Engine.hpp" />
+		<Unit filename="../../engine/io-utils.cpp" />
+		<Unit filename="../../engine/io-utils.hpp" />
+		<Unit filename="../../engine/time/Clock.cpp" />
+		<Unit filename="../../engine/time/Clock.hpp" />
+		<Unit filename="../../engine/time/Timing.cpp" />
+		<Unit filename="../../engine/time/Timing.hpp" />
+		<Unit filename="../../engine/xboard/CommandParser.cpp" />
+		<Unit filename="../../engine/xboard/CommandParser.hpp" />
+		<Unit filename="../../engine/xboard/Draw.cpp" />
+		<Unit filename="../../engine/xboard/Draw.hpp" />
+		<Unit filename="../../engine/xboard/Error.cpp" />
+		<Unit filename="../../engine/xboard/Error.hpp" />
+		<Unit filename="../../engine/xboard/ExactTime.cpp" />
+		<Unit filename="../../engine/xboard/ExactTime.hpp" />
+		<Unit filename="../../engine/xboard/Force.cpp" />
+		<Unit filename="../../engine/xboard/Force.hpp" />
+		<Unit filename="../../engine/xboard/Go.cpp" />
+		<Unit filename="../../engine/xboard/Go.hpp" />
+		<Unit filename="../../engine/xboard/Level.cpp" />
+		<Unit filename="../../engine/xboard/Level.hpp" />
+		<Unit filename="../../engine/xboard/New.cpp" />
+		<Unit filename="../../engine/xboard/New.hpp" />
+		<Unit filename="../../engine/xboard/Ping.cpp" />
+		<Unit filename="../../engine/xboard/Ping.hpp" />
+		<Unit filename="../../engine/xboard/ProtocolVersion.cpp" />
+		<Unit filename="../../engine/xboard/ProtocolVersion.hpp" />
+		<Unit filename="../../engine/xboard/Quit.cpp" />
+		<Unit filename="../../engine/xboard/Quit.hpp" />
+		<Unit filename="../../engine/xboard/ResultCmd.cpp" />
+		<Unit filename="../../engine/xboard/ResultCmd.hpp" />
+		<Unit filename="../../engine/xboard/SetBoard.cpp" />
+		<Unit filename="../../engine/xboard/SetBoard.hpp" />
+		<Unit filename="../../engine/xboard/SetDepth.cpp" />
+		<Unit filename="../../engine/xboard/SetDepth.hpp" />
+		<Unit filename="../../engine/xboard/SetTime.cpp" />
+		<Unit filename="../../engine/xboard/SetTime.hpp" />
+		<Unit filename="../../engine/xboard/Usermove.cpp" />
+		<Unit filename="../../engine/xboard/Usermove.hpp" />
+		<Unit filename="../../engine/xboard/Xboard.cpp" />
+		<Unit filename="../../engine/xboard/Xboard.hpp" />
+		<Unit filename="../../libsimple-chess/data/Board.cpp" />
+		<Unit filename="../../libsimple-chess/data/Board.hpp" />
+		<Unit filename="../../libsimple-chess/data/Castling.cpp" />
+		<Unit filename="../../libsimple-chess/data/Castling.hpp" />
+		<Unit filename="../../libsimple-chess/data/Field.cpp" />
+		<Unit filename="../../libsimple-chess/data/Field.hpp" />
+		<Unit filename="../../libsimple-chess/data/ForsythEdwardsNotation.cpp" />
+		<Unit filename="../../libsimple-chess/data/ForsythEdwardsNotation.hpp" />
+		<Unit filename="../../libsimple-chess/data/Piece.cpp" />
+		<Unit filename="../../libsimple-chess/data/Piece.hpp" />
+		<Unit filename="../../libsimple-chess/data/Result.cpp" />
+		<Unit filename="../../libsimple-chess/data/Result.hpp" />
+		<Unit filename="../../libsimple-chess/evaluation/CastlingEvaluator.cpp" />
+		<Unit filename="../../libsimple-chess/evaluation/CastlingEvaluator.hpp" />
+		<Unit filename="../../libsimple-chess/evaluation/CheckEvaluator.cpp" />
+		<Unit filename="../../libsimple-chess/evaluation/CheckEvaluator.hpp" />
+		<Unit filename="../../libsimple-chess/evaluation/CompoundCreator.cpp" />
+		<Unit filename="../../libsimple-chess/evaluation/CompoundCreator.hpp" />
+		<Unit filename="../../libsimple-chess/evaluation/CompoundEvaluator.cpp" />
+		<Unit filename="../../libsimple-chess/evaluation/CompoundEvaluator.hpp" />
+		<Unit filename="../../libsimple-chess/evaluation/Evaluator.hpp" />
+		<Unit filename="../../libsimple-chess/evaluation/LinearMobilityEvaluator.cpp" />
+		<Unit filename="../../libsimple-chess/evaluation/LinearMobilityEvaluator.hpp" />
+		<Unit filename="../../libsimple-chess/evaluation/MaterialEvaluator.cpp" />
+		<Unit filename="../../libsimple-chess/evaluation/MaterialEvaluator.hpp" />
+		<Unit filename="../../libsimple-chess/evaluation/PromotionEvaluator.cpp" />
+		<Unit filename="../../libsimple-chess/evaluation/PromotionEvaluator.hpp" />
+		<Unit filename="../../libsimple-chess/evaluation/RootMobilityEvaluator.cpp" />
+		<Unit filename="../../libsimple-chess/evaluation/RootMobilityEvaluator.hpp" />
+		<Unit filename="../../libsimple-chess/rules/Moves.cpp" />
+		<Unit filename="../../libsimple-chess/rules/Moves.hpp" />
+		<Unit filename="../../libsimple-chess/rules/check.cpp" />
+		<Unit filename="../../libsimple-chess/rules/check.hpp" />
+		<Unit filename="../../libsimple-chess/search/Node.cpp" />
+		<Unit filename="../../libsimple-chess/search/Node.hpp" />
+		<Unit filename="../../libsimple-chess/search/Search.cpp" />
+		<Unit filename="../../libsimple-chess/search/Search.hpp" />
+		<Unit filename="../../util/strings.cpp" />
+		<Unit filename="../../util/strings.hpp" />
+		<Unit filename="../locate_catch.hpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="xboard/CommandParser.cpp" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

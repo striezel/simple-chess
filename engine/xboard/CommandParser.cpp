@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2021  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -109,6 +109,7 @@ void CommandParser::parse(const std::string& commandString)
   }
   else if (commandString == "hard")
   {
+    // Turn on pondering (i. e. "thinking" on the opponent's time).
     // No operation required, we currently ignore this.
   }
   else if (commandString.substr(0, 6) == "level ")
@@ -184,7 +185,7 @@ void CommandParser::parse(const std::string& commandString)
     // Switch to force mode.
     Engine::get().addCommand(std::unique_ptr<Command>(new Force()));
   }
-  else if (commandString == "post")
+  else if ((commandString == "post") || (commandString == "nopost"))
   {
     // No operation required, we currently ignore this.
   }
@@ -229,7 +230,7 @@ void CommandParser::parse(const std::string& commandString)
       for (std::size_t i = 3; i < parts.size(); ++i)
       {
         comment += std::string(" ") + parts[i];
-      } //for
+      }
     }
     Engine::get().addCommand(std::unique_ptr<Command>(new ResultCmd(res, comment)));
   }

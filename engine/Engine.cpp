@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2021  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -145,6 +145,11 @@ void Engine::addCommand(std::unique_ptr<Command>&& com)
 }
 
 const std::deque<std::unique_ptr<Command> >& Engine::queue() const
+{
+  return mQueue;
+}
+
+std::deque<std::unique_ptr<Command> >& Engine::mutableQueue()
 {
   return mQueue;
 }

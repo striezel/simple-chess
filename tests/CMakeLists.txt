@@ -3,3 +3,6 @@ cmake_minimum_required (VERSION 3.8)
 
 # Recurse into subdirectory for library tests.
 add_subdirectory (library)
+
+# Recurse into subdirectory for engine tests.
+add_subdirectory (engine)
