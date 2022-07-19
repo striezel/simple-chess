@@ -72,6 +72,12 @@ endif ()
 
 add_executable(simple_chess_tests ${simple_chess_tests_sources})
 
+# MSYS2 / MinGW uses Catch 3.x.
+if (HAS_CATCH_V3)
+    find_package(Catch2 3 REQUIRED)
+    target_link_libraries(simple_chess_tests Catch2::Catch2WithMain)
+endif ()
+
 # add test run
 add_test(NAME simple-chess-tests
          COMMAND $<TARGET_FILE:simple_chess_tests>)

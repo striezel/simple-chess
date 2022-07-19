@@ -62,6 +62,12 @@ endif ()
 
 add_executable(engine_tests ${engine_tests_sources})
 
+# MSYS2 / MinGW uses Catch 3.x.
+if (HAS_CATCH_V3)
+    find_package(Catch2 3 REQUIRED)
+    target_link_libraries(engine_tests Catch2::Catch2WithMain)
+endif ()
+
 # add test run
 add_test(NAME engine-tests
          COMMAND $<TARGET_FILE:engine_tests>)
