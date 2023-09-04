@@ -16,15 +16,15 @@ build:
     - ctest -V
 
 coverage:
-  image: debian:11-slim
+  image: debian:12-slim
   stage: test
   before_script:
     - apt-get update && apt-get -y upgrade
-    - apt-get install -y catch cmake g++-10 lcov libglib2.0-dev libmongo-client-dev pkg-config
+    - apt-get install -y catch2 cmake g++-12 lcov libglib2.0-dev libmongo-client-dev pkg-config
   script:
     # build
-    - export CXX=g++-10
-    - export CC=gcc-10
+    - export CXX=g++-12
+    - export CC=gcc-12
     - mkdir build-coverage
     - cd build-coverage
     - cmake -DCODE_COVERAGE=ON ../
@@ -43,7 +43,7 @@ coverage:
       - public
 
 pages:
-  image: debian:11-slim
+  image: debian:12-slim
   stage: deploy
   needs: ["coverage"]
   dependencies:
