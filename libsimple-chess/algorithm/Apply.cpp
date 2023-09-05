@@ -89,7 +89,7 @@ Field findOriginField(const Board& board, const HalfMove& hMove)
 
   const Piece piece = Piece(board.toMove(), hMove.piece());
   std::vector<Field> possibleOrigins = findPieces(board, piece);
-  for (int i = possibleOrigins.size() - 1; i >= 0; --i)
+  for (int i = static_cast<int>(possibleOrigins.size()) - 1; i >= 0; --i)
   {
     bool allowed = false;
     // If move is allowed, then it is a potential matching origin.
