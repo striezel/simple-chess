@@ -58,7 +58,7 @@ BSON QueryCursor::data() const
   bson* b = mongo_sync_cursor_get_data(mCursor);
   if (nullptr == b)
     throw std::runtime_error("BSON data for current cursor position is null!");
-  return std::move(BSON(b));
+  return BSON(b);
 }
 
 } // namespace
