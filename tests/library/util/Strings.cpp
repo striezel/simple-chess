@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017, 2018, 2022  Dirk Stolle
+    Copyright (C) 2017, 2018, 2022, 2023  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  -------------------------------------------------------------------------------
 */
 
+#include <limits>
 #include "../../locate_catch.hpp"
 #include "../../../util/strings.hpp"
 
@@ -78,10 +79,23 @@ TEST_CASE("stringToInt()")
   REQUIRE( stringToInt("-17348", out) );
   REQUIRE( out == -17348 );
 
+  REQUIRE_FALSE( stringToInt("", out) );
   REQUIRE_FALSE( stringToInt("hey1", out) );
   REQUIRE_FALSE( stringToInt("1.2", out) );
   REQUIRE_FALSE( stringToInt("not an integer!", out) );
   REQUIRE_FALSE( stringToInt("123 and still not an integer!", out) );
+
+  // overflow checks
+  if constexpr (2147483647L == std::numeric_limits<int>::max() )
+  {
+    REQUIRE_FALSE( stringToInt("2147483648", out) );
+    REQUIRE_FALSE( stringToInt("3000000000", out) );
+  }
+  else if constexpr (9223372036854775807LL == std::numeric_limits<int>::max() )
+  {
+    REQUIRE_FALSE( stringToInt("9223372036854775808", out) );
+    REQUIRE_FALSE( stringToInt("19000000000000000000", out) );
+  }
 }
 
 TEST_CASE("trimLeft()")
