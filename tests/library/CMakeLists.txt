@@ -12,6 +12,8 @@ set(simple_chess_tests_sources
     ../../libsimple-chess/data/Piece.cpp
     ../../libsimple-chess/data/PortableGameNotation.cpp
     ../../libsimple-chess/data/Result.cpp
+    ../../libsimple-chess/db/mongo/Convert.cpp
+    ../../libsimple-chess/db/mongo/IdGenerator.cpp
     ../../libsimple-chess/evaluation/CastlingEvaluator.cpp
     ../../libsimple-chess/evaluation/CheckEvaluator.cpp
     ../../libsimple-chess/evaluation/CompoundCreator.cpp
@@ -39,6 +41,8 @@ set(simple_chess_tests_sources
     data/HalfMove.cpp
     data/Piece.cpp
     data/Result.cpp
+    db/mongo/Convert.cpp
+    db/mongo/IdGenerator.cpp
     evaluation/ConstantEvaluator.cpp
     evaluation/CastlingEvaluator.cpp
     evaluation/CheckEvaluator.cpp
