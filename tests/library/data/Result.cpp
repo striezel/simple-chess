@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017, 2018, 2021  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021, 2023  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,6 +29,9 @@ TEST_CASE("Result: resultToString")
   REQUIRE( resultToString(Result::WhiteWins) == "1-0" );
   REQUIRE( resultToString(Result::BlackWins) == "0-1" );
   REQUIRE( resultToString(Result::Draw) == "1/2-1/2" );
+
+  const Result out_of_range = static_cast<Result>(static_cast<int>(Result::Draw) + 2);
+  REQUIRE_THROWS( resultToString(out_of_range) );
 }
 
 TEST_CASE("Result: stringToResult")

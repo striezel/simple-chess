@@ -50,6 +50,21 @@ TEST_CASE("HalfMove::fromPGN()")
     REQUIRE_FALSE( hm.queensideCastling() );
   }
 
+  SECTION("Pe2xf3")
+  {
+    // Specifying P for pawn is allowed in some variations, although the piece
+    // is usually omitted for pawns.
+    REQUIRE( hm.fromPGN("Pe2xf3") );
+    REQUIRE( hm.piece() == PieceType::pawn );
+    REQUIRE( hm.origin() == Field::e2 );
+    REQUIRE( hm.destination() == Field::f3 );
+    REQUIRE( hm.capture() );
+    REQUIRE_FALSE( hm.check() );
+    REQUIRE_FALSE( hm.checkmate() );
+    REQUIRE_FALSE( hm.kingsideCastling() );
+    REQUIRE_FALSE( hm.queensideCastling() );
+  }
+
   SECTION("Bd3xe4+")
   {
     REQUIRE( hm.fromPGN("Bd3xe4+") );
@@ -99,6 +114,16 @@ TEST_CASE("HalfMove::fromPGN()")
     REQUIRE_FALSE( hm.checkmate() );
     REQUIRE_FALSE( hm.kingsideCastling() );
     REQUIRE( hm.queensideCastling() );
+  }
+
+  SECTION("empty")
+  {
+    REQUIRE_FALSE( hm.fromPGN("") );
+  }
+
+  SECTION("invalid notation")
+  {
+    REQUIRE_FALSE( hm.fromPGN("Ja2xb3") );
   }
 }
 
@@ -151,5 +176,10 @@ TEST_CASE("HalfMove::toPGN()")
   {
     REQUIRE( hm.fromPGN("O-O-O") );
     REQUIRE( hm.toPGN() == "O-O-O" );
+  }
+
+  SECTION("empty")
+  {
+    REQUIRE( hm.toPGN().empty() );
   }
 }

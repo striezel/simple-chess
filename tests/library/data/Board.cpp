@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2023  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,12 +26,137 @@
 TEST_CASE("Board constructor")
 {
   using namespace simplechess;
-  Board board;
 
-  const Piece empty { Colour::none, PieceType::none };
-  for (int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
+  SECTION("constructor")
   {
-    REQUIRE( board.element(static_cast<Field>(i)) == empty );
+    Board board;
+
+    const Piece empty { Colour::none, PieceType::none };
+    for (int i = static_cast<int>(Field::a1); i <= static_cast<int>(Field::h8); ++i)
+    {
+      REQUIRE( board.element(static_cast<Field>(i)) == empty );
+    }
+  }
+
+  SECTION("Board::element()")
+  {
+    Board board;
+    REQUIRE( board.setElement(Field::e1, Piece(Colour::white, PieceType::king)) );
+
+    SECTION("valid field")
+    {
+      REQUIRE( board.element(Field::e1) == Piece(Colour::white, PieceType::king) );
+      REQUIRE( board.element(Field::e4) == Piece() );
+    }
+
+    SECTION("invalid field")
+    {
+      REQUIRE_THROWS( board.element(Field::none) );
+    }
+  }
+
+  SECTION("Board::setElement()")
+  {
+    Board board;
+
+    SECTION("valid field")
+    {
+      REQUIRE( board.setElement(Field::e8, Piece(Colour::black, PieceType::king)) );
+      REQUIRE( board.element(Field::e8) == Piece(Colour::black, PieceType::king) );
+
+      REQUIRE( board.setElement(Field::d8, Piece(Colour::black, PieceType::queen)) );
+      REQUIRE( board.element(Field::d8) == Piece(Colour::black, PieceType::queen) );
+    }
+
+    SECTION("invalid field")
+    {
+      REQUIRE_FALSE( board.setElement(Field::none, Piece()) );
+    }
+  }
+
+  SECTION("Board::setToMove() + Board::toMove()")
+  {
+    Board board;
+
+    REQUIRE( board.setToMove(Colour::white) );
+    REQUIRE( board.toMove() == Colour::white );
+
+    REQUIRE( board.setToMove(Colour::black) );
+    REQUIRE( board.toMove() == Colour::black );
+
+    REQUIRE_FALSE( board.setToMove(Colour::none) );
+    REQUIRE( board.toMove() == Colour::black );
+  }
+
+  SECTION("Board::setEnPassant()")
+  {
+    Board board;
+
+    REQUIRE( board.setEnPassant(Field::none) );
+    REQUIRE( board.enPassant() == Field::none );
+
+    REQUIRE( board.setEnPassant(Field::a3) );
+    REQUIRE( board.enPassant() == Field::a3 );
+    REQUIRE( board.setEnPassant(Field::b3) );
+    REQUIRE( board.enPassant() == Field::b3 );
+    REQUIRE( board.setEnPassant(Field::c3) );
+    REQUIRE( board.setEnPassant(Field::d3) );
+    REQUIRE( board.setEnPassant(Field::e3) );
+    REQUIRE( board.setEnPassant(Field::f3) );
+    REQUIRE( board.setEnPassant(Field::g3) );
+    REQUIRE( board.setEnPassant(Field::h3) );
+    REQUIRE( board.enPassant() == Field::h3 );
+
+    REQUIRE( board.setEnPassant(Field::a6) );
+    REQUIRE( board.enPassant() == Field::a6 );
+    REQUIRE( board.setEnPassant(Field::b6) );
+    REQUIRE( board.setEnPassant(Field::c6) );
+    REQUIRE( board.setEnPassant(Field::d6) );
+    REQUIRE( board.setEnPassant(Field::e6) );
+    REQUIRE( board.enPassant() == Field::e6 );
+    REQUIRE( board.setEnPassant(Field::f6) );
+    REQUIRE( board.setEnPassant(Field::g6) );
+    REQUIRE( board.setEnPassant(Field::h6) );
+    REQUIRE( board.enPassant() == Field::h6 );
+
+    REQUIRE_FALSE( board.setEnPassant(Field::a1) );
+    REQUIRE_FALSE( board.setEnPassant(Field::a2) );
+    REQUIRE_FALSE( board.setEnPassant(Field::a4) );
+    REQUIRE_FALSE( board.setEnPassant(Field::a5) );
+    REQUIRE_FALSE( board.setEnPassant(Field::a7) );
+    REQUIRE_FALSE( board.setEnPassant(Field::a7) );
+  }
+
+  SECTION("Board::isInCheck()")
+  {
+    Board board;
+
+    SECTION("white is in check")
+    {
+      REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPqPPP/RNBQKBNR w") );
+
+      REQUIRE( board.isInCheck(Colour::white) );
+      REQUIRE_FALSE( board.isInCheck(Colour::black) );
+      REQUIRE_FALSE( board.isInCheck(Colour::none) );
+    }
+
+    SECTION("black is in check")
+    {
+      REQUIRE( board.fromFEN("rnbqkbnr/ppppQppp/8/8/8/8/PPPPPPPP/RNBQKBNR b") );
+
+      REQUIRE_FALSE( board.isInCheck(Colour::white) );
+      REQUIRE( board.isInCheck(Colour::black) );
+      REQUIRE_FALSE( board.isInCheck(Colour::none) );
+    }
+
+    SECTION("nobody in check")
+    {
+      REQUIRE( board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR") );
+
+      REQUIRE_FALSE( board.isInCheck(Colour::white) );
+      REQUIRE_FALSE( board.isInCheck(Colour::black) );
+      REQUIRE_FALSE( board.isInCheck(Colour::none) );
+    }
   }
 }
 
@@ -41,20 +166,20 @@ TEST_CASE("Board::fromFEN() with default start position")
   Board board;
   REQUIRE(board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"));
 
-  //There should be 32 empty fields in rows 3 to 6.
-  for(int i = 3; i<=6; ++i)
+  // There should be 32 empty fields in rows 3 to 6.
+  for(int i = 3; i <= 6; ++i)
   {
     for (char j = 'a'; j < 'h'; ++j)
     {
       CHECK(Piece(Colour::none, PieceType::none) == board.element(toField(j, i)));
-    } //for j
-  } //for i
-  //There should be 8 white pawns in row 2, ...
+    }
+  }
+  // There should be 8 white pawns in row 2, ...
   for (char col = 'a'; col <= 'h'; ++col)
   {
     CHECK(Piece(Colour::white, PieceType::pawn) == board.element(toField(col, 2))
     );
-  } //for
+  }
   // ... and 8 black pawns in row 7.
   for (char col = 'a'; col <= 'h'; ++col)
   {
@@ -256,13 +381,13 @@ TEST_CASE("Board::findNext()")
   Board board;
   REQUIRE(board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"));
 
-  //find piece that is only there once
+  // find piece that is only there once
   Field f = board.findNext(Piece(Colour::white, PieceType::king), Field::a1);
   REQUIRE( f == Field::e1 );
   f = board.findNext(Piece(Colour::white, PieceType::king), Field::e2);
   REQUIRE( f == Field::none );
 
-  //find piece that exists multiple times
+  // find piece that exists multiple times
   f = board.findNext(Piece(Colour::black, PieceType::knight), Field::a1);
   REQUIRE( f == Field::b8 );
   f = board.findNext(Piece(Colour::black, PieceType::knight), Field::c1);

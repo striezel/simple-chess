@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2023  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -110,15 +110,15 @@ bool HalfMove::queensideCastling() const
 
 bool HalfMove::empty() const
 {
-  return ((mOrigin == Field::none) && (mDestination == Field::none)
-      && (mPiece == PieceType::none) && !mKingsideCastling && !mQueensideCastling);
+  return (mOrigin == Field::none) && (mDestination == Field::none)
+      && (mPiece == PieceType::none) && !mKingsideCastling && !mQueensideCastling;
 }
 
 bool HalfMove::fromPGN(const std::string& pgn)
 {
   if (pgn.empty())
     return false;
-  //Is it a castling move?
+  // Is it a castling move?
   if ((pgn == "O-O") || (pgn == "O-O-O"))
   {
     mPiece = PieceType::king;
@@ -130,15 +130,15 @@ bool HalfMove::fromPGN(const std::string& pgn)
     mQueensideCastling = (pgn == "O-O-O");
     return true;
   }
-  //Regular moves follow a certain pattern that can be expressed as regex.
+  // Regular moves follow a certain pattern that can be expressed as regex.
   const std::regex regExPGN = std::regex("^([PRNBQK])?([a-h][1-8]|[a-h]|[1-8])?(x)?([a-h][1-8])([\\+|#])?$");
   std::smatch matches;
   if(!std::regex_search(pgn, matches, regExPGN))
     return false;
-  //piece matched?
+  // piece matched?
   if (matches[1].matched)
   {
-    switch (matches.str(1).at(0))
+    switch (matches.str(1)[0])
     {
       case 'P':
            mPiece = PieceType::pawn;
@@ -158,23 +158,22 @@ bool HalfMove::fromPGN(const std::string& pgn)
       case 'K':
            mPiece = PieceType::king;
            break;
-      default:
-           return false;
-    } //switch
+      // Other characters cannot be present, because the regex has matched.
+    }
   }
-  //no letter for piece means pawn
+  // no letter for piece means pawn
   else
     mPiece = PieceType::pawn;
 
-  //first field matched?
+  // first field matched?
   if (matches[2].matched)
   {
     const auto str = matches.str(2);
     if (str.length() == 2)
     {
-      mOrigin = toField(matches.str(2).at(0), matches.str(2).at(1) - '1' + 1);
+      mOrigin = toField(matches.str(2)[0], matches.str(2)[1] - '1' + 1);
       mOriginType = pgn::OriginType::full;
-    } //if two characters
+    }
     else
     {
       if ((str[0] >= 'a') && (str[0] <= 'h'))
@@ -182,13 +181,14 @@ bool HalfMove::fromPGN(const std::string& pgn)
         mOrigin = toField(matches.str(2).at(0), 1);
         mOriginType = pgn::OriginType::file;
       }
-      else //rank only
+      // rank only
+      else
       {
         mOrigin = toField('a', matches.str(2).at(0) - '1' + 1);
         mOriginType = pgn::OriginType::rank;
       }
-    } //else (i.e. only one character given)
-  } //if field of origin is set
+    } // else (i.e. only one character given)
+  } // if field of origin is set
   else
   {
     mOrigin = Field::none;
@@ -196,21 +196,15 @@ bool HalfMove::fromPGN(const std::string& pgn)
   }
 
 
-  //capture?
+  // capture?
   captures = matches[3].matched;
 
-  //destination field matched?
-  if (matches[4].matched)
-  {
-    mDestination = toField(matches.str(4).at(0), matches.str(4).at(1) - '1' + 1);
-  }
-  //there should be a destination field
-  else
-    return false;
+  // destination field  - must exist because the whole regex matched
+  mDestination = toField(matches.str(4)[0], matches.str(4)[1] - '1' + 1);
 
-  //opponent is in check now?
+  // Opponent is in check now?
   mChecked = matches[5].matched && (matches.str(5) == "+");
-  //opponent is checkmate?
+  // Opponent is checkmate?
   mCheckmate = matches[5].matched && (matches.str(5) == "#");
 
   return true;
@@ -218,7 +212,7 @@ bool HalfMove::fromPGN(const std::string& pgn)
 
 std::string HalfMove::toPGN() const
 {
-  //Treat special cases first.
+  // Treat special cases first.
   if (empty())
     return "";
   if (mKingsideCastling)
@@ -245,9 +239,9 @@ std::string HalfMove::toPGN() const
          break;
     case PieceType::pawn:
     case PieceType::none:
-         //no letter for pawn
+         // no letter for pawn
          break;
-  } //switch
+  }
   if (mOrigin != Field::none)
   {
     if ((mOriginType == pgn::OriginType::full) || (mOriginType == pgn::OriginType::file))
@@ -257,7 +251,7 @@ std::string HalfMove::toPGN() const
   }
   if (captures)
     result += "x";
-  //destination
+  // destination
   result += std::string(1, column(mDestination));
   result += std::string(1, '1' + row(mDestination) - 1);
   if (mChecked)
@@ -267,4 +261,4 @@ std::string HalfMove::toPGN() const
   return result;
 }
 
-} //namespace
+} // namespace
