@@ -1,4 +1,3 @@
-# We might support earlier versions, too, but try to use a more recent one.
 cmake_minimum_required (VERSION 3.8)
 
 project(meteor-chess-client)
@@ -89,7 +88,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../util/GitInfos.template.cpp
 # different invocations for help
 add_test(NAME meteor-chess-client-help-default
          COMMAND $<TARGET_FILE:meteor-chess-client> --help)
-add_test(NAME meteor-chess-lient-help-question-mark
+add_test(NAME meteor-chess-client-help-question-mark
          COMMAND $<TARGET_FILE:meteor-chess-client> -?)
 add_test(NAME meteor-chess-client-help-windows-style
          COMMAND $<TARGET_FILE:meteor-chess-client> /?)
