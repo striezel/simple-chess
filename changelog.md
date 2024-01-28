@@ -17,6 +17,10 @@ simple-chess-cli:
   Those labels can be disables via the new `--hide-labels` option or they can
   be explicitly enabled via the `--show-labels` option.
 
+meteor-chess-client:
+
+- update JSON library
+
 ## Version 0.5.5 (2021-05-13)
 
 - The minimum required CMake version to compile the source code is raised from
