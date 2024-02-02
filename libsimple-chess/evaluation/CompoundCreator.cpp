@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2018  Dirk Stolle
+    Copyright (C) 2018, 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 */
 
 #include "CompoundCreator.hpp"
-#include <set>
+#include <unordered_set>
 #include "CastlingEvaluator.hpp"
 #include "CheckEvaluator.hpp"
 #include "LinearMobilityEvaluator.hpp"
@@ -40,13 +40,13 @@ const std::string CompoundCreator::IdRootMobility = "rootmobility";
 
 bool CompoundCreator::create(const std::string& evaluators, CompoundEvaluator& compound)
 {
-  std::set<std::string> ids;
-  const auto parts = util::split(evaluators, ',');
-  if (parts.empty())
+  if (evaluators.empty())
   {
     std::cout << "Error: List of evaluators is empty!\n";
     return false;
   }
+  std::unordered_set<std::string> ids;
+  const auto parts = util::split(evaluators, ',');
   // Check whether ids are unique and not empty.
   for (const std::string& id : parts)
   {

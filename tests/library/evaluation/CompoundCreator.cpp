@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2018  Dirk Stolle
+    Copyright (C) 2018, 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,130 +25,117 @@
 #include "../../../libsimple-chess/evaluation/LinearMobilityEvaluator.hpp"
 #include "../../../libsimple-chess/evaluation/PromotionEvaluator.hpp"
 
-TEST_CASE("CompoundCreator: create with empty string shall fail")
+TEST_CASE("CompoundCreator")
 {
   using namespace simplechess;
 
-  CompoundEvaluator compound;
-  REQUIRE_FALSE( CompoundCreator::create("", compound) );
-}
-
-TEST_CASE("CompoundCreator: create with empty parts shall fail")
-{
-  using namespace simplechess;
-
-  CompoundEvaluator compound;
-  REQUIRE_FALSE( CompoundCreator::create(",,,,", compound) );
-}
-
-TEST_CASE("CompoundCreator: create with empty unknown ID shall fail")
-{
-  using namespace simplechess;
-
-  CompoundEvaluator compound;
-  REQUIRE_FALSE( CompoundCreator::create("foo,bar,baz", compound) );
-}
-
-TEST_CASE("CompoundCreator: create with known single ID succeeds")
-{
-  using namespace simplechess;
-
-  CompoundEvaluator compound;
-  REQUIRE( CompoundCreator::create(CompoundCreator::IdMaterial, compound) );
-  REQUIRE_FALSE( compound.empty() );
-  REQUIRE( compound.size() == 1 );
-}
-
-TEST_CASE("CompoundCreator: create with several known IDs succeeds")
-{
-  using namespace simplechess;
-
-  const std::string evaluators = CompoundCreator::IdMaterial + "," + CompoundCreator::IdCheck + "," + CompoundCreator::IdPromotion;
-  CompoundEvaluator compound;
-  REQUIRE( CompoundCreator::create(evaluators, compound) );
-  REQUIRE_FALSE( compound.empty() );
-  REQUIRE( compound.size() == 3 );
-}
-
-TEST_CASE("CompoundCreator: create with duplicate known IDs fails")
-{
-  using namespace simplechess;
-
-  const std::string evaluators = CompoundCreator::IdMaterial + "," + CompoundCreator::IdCheck + "," + CompoundCreator::IdMaterial;
-  CompoundEvaluator compound;
-  REQUIRE_FALSE( CompoundCreator::create(evaluators, compound) );
-}
-
-TEST_CASE("CompoundCreator: support for all known evaluator IDs")
-{
-  using namespace simplechess;
-
-  CompoundEvaluator compound;
-  const auto ids = {
-      CompoundCreator::IdCastling,
-      CompoundCreator::IdCheck,
-      CompoundCreator::IdLinearMobility,
-      CompoundCreator::IdMaterial,
-      CompoundCreator::IdPromotion,
-      CompoundCreator::IdRootMobility
-  };
-
-  for (const std::string& id : ids)
+  SECTION("create() with empty string shall fail")
   {
-    compound.clear();
-    REQUIRE( CompoundCreator::create(id, compound) );
+    CompoundEvaluator compound;
+    REQUIRE_FALSE( CompoundCreator::create("", compound) );
+  }
+
+  SECTION("create() with empty parts shall fail")
+  {
+    CompoundEvaluator compound;
+    REQUIRE_FALSE( CompoundCreator::create(",,,,", compound) );
+  }
+
+  SECTION("create() with empty unknown ID shall fail")
+  {
+    CompoundEvaluator compound;
+    REQUIRE_FALSE( CompoundCreator::create("foo,bar,baz", compound) );
+  }
+
+  SECTION("create() with known single ID succeeds")
+  {
+    CompoundEvaluator compound;
+    REQUIRE( CompoundCreator::create(CompoundCreator::IdMaterial, compound) );
     REQUIRE_FALSE( compound.empty() );
     REQUIRE( compound.size() == 1 );
-  } // for
-}
+  }
+
+  SECTION("create() with several known IDs succeeds")
+  {
+    const std::string evaluators = CompoundCreator::IdMaterial + "," + CompoundCreator::IdCheck + "," + CompoundCreator::IdPromotion;
+    CompoundEvaluator compound;
+    REQUIRE( CompoundCreator::create(evaluators, compound) );
+    REQUIRE_FALSE( compound.empty() );
+    REQUIRE( compound.size() == 3 );
+  }
+
+  SECTION("create() with duplicate known IDs fails")
+  {
+    const std::string evaluators = CompoundCreator::IdMaterial + "," + CompoundCreator::IdCheck + "," + CompoundCreator::IdMaterial;
+    CompoundEvaluator compound;
+    REQUIRE_FALSE( CompoundCreator::create(evaluators, compound) );
+  }
+
+  SECTION("support for all known evaluator IDs")
+  {
+    CompoundEvaluator compound;
+    const auto ids = {
+        CompoundCreator::IdCastling,
+        CompoundCreator::IdCheck,
+        CompoundCreator::IdLinearMobility,
+        CompoundCreator::IdMaterial,
+        CompoundCreator::IdPromotion,
+        CompoundCreator::IdRootMobility
+    };
+
+    for (const std::string& id : ids)
+    {
+      compound.clear();
+      REQUIRE( CompoundCreator::create(id, compound) );
+      REQUIRE_FALSE( compound.empty() );
+      REQUIRE( compound.size() == 1 );
+    } // for
+  }
 
 
-TEST_CASE("CompoundEvaluator: id sanity checks")
-{
-  using namespace simplechess;
+  SECTION("id sanity checks")
+  {
+    REQUIRE_FALSE( CompoundCreator::IdCastling.empty() );
+    REQUIRE_FALSE( CompoundCreator::IdCheck.empty() );
+    REQUIRE_FALSE( CompoundCreator::IdLinearMobility.empty() );
+    REQUIRE_FALSE( CompoundCreator::IdMaterial.empty() );
+    REQUIRE_FALSE( CompoundCreator::IdPromotion.empty() );
+    REQUIRE_FALSE( CompoundCreator::IdRootMobility.empty() );
 
-  REQUIRE_FALSE( CompoundCreator::IdCastling.empty() );
-  REQUIRE_FALSE( CompoundCreator::IdCheck.empty() );
-  REQUIRE_FALSE( CompoundCreator::IdLinearMobility.empty() );
-  REQUIRE_FALSE( CompoundCreator::IdMaterial.empty() );
-  REQUIRE_FALSE( CompoundCreator::IdPromotion.empty() );
-  REQUIRE_FALSE( CompoundCreator::IdRootMobility.empty() );
+    // All ids shall be different from each other, i.e. ids are unique.
+    REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdCheck );
+    REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdLinearMobility );
+    REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdMaterial );
+    REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdPromotion );
+    REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdRootMobility );
 
-  // All ids shall be different from each other, i.e. ids are unique.
-  REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdCheck );
-  REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdLinearMobility );
-  REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdMaterial );
-  REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdPromotion );
-  REQUIRE_FALSE( CompoundCreator::IdCastling == CompoundCreator::IdRootMobility );
+    REQUIRE_FALSE( CompoundCreator::IdCheck == CompoundCreator::IdLinearMobility );
+    REQUIRE_FALSE( CompoundCreator::IdCheck == CompoundCreator::IdMaterial );
+    REQUIRE_FALSE( CompoundCreator::IdCheck == CompoundCreator::IdPromotion );
+    REQUIRE_FALSE( CompoundCreator::IdCheck == CompoundCreator::IdRootMobility );
 
-  REQUIRE_FALSE( CompoundCreator::IdCheck == CompoundCreator::IdLinearMobility );
-  REQUIRE_FALSE( CompoundCreator::IdCheck == CompoundCreator::IdMaterial );
-  REQUIRE_FALSE( CompoundCreator::IdCheck == CompoundCreator::IdPromotion );
-  REQUIRE_FALSE( CompoundCreator::IdCheck == CompoundCreator::IdRootMobility );
+    REQUIRE_FALSE( CompoundCreator::IdLinearMobility == CompoundCreator::IdMaterial );
+    REQUIRE_FALSE( CompoundCreator::IdLinearMobility == CompoundCreator::IdPromotion );
+    REQUIRE_FALSE( CompoundCreator::IdLinearMobility == CompoundCreator::IdRootMobility );
 
-  REQUIRE_FALSE( CompoundCreator::IdLinearMobility == CompoundCreator::IdMaterial );
-  REQUIRE_FALSE( CompoundCreator::IdLinearMobility == CompoundCreator::IdPromotion );
-  REQUIRE_FALSE( CompoundCreator::IdLinearMobility == CompoundCreator::IdRootMobility );
+    REQUIRE_FALSE( CompoundCreator::IdMaterial == CompoundCreator::IdPromotion );
+    REQUIRE_FALSE( CompoundCreator::IdMaterial == CompoundCreator::IdRootMobility );
 
-  REQUIRE_FALSE( CompoundCreator::IdMaterial == CompoundCreator::IdPromotion );
-  REQUIRE_FALSE( CompoundCreator::IdMaterial == CompoundCreator::IdRootMobility );
+    REQUIRE_FALSE( CompoundCreator::IdPromotion == CompoundCreator::IdRootMobility );
+  }
 
-  REQUIRE_FALSE( CompoundCreator::IdPromotion == CompoundCreator::IdRootMobility );
-}
+  SECTION("default compound evaluator")
+  {
+    CompoundEvaluator compound;
+    CompoundCreator::getDefault(compound);
 
-TEST_CASE("CompoundCreator: default compound evaluator")
-{
-  using namespace simplechess;
-
-  CompoundEvaluator compound;
-  CompoundCreator::getDefault(compound);
-
-  // Compound evaluator shall not be empty.
-  REQUIRE_FALSE( compound.empty() );
-  // Number of evaluators should be five.
-  const auto size = compound.size();
-  REQUIRE( size == 5 );
-  // Getting default compound again should not change size.
-  CompoundCreator::getDefault(compound);
-  REQUIRE( size == compound.size() );
+    // Compound evaluator shall not be empty.
+    REQUIRE_FALSE( compound.empty() );
+    // Number of evaluators should be five.
+    const auto size = compound.size();
+    REQUIRE( size == 5 );
+    // Getting default compound again should not change size.
+    CompoundCreator::getDefault(compound);
+    REQUIRE( size == compound.size() );
+  }
 }
