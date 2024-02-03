@@ -12,11 +12,11 @@ board after each move on the standard output.
 Supported program options:
 
 ```
-  --help | -?      - displays this help message and quits
-  --version | -v   - show version information
-  --pgn FILENAME   - sets the path for the Portable Game Notation file that
+  --help | -?      - Displays this help message and quits.
+  --version | -v   - Shows version information and quits.
+  --pgn FILENAME   - Sets the path for the Portable Game Notation file that
                      will be read. This parameter is mandatory.
-  --delay N        - sets the delay between moves to N milliseconds.
+  --delay N        - Sets the delay between moves to N milliseconds.
                      The default value is 1000, i.e. one second.
 ```
 
@@ -40,7 +40,7 @@ Supported program options:
 
 ## Copyright and Licensing
 
-Copyright 2017, 2018, 2019, 2021, 2022  Dirk Stolle
+Copyright 2017, 2018, 2019, 2021, 2022, 2024  Dirk Stolle
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

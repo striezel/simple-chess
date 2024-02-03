@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2021  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021, 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,9 +43,9 @@ void showHelp()
   std::cout << "simple-chess-engine [OPTIONS]\n"
             << "\n"
             << "Supported program options:\n"
-            << "  -? | --help     - shows this help message and exits\n"
-            << "  -v | --version  - shows version information and exits\n"
-            << "  --evaluator EVAL - sets a custom set of evaluators to use where EVAL is a\n"
+            << "  --help | -?      - Shows this help message and exits.\n"
+            << "  --version | -v   - Shows version information and exits.\n"
+            << "  --evaluator EVAL - Sets a custom set of evaluators to use where EVAL is a\n"
             << "                     comma-separated list of evaluator ids. Valid ids are:\n"
             << "                       material: evaluator using material value of pieces\n"
             << "                       check: evaluator with bonus for checking opponent\n"
@@ -90,22 +90,24 @@ int main(int argc, char** argv)
         return rcInvalidParameter;
       }
       const std::string param(argv[i]);
+      // version information
       if ((param == "-v") || (param == "--version"))
       {
         showVersion();
         return 0;
-      } // if version
+      }
+      // show help
       else if ((param == "-?") || (param == "--help") || (param == "/?"))
       {
         showHelp();
         return 0;
-      } // if help
+      }
       // custom list of evaluators
       else if ((param == "--evaluators") || (param == "--evaluator") || (param == "-e"))
       {
         if (!evaluators.empty())
         {
-          std::cout << "Error: The parameter " << param << " cannot be specified more than once!\n";
+          std::cerr << "Error: The parameter " << param << " cannot be specified more than once!\n";
           return rcInvalidParameter;
         }
         if (argc > i + 1)
@@ -119,14 +121,14 @@ int main(int argc, char** argv)
           std::cout << "There must be a list of evaluators after " << param << "!\n";
           return rcInvalidParameter;
         }
-      } // if list of evaluators was given
+      }
       else
       {
         std::cerr << "Error: Unknown parameter " << param << "!\n"
                   << "Use --help to show available parameters." << std::endl;
         return rcInvalidParameter;
       }
-    } // for i
+    }
   } // if arguments are there
 
   if (!evaluators.empty())
@@ -137,7 +139,7 @@ int main(int argc, char** argv)
     {
       std::cout << "Error: The given evaluator list is invalid!\n";
       return rcInvalidParameter;
-    } // if
+    }
     // Set custom evaluators.
     Engine::get().setEvaluator(std::move(evaluator));
   }

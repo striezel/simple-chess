@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2022  Dirk Stolle
+    Copyright (C) 2017, 2018, 2022, 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -52,18 +52,18 @@ void showHelp()
   std::cout << "\npgn-reader --pgn FILENAME [--delay MILLISECONDS]\n"
             << "\n"
             << "options:\n"
-            << "  --help | -?      - displays this help message and quits\n"
-            << "  --version | -v   - show version information\n"
-            << "  --pgn FILENAME   - sets the path for the Portable Game Notation file that\n"
+            << "  --help | -?      - Displays this help message and quits.\n"
+            << "  --version | -v   - Shows version information and quits.\n"
+            << "  --pgn FILENAME   - Sets the path for the Portable Game Notation file that\n"
             << "                     will be read. This parameter is mandatory.\n"
-            << "  --delay N        - sets the delay between moves to N milliseconds.\n"
+            << "  --delay N        - Sets the delay between moves to N milliseconds.\n"
             << "                     The default value is 1000, i.e. one second.\n";
   #ifndef NO_METEOR_CHESS
-  std::cout << "  --meteor-chess   - displays board in meteor-chess instance, too\n"
-            << "  --host hostname  - host name of the meteor-chess MongoDB server. The default\n"
-            << "                     value is \"localhost\".\n"
-            << "  --port N         - port number of the meteor-chess MongoDB server. The\n"
-            << "                     default value is 3001.\n";
+  std::cout << "  --meteor-chess   - Displays board in meteor-chess instance, too.\n"
+            << "  --host hostname  - Sets host name of the meteor-chess MongoDB server.\n"
+            << "                     The default value is \"localhost\".\n"
+            << "  --port N         - Sets port number of the meteor-chess MongoDB server.\n"
+            << "                     The default value is 3001.\n";
   #endif // NO_METEOR_CHESS
 }
 
@@ -120,32 +120,32 @@ int main(int argc, char** argv)
   }
   catch(const simplechess::pgn::UnconsumedTokensException& ex)
   {
-    std::cout << "UnconsumedTokensException: " << ex.what() << "\n";
+    std::cerr << "UnconsumedTokensException: " << ex.what() << "\n";
     const auto & tokens = ex.unprocessedTokens();
-    std::cout << "First unprocessed token: " << tokens.at(0).text << " of type "
+    std::cerr << "First unprocessed token: " << tokens.at(0).text << " of type "
               << static_cast<int>(tokens.at(0).type) << ".\n";
-    std::cout << "All remaining tokens:\n";
+    std::cerr << "All remaining tokens:\n";
     for (size_t i = 0; i < tokens.size(); ++i)
     {
-      std::cout << "Type: " << static_cast<int>(tokens[i].type) << " text: \"" << tokens[i].text << "\"\n";
+      std::cerr << "Type: " << static_cast<int>(tokens[i].type) << " text: \"" << tokens[i].text << "\"\n";
     } //for
     return simplechess::rcParserError;
   }
   catch(const simplechess::pgn::ParserException& ex)
   {
-    std::cout << "ParserException: " << ex.what() << "\n";
+    std::cerr << "ParserException: " << ex.what() << "\n";
     return simplechess::rcParserError;
   }
-  std::cout << "Successfully parsed input data. :)\n";
-  std::cout << "\n"
+  std::cout << "Successfully parsed input data. :)\n"
+            << "\n"
             << "PGN is:\n"
-            << pgn.toString() << "\n";
-  std::cout << "Number of first move: " << pgn.firstMoveNumber() << "\n"
+            << pgn.toString() << "\n"
+            << "Number of first move: " << pgn.firstMoveNumber() << "\n"
             << "Number of last move:  " << pgn.lastMoveNumber() << "\n";
 
   if (!simplechess::algorithm::checkPortableGameNotation(pgn))
   {
-    std::cout << "Error: Portable game notation data is implausible!\n";
+    std::cerr << "Error: Portable game notation data is implausible!\n";
     return simplechess::rcDataImplausible;
   }
 
@@ -168,7 +168,7 @@ int main(int argc, char** argv)
 
   if (!board.fromFEN(fen))
   {
-    std::cout << "Could not initialize chess board with the given initial position!\n";
+    std::cerr << "Could not initialize chess board with the given initial position!\n";
     return simplechess::rcBoardInitializationFailure;
   }
 
@@ -229,7 +229,7 @@ int main(int argc, char** argv)
     const auto moves = pgn.move(i);
     if (!simplechess::algorithm::applyMove(board, moves.first, simplechess::Colour::white))
     {
-      std::cout << "Error: Could not perform move " << i << " of white player!\n"
+      std::cerr << "Error: Could not perform move " << i << " of white player!\n"
                 << "Move would have been " << moves.first.toPGN() << ".\n";
       return simplechess::rcMoveNotPossible;
     }
@@ -261,7 +261,7 @@ int main(int argc, char** argv)
     std::this_thread::sleep_for(delay);
     if (!simplechess::algorithm::applyMove(board, moves.second, simplechess::Colour::black))
     {
-      std::cout << "Error: Could not perform move " << i << " of black player!\n"
+      std::cerr << "Error: Could not perform move " << i << " of black player!\n"
                 << "Move would have been " << moves.second.toPGN() << ".\n";
       return simplechess::rcMoveNotPossible;
     }

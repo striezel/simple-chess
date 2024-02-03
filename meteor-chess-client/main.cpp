@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2019, 2020  Dirk Stolle
+    Copyright (C) 2017, 2018, 2019, 2020, 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -60,18 +60,18 @@ void showHelp()
   std::cout << "meteor-chess-client [OPTIONS]\n"
             << "\n"
             << "options:\n"
-            << "  -? | --help      - shows this help message and exits\n"
-            << "  -v | --version   - shows version information and exits\n"
-            << "  --board ID       - sets the ID of the chess board that will be read.\n"
+            << "  --help | -?      - Shows this help message and exits.\n"
+            << "  --version | -v   - Shows version information and exits.\n"
+            << "  --board ID       - Sets the ID of the chess board that will be read.\n"
             << "                     This parameter is mandatory.\n"
-            << "  --host hostname  - host name of the meteor-chess MongoDB server. The default\n"
-            << "                     value is \"localhost\".\n"
-            << "  --port N         - port number of the meteor-chess MongoDB server. The\n"
-            << "                     default value is 3001.\n"
-            << "  --json           - print output in JSON format\n"
-            << "  --move           - perform move on board and write it back to MongoDB. The\n"
+            << "  --host hostname  - Sets the host name of the meteor-chess MongoDB server.\n"
+            << "                     The default value is \"localhost\".\n"
+            << "  --port N         - Sets the port number of the meteor-chess MongoDB server.\n"
+            << "                     The default value is 3001.\n"
+            << "  --json           - Prints output in JSON format.\n"
+            << "  --move           - Perform move on board and write it back to MongoDB. The\n"
             << "                     default is not to move, but just to print the move.\n"
-            << "  --evaluator EVAL - sets a custom set of evaluators to use where EVAL is a\n"
+            << "  --evaluator EVAL - Sets a custom set of evaluators to use where EVAL is a\n"
             << "                     comma-separated list of evaluator ids. Valid ids are:\n"
             << "                       material: evaluator using material value of pieces\n"
             << "                       check: evaluator with bonus for checking opponent\n"
@@ -112,7 +112,7 @@ int main(int argc, char** argv)
   // Is there a board id?
   if (options.boardId.empty())
   {
-    std::cout << "Error: No board id was set!\n";
+    std::cerr << "Error: No board id was set!\n";
     return simplechess::rcInvalidParameter;
   }
 
@@ -128,10 +128,10 @@ int main(int argc, char** argv)
     // Try to parse user input.
     if (!simplechess::CompoundCreator::create(options.evaluators, evaluator))
     {
-      std::cout << "Error: The given evaluator list is invalid!\n";
+      std::cerr << "Error: The given evaluator list is invalid!\n";
       return simplechess::rcInvalidParameter;
-    } // if
-  } // else
+    }
+  }
 
   try
   {
@@ -140,7 +140,7 @@ int main(int argc, char** argv)
     if (!server.getBoard(options.boardId, board))
     {
       std::cerr << "Could not get board data for board " << options.boardId
-                << " from DB!" << std::endl;
+                << " from DB!\n";
       return simplechess::rcMongoDbError;
     }
 
@@ -156,13 +156,13 @@ int main(int argc, char** argv)
         nlohmann::json val;
         val["resign"] = true;
         val["draw"] = false;
-        val["message"] = std::string("simplechess AI could not find a valid move. User wins!");
+        val["message"] = std::string("simplechess engine could not find a valid move. User wins!");
         val["exitcode"] = simplechess::rcEngineResigns;
         std::cout << std::setw(4) << val << std::endl;
       }
       else
       {
-        std::cout << "simplechess AI could not find a valid move. User wins!\n";
+        std::cout << "simplechess engine could not find a valid move. User wins!\n";
       }
       return simplechess::rcEngineResigns;
     } // if there is no move left
@@ -216,7 +216,7 @@ int main(int argc, char** argv)
       } // if move not possible
       if (!server.updateBoard(options.boardId, board))
       {
-        std::cout << "Could not update board in MongoDB!\n";
+        std::cerr << "Could not update board in MongoDB!\n";
         return simplechess::rcMongoDbError;
       }
     } // if move shall be performed
@@ -251,11 +251,11 @@ int main(int argc, char** argv)
   catch (const std::exception& ex)
   {
     const std::string reason = ex.what();
-    std::cout << "Error: An exception occurred!\n"
+    std::cerr << "Error: An exception occurred!\n"
               << reason << "\n";
     if (reason.find("MongoDB") != std::string::npos)
     {
-      std::cout << "Hint: It seems that the error is related to MongoDB. "
+      std::cerr << "Hint: It seems that the error is related to MongoDB. "
                 << "Please check that meteor-chess is running and its MongoDB "
                 << "instance can be reached at " << options.hostname << ":" << options.port
                 << ".\n";
@@ -263,5 +263,5 @@ int main(int argc, char** argv)
     }
     // Other error type.
     return simplechess::rcUnknown;
-  } // try-catch
+  }
 }

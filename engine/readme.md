@@ -7,29 +7,36 @@ XBoard on its standard input and prints responses to the standard output.
 For the XBoard protocol see
   <https://www.gnu.org/software/xboard/engine-intf.html>.
 
+simple-chess-engine also has incomplete UCI protocol support. The program
+expects commands from the UCI-compatible GUI on its standard input and prints
+responses to the standard output.
+For the UCI protocol specification see
+  <http://wbec-ridderkerk.nl/html/UCIProtocol.html>.
+
 ## Invocation
 
     simple-chess-engine [OPTIONS]
 
 Supported program options:
-
-    -? | --help     - shows a help message and exits
-    -v | --version  - shows version information and exits
-    --evaluator EVAL - sets a custom set of evaluators to use where EVAL is a
-                       comma-separated list of evaluator ids. Valid ids are:
-                         material: evaluator using material value of pieces
-                         check: evaluator with bonus for checking opponent
-                         castling: evaluator with malus for not castling before
-                                   the possibility for castling is lost
-                         promotion: evaluator with bonus for pawns that can be
-                                    promoted during the next move
-                         linearmobility: bonus for number of possible moves over
-                                         all pieces by a player
-                         rootmobility: like linearmobility, but with a slower
-                                       increase for higher move numbers
-                       A possible use of this option can look like this:
-                         --evaluator check,promotion,material
-                       If no evaluator option is given, the program uses a preset.
+```
+  --help | -?      - Shows this help message and exits.
+  --version | -v   - Shows version information and exits.
+  --evaluator EVAL - Sets a custom set of evaluators to use where EVAL is a
+                     comma-separated list of evaluator ids. Valid ids are:
+                       material: evaluator using material value of pieces
+                       check: evaluator with bonus for checking opponent
+                       castling: evaluator with malus for not castling before
+                                 the possibility for castling is lost
+                       promotion: evaluator with bonus for pawns that can be
+                                  promoted during the next move
+                       linearmobility: bonus for number of possible moves over
+                                       all pieces by a player
+                       rootmobility: like linearmobility, but with a slower
+                                     increase for higher move numbers
+                     A possible use of this option can look like this:
+                       --evaluator check,promotion,material
+                     If no evaluator option is given, the program uses a preset.
+```
 
 ## Exit status
 
@@ -38,7 +45,7 @@ Supported program options:
 
 ## Copyright and Licensing
 
-Copyright 2017, 2018, 2019, 2020, 2021, 2022  Dirk Stolle
+Copyright 2017, 2018, 2019, 2020, 2021, 2022, 2024  Dirk Stolle
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
