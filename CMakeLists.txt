@@ -48,6 +48,10 @@ if (CODE_COVERAGE)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -fprofile-arcs -ftest-coverage")
 endif ()
 
+# option to explicitly disable applications related to Meteor Chess
+# (off by default, and always disabled on Windows)
+option(NO_METEOR_CHESS "Do not build apps which require Meteor Chess" OFF)
+
 # Recurse into subdirectory for applications.
 add_subdirectory (apps)
 
