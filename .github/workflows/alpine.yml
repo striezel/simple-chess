@@ -1,0 +1,65 @@
+name: Alpine
+
+on: push
+
+jobs:
+  alpine:
+    runs-on: ubuntu-22.04
+    container: alpine:latest
+    steps:
+      # Git is required so that actions/checkout does a proper Git checkout.
+      - name: Install Git in container
+        run: |
+          apk update
+          apk add git
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      # Checks-out the repository under $GITHUB_WORKSPACE.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install packages
+        run: |
+          apk update
+          apk add catch2 cmake g++ make pkgconf
+      - name: Build statically linked binaries
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          mkdir build-static
+          cd build-static
+          cmake ../ -DENABLE_LTO=ON -DENABLE_STATIC_LINKING=ON -DNO_METEOR_CHESS=ON
+          cmake --build . -j2
+      - name: Run tests
+        run: |
+          cd "$GITHUB_WORKSPACE"/build-static
+          ctest -V
+      - name: Collect build artifacts
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE"/artifacts
+          cd "$GITHUB_WORKSPACE"
+          # engine
+          mkdir -p "$GITHUB_WORKSPACE"/artifacts/simple-chess-engine
+          cp build-static/apps/engine/simple-chess-engine artifacts/simple-chess-engine/
+          cp apps/engine/*.md artifacts/simple-chess-engine/
+          # pgn-reader
+          mkdir -p "$GITHUB_WORKSPACE"/artifacts/pgn-reader
+          cp build-static/apps/pgn-reader/pgn-reader artifacts/pgn-reader/
+          cp apps/pgn-reader/*.md artifacts/pgn-reader/
+          cp -R apps/pgn-reader/examples artifacts/pgn-reader/examples
+          # simple-chess-cli
+          mkdir -p "$GITHUB_WORKSPACE"/artifacts/simple-chess-cli
+          cp build-static/apps/simple-chess-cli/simple-chess-cli artifacts/simple-chess-cli/
+          cp apps/simple-chess-cli/*.md artifacts/simple-chess-cli/
+          # license + readme
+          cp LICENSE artifacts/
+          cp apps/readme.md artifacts/
+          # determine version
+          VERSION=$(git describe --always)
+          echo Version is $VERSION.
+          mv artifacts simple-chess-$VERSION
+          tar czf simple-chess_${VERSION}_linux-amd64-generic.tar.gz simple-chess-$VERSION
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: simple-chess_linux-amd64-generic
+          path: simple-chess_*_linux-amd64-generic.tar.gz
+          if-no-files-found: error

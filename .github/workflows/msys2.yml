@@ -11,6 +11,8 @@ jobs:
     steps:
       # Checks-out the repository under $GITHUB_WORKSPACE.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: msys2/setup-msys2@v2
         with:
           msystem: mingw64
@@ -47,3 +49,35 @@ jobs:
           cd build-static
           cmake -DENABLE_LTO=ON -DENABLE_STATIC_LINKING=ON ../
           cmake --build . -j2
+      - name: Collect build artifacts
+        run: |
+          export MSYSTEM=MINGW64
+          cd "$GITHUB_WORKSPACE"
+          mkdir artifacts
+          # engine
+          mkdir -p "$GITHUB_WORKSPACE"/artifacts/simple-chess-engine
+          cp build-static/apps/engine/*.exe artifacts/simple-chess-engine/
+          cp apps/engine/*.md artifacts/simple-chess-engine/
+          # pgn-reader
+          mkdir -p "$GITHUB_WORKSPACE"/artifacts/pgn-reader
+          cp build-static/apps/pgn-reader/*.exe artifacts/pgn-reader/
+          cp apps/pgn-reader/*.md artifacts/pgn-reader/
+          cp -R apps/pgn-reader/examples artifacts/pgn-reader/examples
+          # simple-chess-cli
+          mkdir -p "$GITHUB_WORKSPACE"/artifacts/simple-chess-cli
+          cp build-static/apps/simple-chess-cli/*.exe artifacts/simple-chess-cli/
+          cp apps/simple-chess-cli/*.md artifacts/simple-chess-cli/
+          # license + readme
+          cp LICENSE artifacts/
+          cp apps/readme.md artifacts/
+          # determine version
+          VERSION=$(git describe --always)
+          echo Version is $VERSION.
+          mv artifacts simple-chess-$VERSION
+          "C:\Program Files\7-Zip\7z.exe" a -r simple-chess-$VERSION-win64.zip simple-chess-$VERSION
+      - name: Upload zipped updater
+        uses: actions/upload-artifact@v4
+        with:
+          name: simple-chess-win64
+          if-no-files-found: error
+          path: simple-chess-*.zip
