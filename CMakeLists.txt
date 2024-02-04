@@ -48,30 +48,11 @@ if (CODE_COVERAGE)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -fprofile-arcs -ftest-coverage")
 endif ()
 
-# Recurse into subdirectory for simple-chess-cli.
-add_subdirectory (simple-chess-cli)
+# Recurse into subdirectory for applications.
+add_subdirectory (apps)
 
-# Recurse into subdirectory for pgn-reader.
-add_subdirectory (pgn-reader)
-
-if (NOT WIN32)
-  # Recurse into subdirectory for pgn-reader with meteor-chess support.
-  add_subdirectory (pgn-reader-with-meteor-chess)
-endif (NOT WIN32)
-
-# Recurse into subdirectory for engine.
-add_subdirectory (engine)
-
-if (NOT WIN32)
-  # Recurse into subdirectory for meteor-chess-client.
-  add_subdirectory (meteor-chess-client)
-endif (NOT WIN32)
-
-# Recurse into subdirectory for competing-evaluators.
-add_subdirectory (competing-evaluators)
-
-# Recurse into subdirectory for speedbench.
-add_subdirectory (speedbench)
+# Recurse into subdirectory for development programs.
+add_subdirectory (dev)
 
 if (NOT MSVC)
   # Recurse into subdirectory for tests.

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="pgn-reader" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/pgn-reader" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DNO_METEOR_CHESS" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/pgn-reader" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DNO_METEOR_CHESS" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Target title="Debug-with-meteor-chess">
+				<Option output="bin/Debug/pgn-reader-with-meteor-chess" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug-m/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="/usr/include/mongo-client" />
+					<Add directory="/usr/include/glib-2.0" />
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include" />
+				</Compiler>
+				<Linker>
+					<Add library="mongo-client" />
+				</Linker>
+			</Target>
+			<Target title="Release-with-meteor-chess">
+				<Option output="bin/Release/pgn-reader-with-meteor-chess" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release-m/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="/usr/include/mongo-client" />
+					<Add directory="/usr/include/glib-2.0" />
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="mongo-client" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=c++17" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="../../libsimple-chess/algorithm/Apply.cpp" />
+		<Unit filename="../../libsimple-chess/algorithm/Apply.hpp" />
+		<Unit filename="../../libsimple-chess/data/Board.cpp" />
+		<Unit filename="../../libsimple-chess/data/Board.hpp" />
+		<Unit filename="../../libsimple-chess/data/Castling.cpp" />
+		<Unit filename="../../libsimple-chess/data/Castling.hpp" />
+		<Unit filename="../../libsimple-chess/data/Field.cpp" />
+		<Unit filename="../../libsimple-chess/data/Field.hpp" />
+		<Unit filename="../../libsimple-chess/data/ForsythEdwardsNotation.cpp" />
+		<Unit filename="../../libsimple-chess/data/ForsythEdwardsNotation.hpp" />
+		<Unit filename="../../libsimple-chess/data/HalfMove.cpp" />
+		<Unit filename="../../libsimple-chess/data/HalfMove.hpp" />
+		<Unit filename="../../libsimple-chess/data/Piece.cpp" />
+		<Unit filename="../../libsimple-chess/data/Piece.hpp" />
+		<Unit filename="../../libsimple-chess/data/PortableGameNotation.cpp" />
+		<Unit filename="../../libsimple-chess/data/PortableGameNotation.hpp" />
+		<Unit filename="../../libsimple-chess/data/Result.cpp" />
+		<Unit filename="../../libsimple-chess/data/Result.hpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/Convert.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/Convert.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/IdGenerator.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/IdGenerator.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/Server.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/BSON.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/BSON.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/Connection.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/Connection.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/QueryCursor.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/QueryCursor.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/Server.cpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/Server.hpp">
+			<Option target="Debug-with-meteor-chess" />
+			<Option target="Release-with-meteor-chess" />
+		</Unit>
+		<Unit filename="../../libsimple-chess/pgn/OriginType.hpp" />
+		<Unit filename="../../libsimple-chess/pgn/Parser.cpp" />
+		<Unit filename="../../libsimple-chess/pgn/Parser.hpp" />
+		<Unit filename="../../libsimple-chess/pgn/ParserException.cpp" />
+		<Unit filename="../../libsimple-chess/pgn/ParserException.hpp" />
+		<Unit filename="../../libsimple-chess/pgn/Token.cpp" />
+		<Unit filename="../../libsimple-chess/pgn/Token.hpp" />
+		<Unit filename="../../libsimple-chess/pgn/TokenType.hpp" />
+		<Unit filename="../../libsimple-chess/pgn/Tokenizer.cpp" />
+		<Unit filename="../../libsimple-chess/pgn/Tokenizer.hpp" />
+		<Unit filename="../../libsimple-chess/pgn/UnconsumedTokensException.cpp" />
+		<Unit filename="../../libsimple-chess/pgn/UnconsumedTokensException.hpp" />
+		<Unit filename="../../libsimple-chess/rules/Moves.cpp" />
+		<Unit filename="../../libsimple-chess/rules/Moves.hpp" />
+		<Unit filename="../../libsimple-chess/rules/check.cpp" />
+		<Unit filename="../../libsimple-chess/rules/check.hpp" />
+		<Unit filename="../../libsimple-chess/ui/Console.cpp" />
+		<Unit filename="../../libsimple-chess/ui/Console.hpp" />
+		<Unit filename="../../libsimple-chess/ui/detect_utf8.cpp" />
+		<Unit filename="../../libsimple-chess/ui/detect_utf8.hpp" />
+		<Unit filename="../../libsimple-chess/ui/letters.hpp" />
+		<Unit filename="../../libsimple-chess/ui/symbols.hpp" />
+		<Unit filename="../../util/ReturnCodes.hpp" />
+		<Unit filename="../../util/strings.cpp" />
+		<Unit filename="../../util/strings.hpp" />
+		<Unit filename="Options.cpp" />
+		<Unit filename="Options.hpp" />
+		<Unit filename="main.cpp" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

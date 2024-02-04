@@ -1,30 +1,29 @@
-# We might support earlier versions, too, but try to use a more recent one.
 cmake_minimum_required (VERSION 3.8)
 
 project(engine_tests)
 
 set(engine_tests_sources
-    ../../engine/Engine.cpp
-    ../../engine/io-utils.cpp
-    ../../engine/time/Clock.cpp
-    ../../engine/time/Timing.cpp
-    ../../engine/xboard/CommandParser.cpp
-    ../../engine/xboard/Draw.cpp
-    ../../engine/xboard/Error.cpp
-    ../../engine/xboard/ExactTime.cpp
-    ../../engine/xboard/Force.cpp
-    ../../engine/xboard/Go.cpp
-    ../../engine/xboard/Level.cpp
-    ../../engine/xboard/New.cpp
-    ../../engine/xboard/Ping.cpp
-    ../../engine/xboard/ProtocolVersion.cpp
-    ../../engine/xboard/Quit.cpp
-    ../../engine/xboard/ResultCmd.cpp
-    ../../engine/xboard/SetBoard.cpp
-    ../../engine/xboard/SetDepth.cpp
-    ../../engine/xboard/SetTime.cpp
-    ../../engine/xboard/Usermove.cpp
-    ../../engine/xboard/Xboard.cpp
+    ../../apps/engine/Engine.cpp
+    ../../apps/engine/io-utils.cpp
+    ../../apps/engine/time/Clock.cpp
+    ../../apps/engine/time/Timing.cpp
+    ../../apps/engine/xboard/CommandParser.cpp
+    ../../apps/engine/xboard/Draw.cpp
+    ../../apps/engine/xboard/Error.cpp
+    ../../apps/engine/xboard/ExactTime.cpp
+    ../../apps/engine/xboard/Force.cpp
+    ../../apps/engine/xboard/Go.cpp
+    ../../apps/engine/xboard/Level.cpp
+    ../../apps/engine/xboard/New.cpp
+    ../../apps/engine/xboard/Ping.cpp
+    ../../apps/engine/xboard/ProtocolVersion.cpp
+    ../../apps/engine/xboard/Quit.cpp
+    ../../apps/engine/xboard/ResultCmd.cpp
+    ../../apps/engine/xboard/SetBoard.cpp
+    ../../apps/engine/xboard/SetDepth.cpp
+    ../../apps/engine/xboard/SetTime.cpp
+    ../../apps/engine/xboard/Usermove.cpp
+    ../../apps/engine/xboard/Xboard.cpp
     ../../libsimple-chess/data/Board.cpp
     ../../libsimple-chess/data/Castling.cpp
     ../../libsimple-chess/data/Field.cpp

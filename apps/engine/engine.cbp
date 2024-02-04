@@ -2,12 +2,22 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="engine-tests" />
+		<Option title="engine" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/engine" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DDEBUG" />
+				</Compiler>
+			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/engine-tests" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/engine" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -21,54 +31,10 @@
 		</Build>
 		<Compiler>
 			<Add option="-Weffc++" />
-			<Add option="-pedantic" />
-			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-std=c++17" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="../../apps/engine/Engine.cpp" />
-		<Unit filename="../../apps/engine/Engine.hpp" />
-		<Unit filename="../../apps/engine/io-utils.cpp" />
-		<Unit filename="../../apps/engine/io-utils.hpp" />
-		<Unit filename="../../apps/engine/time/Clock.cpp" />
-		<Unit filename="../../apps/engine/time/Clock.hpp" />
-		<Unit filename="../../apps/engine/time/Timing.cpp" />
-		<Unit filename="../../apps/engine/time/Timing.hpp" />
-		<Unit filename="../../apps/engine/xboard/CommandParser.cpp" />
-		<Unit filename="../../apps/engine/xboard/CommandParser.hpp" />
-		<Unit filename="../../apps/engine/xboard/Draw.cpp" />
-		<Unit filename="../../apps/engine/xboard/Draw.hpp" />
-		<Unit filename="../../apps/engine/xboard/Error.cpp" />
-		<Unit filename="../../apps/engine/xboard/Error.hpp" />
-		<Unit filename="../../apps/engine/xboard/ExactTime.cpp" />
-		<Unit filename="../../apps/engine/xboard/ExactTime.hpp" />
-		<Unit filename="../../apps/engine/xboard/Force.cpp" />
-		<Unit filename="../../apps/engine/xboard/Force.hpp" />
-		<Unit filename="../../apps/engine/xboard/Go.cpp" />
-		<Unit filename="../../apps/engine/xboard/Go.hpp" />
-		<Unit filename="../../apps/engine/xboard/Level.cpp" />
-		<Unit filename="../../apps/engine/xboard/Level.hpp" />
-		<Unit filename="../../apps/engine/xboard/New.cpp" />
-		<Unit filename="../../apps/engine/xboard/New.hpp" />
-		<Unit filename="../../apps/engine/xboard/Ping.cpp" />
-		<Unit filename="../../apps/engine/xboard/Ping.hpp" />
-		<Unit filename="../../apps/engine/xboard/ProtocolVersion.cpp" />
-		<Unit filename="../../apps/engine/xboard/ProtocolVersion.hpp" />
-		<Unit filename="../../apps/engine/xboard/Quit.cpp" />
-		<Unit filename="../../apps/engine/xboard/Quit.hpp" />
-		<Unit filename="../../apps/engine/xboard/ResultCmd.cpp" />
-		<Unit filename="../../apps/engine/xboard/ResultCmd.hpp" />
-		<Unit filename="../../apps/engine/xboard/SetBoard.cpp" />
-		<Unit filename="../../apps/engine/xboard/SetBoard.hpp" />
-		<Unit filename="../../apps/engine/xboard/SetDepth.cpp" />
-		<Unit filename="../../apps/engine/xboard/SetDepth.hpp" />
-		<Unit filename="../../apps/engine/xboard/SetTime.cpp" />
-		<Unit filename="../../apps/engine/xboard/SetTime.hpp" />
-		<Unit filename="../../apps/engine/xboard/Usermove.cpp" />
-		<Unit filename="../../apps/engine/xboard/Usermove.hpp" />
-		<Unit filename="../../apps/engine/xboard/Xboard.cpp" />
-		<Unit filename="../../apps/engine/xboard/Xboard.hpp" />
 		<Unit filename="../../libsimple-chess/data/Board.cpp" />
 		<Unit filename="../../libsimple-chess/data/Board.hpp" />
 		<Unit filename="../../libsimple-chess/data/Castling.cpp" />
@@ -81,6 +47,7 @@
 		<Unit filename="../../libsimple-chess/data/Piece.hpp" />
 		<Unit filename="../../libsimple-chess/data/Result.cpp" />
 		<Unit filename="../../libsimple-chess/data/Result.hpp" />
+		<Unit filename="../../libsimple-chess/data/Ternary.hpp" />
 		<Unit filename="../../libsimple-chess/evaluation/CastlingEvaluator.cpp" />
 		<Unit filename="../../libsimple-chess/evaluation/CastlingEvaluator.hpp" />
 		<Unit filename="../../libsimple-chess/evaluation/CheckEvaluator.cpp" />
@@ -106,11 +73,79 @@
 		<Unit filename="../../libsimple-chess/search/Node.hpp" />
 		<Unit filename="../../libsimple-chess/search/Search.cpp" />
 		<Unit filename="../../libsimple-chess/search/Search.hpp" />
+		<Unit filename="../../util/GitInfos.cpp" />
+		<Unit filename="../../util/GitInfos.hpp" />
+		<Unit filename="../../util/ReturnCodes.hpp" />
+		<Unit filename="../../util/Version.hpp" />
 		<Unit filename="../../util/strings.cpp" />
 		<Unit filename="../../util/strings.hpp" />
-		<Unit filename="../locate_catch.hpp" />
+		<Unit filename="Command.hpp" />
+		<Unit filename="Engine.cpp" />
+		<Unit filename="Engine.hpp" />
+		<Unit filename="ParseLoop.hpp" />
+		<Unit filename="Protocol.cpp" />
+		<Unit filename="Protocol.hpp" />
+		<Unit filename="io-utils.cpp" />
+		<Unit filename="io-utils.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="time/Clock.cpp" />
+		<Unit filename="time/Clock.hpp" />
+		<Unit filename="time/TimeControlMode.hpp" />
+		<Unit filename="time/Timing.cpp" />
+		<Unit filename="time/Timing.hpp" />
+		<Unit filename="uci/CommandParser.cpp" />
+		<Unit filename="uci/CommandParser.hpp" />
+		<Unit filename="uci/Go.cpp" />
+		<Unit filename="uci/Go.hpp" />
+		<Unit filename="uci/IsReady.cpp" />
+		<Unit filename="uci/IsReady.hpp" />
+		<Unit filename="uci/Move.cpp" />
+		<Unit filename="uci/Move.hpp" />
+		<Unit filename="uci/NewGame.cpp" />
+		<Unit filename="uci/NewGame.hpp" />
+		<Unit filename="uci/Position.cpp" />
+		<Unit filename="uci/Position.hpp" />
+		<Unit filename="uci/Quit.hpp" />
+		<Unit filename="uci/Uci.cpp" />
+		<Unit filename="uci/Uci.hpp" />
 		<Unit filename="xboard/CommandParser.cpp" />
-		<Extensions />
+		<Unit filename="xboard/CommandParser.hpp" />
+		<Unit filename="xboard/Draw.cpp" />
+		<Unit filename="xboard/Draw.hpp" />
+		<Unit filename="xboard/Error.cpp" />
+		<Unit filename="xboard/Error.hpp" />
+		<Unit filename="xboard/ExactTime.cpp" />
+		<Unit filename="xboard/ExactTime.hpp" />
+		<Unit filename="xboard/Force.cpp" />
+		<Unit filename="xboard/Force.hpp" />
+		<Unit filename="xboard/Go.cpp" />
+		<Unit filename="xboard/Go.hpp" />
+		<Unit filename="xboard/Level.cpp" />
+		<Unit filename="xboard/Level.hpp" />
+		<Unit filename="xboard/New.cpp" />
+		<Unit filename="xboard/New.hpp" />
+		<Unit filename="xboard/NoOperation.cpp" />
+		<Unit filename="xboard/NoOperation.hpp" />
+		<Unit filename="xboard/Ping.cpp" />
+		<Unit filename="xboard/Ping.hpp" />
+		<Unit filename="xboard/ProtocolVersion.cpp" />
+		<Unit filename="xboard/ProtocolVersion.hpp" />
+		<Unit filename="xboard/Quit.cpp" />
+		<Unit filename="xboard/Quit.hpp" />
+		<Unit filename="xboard/ResultCmd.cpp" />
+		<Unit filename="xboard/ResultCmd.hpp" />
+		<Unit filename="xboard/SetBoard.cpp" />
+		<Unit filename="xboard/SetBoard.hpp" />
+		<Unit filename="xboard/SetDepth.cpp" />
+		<Unit filename="xboard/SetDepth.hpp" />
+		<Unit filename="xboard/SetTime.cpp" />
+		<Unit filename="xboard/SetTime.hpp" />
+		<Unit filename="xboard/Usermove.cpp" />
+		<Unit filename="xboard/Usermove.hpp" />
+		<Unit filename="xboard/Xboard.cpp" />
+		<Unit filename="xboard/Xboard.hpp" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

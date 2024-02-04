@@ -2,12 +2,21 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="engine-tests" />
+		<Option title="meteor-chess-client" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/meteor-chess-client" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/engine-tests" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/meteor-chess-client" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -21,66 +30,37 @@
 		</Build>
 		<Compiler>
 			<Add option="-Weffc++" />
-			<Add option="-pedantic" />
-			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-std=c++17" />
 			<Add option="-fexceptions" />
+			<Add directory="/usr/include/mongo-client" />
+			<Add directory="/usr/include/glib-2.0" />
+			<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include" />
 		</Compiler>
-		<Unit filename="../../apps/engine/Engine.cpp" />
-		<Unit filename="../../apps/engine/Engine.hpp" />
-		<Unit filename="../../apps/engine/io-utils.cpp" />
-		<Unit filename="../../apps/engine/io-utils.hpp" />
-		<Unit filename="../../apps/engine/time/Clock.cpp" />
-		<Unit filename="../../apps/engine/time/Clock.hpp" />
-		<Unit filename="../../apps/engine/time/Timing.cpp" />
-		<Unit filename="../../apps/engine/time/Timing.hpp" />
-		<Unit filename="../../apps/engine/xboard/CommandParser.cpp" />
-		<Unit filename="../../apps/engine/xboard/CommandParser.hpp" />
-		<Unit filename="../../apps/engine/xboard/Draw.cpp" />
-		<Unit filename="../../apps/engine/xboard/Draw.hpp" />
-		<Unit filename="../../apps/engine/xboard/Error.cpp" />
-		<Unit filename="../../apps/engine/xboard/Error.hpp" />
-		<Unit filename="../../apps/engine/xboard/ExactTime.cpp" />
-		<Unit filename="../../apps/engine/xboard/ExactTime.hpp" />
-		<Unit filename="../../apps/engine/xboard/Force.cpp" />
-		<Unit filename="../../apps/engine/xboard/Force.hpp" />
-		<Unit filename="../../apps/engine/xboard/Go.cpp" />
-		<Unit filename="../../apps/engine/xboard/Go.hpp" />
-		<Unit filename="../../apps/engine/xboard/Level.cpp" />
-		<Unit filename="../../apps/engine/xboard/Level.hpp" />
-		<Unit filename="../../apps/engine/xboard/New.cpp" />
-		<Unit filename="../../apps/engine/xboard/New.hpp" />
-		<Unit filename="../../apps/engine/xboard/Ping.cpp" />
-		<Unit filename="../../apps/engine/xboard/Ping.hpp" />
-		<Unit filename="../../apps/engine/xboard/ProtocolVersion.cpp" />
-		<Unit filename="../../apps/engine/xboard/ProtocolVersion.hpp" />
-		<Unit filename="../../apps/engine/xboard/Quit.cpp" />
-		<Unit filename="../../apps/engine/xboard/Quit.hpp" />
-		<Unit filename="../../apps/engine/xboard/ResultCmd.cpp" />
-		<Unit filename="../../apps/engine/xboard/ResultCmd.hpp" />
-		<Unit filename="../../apps/engine/xboard/SetBoard.cpp" />
-		<Unit filename="../../apps/engine/xboard/SetBoard.hpp" />
-		<Unit filename="../../apps/engine/xboard/SetDepth.cpp" />
-		<Unit filename="../../apps/engine/xboard/SetDepth.hpp" />
-		<Unit filename="../../apps/engine/xboard/SetTime.cpp" />
-		<Unit filename="../../apps/engine/xboard/SetTime.hpp" />
-		<Unit filename="../../apps/engine/xboard/Usermove.cpp" />
-		<Unit filename="../../apps/engine/xboard/Usermove.hpp" />
-		<Unit filename="../../apps/engine/xboard/Xboard.cpp" />
-		<Unit filename="../../apps/engine/xboard/Xboard.hpp" />
+		<Linker>
+			<Add library="mongo-client" />
+		</Linker>
 		<Unit filename="../../libsimple-chess/data/Board.cpp" />
 		<Unit filename="../../libsimple-chess/data/Board.hpp" />
 		<Unit filename="../../libsimple-chess/data/Castling.cpp" />
 		<Unit filename="../../libsimple-chess/data/Castling.hpp" />
 		<Unit filename="../../libsimple-chess/data/Field.cpp" />
 		<Unit filename="../../libsimple-chess/data/Field.hpp" />
-		<Unit filename="../../libsimple-chess/data/ForsythEdwardsNotation.cpp" />
-		<Unit filename="../../libsimple-chess/data/ForsythEdwardsNotation.hpp" />
 		<Unit filename="../../libsimple-chess/data/Piece.cpp" />
 		<Unit filename="../../libsimple-chess/data/Piece.hpp" />
-		<Unit filename="../../libsimple-chess/data/Result.cpp" />
-		<Unit filename="../../libsimple-chess/data/Result.hpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/Convert.cpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/Convert.hpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/IdGenerator.cpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/IdGenerator.hpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/Server.hpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/BSON.cpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/BSON.hpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/Connection.cpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/Connection.hpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/QueryCursor.cpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/QueryCursor.hpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/Server.cpp" />
+		<Unit filename="../../libsimple-chess/db/mongo/libmongoclient/Server.hpp" />
 		<Unit filename="../../libsimple-chess/evaluation/CastlingEvaluator.cpp" />
 		<Unit filename="../../libsimple-chess/evaluation/CastlingEvaluator.hpp" />
 		<Unit filename="../../libsimple-chess/evaluation/CheckEvaluator.cpp" />
@@ -106,11 +86,20 @@
 		<Unit filename="../../libsimple-chess/search/Node.hpp" />
 		<Unit filename="../../libsimple-chess/search/Search.cpp" />
 		<Unit filename="../../libsimple-chess/search/Search.hpp" />
+		<Unit filename="../../third-party/nlohmann/json.hpp" />
+		<Unit filename="../../util/GitInfos.cpp" />
+		<Unit filename="../../util/GitInfos.hpp" />
+		<Unit filename="../../util/ReturnCodes.hpp" />
+		<Unit filename="../../util/Version.hpp" />
 		<Unit filename="../../util/strings.cpp" />
 		<Unit filename="../../util/strings.hpp" />
-		<Unit filename="../locate_catch.hpp" />
+		<Unit filename="Options.cpp" />
+		<Unit filename="Options.hpp" />
 		<Unit filename="main.cpp" />
-		<Unit filename="xboard/CommandParser.cpp" />
-		<Extensions />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<debugger />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
