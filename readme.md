@@ -1,7 +1,20 @@
 # simple-chess
 
-simple-chess is (or better: will be) a small command-line tool that can be used
-to perform some chess-related tasks. More information will follow soon.
+`simple-chess` provides a collection of a small command-line tools that can be
+used to perform some chess-related tasks.
+
+Currently, these are the following programs:
+
+* [`simple-chess-engine`](./apps/engine/readme.md) - an XBoard-compatible chess
+  engine that supports most of the XBoard commands from protocol version 2
+* [`meteor-chess-client`](./apps/meteor-chess-client/readme.md) - utility tool
+  for use with [Meteor Chess](https://github.com/striezel/meteor-chess), _still
+  under development_
+* [`pgn-reader`](./apps/pgn-reader/readme.md) - command-line application that
+  parses a file containing a chess game in [Portable Game Notation](https://en.wikipedia.org/wiki/Portable_Game_Notation)
+  and will then replay that game move by move
+* [`simple-chess-cli`](./apps/simple-chess-cli/readme.md) - program that allows
+  to play against the engine of `simple-chess`
 
 ## Build status
 

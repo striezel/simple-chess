@@ -51,7 +51,7 @@ jobs:
           cp apps/simple-chess-cli/*.md artifacts/simple-chess-cli/
           # license + readme
           cp LICENSE artifacts/
-          cp apps/readme.md artifacts/
+          cp apps/readme_package.md artifacts/readme.md
           # determine version
           VERSION=$(git describe --always)
           echo Version is $VERSION.
