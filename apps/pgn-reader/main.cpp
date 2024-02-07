@@ -37,14 +37,20 @@
 #include "../../libsimple-chess/pgn/ParserException.hpp"
 #include "../../libsimple-chess/ui/Console.hpp"
 #include "../../libsimple-chess/ui/detect_utf8.hpp"
+#include "../../util/GitInfos.hpp"
 #include "../../util/ReturnCodes.hpp"
+#include "../../util/Version.hpp"
 
 void showVersion()
 {
-  std::cout << "pgn-reader, version 0.9.1-u8, 2022-07-06" << std::endl;
+  std::cout << "pgn-reader, " << simplechess::version << '\n';
   #ifndef NO_METEOR_CHESS
   std::cout << "This version has support for meteor-chess.\n";
   #endif // NO_METEOR_CHESS
+  const simplechess::GitInfos info;
+  std::cout << "\n"
+            << "Version control commit: " << info.commit() << "\n"
+            << "Version control date:   " << info.date() << "\n";
 }
 
 void showHelp()
