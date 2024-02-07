@@ -13,6 +13,10 @@ simple-chess-cli:
 - The program will now try to detect whether UTF-8 can be used on the terminal,
   and if that is the case, then it will use Unicode chess symbols to display
   the pieces on the board instead of just letters.
+
+  However, that detection may be wrong in some cases, so it can be overridden by
+  specifying either `--letters` as command-line parameter to use letters or
+  `--symbols` to use Unicode chess symbols.
 - Files (a-h) and ranks (1-8) are now shown next to the board by default.
   Those labels can be disables via the new `--hide-labels` option or they can
   be explicitly enabled via the `--show-labels` option.
@@ -20,6 +24,16 @@ simple-chess-cli:
 meteor-chess-client:
 
 - update JSON library
+
+pgn-reader:
+
+- Like simple-chess-cli, the program will now try to detect whether UTF-8 can be
+  used on the terminal, and if that is the case, then it will use Unicode chess
+  symbols to display the pieces on the board instead of just letters.
+
+  However, that detection may be wrong in some cases, so it can be overridden by
+  specifying either `--letters` as command-line parameter to use letters or
+  `--symbols` to use Unicode chess symbols.
 
 ## Version 0.5.5 (2021-05-13)
 

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2022  Dirk Stolle
+    Copyright (C) 2016, 2017, 2022, 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,6 +31,12 @@ enum class Labels: bool
 {
   Show = true,
   Hide = false
+};
+
+enum class PieceGlyphs: bool
+{
+  Letters = false,
+  Symbols = true
 };
 
 /** Shows a chess board on the console using ASCII characters for pieces. */

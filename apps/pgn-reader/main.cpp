@@ -57,7 +57,14 @@ void showHelp()
             << "  --pgn FILENAME   - Sets the path for the Portable Game Notation file that\n"
             << "                     will be read. This parameter is mandatory.\n"
             << "  --delay N        - Sets the delay between moves to N milliseconds.\n"
-            << "                     The default value is 1000, i.e. one second.\n";
+            << "                     The default value is 1000, i.e. one second.\n"
+            << "  --letters        - Use letters to represent chess pieces on the board.\n"
+            << "                     Use this option, if your terminal cannot display UTF-8\n"
+            << "                     characters properly. Mutually exclusive with --symbols.\n"
+            << "  --symbols        - Use symbols to represent chess pieces on the board. This\n"
+            << "                     option requires that the terminal supports UTF-8. While it\n"
+            << "                     may look nicer, not all terminals support it. This option\n"
+            << "                     is mutually exclusive with --letters.\n";
   #ifndef NO_METEOR_CHESS
   std::cout << "  --meteor-chess   - Displays board in meteor-chess instance, too.\n"
             << "  --host hostname  - Sets host name of the meteor-chess MongoDB server.\n"
@@ -192,7 +199,11 @@ int main(int argc, char** argv)
   std::string boardId;
   #endif // NO_METEOR_CHESS
 
-  const bool use_utf8 = simplechess::ui::may_support_utf8();
+  bool use_utf8 = simplechess::ui::may_support_utf8();
+  if (options.glyphs.has_value())
+  {
+    use_utf8 = options.glyphs.value() == simplechess::ui::PieceGlyphs::Symbols;
+  }
 
   std::cout << "\n\nInitial position:\n\n";
   showBoard(board, use_utf8);

@@ -23,6 +23,13 @@ Supported program options:
                      will be read. This parameter is mandatory.
   --delay N        - Sets the delay between moves to N milliseconds.
                      The default value is 1000, i.e. one second.
+  --letters        - Use letters to represent chess pieces on the board.
+                     Use this option, if your terminal cannot display UTF-8
+                     characters properly. Mutually exclusive with --symbols.
+  --symbols        - Use symbols to represent chess pieces on the board. This
+                     option requires that the terminal supports UTF-8. While it
+                     may look nicer, not all terminals support it. This option
+                     is mutually exclusive with --letters.
   --meteor-chess   - Displays board in meteor-chess instance, too.
   --host hostname  - Sets host name of the meteor-chess MongoDB server.
                      The default value is "localhost".

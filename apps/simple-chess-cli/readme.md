@@ -37,6 +37,13 @@ Supported program options:
                       has no effect when two humans play against each other.
     --show-labels   - Show labels for fields next to the chess board.
     --hide-labels   - Do not show labels for fields next to the chess board.
+    --letters       - Use letters to represent chess pieces on the board.
+                      Use this option, if your terminal cannot display UTF-8
+                      characters properly. Mutually exclusive with --symbols.
+    --symbols       - Use symbols to represent chess pieces on the board. This
+                      option requires that the terminal supports UTF-8. While it
+                      may look nicer, not all terminals support it. This option
+                      is mutually exclusive with --letters.
 
 ## Copyright and Licensing
 

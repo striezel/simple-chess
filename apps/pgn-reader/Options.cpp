@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,7 +29,8 @@ PgnReaderOptions::PgnReaderOptions()
 : inputFile(""),
   delayMilliseconds(1000),
   help(false),
-  version(false)
+  version(false),
+  glyphs(std::nullopt)
   #ifndef NO_METEOR_CHESS
   , meteorChess(false),
   hostname(""),
@@ -96,6 +97,26 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
     else if ((param == "--version") || (param == "-v") || (param == "/v"))
     {
       version = true;
+    }
+    else if ((param == "--letters") || (param == "--ascii"))
+    {
+      if (glyphs.has_value())
+      {
+        std::cerr << "Error: A parameter to set the piece symbols was already set!"
+                  << std::endl;
+        return false;
+      }
+      glyphs = ui::PieceGlyphs::Letters;
+    }
+    else if ((param == "--symbols") || (param == "--utf8"))
+    {
+      if (glyphs.has_value())
+      {
+        std::cerr << "Error: A parameter to set the piece symbols was already set!"
+                  << std::endl;
+        return false;
+      }
+      glyphs = ui::PieceGlyphs::Symbols;
     }
     #ifdef NO_METEOR_CHESS
     else if ((param == "--meteor-chess") || (param == "--meteor"))

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2016, 2017, 2018, 2020, 2021, 2022  Dirk Stolle
+    Copyright (C) 2016, 2017, 2018, 2020, 2021, 2022, 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -71,7 +71,14 @@ void showHelp()
             << "                    Evaluators are used by computer players only, so this\n"
             << "                    has no effect when two humans play against each other.\n"
             << "  --show-labels   - Show labels for fields next to the chess board.\n"
-            << "  --hide-labels   - Do not show labels for fields next to the chess board.\n";
+            << "  --hide-labels   - Do not show labels for fields next to the chess board.\n"
+            << "  --letters       - Use letters to represent chess pieces on the board.\n"
+            << "                    Use this option, if your terminal cannot display UTF-8\n"
+            << "                    characters properly. Mutually exclusive with --symbols.\n"
+            << "  --symbols       - Use symbols to represent chess pieces on the board. This\n"
+            << "                    option requires that the terminal supports UTF-8. While it\n"
+            << "                    may look nicer, not all terminals support it. This option\n"
+            << "                    is mutually exclusive with --letters.\n";
 }
 
 /** \brief Prints a board to the standard output.
@@ -149,6 +156,7 @@ int main(int argc, char** argv)
   bool doneFEN = false;
   std::string evaluators = "";
   std::optional<ui::Labels> labels = std::nullopt;
+  std::optional<ui::PieceGlyphs> glyphs = std::nullopt;
 
   // Use default start position.
   if (!board.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
@@ -220,6 +228,26 @@ int main(int argc, char** argv)
         }
         labels = ui::Labels::Hide;
       }
+      else if ((param == "--letters") || (param == "--ascii"))
+      {
+        if (glyphs.has_value())
+        {
+          std::cerr << "Error: A parameter to set the piece symbols was already set!"
+                    << std::endl;
+          return simplechess::rcInvalidParameter;
+        }
+        glyphs = ui::PieceGlyphs::Letters;
+      }
+      else if ((param == "--symbols") || (param == "--utf8"))
+      {
+        if (glyphs.has_value())
+        {
+          std::cerr << "Error: A parameter to set the piece symbols was already set!"
+                    << std::endl;
+          return simplechess::rcInvalidParameter;
+        }
+        glyphs = ui::PieceGlyphs::Symbols;
+      }
       // custom list of evaluators
       else if ((param == "--evaluators") || (param == "--evaluator") || (param == "-e"))
       {
@@ -277,6 +305,10 @@ int main(int argc, char** argv)
   }
 
   bool use_utf8 = ui::may_support_utf8();
+  if (glyphs.has_value())
+  {
+    use_utf8 = glyphs.value() == ui::PieceGlyphs::Symbols;
+  }
 
   // potentially endless game loop
   while (true)

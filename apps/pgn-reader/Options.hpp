@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017  Dirk Stolle
+    Copyright (C) 2017, 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,7 +22,9 @@
 #define SIMPLE_CHESS_PGNREADER_OPTIONS_HPP
 
 #include <cstdint>
+#include <optional>
 #include <string>
+#include "../../libsimple-chess/ui/Console.hpp"
 
 namespace simplechess
 {
@@ -34,6 +36,7 @@ struct PgnReaderOptions
   unsigned int delayMilliseconds; /**< delay between moves in milliseconds */
   bool help; /**< whether the program help was requested */
   bool version; /**< whether the version information was requested */
+  std::optional<ui::PieceGlyphs> glyphs; /**< what glyphs to use for pieces */
   #ifndef NO_METEOR_CHESS
   bool meteorChess; /**< whether meteor-chess will be used for output */
   std::string hostname; /**< host name of the MongoDB server for meteor-chess */
