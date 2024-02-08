@@ -27,6 +27,7 @@ set(simple_chess_engine_sources
     ../../libsimple-chess/search/Search.cpp
     ../../util/GitInfos.cpp
     ../../util/strings.cpp
+    ../../util/Version.cpp
     time/Clock.cpp
     time/Timing.cpp
     uci/CommandParser.cpp

@@ -50,7 +50,8 @@ void showVersion()
   const simplechess::GitInfos info;
   std::cout << "\n"
             << "Version control commit: " << info.commit() << "\n"
-            << "Version control date:   " << info.date() << "\n";
+            << "Version control date:   " << info.date() << "\n\n";
+  simplechess::license({ 2017, 2018, 2019, 2021, 2022, 2024 });
 }
 
 void showHelp()

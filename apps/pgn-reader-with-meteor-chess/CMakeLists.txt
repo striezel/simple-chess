@@ -31,6 +31,7 @@ set(pgn_reader_with_meteor_chess_sources
     ../../libsimple-chess/ui/symbols.hpp
     ../../util/GitInfos.cpp
     ../../util/strings.cpp
+    ../../util/Version.cpp
     ../pgn-reader/Options.cpp
     ../pgn-reader/main.cpp)
 

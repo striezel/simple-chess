@@ -27,6 +27,7 @@ set(simple_chess_cli_sources
     ../../libsimple-chess/ui/symbols.hpp
     ../../util/GitInfos.cpp
     ../../util/strings.cpp
+    ../../util/Version.cpp
     main.cpp)
 
 set(CMAKE_CXX_STANDARD 17)

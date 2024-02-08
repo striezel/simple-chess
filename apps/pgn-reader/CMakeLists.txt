@@ -25,6 +25,7 @@ set(pgn_reader_sources
     ../../libsimple-chess/ui/symbols.hpp
     ../../util/GitInfos.cpp
     ../../util/strings.cpp
+    ../../util/Version.cpp
     Options.cpp
     main.cpp)
 

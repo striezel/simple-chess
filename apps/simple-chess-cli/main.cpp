@@ -37,7 +37,8 @@ void showVersion()
   std::cout << "simple-chess-cli, " << simplechess::version << "\n"
             << "\n"
             << "Version control commit: " << info.commit() << "\n"
-            << "Version control date:   " << info.date() << std::endl;
+            << "Version control date:   " << info.date() << "\n\n";
+  simplechess::license({ 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024 });
 }
 
 void showHelp()

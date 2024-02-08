@@ -40,7 +40,8 @@ void showVersion(const bool json = false)
     std::cout << "meteor-chess-client, " << simplechess::version << "\n"
               << "\n"
               << "Version control commit: " << info.commit() << "\n"
-              << "Version control date:   " << info.date() << std::endl;
+              << "Version control date:   " << info.date() << "\n\n";
+    simplechess::license({ 2018, 2019, 2020, 2021, 2024 });
   }
   else
   {

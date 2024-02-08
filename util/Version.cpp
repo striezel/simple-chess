@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2019, 2020, 2021  Dirk Stolle
+    Copyright (C) 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,33 +18,31 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef SIMPLE_CHESS_VERSION_HPP
-#define SIMPLE_CHESS_VERSION_HPP
-
-#include <string>
-#include <vector>
+#include "Version.hpp"
+#include <iostream>
+#include <iterator>
+#include <numeric>
 
 namespace simplechess
 {
 
-/** \brief version information */
-const std::string version = "version 0.5.5, 2021-05-13";
+void license(const std::vector<unsigned int> years)
+{
+  if (years.empty())
+  {
+    license({ 2024 });
+    return;
+  }
+  auto comma_fold = [](std::string s, unsigned int i)
+  {
+     return std::move(s) + ", " + std::to_string(i);
+  };
+  const auto timeline = std::accumulate(std::next(years.begin()), years.end(),
+                            std::to_string(years[0]), comma_fold);
+  std::cout << "Copyright (C) " << timeline << "  Dirk Stolle\n"
+            << "License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\n"
+            << "This program is free software: you are free to change and redistribute it.\n"
+            << "There is NO WARRANTY, to the extent permitted by law.\n";
+}
 
-/** \brief major version number */
-const unsigned int versionMajor = 0;
-
-/** \brief minor version number */
-const unsigned int versionMinor = 5;
-
-/** \brief patch version number */
-const unsigned int versionPatch = 5;
-
-/** \brief Prints license notice to standard output.
- *
- * \param years   the years to show in the notice
- */
-void license(const std::vector<unsigned int> years);
-
-} // namespace
-
-#endif // SIMPLE_CHESS_VERSION_HPP
+}

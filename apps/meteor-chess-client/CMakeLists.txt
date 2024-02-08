@@ -27,6 +27,7 @@ set(meteor-chess-client_sources
     ../../libsimple-chess/search/Search.cpp
     ../../util/GitInfos.cpp
     ../../util/strings.cpp
+    ../../util/Version.cpp
     Options.cpp
     main.cpp)
 

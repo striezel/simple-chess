@@ -90,16 +90,13 @@
 		<Unit filename="../../util/GitInfos.cpp" />
 		<Unit filename="../../util/GitInfos.hpp" />
 		<Unit filename="../../util/ReturnCodes.hpp" />
+		<Unit filename="../../util/Version.cpp" />
 		<Unit filename="../../util/Version.hpp" />
 		<Unit filename="../../util/strings.cpp" />
 		<Unit filename="../../util/strings.hpp" />
 		<Unit filename="Options.cpp" />
 		<Unit filename="Options.hpp" />
 		<Unit filename="main.cpp" />
-		<Extensions>
-			<envvars />
-			<code_completion />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
