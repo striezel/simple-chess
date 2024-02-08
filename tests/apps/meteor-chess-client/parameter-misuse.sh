@@ -106,6 +106,14 @@ then
   exit 1
 fi
 
+# no port number after parameter --port
+"$EXECUTABLE" --board aBcDeFg1234 --port
+if [ $? -ne 1 ]
+then
+  echo "Executable did not exit with code 1 when --port had no port number."
+  exit 1
+fi
+
 # parameter --json given twice
 "$EXECUTABLE" --board aBcDeFg1234 --json --json
 if [ $? -ne 1 ]

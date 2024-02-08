@@ -74,6 +74,13 @@ if %ERRORLEVEL% NEQ 1 (
   exit /B 1
 )
 
+:: no value after parameter --delay
+"%EXECUTABLE%" --pgn foo.pgn --delay
+if %ERRORLEVEL% NEQ 1 (
+  echo Executable did not exit with code 1 when --delay had no value.
+  exit /B 1
+)
+
 :: parameter --letters given twice
 "%EXECUTABLE%" --letters --letters
 if %ERRORLEVEL% NEQ 1 (

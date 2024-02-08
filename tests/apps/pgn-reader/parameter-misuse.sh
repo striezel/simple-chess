@@ -82,6 +82,14 @@ then
   exit 1
 fi
 
+# no value after parameter --delay
+"$EXECUTABLE" --pgn foo.pgn --delay
+if [ $? -ne 1 ]
+then
+  echo "Executable did not exit with code 1 when --delay had no value."
+  exit 1
+fi
+
 # parameter --letters is given twice
 "$EXECUTABLE" --letters --letters
 if [ $? -ne 1 ]

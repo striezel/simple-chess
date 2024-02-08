@@ -34,6 +34,14 @@ then
   exit 1
 fi
 
+# parameter --hostname given twice
+"$EXECUTABLE" --meteor-chess --hostname some.node.local --hostname host.local
+if [ $? -ne 1 ]
+then
+  echo "Executable did not exit with code 1 when --hostname was given twice."
+  exit 1
+fi
+
 # no host name after parameter --hostname
 "$EXECUTABLE" --hostname
 if [ $? -ne 1 ]
@@ -79,6 +87,14 @@ fi
 if [ $? -ne 1 ]
 then
   echo "Executable did not exit with code 1 when --port had out of range value."
+  exit 1
+fi
+
+# no port number after parameter --port
+"$EXECUTABLE" --pgn foo.pgn --meteor-chess --port
+if [ $? -ne 1 ]
+then
+  echo "Executable did not exit with code 1 when --port had no port number."
   exit 1
 fi
 
