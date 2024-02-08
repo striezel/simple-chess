@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2018  Dirk Stolle
+    Copyright (C) 2018, 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -61,13 +61,13 @@ bool MeteorChessOptions::parse(const int argc, char** argv)
     {
       if (!boardId.empty())
       {
-        std::cout << "Error: The board ID cannot be specified more than once!\n";
+        std::cerr << "Error: The board ID cannot be specified more than once!\n";
         return false;
       }
       if (argc > i + 1)
       {
         boardId = std::string(argv[i+1]);
-        //Skip next argument, because that was already processed as board ID.
+        // Skip next argument, because that was already processed as board ID.
         ++i;
       }
       else
@@ -81,7 +81,7 @@ bool MeteorChessOptions::parse(const int argc, char** argv)
     {
       if (!hostname.empty())
       {
-        std::cout << "Error: The host name cannot be specified more than once!\n";
+        std::cerr << "Error: The host name cannot be specified more than once!\n";
         return false;
       }
       if (argc > i + 1)
@@ -101,16 +101,21 @@ bool MeteorChessOptions::parse(const int argc, char** argv)
     {
       if (argc > i + 1)
       {
+        if (port != 0)
+        {
+          std::cerr << "Error: The port number cannot be specified more than once!\n";
+          return false;
+        }
         const std::string portString = std::string(argv[i+1]);
         int dummy = -1;
         if (!util::stringToInt(portString, dummy))
         {
-          std::cout << "Parameter " << param << " must be followed by a port number!\n";
+          std::cerr << "Parameter " << param << " must be followed by a port number!\n";
           return false;
         }
         if ((dummy <= 0) || (dummy > 32767))
         {
-          std::cout << "The given port number is out of range. It must be in [1;32767].\n";
+          std::cerr << "The given port number is out of range. It must be in [1;32767].\n";
           return false;
         }
         port = static_cast<uint16_t>(dummy);
@@ -119,7 +124,7 @@ bool MeteorChessOptions::parse(const int argc, char** argv)
       }
       else
       {
-        std::cout << "There must be a port number after " << param << "!\n";
+        std::cerr << "There must be a port number after " << param << "!\n";
         return false;
       }
     } // if port number
@@ -128,7 +133,7 @@ bool MeteorChessOptions::parse(const int argc, char** argv)
     {
       if (json)
       {
-        std::cout << "Error: The parameter " << param << " cannot be specified more than once!\n";
+        std::cerr << "Error: The parameter " << param << " cannot be specified more than once!\n";
         return false;
       }
       json = true;
@@ -138,7 +143,7 @@ bool MeteorChessOptions::parse(const int argc, char** argv)
     {
       if (move)
       {
-        std::cout << "Error: The parameter " << param << " cannot be specified more than once!\n";
+        std::cerr << "Error: The parameter " << param << " cannot be specified more than once!\n";
         return false;
       }
       move = true;
@@ -148,7 +153,7 @@ bool MeteorChessOptions::parse(const int argc, char** argv)
     {
       if (!evaluators.empty())
       {
-        std::cout << "Error: The parameter " << param << " cannot be specified more than once!\n";
+        std::cerr << "Error: The parameter " << param << " cannot be specified more than once!\n";
         return false;
       }
       if (argc > i + 1)
@@ -159,13 +164,13 @@ bool MeteorChessOptions::parse(const int argc, char** argv)
       }
       else
       {
-        std::cout << "There must be a list of evaluators after " << param << "!\n";
+        std::cerr << "There must be a list of evaluators after " << param << "!\n";
         return false;
       }
     } // if list of evaluators was given
     else
     {
-      std::cout << "Error: Invalid parameter \"" << param << "\"!\n";
+      std::cerr << "Error: Invalid parameter \"" << param << "\"!\n";
       return false;
     }
   } // for
