@@ -67,7 +67,7 @@ Now the binaries are built and ready for use.
 
 ## Copyright and Licensing
 
-Copyright 2016, 2017, 2018, 2019  Dirk Stolle
+Copyright 2016, 2017, 2018, 2019, 2020, 2021, 2024  Dirk Stolle
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
