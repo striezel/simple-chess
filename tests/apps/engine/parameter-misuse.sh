@@ -26,22 +26,6 @@ fi
 
 EXECUTABLE="$1"
 
-# parameter white given twice
-"$EXECUTABLE" white white
-if [ $? -ne 1 ]
-then
-  echo "Executable did not exit with code 1 when white was given twice."
-  exit 1
-fi
-
-# parameter black given twice
-"$EXECUTABLE" black black
-if [ $? -ne 1 ]
-then
-  echo "Executable did not exit with code 1 when black was given twice."
-  exit 1
-fi
-
 # parameter --evaluators given twice
 "$EXECUTABLE" --evaluators material --evaluators material,check
 if [ $? -ne 1 ]

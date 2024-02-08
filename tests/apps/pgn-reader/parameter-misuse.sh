@@ -82,7 +82,7 @@ then
   exit 1
 fi
 
-# --letters is given twice
+# parameter --letters is given twice
 "$EXECUTABLE" --letters --letters
 if [ $? -ne 1 ]
 then
@@ -90,7 +90,7 @@ then
   exit 1
 fi
 
-# --symbols is given twice
+# parameter --symbols is given twice
 "$EXECUTABLE" --symbols --symbols
 if [ $? -ne 1 ]
 then
