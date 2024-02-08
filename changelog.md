@@ -2,7 +2,7 @@
 
 _Note: This changelog may be incomplete._
 
-## Version 0.5.6 (2022-??-??)
+## Version 0.5.6 (2024-02-08)
 
 simple-chess-cli:
 
