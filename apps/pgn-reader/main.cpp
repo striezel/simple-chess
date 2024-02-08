@@ -163,7 +163,7 @@ int main(int argc, char** argv)
   }
 
   #ifndef NO_METEOR_CHESS
-  //set default values for meteor-chess, if necessary
+  // set default values for meteor-chess, if necessary
   if (options.meteorChess)
   {
     if (options.port == 0)

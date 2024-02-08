@@ -43,6 +43,7 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
 {
   if (nullptr == argv)
     return false;
+  bool hasDelay = false;
   for (int i = 1; i < argc; ++i)
   {
     if (nullptr == argv[i])
@@ -52,6 +53,11 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
     {
       if (argc > i + 1)
       {
+        if (hasDelay)
+        {
+          std::cerr << "Error: The delay time was already set!\n";
+          return false;
+        }
         const std::string ms = std::string(argv[i+1]);
         int dummy = -1;
         if (!util::stringToInt(ms, dummy))
@@ -65,6 +71,7 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
           return false;
         }
         delayMilliseconds = dummy;
+        hasDelay = true;
         // Skip next argument, because that was already processed as delay value.
         ++i;
       }
@@ -79,6 +86,11 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
     {
       if (argc > i + 1)
       {
+        if (!inputFile.empty())
+        {
+          std::cerr << "Error: Path to the PGN file was already set!\n";
+          return false;
+        }
         inputFile = std::string(argv[i+1]);
         // Skip next argument, because that was already processed as file name.
         ++i;
@@ -93,10 +105,12 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
     else if ((param == "--help") || (param == "-?") || (param == "/?"))
     {
       help = true;
+      return true;
     }
     else if ((param == "--version") || (param == "-v") || (param == "/v"))
     {
       version = true;
+      return true;
     }
     else if ((param == "--letters") || (param == "--ascii"))
     {
@@ -128,13 +142,18 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
     #else
     else if ((param == "--meteor-chess") || (param == "--meteor"))
     {
+      if (meteorChess)
+      {
+        std::cerr << "Error: The option to use Meteor Chess was already set!\n";
+        return false;
+      }
       meteorChess = true;
     }
     else if ((param == "--hostname") || (param == "--host"))
     {
       if (!hostname.empty())
       {
-        std::cout << "Error: The host name cannot be specified more than once!\n";
+        std::cerr << "Error: The host name cannot be specified more than once!\n";
         return false;
       }
       if (argc > i + 1)
@@ -145,7 +164,7 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
       }
       else
       {
-        std::cout << "There must be a host name after " << param << "!\n";
+        std::cerr << "There must be a host name after " << param << "!\n";
         return false;
       }
     } // hostname
@@ -153,6 +172,11 @@ bool PgnReaderOptions::parse(const int argc, char** argv)
     {
       if (argc > i + 1)
       {
+        if (port != 0)
+        {
+          std::cerr << "Error: The port number cannot be specified more than once!\n";
+          return false;
+        }
         const std::string portString = std::string(argv[i+1]);
         int dummy = -1;
         if (!util::stringToInt(portString, dummy))

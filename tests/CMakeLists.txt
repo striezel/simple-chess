@@ -7,6 +7,9 @@ else ()
   set(HAS_CATCH_V3 OFF)
 endif ()
 
+# Recurse into subdirectory for app tests.
+add_subdirectory (apps)
+
 # Recurse into subdirectory for library tests.
 add_subdirectory (library)
 
