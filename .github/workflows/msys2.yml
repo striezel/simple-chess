@@ -67,9 +67,10 @@ jobs:
           mkdir -p "$GITHUB_WORKSPACE"/artifacts/simple-chess-cli
           cp build-static/apps/simple-chess-cli/*.exe artifacts/simple-chess-cli/
           cp apps/simple-chess-cli/*.md artifacts/simple-chess-cli/
-          # license + readme
+          # license + readme + changelog
           cp LICENSE artifacts/
           cp apps/readme_package.md artifacts/readme.md
+          cp changelog.md artifacts/
           # determine version
           VERSION=$(git describe --always)
           echo Version is $VERSION.
