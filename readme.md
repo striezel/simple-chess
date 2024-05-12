@@ -35,7 +35,7 @@ CMake 3.8 or later, the libmongo-client-dev library and catch for unit tests.
 It also helps to have Git, a distributed version control system, on your build
 system to get the latest source code directly from the Git repository.
 
-All that can usually be installed be typing
+All that can usually be installed by typing
 
     apt-get install cmake g++ git libmongo-client-dev catch
 
