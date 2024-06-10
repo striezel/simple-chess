@@ -3,12 +3,24 @@ name: GCC
 on: push
 
 jobs:
-  ubuntu_gcc:
-    runs-on: ubuntu-22.04
+  gcc:
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        version: [9, 10, 11, 12]
+        include:
+          - version: 9
+            os: ubuntu-22.04
+          - version: 10
+            os: ubuntu-22.04
+          - version: 11
+            os: ubuntu-22.04
+          - version: 12
+            os: ubuntu-22.04
+          - version: 13
+            os: ubuntu-24.04
+          - version: 14
+            os: ubuntu-24.04
     steps:
       # Checks-out the repository under $GITHUB_WORKSPACE.
       - uses: actions/checkout@v4
@@ -38,5 +50,5 @@ jobs:
           cd build-static
           cmake -DENABLE_LTO=ON -DENABLE_STATIC_LINKING=ON ../
           cmake --build . -j2
-        # Only run static build on latest version in the matrix.
+        # Only run static build on one version in the matrix.
         if: matrix.version == 12
