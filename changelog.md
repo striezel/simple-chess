@@ -2,6 +2,13 @@
 
 _Note: This changelog may be incomplete._
 
+## Version 0.?.? (2024-??-??)
+
+General:
+
+- A bug is fixed where the search would not consider different pawn promotion
+  options but only consider promotions of pawn to queen.
+
 ## Version 0.5.6 (2024-02-08)
 
 simple-chess-cli:

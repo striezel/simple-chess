@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2017, 2018, 2021, 2022  Dirk Stolle
+    Copyright (C) 2017, 2018, 2021, 2022, 2024  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -218,7 +218,7 @@ void Search::expandNode(Node& node, const Evaluator& eval, const unsigned int de
           for ( const auto promo : types )
           {
             Board movedBoard(node.board);
-            movedBoard.move(from, to, PieceType::queen);
+            movedBoard.move(from, to, promo);
             node.children.push_back(
                 std::unique_ptr<Node>(
                 new Node(movedBoard, from, to, promo,
