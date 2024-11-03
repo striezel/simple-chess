@@ -122,7 +122,7 @@ TEST_CASE("MaterialEvaluator")
   {
     REQUIRE( MaterialEvaluator::pieceValue(PieceType::none) == 0 );
     REQUIRE( MaterialEvaluator::pieceValue(PieceType::pawn) == 100 );
-    REQUIRE( MaterialEvaluator::pieceValue(PieceType::bishop) == 300 );
+    REQUIRE( MaterialEvaluator::pieceValue(PieceType::bishop) == 325 );
     REQUIRE( MaterialEvaluator::pieceValue(PieceType::knight) == 300 );
     REQUIRE( MaterialEvaluator::pieceValue(PieceType::rook) == 500 );
     REQUIRE( MaterialEvaluator::pieceValue(PieceType::queen) == 900 );

@@ -30,6 +30,7 @@ int MaterialEvaluator::pieceValue(const PieceType& pt)
     case PieceType::pawn:
          return 100;
     case PieceType::bishop:
+         return 325;
     case PieceType::knight:
          return 300;
     case PieceType::rook:

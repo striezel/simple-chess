@@ -8,6 +8,8 @@ General:
 
 - A bug is fixed where the search would not consider different pawn promotion
   options but only consider promotions of pawn to queen.
+- The material value of a bishop used in evaluation is increased from 300
+  centipawns to 325 centipawns.
 
 ## Version 0.5.6 (2024-02-08)
 
