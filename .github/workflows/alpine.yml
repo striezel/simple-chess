@@ -27,7 +27,7 @@ jobs:
           mkdir build-static
           cd build-static
           cmake ../ -DENABLE_LTO=ON -DENABLE_STATIC_LINKING=ON -DNO_METEOR_CHESS=ON
-          cmake --build . -j2
+          cmake --build . -j4
       - name: Run tests
         run: |
           cd "$GITHUB_WORKSPACE"/build-static

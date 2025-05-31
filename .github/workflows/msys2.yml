@@ -33,7 +33,7 @@ jobs:
           mkdir build
           cd build
           cmake ../
-          cmake --build . -j2
+          cmake --build . -j4
       - name: Tests
         run: |
           export MSYSTEM=MINGW64
