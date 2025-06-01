@@ -7,12 +7,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [2019, 2022]
+        version: [2022, 2025]
     runs-on: windows-${{ matrix.version }}
     steps:
       # Checks-out the repository under $GITHUB_WORKSPACE.
       - uses: actions/checkout@v4
-      - name: Build with Visual Studio ${{ matrix.version }}
+      - name: Build with Visual Studio 2022 on Windows Server ${{ matrix.version }}
         run: |
           cd "%GITHUB_WORKSPACE%"
           md build
