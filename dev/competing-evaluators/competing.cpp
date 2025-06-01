@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2020, 2021  Dirk Stolle
+    Copyright (C) 2020, 2021, 2025  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 namespace simplechess
 {
 
-const std::vector<std::string> Competition::allEvaluators = {
+const std::vector<std::string_view> Competition::allEvaluators = {
     CompoundCreator::IdCastling,
     CompoundCreator::IdCheck,
     CompoundCreator::IdLinearMobility,
@@ -41,7 +41,7 @@ const std::vector<std::string> Competition::allEvaluators = {
 };
 
 #ifndef SIMPLE_CHESS_NO_COMPETITION_DATA
-void Competition::compete(const std::vector<std::string>& allowedEvaluators, unsigned int threads)
+void Competition::compete(const std::vector<std::string_view>& allowedEvaluators, unsigned int threads)
 {
   if (allowedEvaluators.empty())
   {

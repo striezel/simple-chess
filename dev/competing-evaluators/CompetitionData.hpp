@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2020, 2021  Dirk Stolle
+    Copyright (C) 2020, 2021, 2025  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #ifndef SIMPLE_CHESS_COMPETITION_DATA_HPP
 #define SIMPLE_CHESS_COMPETITION_DATA_HPP
 
-#include <string>
+#include <string_view>
 #include <map>
 #include <memory>
 #include <vector>
@@ -38,7 +38,7 @@ class CompetitionData
      *
      * \param allowedEvaluators   ids of allowed evaluators
      */
-    CompetitionData(const std::vector<std::string>& allowedEvaluators);
+    CompetitionData(const std::vector<std::string_view>& allowedEvaluators);
 
 
     /** \brief Performs the whole competition between evaluators.
@@ -72,7 +72,7 @@ class CompetitionData
      * \param allowedEvaluators  container with identifiers of all allowed evaluators
      * \return Returns a vector containing all combinations.
      */
-    static std::vector<std::unique_ptr<Evaluator>> createEvaluators(const std::vector<std::string>& allowedEvaluators);
+    static std::vector<std::unique_ptr<Evaluator>> createEvaluators(const std::vector<std::string_view>& allowedEvaluators);
 
     /** \brief Sanitizes the given number of threads by looking at the hardware.
      *

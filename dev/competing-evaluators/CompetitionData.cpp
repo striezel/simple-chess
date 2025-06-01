@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2020, 2021  Dirk Stolle
+    Copyright (C) 2020, 2021, 2025  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 namespace simplechess
 {
 
-CompetitionData::CompetitionData(const std::vector<std::string>& allowedEvaluators)
+CompetitionData::CompetitionData(const std::vector<std::string_view>& allowedEvaluators)
 : stopRequested(false),
   isCompeting(false),
   evaluators(createEvaluators(allowedEvaluators)),
@@ -41,9 +41,9 @@ CompetitionData::CompetitionData(const std::vector<std::string>& allowedEvaluato
 {
 }
 
-std::vector<std::unique_ptr<Evaluator>> CompetitionData::createEvaluators(const std::vector<std::string>& allowedEvaluators)
+std::vector<std::unique_ptr<Evaluator>> CompetitionData::createEvaluators(const std::vector<std::string_view>& allowedEvaluators)
 {
-  using vecsize_t = std::vector<std::string>::size_type;
+  using vecsize_t = std::vector<std::string_view>::size_type;
   const vecsize_t distinctCount = allowedEvaluators.size();
   const vecsize_t totalCombinations = static_cast<vecsize_t>(1) << allowedEvaluators.size();
   std::vector<std::unique_ptr<Evaluator>> result;
@@ -55,7 +55,7 @@ std::vector<std::unique_ptr<Evaluator>> CompetitionData::createEvaluators(const 
     {
       if ((i & (static_cast<std::size_t>(1) << j)) != 0)
       {
-        evals += "," + allowedEvaluators[j];
+        evals += std::string(",").append(allowedEvaluators[j]);
       }
     } // for j
     evals = evals.substr(1);

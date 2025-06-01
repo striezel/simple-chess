@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2020, 2021  Dirk Stolle
+    Copyright (C) 2020, 2021, 2025  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #ifndef SIMPLE_CHESS_COMPETING_HPP
 #define SIMPLE_CHESS_COMPETING_HPP
 
-#include <string>
+#include <string_view>
 #include <map>
 #include <memory>
 #include <vector>
@@ -38,7 +38,7 @@ class Competition
   public:
     /** \brief container with identifiers for all available evaluators
      */
-    static const std::vector<std::string> allEvaluators;
+    static const std::vector<std::string_view> allEvaluators;
 
 
     #ifndef SIMPLE_CHESS_NO_COMPETITION_DATA
@@ -48,7 +48,7 @@ class Competition
      * \param threads             number of threads to use
      * \remarks At the moment, only single-threaded execution is supported.
      */
-    static void compete(const std::vector<std::string>& allowedEvaluators, unsigned int threads = 1);
+    static void compete(const std::vector<std::string_view>& allowedEvaluators, unsigned int threads = 1);
     #endif
 
 

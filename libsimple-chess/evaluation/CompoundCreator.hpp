@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2018, 2021  Dirk Stolle
+    Copyright (C) 2018, 2021, 2025  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #ifndef SIMPLE_CHESS_COMPOUNDCREATOR_HPP
 #define SIMPLE_CHESS_COMPOUNDCREATOR_HPP
 
-#include <string>
+#include <string_view>
 #include "CompoundEvaluator.hpp"
 
 namespace simplechess
@@ -40,7 +40,7 @@ class CompoundCreator
      * \remarks Should change return type to std::optional, once the C++17 support
      *          hits all major compilers in major distributions.
      */
-    static bool create(const std::string& evaluators, CompoundEvaluator& compound);
+    static bool create(const std::string_view evaluators, CompoundEvaluator& compound);
 
 
     /** \brief Creates the default compound evaluator used in simple-chess.
@@ -50,12 +50,12 @@ class CompoundCreator
     static void getDefault(CompoundEvaluator& compound);
 
 
-    static const std::string IdCastling; /**< id for CastlingEvaluator */
-    static const std::string IdCheck; /**< id for CheckEvaluator */
-    static const std::string IdLinearMobility; /**< id for LinearMobilityEvaluator */
-    static const std::string IdMaterial; /**< id for MaterialEvaluator */
-    static const std::string IdPromotion; /**< id for PromotionEvaluator */
-    static const std::string IdRootMobility; /**< id for RootMobilityEvaluator */
+    static constexpr std::string_view IdCastling = "castling"; /**< id for CastlingEvaluator */
+    static constexpr std::string_view IdCheck = "check"; /**< id for CheckEvaluator */
+    static constexpr std::string_view IdLinearMobility = "linearmobility"; /**< id for LinearMobilityEvaluator */
+    static constexpr std::string_view IdMaterial = "material"; /**< id for MaterialEvaluator */
+    static constexpr std::string_view IdPromotion = "promotion"; /**< id for PromotionEvaluator */
+    static constexpr std::string_view IdRootMobility = "rootmobility"; /**< id for RootMobilityEvaluator */
   private:
     /** \brief Deleted constructor, because class shall not be instantiated.
      */

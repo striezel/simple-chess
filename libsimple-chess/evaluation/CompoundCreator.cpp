@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of simple-chess.
-    Copyright (C) 2018, 2024  Dirk Stolle
+    Copyright (C) 2018, 2024, 2025  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,14 +31,7 @@
 namespace simplechess
 {
 
-const std::string CompoundCreator::IdCastling = "castling";
-const std::string CompoundCreator::IdCheck = "check";
-const std::string CompoundCreator::IdLinearMobility = "linearmobility";
-const std::string CompoundCreator::IdMaterial = "material";
-const std::string CompoundCreator::IdPromotion = "promotion";
-const std::string CompoundCreator::IdRootMobility = "rootmobility";
-
-bool CompoundCreator::create(const std::string& evaluators, CompoundEvaluator& compound)
+bool CompoundCreator::create(const std::string_view evaluators, CompoundEvaluator& compound)
 {
   if (evaluators.empty())
   {
@@ -46,7 +39,7 @@ bool CompoundCreator::create(const std::string& evaluators, CompoundEvaluator& c
     return false;
   }
   std::unordered_set<std::string> ids;
-  const auto parts = util::split(evaluators, ',');
+  const auto parts = util::split(std::string(evaluators), ',');
   // Check whether ids are unique and not empty.
   for (const std::string& id : parts)
   {

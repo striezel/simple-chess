@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2018, 2024  Dirk Stolle
+    Copyright (C) 2018, 2024, 2025  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ TEST_CASE("CompoundCreator")
 
   SECTION("create() with several known IDs succeeds")
   {
-    const std::string evaluators = CompoundCreator::IdMaterial + "," + CompoundCreator::IdCheck + "," + CompoundCreator::IdPromotion;
+    const std::string evaluators = std::string(CompoundCreator::IdMaterial) + "," + std::string(CompoundCreator::IdCheck) + "," + std::string(CompoundCreator::IdPromotion);
     CompoundEvaluator compound;
     REQUIRE( CompoundCreator::create(evaluators, compound) );
     REQUIRE_FALSE( compound.empty() );
@@ -66,7 +66,7 @@ TEST_CASE("CompoundCreator")
 
   SECTION("create() with duplicate known IDs fails")
   {
-    const std::string evaluators = CompoundCreator::IdMaterial + "," + CompoundCreator::IdCheck + "," + CompoundCreator::IdMaterial;
+    const std::string evaluators = std::string(CompoundCreator::IdMaterial) + "," + std::string(CompoundCreator::IdCheck) + "," + std::string(CompoundCreator::IdMaterial);
     CompoundEvaluator compound;
     REQUIRE_FALSE( CompoundCreator::create(evaluators, compound) );
   }
@@ -83,7 +83,7 @@ TEST_CASE("CompoundCreator")
         CompoundCreator::IdRootMobility
     };
 
-    for (const std::string& id : ids)
+    for (const auto id : ids)
     {
       compound.clear();
       REQUIRE( CompoundCreator::create(id, compound) );
