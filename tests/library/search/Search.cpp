@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the test suite for simple-chess.
-    Copyright (C) 2017, 2018  Dirk Stolle
+    Copyright (C) 2017, 2018, 2025  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 
 #include "../../locate_catch.hpp"
+#include "../../../libsimple-chess/evaluation/CompoundCreator.hpp"
 #include "../../../libsimple-chess/evaluation/CompoundEvaluator.hpp"
 #include "../../../libsimple-chess/evaluation/MaterialEvaluator.hpp"
 #include "../../../libsimple-chess/evaluation/LinearMobilityEvaluator.hpp"
@@ -163,4 +164,36 @@ TEST_CASE("Search tree results must not put player in check")
 
   // Move c2-c1 must not be in list.
   REQUIRE_FALSE( found );
+}
+
+TEST_CASE("Search: Use of proper pawn promotion options")
+{
+  // This is a regression test for a scenario that occurred when the cli was
+  // started with the position given below and white to move. White can force
+  // checkmate in one move, but for that the pawn has to be promoted to a knight
+  // and not to a queen. Otherwise white will loose the game.
+
+  using namespace simplechess;
+  Board board;
+
+  // Position where white can force checkmate in one move with pawn promotion
+  // to knight (and not to queen).
+  REQUIRE(board.fromFEN("7n/r4P1k/5b2/5N1p/8/1q6/PP6/K5R1 w - - 0 1"));
+  // Black player is not in check.
+  REQUIRE_FALSE( isInCheck(board, Colour::black) );
+  REQUIRE_FALSE( board.isInCheck(Colour::black) );
+
+  CompoundEvaluator evaluator;
+  CompoundCreator::getDefault(evaluator);
+  simplechess::Search s(board);
+  s.search(evaluator, 2);
+  REQUIRE( s.hasMove() );
+  const auto move = s.bestMove();
+  const Field from = std::get<0>(move);
+  const Field to = std::get<1>(move);
+  const PieceType promo = std::get<2>(move);
+
+  REQUIRE( promo == PieceType::knight );
+  REQUIRE( from == Field::f7 );
+  REQUIRE( to == Field::f8 );
 }
