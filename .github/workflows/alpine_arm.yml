@@ -86,7 +86,7 @@ jobs:
           mv artifacts simple-chess-$VERSION
           tar czf simple-chess_${VERSION}_linux-arm64-generic.tar.gz simple-chess-$VERSION
       - name: Archive build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: simple-chess_linux-arm64-generic
           path: simple-chess_*_linux-arm64-generic.tar.gz

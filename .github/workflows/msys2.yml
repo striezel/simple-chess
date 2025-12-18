@@ -80,7 +80,7 @@ jobs:
           mv artifacts simple-chess-$VERSION
           "C:\Program Files\7-Zip\7z.exe" a -r simple-chess-$VERSION-win64.zip simple-chess-$VERSION
       - name: Upload zipped updater
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: simple-chess-win64
           if-no-files-found: error
